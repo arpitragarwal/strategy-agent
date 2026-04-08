@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  let body: { prompt?: string; companyContext?: string };
+  let body: { prompt?: string };
   try {
     body = await req.json();
   } catch {
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const run = await prisma.strategyRun.create({
     data: {
       prompt,
-      companyContext: body.companyContext?.trim() ?? "",
+      companyContext: "",
       status: "pending",
       progressLog: [],
     },

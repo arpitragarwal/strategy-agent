@@ -16,6 +16,8 @@ model StrategyRun {
   companyContext  String   @default("") @db.Text
   discoveryOutput String?  @db.Text
   outline         Json?
+  /// Manager critique of the MECE tree before leaf analysis; structure is then revised
+  treeReviewNotes String?  @db.Text
   nodeStates      Json?
   managerNotes    String?  @db.Text
   synthesis       String?  @db.Text

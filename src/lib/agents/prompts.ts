@@ -1,15 +1,12 @@
 export function discoveryPrompt(input: {
-  userGoal: string;
-  companyContext: string;
+  /** Goal, question, metrics, constraints, KB notes — everything in one block. */
+  prompt: string;
   priorAnalyses: string;
 }): string {
   return `You are a strategy discovery agent. Your job is to scan the provided context (simulating recurring review of internal knowledge) and surface problems, opportunities, ambiguities, and early hypotheses.
 
-User goal or question:
-${input.userGoal}
-
-Company / knowledge context (may include docs, metrics notes, org facts):
-${input.companyContext || "(none provided)"}
+User input (goal, question, and any context to honor):
+${input.prompt}
 
 Prior completed analyses summaries (memory — reuse or build on these, cite overlap):
 ${input.priorAnalyses || "(none)"}
@@ -58,6 +55,85 @@ Rules:
 - IDs: lowercase letters, numbers, underscores only.
 - Questions must be specific and answerable.`;
 }
+
+/** Appended on second attempt when normalizeOutlineDoc finds empty/malformed roots. */
+export const STRUCTURE_RETRY_SUFFIX = `
+
+CRITICAL FIX: The previous JSON was rejected — "roots" was missing, empty, or not a non-empty array, or there were no leaf nodes.
+Reply with ONLY one JSON object. "roots" MUST be a non-empty array. For a normal strategy question use at least 3 top-level pillars; each branch must end in leaves with "children": [].
+First character "{", last character "}".`;
+
+export function managerMeceReviewPrompt(input: {
+  userGoal: string;
+  discovery: string;
+  outlineJson: string;
+}): string {
+  return `You are a senior manager reviewing the proposed MECE issue tree **before** any per-branch analysis runs.
+
+User goal and context (full prompt):
+${input.userGoal}
+
+Discovery output:
+${input.discovery}
+
+Proposed MECE tree (JSON):
+${input.outlineJson}
+
+Output markdown with:
+## MECE / coverage check (mutually exclusive? collectively exhaustive for the goal?)
+## Gaps, overlaps, or mis-groupings
+## Concrete structural fixes (merge/split/rename pillars, add missing branches, clarify questions)
+## Must-fix issues before analysis proceeds
+
+Be direct and actionable. The next step will **rebuild the tree JSON** from your feedback.`;
+}
+
+export function structureRevisionPrompt(input: {
+  userGoal: string;
+  discovery: string;
+  priorOutlineJson: string;
+  managerTreeFeedback: string;
+}): string {
+  return `You output ONE JSON object only. No markdown, no preamble. First character "{".
+
+An initial MECE tree was drafted, then reviewed by a manager. Produce a **revised full tree** that addresses the feedback. Use new stable ids (lowercase_snake_case).
+
+User goal:
+${input.userGoal}
+
+Discovery:
+${input.discovery}
+
+Prior tree JSON (reference — fix; do not preserve bad structure):
+${input.priorOutlineJson}
+
+Manager feedback (incorporate fully):
+${input.managerTreeFeedback}
+
+Exact shape:
+{
+  "roots": [
+    {
+      "id": "unique_snake_id",
+      "title": "short pillar name",
+      "question": "decision-oriented question",
+      "children": [ ... leaves must have "children": [] ]
+    }
+  ]
+}
+
+Rules:
+- Every leaf: "children": []
+- Internal nodes: non-empty children
+- 3–6 top-level roots unless the scope is tiny
+- Questions must be answerable in analysis`;
+
+}
+
+export const STRUCTURE_REVISION_RETRY_SUFFIX = `
+
+CRITICAL: Previous revision JSON was invalid or had no usable leaves.
+Return ONLY one JSON object with non-empty "roots" and valid leaf nodes. First "{", last "}".`;
 
 export function analysisPrompt(input: {
   userGoal: string;

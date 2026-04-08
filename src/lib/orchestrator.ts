@@ -2,17 +2,25 @@ import { prisma } from "./db";
 import {
   analysisPrompt,
   discoveryPrompt,
+  managerMeceReviewPrompt,
   managerPrompt,
   partialManagerPrompt,
   partialSynthesisPrompt,
+  STRUCTURE_RETRY_SUFFIX,
+  STRUCTURE_REVISION_RETRY_SUFFIX,
   structurePrompt,
+  structureRevisionPrompt,
   synthesisPrompt,
 } from "./agents/prompts";
 import { generateJson, generateText } from "./genai";
-import { flattenLeaves, initNodeStates, pathToNode } from "./outline";
+import {
+  type OutlineDoc,
+  flattenLeaves,
+  initNodeStates,
+  normalizeOutlineDoc,
+  pathToNode,
+} from "./outline";
 import type { OutlineNode, NodeState, ProgressEntry, StreamEvent } from "./types";
-
-type OutlineDoc = { roots: OutlineNode[] };
 
 type AnalysisJson = {
   summary: string;
@@ -197,6 +205,7 @@ async function finalizePartialSynthesis(
       payload: {
         runId,
         outline,
+        treeReviewNotes: run.treeReviewNotes,
         nodeStates: states,
         discovery: discoveryText,
         managerNotes,
@@ -214,6 +223,9 @@ async function replayCompleted(runId: string, send: StreamSender) {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   if (run.discoveryOutput) {
     send({ type: "discovery", text: run.discoveryOutput });
+  }
+  if (run.treeReviewNotes) {
+    send({ type: "tree_review", notes: run.treeReviewNotes });
   }
   const outline = run.outline as OutlineDoc | null;
   if (outline?.roots) {
@@ -277,8 +289,7 @@ export async function executeRun(runId: string, send: StreamSender) {
 
     const prior = await priorAnalysesBlock();
     const discoveryInput = discoveryPrompt({
-      userGoal: run.prompt,
-      companyContext: run.companyContext,
+      prompt: run.prompt,
       priorAnalyses: prior,
     });
     const discoveryText = await generateText(discoveryInput);
@@ -298,25 +309,120 @@ export async function executeRun(runId: string, send: StreamSender) {
       await recordRedirect(runId, ctrl.note.trim(), send);
     }
 
-    await emit("structure", "Building MECE outline");
-    const structureOut = await generateJson<OutlineDoc>(
+    await emit("structure", "Building initial MECE outline");
+    const structureRepairHint =
+      'One object with key "roots" (array). Each node: "id" (string), "title", "question", "children" (array; use [] on leaves). Internal nodes must have non-empty children.';
+
+    const raw1 = await generateJson<OutlineDoc>(
       structurePrompt({
         userGoal: run.prompt,
         discovery: discoveryText,
       }),
-      {
-        repairHint:
-          'One object with key "roots" (array). Each node: "id" (string), "title", "question", "children" (array; use [] on leaves). Internal nodes must have non-empty children.',
-      },
+      { repairHint: structureRepairHint },
     );
-    if (!structureOut?.roots?.length) {
-      throw new Error("Structure agent returned no roots");
+    let outlineDoc = normalizeOutlineDoc(raw1);
+    const leafCount = (doc: OutlineDoc | null) =>
+      doc ? flattenLeaves(doc.roots).length : 0;
+
+    if (!outlineDoc?.roots?.length || leafCount(outlineDoc) === 0) {
+      await emit("structure", "Retrying — model returned empty or unusable roots");
+      const raw2 = await generateJson<OutlineDoc>(
+        structurePrompt({
+          userGoal: run.prompt,
+          discovery: discoveryText,
+        }) + STRUCTURE_RETRY_SUFFIX,
+        { repairHint: structureRepairHint },
+      );
+      outlineDoc = normalizeOutlineDoc(raw2);
     }
-    const roots = structureOut.roots;
-    const states: Record<string, NodeState> = initNodeStates(roots) as Record<
+
+    if (!outlineDoc?.roots?.length || leafCount(outlineDoc) === 0) {
+      throw new Error(
+        "Structure agent returned no usable MECE tree (no roots or no leaf nodes). Try again or shorten the goal.",
+      );
+    }
+
+    const firstOutline = outlineDoc;
+    let roots = firstOutline.roots;
+    let states: Record<string, NodeState> = initNodeStates(roots) as Record<
       string,
       NodeState
     >;
+    await prisma.strategyRun.update({
+      where: { id: runId },
+      data: {
+        outline: firstOutline as object,
+        nodeStates: states as object,
+      },
+    });
+    send({ type: "outline", roots });
+    await emit(
+      "structure",
+      `Initial outline (${flattenLeaves(roots).length} leaves) — manager MECE review`,
+    );
+
+    ctrl = await consumeControl(runId);
+    if (ctrl?.action === "synthesize_now") {
+      await finalizePartialSynthesis(runId, send, ctrl.note);
+      return;
+    }
+    if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
+      await recordRedirect(runId, ctrl.note.trim(), send);
+    }
+
+    const treeReviewNotes = await generateText(
+      managerMeceReviewPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        outlineJson: JSON.stringify(firstOutline, null, 2),
+      }),
+    );
+    await prisma.strategyRun.update({
+      where: { id: runId },
+      data: { treeReviewNotes },
+    });
+    send({ type: "tree_review", notes: treeReviewNotes });
+    await emit("structure", "Revising MECE tree from manager feedback");
+
+    const revisionRaw = await generateJson<OutlineDoc>(
+      structureRevisionPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        priorOutlineJson: JSON.stringify(firstOutline, null, 2),
+        managerTreeFeedback: treeReviewNotes,
+      }),
+      { repairHint: structureRepairHint },
+    );
+    let revisedOutline = normalizeOutlineDoc(revisionRaw);
+    if (!revisedOutline?.roots?.length || leafCount(revisedOutline) === 0) {
+      await emit("structure", "Retrying tree revision JSON…");
+      const revisionRaw2 = await generateJson<OutlineDoc>(
+        structureRevisionPrompt({
+          userGoal: run.prompt,
+          discovery: discoveryText,
+          priorOutlineJson: JSON.stringify(firstOutline, null, 2),
+          managerTreeFeedback: treeReviewNotes,
+        }) + STRUCTURE_REVISION_RETRY_SUFFIX,
+        { repairHint: structureRepairHint },
+      );
+      revisedOutline = normalizeOutlineDoc(revisionRaw2);
+    }
+
+    let structureOut: OutlineDoc;
+    if (!revisedOutline?.roots?.length || leafCount(revisedOutline) === 0) {
+      const entry = await appendProgress(
+        runId,
+        "structure",
+        "Revision did not produce a valid tree — keeping initial outline for analysis.",
+      );
+      send({ type: "progress", entry });
+      structureOut = firstOutline;
+    } else {
+      structureOut = revisedOutline;
+    }
+
+    roots = structureOut.roots;
+    states = initNodeStates(roots) as Record<string, NodeState>;
     await prisma.strategyRun.update({
       where: { id: runId },
       data: {
@@ -325,7 +431,10 @@ export async function executeRun(runId: string, send: StreamSender) {
       },
     });
     send({ type: "outline", roots });
-    await emit("structure", `Outline ready (${flattenLeaves(roots).length} leaves)`);
+    await emit(
+      "structure",
+      `Revised outline ready (${flattenLeaves(roots).length} leaves) — leaf analysis`,
+    );
 
     ctrl = await consumeControl(runId);
     if (ctrl?.action === "synthesize_now") {
@@ -439,6 +548,7 @@ export async function executeRun(runId: string, send: StreamSender) {
         payload: {
           runId,
           outline: structureOut,
+          treeReviewNotes,
           nodeStates: states,
           discovery: discoveryText,
           managerNotes,

@@ -24,6 +24,7 @@ export type StreamEvent =
   | { type: "progress"; entry: ProgressEntry }
   | { type: "discovery"; text: string }
   | { type: "outline"; roots: OutlineNode[] }
+  | { type: "tree_review"; notes: string }
   | { type: "node"; state: NodeState }
   | { type: "manager"; notes: string }
   | { type: "synthesis"; text: string; partial?: boolean }
