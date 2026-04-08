@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model StrategyRun {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  status          String   @default("pending")
+  prompt          String   @db.Text
+  companyContext  String   @default("") @db.Text
+  discoveryOutput String?  @db.Text
+  outline         Json?
+  nodeStates      Json?
+  managerNotes    String?  @db.Text
+  synthesis       String?  @db.Text
+  progressLog     Json     @default("[]")
+  error           String?  @db.Text
+  /// User interrupt: synthesize_now | redirect (consumed by orchestrator when checked)
+  controlAction   String?
+  controlNote     String?  @db.Text
+  /// Appended steering notes from redirects; injected into remaining leaf analyses
+  redirectContext String  @default("") @db.Text
+  synthesisIsPartial Boolean @default(false)
+}
+
+model MemoryArtifact {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  title     String
+  summary   String   @db.Text
+  topics    String   @default("") @db.Text
+  payload   Json
+  runId     String?
+}
