@@ -31,7 +31,7 @@ export function getJsonModel(): GenerativeModel {
   return getClient().getGenerativeModel({
     model: getModelId(),
     generationConfig: {
-      temperature: 0.25,
+      temperature: 0.15,
       maxOutputTokens: 8192,
       responseMimeType: "application/json",
     },
@@ -45,7 +45,18 @@ export async function generateText(prompt: string): Promise<string> {
   return text;
 }
 
-export async function generateJson<T>(prompt: string): Promise<T> {
+export type GenerateJsonOptions = {
+  /**
+   * Required context for the repair pass when the model ignores JSON mode (common on Gemma).
+   * Describe the exact JSON shape expected — repair was wrongly hard-coded to MECE roots only.
+   */
+  repairHint: string;
+};
+
+export async function generateJson<T>(
+  prompt: string,
+  options: GenerateJsonOptions,
+): Promise<T> {
   const res = await getJsonModel().generateContent(prompt);
   const text = res.response.text();
   if (!text) throw new Error("Empty model response");
@@ -61,25 +72,39 @@ export async function generateJson<T>(prompt: string): Promise<T> {
   const first = attemptParse(text);
   if (first !== null) return first;
 
-  const repaired = await getTextModel().generateContent(
+  const repairBlock = (label: string) =>
     [
-      "You were asked for a JSON object with top-level key \"roots\" (MECE issue tree).",
-      "The following model output is INVALID (not parseable JSON). Reconstruct the intended tree.",
-      "Reply with ONLY valid JSON. No markdown fences, no commentary. First character \"{\".",
+      label,
+      "The following text is NOT valid JSON (or has extra prose).",
+      "Output ONLY a single JSON object that satisfies:",
+      options.repairHint,
+      "Rules: no markdown, no code fences, no commentary before or after. First character must be \"{\".",
       "",
-      "Invalid output:",
+      "Broken output:",
       text.slice(0, 12000),
-    ].join("\n"),
-  );
-  const fixed = repaired.response.text();
+    ].join("\n");
+
+  const repaired = await getTextModel().generateContent(repairBlock("Repair pass 1."));
+  let fixed = repaired.response.text();
   if (!fixed) {
     throw new Error(`JSON repair got empty response. Raw (truncated): ${text.slice(0, 400)}`);
   }
 
-  const second = attemptParse(fixed);
+  let second = attemptParse(fixed);
   if (second !== null) return second;
 
+  const repaired2 = await getTextModel().generateContent(
+    repairBlock(
+      "Repair pass 2 — previous fix was still not parseable JSON. Be stricter: minified JSON only.",
+    ),
+  );
+  fixed = repaired2.response.text();
+  if (fixed) {
+    second = attemptParse(fixed);
+    if (second !== null) return second;
+  }
+
   throw new Error(
-    `Model did not return usable JSON after repair. Raw (truncated): ${text.slice(0, 400)}`,
+    `Model did not return usable JSON after repair. Hint was: ${options.repairHint.slice(0, 120)}… Raw (truncated): ${text.slice(0, 400)}`,
   );
 }

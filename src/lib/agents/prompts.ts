@@ -84,13 +84,15 @@ Path in tree: ${input.pathTitles}
 Leaf question:
 ${input.leafQuestion}
 
-Respond as JSON:
+Your entire reply must be ONE JSON object only — no markdown, no keys in prose form, no text before { or after }.
+
+Required JSON shape (types matter):
 {
-  "summary": "2-4 sentences for executives",
-  "analysis": "Detailed reasoning with bullet points if needed",
-  "hypothesis": "Single testable hypothesis OR null if not applicable",
-  "evidence_needed": ["what data would increase confidence"],
-  "confidence": "low|medium|high"
+  "summary": "string, 2-4 sentences for executives",
+  "analysis": "string, detailed reasoning",
+  "hypothesis": null or "string",
+  "evidence_needed": ["array", "of", "strings"],
+  "confidence": "low" | "medium" | "high"
 }`;
 }
 

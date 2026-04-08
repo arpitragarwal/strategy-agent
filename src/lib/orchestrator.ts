@@ -304,6 +304,10 @@ export async function executeRun(runId: string, send: StreamSender) {
         userGoal: run.prompt,
         discovery: discoveryText,
       }),
+      {
+        repairHint:
+          'One object with key "roots" (array). Each node: "id" (string), "title", "question", "children" (array; use [] on leaves). Internal nodes must have non-empty children.',
+      },
     );
     if (!structureOut?.roots?.length) {
       throw new Error("Structure agent returned no roots");
@@ -365,6 +369,10 @@ export async function executeRun(runId: string, send: StreamSender) {
           leafQuestion: leaf.question ?? leaf.title,
           redirectContext: redirectRow.redirectContext || undefined,
         }),
+        {
+          repairHint:
+            'Exactly these keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (array of strings), "confidence" (string: low, medium, or high).',
+        },
       );
       const block = [
         parsed.analysis,
