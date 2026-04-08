@@ -117,7 +117,7 @@ async function finalizePartialSynthesis(
   const discoveryText = run.discoveryOutput ?? "";
   const outline = run.outline as OutlineDoc | null;
   const roots = outline?.roots ?? [];
-  let states = { ...((run.nodeStates as Record<string, NodeState> | null) ?? {}) };
+  const states = { ...((run.nodeStates as Record<string, NodeState> | null) ?? {}) };
 
   if (roots.length) {
     const leaves = flattenLeaves(roots);
@@ -309,7 +309,7 @@ export async function executeRun(runId: string, send: StreamSender) {
       throw new Error("Structure agent returned no roots");
     }
     const roots = structureOut.roots;
-    let states: Record<string, NodeState> = initNodeStates(roots) as Record<
+    const states: Record<string, NodeState> = initNodeStates(roots) as Record<
       string,
       NodeState
     >;
