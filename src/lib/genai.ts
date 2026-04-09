@@ -245,6 +245,7 @@ export async function generateJson<T>(
     [
       label,
       "The following text is NOT valid JSON (or has extra prose).",
+      "If it looks like comma-separated themes, bullet topics, or short phrases, you MUST turn them into a full nested object per the hint (add ids, titles, questions, children arrays).",
       "Output ONLY a single JSON object that satisfies:",
       options.repairHint,
       "Rules: no markdown, no code fences, no commentary before or after. First character must be \"{\".",
@@ -272,6 +273,25 @@ export async function generateJson<T>(
   if (fixed) {
     second = attemptParse(fixed);
     if (second !== null) return second;
+  }
+
+  // Pass 3: JSON MIME model — helps when the first call returned prose (e.g. comma-separated themes, no "{").
+  const repaired3 = await generateContentText(
+    getJsonModel(),
+    [
+      "Repair pass 3 (strict JSON output mode).",
+      "The following text is NOT valid JSON. It may be a comma-separated list of themes, short phrases, or partial outline — you MUST convert it into ONE valid JSON object.",
+      "Output ONLY that object. Satisfy:",
+      options.repairHint,
+      "Rules: first character \"{\", last \"}\". No markdown fences, no commentary.",
+      "",
+      "Broken / prose output to convert:",
+      text.slice(0, 12000),
+    ].join("\n"),
+  );
+  if (repaired3?.trim()) {
+    const third = attemptParse(repaired3);
+    if (third !== null) return third;
   }
 
   throw new Error(

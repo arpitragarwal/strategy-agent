@@ -127,6 +127,8 @@ export function structurePrompt(input: {
 }): string {
   return `You output ONE JSON object only. No markdown, no bullets, no preamble, no explanation. First character must be "{". Last must be "}".
 
+FORBIDDEN (will break the pipeline): comma-separated theme lists, plain sentences listing segments or gaps, bullet lists of topics, or any paragraph that does not start with "{". Those are NOT acceptable — only the JSON object below the rules.
+
 Task: build a **hypothesis tree** (mutually exclusive branches at each level, collectively covering the goal) for the goal below. If context & clarification notes are thin, still produce a concrete tree using the goal and general knowledge of the company or industry named in the goal—do not refuse or complain about missing context in prose.
 
 User goal:
