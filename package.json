@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
-    "@prisma/client": "^6.16.0",
+    "@prisma/client": "6.19.3",
     "arquero": "^8.0.3",
     "next": "^15.5.0",
     "papaparse": "^5.5.3",
@@ -34,7 +34,7 @@
     "@types/react-dom": "^19.1.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.5.0",
-    "prisma": "^6.16.0",
+    "prisma": "6.19.3",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.8.0"
   }
