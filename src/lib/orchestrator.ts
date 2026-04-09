@@ -36,6 +36,65 @@ import type {
 
 const DATA_CATALOG_MARKDOWN = buildDataCatalogMarkdown();
 
+function analysisConcurrency(): number {
+  const raw = process.env.ANALYSIS_CONCURRENCY;
+  const n = raw?.trim() ? parseInt(raw, 10) : 4;
+  if (!Number.isFinite(n) || n < 1) return 1;
+  return Math.min(16, n);
+}
+
+async function analyzeLeafToDoneState(params: {
+  userGoal: string;
+  discoveryText: string;
+  roots: OutlineNode[];
+  leaf: OutlineNode;
+  redirectContext: string | undefined;
+}): Promise<NodeState> {
+  const pathTitles = pathToNode(params.roots, params.leaf.id).join(" > ");
+  const parsed = await generateJson<AnalysisJson>(
+    analysisPrompt({
+      userGoal: params.userGoal,
+      discovery: params.discoveryText,
+      pathTitles,
+      leafQuestion: params.leaf.question ?? params.leaf.title,
+      redirectContext: params.redirectContext,
+      dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
+    }),
+    {
+      repairHint:
+        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array — data/context/stakeholder/quant gaps per prompt), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
+    },
+  );
+  let quantResult = undefined;
+  if (
+    parsed.quant &&
+    typeof parsed.quant === "object" &&
+    typeof (parsed.quant as QuantPlan).datasetId === "string" &&
+    Array.isArray((parsed.quant as QuantPlan).steps)
+  ) {
+    quantResult = executeQuantPlan(parsed.quant as QuantPlan);
+  }
+
+  const block = [
+    parsed.analysis,
+    parsed.hypothesis ? `\n\nHypothesis: ${parsed.hypothesis}` : "",
+    `\n\nConfidence: ${parsed.confidence}`,
+    parsed.evidence_needed?.length
+      ? `\nEvidence needed: ${parsed.evidence_needed.join("; ")}`
+      : "",
+    quantResult?.narrative ? `\n\n**Quant:** ${quantResult.narrative}` : "",
+    quantResult?.error ? `\n\n_Quant error: ${quantResult.error}_` : "",
+  ].join("");
+
+  return {
+    id: params.leaf.id,
+    status: "done",
+    summary: parsed.summary,
+    analysis: block.trim(),
+    ...(quantResult ? { quant: quantResult } : {}),
+  };
+}
+
 type AnalysisJson = {
   summary: string;
   analysis: string;
@@ -498,8 +557,10 @@ async function runLeafAnalysisPhase(
 
   const states = { ...((run.nodeStates as Record<string, NodeState> | null) ?? {}) };
   const leaves = flattenLeaves(roots);
+  const concurrency = analysisConcurrency();
+  let offset = 0;
 
-  for (const leaf of leaves) {
+  while (offset < leaves.length) {
     const ctrl = await consumeControl(runId);
     if (ctrl?.action === "synthesize_now") {
       await finalizePartialSynthesis(runId, send, ctrl.note);
@@ -513,63 +574,47 @@ async function runLeafAnalysisPhase(
       where: { id: runId },
       select: { redirectContext: true },
     });
+    const redirectContext =
+      redirectRow.redirectContext?.trim() || undefined;
+    const batch = leaves.slice(offset, offset + concurrency);
+    offset += batch.length;
 
-    states[leaf.id] = { ...states[leaf.id], status: "running" };
+    for (const leaf of batch) {
+      states[leaf.id] = {
+        ...states[leaf.id],
+        id: leaf.id,
+        status: "running",
+      };
+    }
     await prisma.strategyRun.update({
       where: { id: runId },
       data: { nodeStates: states as object },
     });
-    send({ type: "node", state: states[leaf.id] });
-    await emit("analysis", `Analyzing: ${leaf.title}`);
-
-    const pathTitles = pathToNode(roots, leaf.id).join(" > ");
-    const parsed = await generateJson<AnalysisJson>(
-      analysisPrompt({
-        userGoal: run.prompt,
-        discovery: discoveryText,
-        pathTitles,
-        leafQuestion: leaf.question ?? leaf.title,
-        redirectContext: redirectRow.redirectContext || undefined,
-        dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
-      }),
-      {
-        repairHint:
-          'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array — data/context/stakeholder/quant gaps per prompt), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
-      },
-    );
-    let quantResult = undefined;
-    if (
-      parsed.quant &&
-      typeof parsed.quant === "object" &&
-      typeof (parsed.quant as QuantPlan).datasetId === "string" &&
-      Array.isArray((parsed.quant as QuantPlan).steps)
-    ) {
-      quantResult = executeQuantPlan(parsed.quant as QuantPlan);
+    for (const leaf of batch) {
+      send({ type: "node", state: states[leaf.id] });
+      await emit("analysis", `Analyzing: ${leaf.title}`);
     }
 
-    const block = [
-      parsed.analysis,
-      parsed.hypothesis ? `\n\nHypothesis: ${parsed.hypothesis}` : "",
-      `\n\nConfidence: ${parsed.confidence}`,
-      parsed.evidence_needed?.length
-        ? `\nEvidence needed: ${parsed.evidence_needed.join("; ")}`
-        : "",
-      quantResult?.narrative ? `\n\n**Quant:** ${quantResult.narrative}` : "",
-      quantResult?.error ? `\n\n_Quant error: ${quantResult.error}_` : "",
-    ].join("");
+    const doneStates = await Promise.all(
+      batch.map((leaf) =>
+        analyzeLeafToDoneState({
+          userGoal: run.prompt,
+          discoveryText,
+          roots,
+          leaf,
+          redirectContext,
+        }),
+      ),
+    );
 
-    states[leaf.id] = {
-      id: leaf.id,
-      status: "done",
-      summary: parsed.summary,
-      analysis: block.trim(),
-      ...(quantResult ? { quant: quantResult } : {}),
-    };
+    for (const done of doneStates) {
+      states[done.id] = done;
+      send({ type: "node", state: done });
+    }
     await prisma.strategyRun.update({
       where: { id: runId },
       data: { nodeStates: states as object },
     });
-    send({ type: "node", state: states[leaf.id] });
   }
 
   const modeRow = await prisma.strategyRun.findUnique({
