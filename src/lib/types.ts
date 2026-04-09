@@ -20,6 +20,11 @@ export type ProgressEntry = {
   message: string;
 };
 
+export type ReviewCheckpoint =
+  | "after_discovery"
+  | "after_structure"
+  | "after_analysis";
+
 export type StreamEvent =
   | { type: "progress"; entry: ProgressEntry }
   | { type: "discovery"; text: string }
@@ -29,5 +34,6 @@ export type StreamEvent =
   | { type: "manager"; notes: string }
   | { type: "synthesis"; text: string; partial?: boolean }
   | { type: "redirect_ack"; note: string }
+  | { type: "awaiting_review"; checkpoint: ReviewCheckpoint }
   | { type: "complete"; runId: string }
   | { type: "error"; message: string };

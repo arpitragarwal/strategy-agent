@@ -1,12 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { flattenLeaves } from "@/lib/outline";
-import type { OutlineNode, NodeState, ProgressEntry } from "@/lib/types";
+import type { OutlineNode, NodeState, ProgressEntry, ReviewCheckpoint } from "@/lib/types";
 
 type RunRow = {
   id: string;
+  status?: string;
+  reviewCheckpoint?: string | null;
   prompt: string;
   companyContext?: string | null;
   discoveryOutput: string | null;
@@ -36,6 +38,12 @@ type MemoryRow = {
   summary: string;
   topics: string;
   runId: string | null;
+};
+
+const REVIEW_LABELS: Record<ReviewCheckpoint, string> = {
+  after_discovery: "Discovery",
+  after_structure: "Revised MECE structure",
+  after_analysis: "Leaf analyses",
 };
 
 function StatusDot({ status }: { status: NodeState["status"] }) {
@@ -105,6 +113,8 @@ export function StrategyConsole() {
   const [controlMessage, setControlMessage] = useState<string | null>(null);
   const [memory, setMemory] = useState<MemoryRow[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
+  const [pausedAt, setPausedAt] = useState<ReviewCheckpoint | null>(null);
+  const endedWithPauseRef = useRef(false);
 
   const loadMemory = useCallback(async () => {
     const res = await fetch("/api/memory");
@@ -129,6 +139,7 @@ export function StrategyConsole() {
     setSynthesisPartial(false);
     setControlMessage(null);
     setSelectedMemoryId(null);
+    setPausedAt(null);
   };
 
   function hydrateFromRun(run: RunRow) {
@@ -163,6 +174,11 @@ export function StrategyConsole() {
     setError(null);
     setControlMessage(null);
     setRedirectNote("");
+    if (run.status === "awaiting_review" && run.reviewCheckpoint) {
+      setPausedAt(run.reviewCheckpoint as ReviewCheckpoint);
+    } else {
+      setPausedAt(null);
+    }
   }
 
   function hydrateFromArtifact(art: {
@@ -199,6 +215,7 @@ export function StrategyConsole() {
     setError(null);
     setControlMessage(null);
     setRedirectNote("");
+    setPausedAt(null);
   }
 
   const openMemoryEntry = async (m: MemoryRow) => {
@@ -228,24 +245,12 @@ export function StrategyConsole() {
     setError("Could not load this saved analysis.");
   };
 
-  const startRun = async () => {
-    if (!prompt.trim() || busy) return;
-    resetOutput();
-    setBusy(true);
-    try {
-      const res = await fetch("/api/runs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: prompt.trim(),
-        }),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error ?? res.statusText);
-      }
-      const { id } = await res.json();
-      setRunId(id);
+  const attachRunStream = useCallback(
+    (id: string) => {
+      endedWithPauseRef.current = false;
+      setBusy(true);
+      setPausedAt(null);
+      setError(null);
 
       const src = new EventSource(`/api/runs/${id}/stream`);
       src.onmessage = (ev) => {
@@ -261,6 +266,7 @@ export function StrategyConsole() {
             runId?: string;
             message?: string;
             partial?: boolean;
+            checkpoint?: ReviewCheckpoint;
           };
           switch (msg.type) {
             case "tree_review":
@@ -308,9 +314,19 @@ export function StrategyConsole() {
                 setControlMessage(`Redirect recorded — next leaves will follow your note.`);
               }
               break;
+            case "awaiting_review":
+              endedWithPauseRef.current = true;
+              if (msg.checkpoint) {
+                setPausedAt(msg.checkpoint);
+              }
+              setBusy(false);
+              setControlMessage(null);
+              src.close();
+              break;
             case "complete":
               src.close();
               setBusy(false);
+              setPausedAt(null);
               setControlMessage(null);
               void loadMemory();
               break;
@@ -329,12 +345,43 @@ export function StrategyConsole() {
       src.onerror = () => {
         src.close();
         setBusy(false);
+        if (endedWithPauseRef.current) {
+          endedWithPauseRef.current = false;
+          return;
+        }
         setError((prev) => prev ?? "Stream connection lost");
       };
+    },
+    [loadMemory],
+  );
+
+  const startRun = async () => {
+    if (!prompt.trim() || busy || pausedAt) return;
+    resetOutput();
+    try {
+      const res = await fetch("/api/runs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: prompt.trim(),
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error ?? res.statusText);
+      }
+      const { id } = await res.json();
+      setRunId(id);
+      attachRunStream(id);
     } catch (e) {
       setBusy(false);
       setError(e instanceof Error ? e.message : String(e));
     }
+  };
+
+  const continueRun = () => {
+    if (!runId || busy) return;
+    attachRunStream(runId);
   };
 
   const leavesTotal = useMemo(() => {
@@ -348,7 +395,7 @@ export function StrategyConsole() {
   );
 
   const sendControl = async (action: "synthesize_now" | "redirect", note?: string) => {
-    if (!runId || !busy) return;
+    if (!runId || (!busy && !pausedAt)) return;
     setControlMessage(null);
     const res = await fetch(`/api/runs/${runId}/control`, {
       method: "PATCH",
@@ -361,7 +408,11 @@ export function StrategyConsole() {
       return;
     }
     if (action === "synthesize_now") {
-      setControlMessage("Stopping after current step — partial synthesis will stream next.");
+      setControlMessage(
+        pausedAt
+          ? "Queued. Click Continue pipeline to stream partial synthesis."
+          : "Stopping after current step — partial synthesis will stream next.",
+      );
     }
     if (action === "redirect") {
       setRedirectNote("");
@@ -400,15 +451,71 @@ export function StrategyConsole() {
             <button
               type="button"
               onClick={() => void startRun()}
-              disabled={busy || !prompt.trim()}
+              disabled={busy || Boolean(pausedAt) || !prompt.trim()}
               className="rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2 transition-colors"
             >
-              {busy ? "Running…" : "Run strategy pipeline"}
+              {busy ? "Running…" : pausedAt ? "Finish review to run again" : "Run strategy pipeline"}
             </button>
             {runId ? (
               <span className="text-xs text-zinc-500 font-mono break-all">run {runId}</span>
             ) : null}
           </div>
+
+          {pausedAt && runId && !busy ? (
+            <div className="rounded-lg border border-amber-200 bg-amber-50/90 p-3 space-y-3">
+              <p className="text-xs font-medium text-amber-950 uppercase tracking-wide">
+                Human review
+              </p>
+              <p className="text-sm text-amber-950/90">
+                Review: <strong>{REVIEW_LABELS[pausedAt]}</strong>. When you are ready, continue the
+                pipeline or synthesize from work so far.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => void continueRun()}
+                  className="rounded-md bg-amber-700 hover:bg-amber-800 text-white text-xs font-medium px-3 py-1.5"
+                >
+                  Continue pipeline
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void sendControl("synthesize_now")}
+                  className="rounded-md bg-zinc-700 hover:bg-zinc-800 text-white text-xs font-medium px-3 py-1.5"
+                >
+                  Synthesize so far
+                </button>
+              </div>
+              {pausedAt === "after_structure" ? (
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end pt-1 border-t border-amber-200/80">
+                  <label className="flex-1 block text-xs text-amber-950/85">
+                    Redirect / steering (applied when analysis runs)
+                    <textarea
+                      className="mt-1 w-full min-h-[64px] rounded-md border border-amber-200 bg-white px-2 py-1.5 text-sm text-zinc-900"
+                      placeholder="e.g. Focus on enterprise segment…"
+                      value={redirectNote}
+                      onChange={(e) => setRedirectNote(e.target.value)}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const n = redirectNote.trim();
+                      if (!n) return;
+                      void sendControl("redirect", n);
+                    }}
+                    disabled={!redirectNote.trim()}
+                    className="rounded-md bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white text-xs font-medium px-3 py-1.5 sm:mb-0.5"
+                  >
+                    Save redirect
+                  </button>
+                </div>
+              ) : null}
+              {controlMessage ? (
+                <p className="text-xs text-amber-900">{controlMessage}</p>
+              ) : null}
+            </div>
+          ) : null}
 
           {busy && runId ? (
             <div className="rounded-lg border border-sky-200 bg-sky-50/80 p-3 space-y-2">
@@ -416,8 +523,9 @@ export function StrategyConsole() {
                 Steer while running
               </p>
               <p className="text-xs text-sky-800/90">
-                Pause is checked between steps (and before each leaf). The in-flight model call always
-                finishes first.
+                Between major steps the run pauses for your review. While a step is running, the
+                in-flight model call finishes first; synthesize / redirect are applied at the next
+                checkpoint (between leaves during analysis).
               </p>
               <div className="flex flex-wrap gap-2">
                 <button

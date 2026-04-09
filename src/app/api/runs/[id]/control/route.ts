@@ -37,9 +37,12 @@ export async function PATCH(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  if (run.status !== "running") {
+  if (run.status !== "running" && run.status !== "awaiting_review") {
     return NextResponse.json(
-      { error: "Controls only apply while a run is in progress (status=running)" },
+      {
+        error:
+          "Controls apply while the pipeline is running or paused for review (status running or awaiting_review)",
+      },
       { status: 409 },
     );
   }

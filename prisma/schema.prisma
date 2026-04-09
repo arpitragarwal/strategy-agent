@@ -12,6 +12,8 @@ model StrategyRun {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   status          String   @default("pending")
+  /// When status is awaiting_review: after_discovery | after_structure | after_analysis
+  reviewCheckpoint String?
   prompt          String   @db.Text
   companyContext  String   @default("") @db.Text
   discoveryOutput String?  @db.Text
