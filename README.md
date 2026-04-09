@@ -10,53 +10,59 @@ All steps are orchestrated in **`src/lib/orchestrator.ts`**. Each “agent” is
 
 | Stage | Role | Output |
 |--------|------|--------|
-| **Discovery** | Optionally **searches Memory** (model decides via a small JSON route + keyword scan of recent artifacts), then surfaces themes, risks, opportunities, and open questions from the user’s goal. | Markdown |
-| **Structure (v1)** | Builds an initial **MECE JSON tree** (`roots` → nested `children`; leaves have `children: []`). Parses alternate shapes via `normalizeOutlineDoc`; retries once if empty. | JSON → outline |
-| **Manager MECE review** | Reviews coverage, overlaps, and gaps of the **draft tree only** (no leaf analyses yet). | Markdown → `treeReviewNotes` |
-| **Structure (revised)** | Rebuilds the full tree JSON from **structure revision** prompt using manager feedback; falls back to v1 if revision JSON is invalid. | JSON → final outline |
-| **Analysis** (loop) | One call **per leaf** on the **revised** tree: JSON (`summary`, `analysis`, `hypothesis`, **`evidence_needed`** data/context gaps, `confidence`, optional **`quant` plan**). **Redirect** notes go to `redirectContext` for later leaves. | JSON per leaf |
-| **Manager (analyses)** | Pressure-tests the combined leaf analyses. | Markdown |
-| **Synthesis** | Executive memo from discovery + manager + analyses. | Markdown |
+| **Context & clarification** | Optional **Memory** routing (small JSON: search or skip) + keyword scan of recent artifacts when useful. Then a **plan JSON** drives **0–4 in-process quant runs** on catalog CSVs to pin down vague goal phrases (e.g. “largest segment”). A final brief is **markdown**: themes, risks, opportunities, **data-backed specificity**, open questions, **Questions for you**, and suggested focus for the tree. Step‑by‑step runs pause here; you can **`PATCH /api/runs/[id]`** with **`clarificationAnswers`** before continuing so answers merge into the brief. | Markdown (`discoveryOutput`) |
+| **Structure (v1)** | Builds an initial **hypothesis tree** as JSON: **`roots`** → nested **`children`**; **every node** gets a `nodeStates` entry; leaves have **`children: []`** and a **testable hypothesis** in **`question`**. Parses alternate shapes via `normalizeOutlineDoc`; retries if empty. | JSON → outline |
+| **Manager review (tree)** | Reviews coverage and whether **leaf questions are testable claims** (confirm/refute), not the full prose brief. | Markdown → `treeReviewNotes` |
+| **Structure (revised)** | Rebuilds full tree JSON from manager feedback; falls back to v1 if revision JSON is invalid. | JSON → final outline |
+| **Analysis** (leaves, **bounded concurrency**) | Batched **`Promise.all`** over leaves (cap **`ANALYSIS_CONCURRENCY`**, default 4). Each leaf: JSON with **`verdict`** (confirmed / refuted / inconclusive / partially_supported), **`confidence`**, **`evidence_needed`**, optional **`quant`**. User **redirect** notes accumulate in **`redirectContext`** for later batches. | JSON per leaf + SSE |
+| **Branch rollup** | After all leaves finish (or skip), **bottom‑up waves** synthesize each parent from **direct children** (LLM JSON + deterministic fallback): **summary**, **analysis**, **verdict**, **confidence**, optional **evidence** gaps. Root reflects the whole tree. | Updates `nodeStates` for internal nodes |
+| **Manager (analyses)** | Pressure-tests **leaf** analyses (manager prompt stays leaf-focused). | Markdown |
+| **Synthesis** | **Short** markdown: **Recommendation** (≤2 lines to the user goal), **Supporting points** (bullets with data/reasoning), **Open questions** (gaps / follow‑up). Partial runs use the same shape with a partial banner. | Markdown |
 
-JSON-heavy steps use **`generateJson`** with repair hints and parsing fallbacks (`src/lib/json.ts`) because small models often ignore JSON MIME types. **`generateText` / `generateJson`** also **retry transient API and network errors** with backoff (see **`GOOGLE_AI_MAX_RETRIES`** in `.env.example`).
+JSON-heavy steps use **`generateJson`** with repair hints (`src/lib/json.ts`). Small models often ignore JSON MIME types, so repairs include **text-model passes** plus a **final JSON-MIME repair** when needed (e.g. prose or comma-separated themes instead of `{ "roots": [...] }`). **`generateText` / `generateJson`** also **retry transient API and network errors** (including many `fetch failed` cases) with backoff — see **`GOOGLE_AI_MAX_RETRIES`** and **`ANALYSIS_CONCURRENCY`** in `.env.example`.
 
-### User controls (while `status === running`)
+### User controls (while `status === running` or paused for review)
 
-Checked **after discovery**, **after initial outline**, **after revised outline**, and **before each leaf** (the current LLM call always finishes first).
+- **Step‑by‑step** pauses after **context & clarification**, **revised hypothesis tree**, and **after branch rollup / leaf phase** (before manager critique).
+- **End‑to‑end** skips those pauses (you can still queue **synthesize** / **redirect** between analysis batches).
 
-- **Synthesize so far** — Stops early: marks remaining leaves `skipped`, runs **partial manager** + **partial synthesis**, saves run and a **memory** row tagged partial.
-- **Apply redirect** — Appends a steering note to `redirectContext` on the run; **subsequent leaf analyses** see it in the prompt.
+Checked **between leaf batches** (not mid–API‑call): control consumption applies before each concurrent batch.
+
+- **Synthesize so far** — Stops early: marks remaining leaves `skipped`, runs **partial manager** + **partial synthesis**, saves run and a **memory** row tagged partial (no branch rollup if leaves incomplete).
+- **Apply redirect** — Appends steering to **`redirectContext`**; **later leaf batches** see it in the prompt.
 
 Controls: `PATCH /api/runs/[id]/control` with `{ "action": "synthesize_now" }` or `{ "action": "redirect", "note": "..." }`.
 
+While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clarificationAnswers": "..." }` (optional); merged into the brief when you continue.
+
 ### Memory
 
-- **Writes:** On completion (full or partial), a **`MemoryArtifact`** row is saved (synthesis excerpt, topics, outline + node states, discovery — **not** manager critique text).
-- **Reads:** Discovery **does not** preload memory. A routing step may request a **targeted search** over recent artifacts (`src/lib/strategyMemory.ts`); hits are passed into the main discovery prompt only when relevant.
+- **Writes:** On completion (full or partial), a **`MemoryArtifact`** row is saved (title derived from the **user goal**, synthesis excerpt, topics, outline + **all** node states, context brief — **not** manager critique in payload).
+- **Reads:** Context step does **not** preload memory. A routing step may request a **targeted search** over recent artifacts (`src/lib/strategyMemory.ts`); hits feed the context prompts when relevant.
 
 ### Prototype data & quant
 
-- CSVs live in **`data/dummy/`** (CRM, finance, CX, support). The app’s catalog is **`src/lib/quant/catalog.ts`**; analysis agents reference dataset IDs such as **`crm/accounts`** or **`finance/pnl_monthly`**.
+- CSVs live in **`data/dummy/`** (CRM, finance, CX, support). The app’s catalog is **`src/lib/quant/catalog.ts`**; agents reference dataset IDs such as **`crm/accounts`** or **`finance/pnl_monthly`**.
 - Regenerate the **~$200M ARR / ~2K logo** synthetic SaaS universe (aligned rollups across CRM, finance, support, and CX):  
   **`npm run data:generate`**  
   (`scripts/generate-enterprise-saas-dummy.mjs`).
 
 ### Data model (Prisma)
 
-- **`StrategyRun`** — prompt, discovery, outline JSON, **`treeReviewNotes`** (manager feedback on the MECE tree), per-node state, manager/synthesis text, progress log, optional control fields, `synthesisIsPartial`, etc.
+- **`StrategyRun`** — prompt, **`discoveryOutput`** (context & clarification brief), outline JSON, **`treeReviewNotes`**, **`clarificationAnswers`** (optional; merged on continue), per-node state (leaves + rolled-up branches), manager/synthesis text, progress log, control fields, **`redirectContext`**, **`synthesisIsPartial`**, etc.
 - **`MemoryArtifact`** — title, summary, topics, full `payload` snapshot (no manager-notes field in payload for new rows), optional `runId`.
 
 ### Code map
 
 | Path | Purpose |
 |------|---------|
-| `src/lib/agents/prompts.ts` | All agent system/user prompt strings. |
-| `src/lib/orchestrator.ts` | Run state machine, SSE events, partial completion, memory writes. |
-| `src/lib/strategyMemory.ts` | Optional Memory search + digest formatting for discovery. |
-| `src/lib/genai.ts` | Google AI client, text vs JSON generation, JSON repair, retries. |
+| `src/lib/agents/prompts.ts` | All agent prompt strings (context, tree, leaves, rollup, synthesis, …). |
+| `src/lib/orchestrator.ts` | Run state machine, SSE, partial completion, branch rollup, memory writes. |
+| `src/lib/strategyMemory.ts` | Optional Memory search + digest for context step. |
+| `src/lib/genai.ts` | Google AI client, text vs JSON generation, JSON repair (incl. JSON‑MIME pass), retries. |
 | `src/lib/quant/` | Dataset paths, CSV load, declarative **quant** plan execution (Arquero). |
-| `src/lib/outline.ts` | MECE normalization, leaf flattening, path labels. |
-| `src/components/StrategyConsole.tsx` | UI (MECE tree, strategy-question header, collapsible branches), EventSource, memory load. |
+| `src/lib/outline.ts` | Outline normalization, leaf flattening, **all node ids**, path labels. |
+| `src/components/StrategyConsole.tsx` | UI: hypothesis tree, verdict/confidence/evidence per node, rollup labels, EventSource, memory. |
 | `src/components/MarkdownBody.tsx` | Renders memo markdown in the browser. |
 | `scripts/generate-enterprise-saas-dummy.mjs` | Regenerate `data/dummy/*.csv` for end-to-end tests. |
 
@@ -79,6 +85,7 @@ Legacy env name `GEMINI_MODEL` is still read if `GOOGLE_AI_MODEL` is unset.
 ```bash
 cp .env.example .env
 # Edit .env: GOOGLE_AI_API_KEY, GOOGLE_AI_MODEL, DATABASE_URL
+# Optional: GOOGLE_AI_MAX_RETRIES, ANALYSIS_CONCURRENCY
 
 npm install
 npx prisma db push
