@@ -74,9 +74,125 @@ const NOUN = [
 
 const ROLES = ["CFO", "VP Operations", "IT Director", "Head of Procurement", "Solutions Architect", "VP Engineering"];
 
-const OPP_STAGES = ["Discovery", "Qualify", "Proposal", "Negotiate"];
-
 const STEPS = ["Landing", "Signup", "Onboarding", "First Value", "Expansion Signal"];
+
+/** Quarters for closed opp history (aligns with NPS window). */
+const HISTORICAL_QUARTERS = (() => {
+  const q = [];
+  for (let y = 2024; y <= 2025; y++) {
+    for (let qi = 1; qi <= 4; qi++) q.push(`${y}-Q${qi}`);
+  }
+  return q;
+})();
+
+const LOSS_REASONS_WEIGHTED = [
+  ["competitor", 0.28],
+  ["price_budget", 0.22],
+  ["timing_priorities", 0.18],
+  ["no_decision", 0.12],
+  ["product_gap", 0.1],
+  ["champion_departed", 0.05],
+  ["security_compliance", 0.05],
+];
+
+/** Rough count of historical closed rows (won + lost) spread across HISTORICAL_QUARTERS. */
+const TARGET_CLOSED_OPPORTUNITIES = 3400;
+
+/** Support ticket weeks (UTC Mondays) — shared by tickets + SLA rollups. */
+const TICKET_SLA_WEEK_COUNT = 20;
+
+const SLA_TARGET_HOURS = { P1: 8, P2: 24, P3: 48 };
+const PRIORITY_FOR_TEAM = { L1: "P1", L2: "P2", L3: "P3" };
+
+function quarterToIndex(q) {
+  const m = String(q).match(/^(\d{4})-Q([1-4])$/);
+  if (!m) return 0;
+  return (parseInt(m[1], 10) - 2024) * 4 + (parseInt(m[2], 10) - 1);
+}
+
+function indexToQuarter(idx) {
+  const y = 2024 + Math.floor(idx / 4);
+  const qi = (idx % 4) + 1;
+  return `${y}-Q${qi}`;
+}
+
+/** First quarter this account appears as a customer (anchors land / renewals). */
+function customerSinceQuarterForTier(tier) {
+  const maxIdx = HISTORICAL_QUARTERS.length - 1;
+  if (tier === "Strategic") {
+    const idx = rng() < 0.45 ? Math.floor(rng() * 3) : Math.floor(rng() * (maxIdx + 1));
+    return HISTORICAL_QUARTERS[Math.min(idx, maxIdx)];
+  }
+  if (tier === "Enterprise") {
+    return HISTORICAL_QUARTERS[Math.floor(rng() * (maxIdx + 1))];
+  }
+  if (tier === "Mid-Market") {
+    const idx = 1 + Math.floor(rng() * maxIdx);
+    return HISTORICAL_QUARTERS[Math.min(Math.max(0, idx), maxIdx)];
+  }
+  const idx = 3 + Math.floor(rng() * Math.max(1, maxIdx - 2));
+  return HISTORICAL_QUARTERS[Math.min(idx, maxIdx)];
+}
+
+/** Quarters near subscription anniversaries (renewal cycles). */
+function renewalQuarterSet(customerSinceIdx, contractYears, minIdx, maxIdx) {
+  const termQ = Math.max(4, Math.round(Number(contractYears)) * 4);
+  const set = new Set();
+  for (let cycle = 0; cycle <= 5; cycle++) {
+    const ann = customerSinceIdx + cycle * termQ;
+    for (const d of [-1, 0, 1]) {
+      const idx = ann + d;
+      if (idx >= minIdx && idx <= maxIdx) set.add(indexToQuarter(idx));
+    }
+  }
+  return set;
+}
+
+function sampleUniqueQuarters(pool, n) {
+  const copy = [...pool];
+  const out = [];
+  const take = Math.min(n, copy.length);
+  for (let i = 0; i < take; i++) {
+    const idx = Math.floor(rng() * copy.length);
+    out.push(copy[idx]);
+    copy.splice(idx, 1);
+  }
+  return out;
+}
+
+function skuForDealType(a, deal_type) {
+  if (deal_type === "renewal") {
+    return rng() < 0.93 ? a.primary_sku : pick(SKUS);
+  }
+  if (deal_type === "land") {
+    return rng() < 0.78 ? a.primary_sku : pick(SKUS);
+  }
+  const alt = SKUS.filter((s) => s !== a.primary_sku);
+  if (alt.length && rng() < 0.65) return pick(alt);
+  return a.primary_sku;
+}
+
+/** Deal size vs current account ARR — land largest slice, renewal near book, expand add-on. */
+function amountForDealType(a, deal_type, isClosed) {
+  const base = a.arr_usd;
+  if (deal_type === "renewal") {
+    const f = isClosed ? 0.84 + rng() * 0.22 : 0.7 + rng() * 0.28;
+    return Math.round(base * f);
+  }
+  if (deal_type === "land") {
+    const f = isClosed ? 0.1 + rng() * 0.34 : 0.08 + rng() * 0.48;
+    return Math.round(base * f);
+  }
+  const f = isClosed ? 0.045 + rng() * 0.2 : 0.055 + rng() * 0.22;
+  return Math.round(base * f);
+}
+
+function openPipelineDealType() {
+  const x = rng();
+  if (x < 0.2) return "renewal";
+  if (x < 0.68) return "expand";
+  return "land";
+}
 
 function rng() {
   return Math.random();
@@ -84,6 +200,16 @@ function rng() {
 
 function pick(arr) {
   return arr[Math.floor(rng() * arr.length)];
+}
+
+function pickLossReason() {
+  const x = rng();
+  let c = 0;
+  for (const [reason, w] of LOSS_REASONS_WEIGHTED) {
+    c += w;
+    if (x < c) return reason;
+  }
+  return "no_decision";
 }
 
 function gaussian(mean, sd) {
@@ -191,6 +317,7 @@ function main() {
     const primary_sku = skuForAccount(region);
     let arr_usd = baseArrForTier(tier) * REGION_PRICE_INDEX[region];
     const contract_term_years = contractYears(tier);
+    const customer_since_quarter = customerSinceQuarterForTier(tier);
     const employees = Math.max(
       12,
       Math.round((Math.sqrt(arr_usd / 1200) + rng() * 40) * (tier === "Strategic" ? 2.2 : tier === "SMB" ? 0.85 : 1)),
@@ -206,6 +333,7 @@ function main() {
       primary_sku,
       arr_usd,
       contract_term_years,
+      customer_since_quarter,
       regional_price_index: REGION_PRICE_INDEX[region],
     });
   }
@@ -231,8 +359,27 @@ function main() {
     "primary_sku",
     "arr_usd",
     "contract_term_years",
+    "customer_since_quarter",
     "regional_price_index",
   ]));
+
+  const countByRegion = { AMER: 0, EMEA: 0, APAC: 0 };
+  const countBySegmentRegion = new Map();
+  const primarySkuLogoCount = {};
+  for (const a of accounts) {
+    countByRegion[a.region]++;
+    const seg = TIER_SEG[a.tier];
+    const srKey = `${seg}|${a.region}`;
+    countBySegmentRegion.set(srKey, (countBySegmentRegion.get(srKey) ?? 0) + 1);
+    primarySkuLogoCount[a.primary_sku] = (primarySkuLogoCount[a.primary_sku] ?? 0) + 1;
+  }
+  const totalLogos = accounts.length;
+
+  const ticketWeekStarts = [];
+  for (let w = 0; w < TICKET_SLA_WEEK_COUNT; w++) {
+    const d = new Date(Date.UTC(2025, 1, 3 + w * 7));
+    ticketWeekStarts.push(d.toISOString().slice(0, 10));
+  }
 
   const contacts = [];
   let cid = 0;
@@ -262,11 +409,12 @@ function main() {
     const numOpps = 1 + Math.floor(rng() * (a.tier === "Strategic" ? 4 : a.tier === "SMB" ? 2 : 3));
     for (let k = 0; k < numOpps; k++) {
       oid++;
-      const sku = rng() < 0.72 ? a.primary_sku : pick(SKUS);
+      const deal_type = openPipelineDealType();
+      const sku = skuForDealType(a, deal_type);
       const stage = stageFromWinRate(a.region, sku);
       const seg = TIER_SEG[a.tier];
-      const acvProxy = a.arr_usd * (0.08 + rng() * 0.55) * (sku === "Analytics Pro" ? 1.15 : sku === "Automation Edge" ? 1.08 : 1);
-      const amount = Math.round(acvProxy * (0.85 + rng() * 0.35));
+      let amount = amountForDealType(a, deal_type, false);
+      amount = Math.round(amount * (sku === "Analytics Pro" ? 1.06 : sku === "Automation Edge" ? 1.03 : 1));
       opps.push({
         opportunity_id: `O${String(oid).padStart(6, "0")}`,
         account_id: a.account_id,
@@ -276,12 +424,85 @@ function main() {
         segment: seg,
         owner_region: a.region,
         sku,
+        deal_type,
+        close_quarter: "",
+        loss_reason: "",
       });
     }
   }
+
+  let closedBudget = TARGET_CLOSED_OPPORTUNITIES;
+  const qIdxMin = 0;
+  const qIdxMax = HISTORICAL_QUARTERS.length - 1;
+  const accShuffled = [...accounts].sort(() => rng() - 0.5);
+
+  for (const a of accShuffled) {
+    if (closedBudget <= 0) break;
+    const custIdx = quarterToIndex(a.customer_since_quarter);
+    const pool = HISTORICAL_QUARTERS.filter((q) => quarterToIndex(q) >= custIdx);
+    if (!pool.length) continue;
+
+    const renewSet = renewalQuarterSet(custIdx, a.contract_term_years, qIdxMin, qIdxMax);
+    const maxN = Math.min(5, closedBudget, pool.length);
+    if (maxN < 1) continue;
+    const nDesired = 1 + Math.floor(rng() * maxN);
+    const picks = sampleUniqueQuarters(pool, nDesired).sort(
+      (q1, q2) => quarterToIndex(q1) - quarterToIndex(q2),
+    );
+    closedBudget -= picks.length;
+
+    picks.forEach((close_quarter, ord) => {
+      oid++;
+      let deal_type;
+      if (ord === 0) {
+        deal_type = "land";
+      } else if (renewSet.has(close_quarter) && rng() < 0.84) {
+        deal_type = "renewal";
+      } else if (rng() < 0.74) {
+        deal_type = "expand";
+      } else {
+        deal_type = rng() < 0.52 ? "land" : "renewal";
+      }
+
+      const sku = skuForDealType(a, deal_type);
+      const wr = WIN_RATE[a.region][sku];
+      const winProb = Math.max(0.12, Math.min(0.48, wr + gaussian(0, 0.04)));
+      const won = rng() < winProb;
+      const seg = TIER_SEG[a.tier];
+      let amount = amountForDealType(a, deal_type, true);
+      amount = Math.round(amount * (sku === "Analytics Pro" ? 1.06 : sku === "Automation Edge" ? 1.03 : 1));
+
+      opps.push({
+        opportunity_id: `O${String(oid).padStart(6, "0")}`,
+        account_id: a.account_id,
+        account_name: a.account_name,
+        stage: won ? "Closed Won" : "Closed Lost",
+        amount,
+        segment: seg,
+        owner_region: a.region,
+        sku,
+        deal_type,
+        close_quarter,
+        loss_reason: won ? "" : pickLossReason(),
+      });
+    });
+  }
+
   writeFileSync(
     join(OUT, "crm", "opportunities.csv"),
-    toCsv(opps, ["opportunity_id", "account_id", "account_name", "stage", "amount", "segment", "owner_region", "sku"]),
+    toCsv(opps, [
+      "opportunity_id",
+      "account_id",
+      "account_name",
+      "stage",
+      "amount",
+      "segment",
+      "owner_region",
+      "sku",
+      "deal_type",
+      "close_quarter",
+      "loss_reason",
+    ]),
   );
 
   const quarters = [];
@@ -300,8 +521,16 @@ function main() {
           : 33;
         const segAdj = segment === "Enterprise" ? 8 : segment === "Mid-Market" ? 0 : -6;
         const nps_score = Math.round(Math.max(-40, Math.min(75, base + segAdj + gaussian(0, 6))));
-        const respondents = Math.round(
-          (segment === "SMB" ? 520 : segment === "Mid-Market" ? 220 : 95) * (region === "AMER" ? 1.1 : region === "EMEA" ? 0.95 : 1.0) * (0.9 + rng() * 0.25),
+        const logosInCell = countBySegmentRegion.get(`${segment}|${region}`) ?? 0;
+        const respondents = Math.max(
+          6,
+          Math.round(
+            logosInCell *
+              (0.1 + rng() * 0.28) *
+              (0.78 + rng() * 0.35) *
+              (region === "AMER" ? 1.08 : region === "EMEA" ? 0.96 : 1.02) *
+              (segment === "SMB" ? 1.15 : segment === "Mid-Market" ? 1.05 : 1),
+          ),
         );
         npsRows.push({ segment, quarter, region, nps_score, respondents });
       }
@@ -310,18 +539,12 @@ function main() {
   writeFileSync(join(OUT, "cx", "survey_nps.csv"), toCsv(npsRows, ["segment", "quarter", "region", "nps_score", "respondents"]));
 
   const journeyRows = [];
-  const monday = (d) => {
-    const dt = new Date(d);
-    const day = dt.getUTCDay();
-    const diff = (day + 6) % 7;
-    dt.setUTCDate(dt.getUTCDate() - diff);
-    return dt.toISOString().slice(0, 10);
-  };
   for (let w = 0; w < 16; w++) {
-    const start = new Date(Date.UTC(2025, 0, 6 + w * 7));
-    const week = monday(start);
+    const week = ticketWeekStarts[w];
     for (const region of REGIONS) {
-      let prev = 12000 + Math.round((REGION_LOGO_SHARE[region] * 8000 + rng() * 2000) * (1 + w * 0.012));
+      const regShare = countByRegion[region] / totalLogos;
+      let prev =
+        6500 + Math.round((regShare * 24000 + rng() * 1800) * (1 + w * 0.012));
       for (let si = 0; si < STEPS.length; si++) {
         const step = STEPS[si];
         const baseConv =
@@ -350,33 +573,63 @@ function main() {
       const base = region === "AMER" ? 4.55 : region === "APAC" ? 4.35 : 4.25;
       const chAdj = channel === "Chat" ? 0.12 : channel === "In-app" ? 0.08 : channel === "Phone" ? 0 : -0.08;
       const csat_score = Math.round((base + chAdj + (rng() - 0.5) * 0.15) * 10) / 10;
-      const sample_size = Math.round((400 + rng() * 600) * REGION_LOGO_SHARE[region] * 3);
+      const chFactor = channel === "Chat" ? 1.25 : channel === "In-app" ? 1.12 : channel === "Phone" ? 0.85 : 1;
+      const sample_size = Math.max(
+        24,
+        Math.round(countByRegion[region] * (0.32 + rng() * 0.38) * chFactor),
+      );
       csatRows.push({ channel, region, csat_score, sample_size });
     }
   }
   writeFileSync(join(OUT, "cx", "csats.csv"), toCsv(csatRows, ["channel", "region", "csat_score", "sample_size"]));
+
+  /** Regional ARR from CRM — P&amp;L MRR ends aligned to account roll-forward. */
+  const arrByRegion = { AMER: 0, EMEA: 0, APAC: 0 };
+  for (const a of accounts) {
+    arrByRegion[a.region] += a.arr_usd;
+  }
 
   const pnlRows = [];
   const months = [];
   for (let y = 2024; y <= 2025; y++) {
     for (let m = 1; m <= 12; m++) months.push(`${y}-${String(m).padStart(2, "0")}`);
   }
-  const mrr0 = {
-    AMER: (TARGET_ARR_USD / 12) * REGION_LOGO_SHARE.AMER,
-    EMEA: (TARGET_ARR_USD / 12) * REGION_LOGO_SHARE.EMEA,
-    APAC: (TARGET_ARR_USD / 12) * REGION_LOGO_SHARE.APAC,
-  };
-  for (let mi = 0; mi < months.length; mi++) {
+  const nM = months.length;
+  for (let mi = 0; mi < nM; mi++) {
     const month = months[mi];
     for (const region of REGIONS) {
-      const growth = Math.pow(1 + REGION_MOM_GROWTH[region], mi);
-      const revenue = Math.round(mrr0[region] * growth * (0.97 + rng() * 0.04));
+      const targetMrrEnd = arrByRegion[region] / 12;
+      const g = REGION_MOM_GROWTH[region];
+      const mrrStart = targetMrrEnd / Math.pow(1 + g, nM - 1);
+      const revenue = Math.round(mrrStart * Math.pow(1 + g, mi));
       const cogs = Math.round(revenue * (0.34 + rng() * 0.06));
       const opex = Math.round(revenue * (0.22 + rng() * 0.05));
       pnlRows.push({ month, region, revenue, cogs, opex });
     }
   }
   writeFileSync(join(OUT, "finance", "pnl_monthly.csv"), toCsv(pnlRows, ["month", "region", "revenue", "cogs", "opex"]));
+
+  function monthToQuarterKey(monthStr) {
+    const [ys, ms] = monthStr.split("-");
+    const y = parseInt(ys, 10);
+    const m = parseInt(ms, 10);
+    const q = Math.floor((m - 1) / 3) + 1;
+    return `${y}-Q${q}`;
+  }
+
+  const cfQuarterOrder = ["2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4"];
+  const cfSums = Object.fromEntries(cfQuarterOrder.map((q) => [q, 0]));
+  for (const row of pnlRows) {
+    const qk = monthToQuarterKey(row.month);
+    if (qk in cfSums) {
+      cfSums[qk] += row.revenue - row.cogs - row.opex;
+    }
+  }
+  const cfRows = cfQuarterOrder.map((quarter) => ({
+    quarter,
+    operating_cash_flow_musd: Math.round((cfSums[quarter] / 1_000_000) * 10) / 10,
+  }));
+  writeFileSync(join(OUT, "finance", "cash_flow.csv"), toCsv(cfRows, ["quarter", "operating_cash_flow_musd"]));
 
   const arrAgg = {};
   for (const a of accounts) {
@@ -405,13 +658,6 @@ function main() {
     toCsv(arrRows, ["segment", "region", "arr_usd", "logo_count", "nrr_pct", "grr_pct"]),
   );
 
-  const cfRows = [];
-  for (const quarter of ["2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4"]) {
-    const operating_cash_flow_musd = Math.round((11 + rng() * 5 + (quarter.startsWith("2025") ? 2.2 : 0)) * 10) / 10;
-    cfRows.push({ quarter, operating_cash_flow_musd });
-  }
-  writeFileSync(join(OUT, "finance", "cash_flow.csv"), toCsv(cfRows, ["quarter", "operating_cash_flow_musd"]));
-
   const tickets = [];
   let tid = 0;
   for (let i = 0; i < 8500; i++) {
@@ -421,29 +667,52 @@ function main() {
     const priority = rng() < 0.08 ? "P1" : rng() < 0.35 ? "P2" : "P3";
     const baseHours = priority === "P1" ? 6 : priority === "P2" ? 18 : 36;
     const resolution_hours = Math.round((baseHours * (0.5 + rng()) * (a.region === "EMEA" ? 1.05 : 1)) * 10) / 10;
+    const week_start = pick(ticketWeekStarts);
     tickets.push({
       ticket_id: `T${String(tid).padStart(6, "0")}`,
+      account_id: a.account_id,
+      tier: a.tier,
       priority,
       product,
       region: a.region,
       resolution_hours,
+      week_start,
     });
   }
   writeFileSync(
     join(OUT, "support", "tickets.csv"),
-    toCsv(tickets, ["ticket_id", "priority", "product", "region", "resolution_hours"]),
+    toCsv(tickets, [
+      "ticket_id",
+      "account_id",
+      "tier",
+      "priority",
+      "product",
+      "region",
+      "resolution_hours",
+      "week_start",
+    ]),
   );
 
   const teams = ["L1", "L2", "L3"];
   const slaRows = [];
-  for (let w = 0; w < 20; w++) {
-    const d = new Date(Date.UTC(2025, 1, 3 + w * 7));
-    const week_start = d.toISOString().slice(0, 10);
+  for (const week_start of ticketWeekStarts) {
     for (const team of teams) {
       for (const region of REGIONS) {
-        const baseBreach = team === "L1" ? 2.2 : team === "L2" ? 3.8 : 5.2;
-        const regAdj = region === "APAC" ? 0.4 : region === "EMEA" ? 0.2 : 0;
-        const breach_rate_pct = Math.round((baseBreach + regAdj + (rng() - 0.5) * 1.2) * 10) / 10;
+        const pri = PRIORITY_FOR_TEAM[team];
+        const subset = tickets.filter(
+          (t) => t.week_start === week_start && t.region === region && t.priority === pri,
+        );
+        let breach_rate_pct;
+        if (subset.length < 3) {
+          breach_rate_pct =
+            Math.round(
+              (2.0 + (team === "L2" ? 1.4 : team === "L3" ? 2.4 : 0) + (rng() - 0.5) * 2.2) * 10,
+            ) / 10;
+        } else {
+          const target = SLA_TARGET_HOURS[pri];
+          const breaches = subset.filter((t) => t.resolution_hours > target).length;
+          breach_rate_pct = Math.round(((100 * breaches) / subset.length) * 10) / 10;
+        }
         slaRows.push({ team, week_start, region, breach_rate_pct });
       }
     }
@@ -460,10 +729,11 @@ function main() {
   ];
   const kbRows = [];
   for (const [slug, related_sku] of kbArticles) {
+    const nSku = primarySkuLogoCount[related_sku] ?? 0;
     kbRows.push({
       article_slug: slug,
-      views: Math.round(800 + rng() * 6200),
-      deflection_proxy: Math.round(200 + rng() * 1400),
+      views: Math.round(320 + nSku * (90 + rng() * 50) + rng() * 2100),
+      deflection_proxy: Math.round(110 + nSku * (26 + rng() * 16) + rng() * 480),
       related_sku,
     });
   }
@@ -473,9 +743,14 @@ function main() {
   );
 
   const realizedArr = accounts.reduce((s, a) => s + a.arr_usd, 0);
+  const closedWon = opps.filter((o) => o.stage === "Closed Won").length;
+  const closedLost = opps.filter((o) => o.stage === "Closed Lost").length;
+  const openOpps = opps.length - closedWon - closedLost;
   console.log(`Wrote CSVs under ${OUT}`);
   console.log(`Accounts: ${accounts.length}, total arr_usd: ${realizedArr} (target ${TARGET_ARR_USD})`);
-  console.log(`Contacts: ${contacts.length}, Opportunities: ${opps.length}, Tickets: ${tickets.length}`);
+  console.log(
+    `Contacts: ${contacts.length}, Opportunities: ${opps.length} (${openOpps} open, ${closedWon} won, ${closedLost} lost), Tickets: ${tickets.length}`,
+  );
 }
 
 main();

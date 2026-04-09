@@ -20,37 +20,42 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     id: "crm/opportunities",
     relativePath: "crm/opportunities.csv",
     domain: "crm",
-    description: "Pipeline by stage, amount, segment, owner_region, sku, account_id",
+    description:
+      "Pipeline: deal_type land | expand | renewal (chronology + anniversaries); Closed Won/Lost; close_quarter, loss_reason",
   },
   {
     id: "crm/accounts",
     relativePath: "crm/accounts.csv",
     domain: "crm",
-    description: "Accounts: tier, region, primary_sku, arr_usd, contract_term_years, price index",
+    description:
+      "Accounts: tier, region, primary_sku, arr_usd, contract_term_years, customer_since_quarter, price index",
   },
   {
     id: "cx/survey_nps",
     relativePath: "cx/survey_nps.csv",
     domain: "cx",
-    description: "NPS by segment, quarter, region (AMER typically highest)",
+    description:
+      "NPS by segment (aligns with account tier→segment), quarter, region; respondents scale with logo count",
   },
   {
     id: "cx/journey_events",
     relativePath: "cx/journey_events.csv",
     domain: "cx",
-    description: "Funnel steps by week and region with conversion_rate",
+    description:
+      "Funnel by week (same Mon weeks as support tickets) and region; volumes scale with regional logo share",
   },
   {
     id: "cx/csats",
     relativePath: "cx/csats.csv",
     domain: "cx",
-    description: "CSAT by channel and region",
+    description: "CSAT by channel and region; sample_size scales with accounts in region",
   },
   {
     id: "finance/pnl_monthly",
     relativePath: "finance/pnl_monthly.csv",
     domain: "finance",
-    description: "Monthly revenue, COGS, OpEx by region",
+    description:
+      "Monthly revenue, COGS, OpEx by region — revenue path ties to crm/accounts regional ARR (end MRR = ARR÷12, MoM growth)",
   },
   {
     id: "finance/arr_by_segment",
@@ -62,25 +67,28 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     id: "finance/cash_flow",
     relativePath: "finance/cash_flow.csv",
     domain: "finance",
-    description: "Operating cash flow by quarter",
+    description:
+      "Quarterly operating cash flow (MUSD) derived from pnl_monthly: sum(revenue−cogs−opex) per quarter",
   },
   {
     id: "support/tickets",
     relativePath: "support/tickets.csv",
     domain: "support",
-    description: "Tickets: priority, product (SKU), region, resolution_hours",
+    description:
+      "Tickets: account_id, tier, priority, product (SKU), region, resolution_hours, week_start (UTC Mon)",
   },
   {
     id: "support/sla_metrics",
     relativePath: "support/sla_metrics.csv",
     domain: "support",
-    description: "SLA breach rate by team, week, and region",
+    description:
+      "SLA breach % by team (L1/L2/L3↔P1/P2/P3), week, region — aggregated from tickets vs hour targets",
   },
   {
     id: "support/knowledge_base_hits",
     relativePath: "support/knowledge_base_hits.csv",
     domain: "support",
-    description: "KB views, deflection proxy, related_sku",
+    description: "KB views/deflection scale with primary_sku adoption (accounts.primary_sku counts)",
   },
 ];
 
