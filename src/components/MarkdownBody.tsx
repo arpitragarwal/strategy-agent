@@ -86,7 +86,7 @@ type Props = {
 /** Renders model markdown (headings, lists, bold, tables, code) for light UI. */
 export function MarkdownBody({ content, className = "" }: Props) {
   return (
-    <div className={`text-sm ${className}`}>
+    <div className={`text-sm min-w-0 max-w-full break-words ${className}`}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {content}
       </ReactMarkdown>

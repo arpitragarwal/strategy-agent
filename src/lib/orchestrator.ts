@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "./db";
 import {
   analysisPrompt,
@@ -20,6 +21,8 @@ import {
   normalizeOutlineDoc,
   pathToNode,
 } from "./outline";
+import { buildDataCatalogMarkdown, executeQuantPlan } from "./quant";
+import type { QuantPlan } from "./quant/types";
 import type {
   OutlineNode,
   NodeState,
@@ -28,12 +31,15 @@ import type {
   StreamEvent,
 } from "./types";
 
+const DATA_CATALOG_MARKDOWN = buildDataCatalogMarkdown();
+
 type AnalysisJson = {
   summary: string;
   analysis: string;
   hypothesis: string | null;
   evidence_needed: string[];
   confidence: string;
+  quant?: QuantPlan | null;
 };
 
 export type StreamSender = (event: StreamEvent) => void;
@@ -91,19 +97,87 @@ async function recordRedirect(runId: string, note: string, send: StreamSender) {
   send({ type: "progress", entry });
 }
 
+function isPayloadRecord(x: unknown): x is Record<string, unknown> {
+  return typeof x === "object" && x !== null && !Array.isArray(x);
+}
+
+const MAX_PRIOR_BLOCK_CHARS = 14_000;
+
+/** Text for discovery only: synthesis, manager critique, leaf analyses — never old user prompts or titles. */
+function memoryArtifactToDiscoveryBlock(payload: unknown, summaryFallback: string): string {
+  const parts: string[] = [];
+  const p = isPayloadRecord(payload) ? payload : null;
+
+  const synthesis = typeof p?.synthesis === "string" ? p.synthesis.trim() : "";
+  if (synthesis) {
+    parts.push(
+      `**Strategy memo (excerpt)**\n${synthesis.slice(0, 3200)}${synthesis.length > 3200 ? "…" : ""}`,
+    );
+  } else if (summaryFallback.trim()) {
+    parts.push(`**Strategy memo (excerpt)**\n${summaryFallback.trim()}`);
+  }
+
+  const managerNotes = typeof p?.managerNotes === "string" ? p.managerNotes.trim() : "";
+  if (managerNotes) {
+    parts.push(
+      `**Manager critique (post-analysis)**\n${managerNotes.slice(0, 2200)}${managerNotes.length > 2200 ? "…" : ""}`,
+    );
+  }
+
+  const outlineDoc = normalizeOutlineDoc(p?.outline);
+  const statesRaw = p?.nodeStates;
+  if (outlineDoc?.roots && isPayloadRecord(statesRaw)) {
+    const leaves = flattenLeaves(outlineDoc.roots);
+    const leafBits: string[] = [];
+    for (const leaf of leaves) {
+      const raw = statesRaw[leaf.id];
+      if (!isPayloadRecord(raw)) continue;
+      const analysis = typeof raw.analysis === "string" ? raw.analysis.trim() : "";
+      if (!analysis) continue;
+      const path = pathToNode(outlineDoc.roots, leaf.id).join(" > ");
+      leafBits.push(
+        `*${path}*\n${analysis.slice(0, 1200)}${analysis.length > 1200 ? "…" : ""}`,
+      );
+    }
+    if (leafBits.length) {
+      parts.push(`**Branch analyses (write-ups only)**\n${leafBits.join("\n\n")}`);
+    }
+  }
+
+  return parts.join("\n\n");
+}
+
+function memoryArtifactLabel(runId: string, createdAt: Date, partial: boolean): string {
+  const d = createdAt.toISOString().slice(0, 10);
+  const tail = runId.length >= 6 ? runId.slice(-6) : runId;
+  return partial ? `Saved analysis (partial) · ${d} · ${tail}` : `Saved analysis · ${d} · ${tail}`;
+}
+
 async function priorAnalysesBlock(): Promise<string> {
   const artifacts = await prisma.memoryArtifact.findMany({
     orderBy: { createdAt: "desc" },
     take: 6,
-    select: { title: true, summary: true, topics: true },
+    select: { summary: true, payload: true, runId: true, createdAt: true },
   });
   if (!artifacts.length) return "";
-  return artifacts
-    .map(
-      (a) =>
-        `#### ${a.title}\nTopics: ${a.topics || "—"}\n${a.summary}`,
-    )
-    .join("\n\n");
+
+  const blocks: string[] = [];
+  for (let i = 0; i < artifacts.length; i++) {
+    const a = artifacts[i]!;
+    const body = memoryArtifactToDiscoveryBlock(a.payload, a.summary);
+    if (!body.trim()) continue;
+    const partial =
+      isPayloadRecord(a.payload) && a.payload.synthesisIsPartial === true;
+    const label =
+      a.runId ?
+        memoryArtifactLabel(a.runId, a.createdAt, partial)
+      : `Saved output ${i + 1} · ${a.createdAt.toISOString().slice(0, 10)}`;
+    blocks.push(`---\n_${label}_\n\n${body}`);
+  }
+
+  const merged = blocks.join("\n\n");
+  if (merged.length <= MAX_PRIOR_BLOCK_CHARS) return merged;
+  return `${merged.slice(0, MAX_PRIOR_BLOCK_CHARS)}\n\n_(older memory truncated)_`;
 }
 
 function analysesMarkdown(
@@ -116,7 +190,15 @@ function analysesMarkdown(
     .map((leaf) => {
       const st = states[leaf.id];
       const path = pathToNode(roots, leaf.id).join(" > ");
-      return `### ${path}\nQuestion: ${leaf.question ?? leaf.title}\n\n${st?.analysis ?? "(pending)"}`;
+      let q = "";
+      if (st?.quant) {
+        if (st.quant.error) {
+          q = `\n\n_Quant error: ${st.quant.error}_`;
+        } else if (st.quant.narrative) {
+          q = `\n\n_Quant (${st.quant.datasetId ?? "dataset"}): ${st.quant.narrative}_`;
+        }
+      }
+      return `### ${path}\nQuestion: ${leaf.question ?? leaf.title}\n\n${st?.analysis ?? "(pending)"}${q}`;
     })
     .join("\n\n---\n\n");
 }
@@ -241,11 +323,13 @@ async function finalizePartialSynthesis(
     : "partial";
   await prisma.memoryArtifact.create({
     data: {
-      title: `${run.prompt.slice(0, 180)}${run.prompt.length > 180 ? "…" : ""} (partial)`,
+      title: memoryArtifactLabel(runId, run.createdAt, true),
       summary: synthesis.slice(0, 4000),
       topics,
+      runStartedAt: run.createdAt,
       payload: {
         runId,
+        userPrompt: run.prompt,
         outline,
         treeReviewNotes: run.treeReviewNotes,
         nodeStates: states,
@@ -253,7 +337,8 @@ async function finalizePartialSynthesis(
         managerNotes,
         synthesis,
         synthesisIsPartial: true,
-      },
+        runStartedAt: run.createdAt.toISOString(),
+      } as Prisma.InputJsonValue,
       runId,
     },
   });
@@ -498,12 +583,23 @@ async function runLeafAnalysisPhase(
         pathTitles,
         leafQuestion: leaf.question ?? leaf.title,
         redirectContext: redirectRow.redirectContext || undefined,
+        dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
       }),
       {
         repairHint:
-          'Exactly these keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (array of strings), "confidence" (string: low, medium, or high).',
+          'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
       },
     );
+    let quantResult = undefined;
+    if (
+      parsed.quant &&
+      typeof parsed.quant === "object" &&
+      typeof (parsed.quant as QuantPlan).datasetId === "string" &&
+      Array.isArray((parsed.quant as QuantPlan).steps)
+    ) {
+      quantResult = executeQuantPlan(parsed.quant as QuantPlan);
+    }
+
     const block = [
       parsed.analysis,
       parsed.hypothesis ? `\n\nHypothesis: ${parsed.hypothesis}` : "",
@@ -511,6 +607,8 @@ async function runLeafAnalysisPhase(
       parsed.evidence_needed?.length
         ? `\nEvidence needed: ${parsed.evidence_needed.join("; ")}`
         : "",
+      quantResult?.narrative ? `\n\n**Quant:** ${quantResult.narrative}` : "",
+      quantResult?.error ? `\n\n_Quant error: ${quantResult.error}_` : "",
     ].join("");
 
     states[leaf.id] = {
@@ -518,6 +616,7 @@ async function runLeafAnalysisPhase(
       status: "done",
       summary: parsed.summary,
       analysis: block.trim(),
+      ...(quantResult ? { quant: quantResult } : {}),
     };
     await prisma.strategyRun.update({
       where: { id: runId },
@@ -595,11 +694,13 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
     .join(", ");
   await prisma.memoryArtifact.create({
     data: {
-      title: run.prompt.slice(0, 200),
+      title: memoryArtifactLabel(runId, run.createdAt, false),
       summary: synthesis.slice(0, 4000),
       topics,
+      runStartedAt: run.createdAt,
       payload: {
         runId,
+        userPrompt: run.prompt,
         outline: structureOut,
         treeReviewNotes,
         nodeStates: states,
@@ -607,7 +708,8 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
         managerNotes,
         synthesis,
         synthesisIsPartial: false,
-      },
+        runStartedAt: run.createdAt.toISOString(),
+      } as Prisma.InputJsonValue,
       runId,
     },
   });

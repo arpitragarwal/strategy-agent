@@ -1,3 +1,7 @@
+import type { QuantResult } from "./quant/types";
+
+export type { QuantResult } from "./quant/types";
+
 export type OutlineNode = {
   id: string;
   title: string;
@@ -12,6 +16,7 @@ export type NodeState = {
   status: NodeStatus;
   summary?: string;
   analysis?: string;
+  quant?: QuantResult;
 };
 
 export type ProgressEntry = {

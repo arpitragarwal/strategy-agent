@@ -38,6 +38,8 @@ model StrategyRun {
 model MemoryArtifact {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
+  /// When the strategy run began (copied from StrategyRun.createdAt) for display in Memory
+  runStartedAt DateTime?
   title     String
   summary   String   @db.Text
   topics    String   @default("") @db.Text

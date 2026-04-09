@@ -1,0 +1,8 @@
+account_id,account_name,industry,tier,region,employees
+A101,Acme Corp,Manufacturing,Strategic,NAMER,4200
+A102,Globex Ltd,Logistics,Growth,EMEA,890
+A103,Initech,Software,SMB,APAC,120
+A104,Umbrella Biotech,Life Sciences,Strategic,NAMER,7800
+A105,Stark Industries,Aerospace,Strategic,NAMER,12000
+A106,Wonka Foods,CPG,Growth,EMEA,2100
+A107,Wayne Ent,Media,Mid-Market,NAMER,340

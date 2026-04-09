@@ -1,0 +1,9 @@
+contact_id,account_id,account_name,role,region
+C001,A101,Acme Corp,VP Sales,NAMER
+C002,A101,Acme Corp,IT Director,NAMER
+C003,A102,Globex Ltd,CFO,EMEA
+C004,A103,Initech,Solutions Architect,APAC
+C005,A104,Umbrella Biotech,Procurement,NAMER
+C006,A105,Stark Industries,COO,NAMER
+C007,A106,Wonka Foods,Marketing,EMEA
+C008,A102,Globex Ltd,Head of Ops,EMEA

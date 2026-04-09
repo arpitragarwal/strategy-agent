@@ -8,8 +8,10 @@ export function discoveryPrompt(input: {
 User input (goal, question, and any context to honor):
 ${input.prompt}
 
-Prior completed analyses summaries (memory — reuse or build on these, cite overlap):
+Prior outputs only from earlier completed runs in this app (strategy memos, manager critiques, branch write-ups). **Does not** include those runs’ original questions, goals, or prompts — treat the user input above as the sole brief.
 ${input.priorAnalyses || "(none)"}
+
+Rules: Use prior outputs **only when clearly relevant** to the user input above (same company, product, problem class, or reusable fact). If nothing clearly applies, **ignore this block entirely** — do not echo unrelated companies, metrics, or themes from past work.
 
 Output concise markdown with sections:
 ## Themes
@@ -141,13 +143,14 @@ export function analysisPrompt(input: {
   pathTitles: string;
   leafQuestion: string;
   redirectContext?: string;
+  dataCatalogMarkdown: string;
 }): string {
   const steer =
     input.redirectContext?.trim() ?
       `\nUser steering / redirect (prioritize this when answering this leaf):\n${input.redirectContext.trim()}\n`
     : "";
 
-  return `You are an analysis agent. Answer one leaf of a strategy tree with discipline.
+  return `You are an analysis agent. Answer one leaf of a strategy tree with discipline. You may request a quantitative check using prototype CSVs (no live connectors).
 
 Overall goal:
 ${input.userGoal}
@@ -160,6 +163,18 @@ Path in tree: ${input.pathTitles}
 Leaf question:
 ${input.leafQuestion}
 
+${input.dataCatalogMarkdown}
+
+Quantitative plans: when numeric evidence from these CSVs would strengthen the answer, include "quant" with a pipeline. If the leaf is purely qualitative or no dataset fits, set "quant" to null.
+
+Allowed quant.steps operations (execute in order):
+- {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
+- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
+- {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
+- {"op":"limit","n": number}
+
+Optional "chart": {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} referencing columns present AFTER all steps.
+
 Your entire reply must be ONE JSON object only — no markdown, no keys in prose form, no text before { or after }.
 
 Required JSON shape (types matter):
@@ -168,7 +183,13 @@ Required JSON shape (types matter):
   "analysis": "string, detailed reasoning",
   "hypothesis": null or "string",
   "evidence_needed": ["array", "of", "strings"],
-  "confidence": "low" | "medium" | "high"
+  "confidence": "low" | "medium" | "high",
+  "quant": null OR {
+    "hypothesis_under_test": "string, what the numbers will test",
+    "datasetId": "string, exact id from catalog e.g. crm/opportunities",
+    "steps": [ ...quant steps... ],
+    "chart": null OR { "type": "bar" | "line", "x": "string", "y": "string", "title": "optional string" }
+  }
 }`;
 }
 

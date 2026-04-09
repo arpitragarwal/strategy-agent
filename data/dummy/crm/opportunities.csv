@@ -1,0 +1,11 @@
+opportunity_id,account_name,stage,amount,segment,owner_region
+O1001,Acme Corp,Qualify,120000,Enterprise,NAMER
+O1002,Globex Ltd,Discovery,45000,Mid-Market,EMEA
+O1003,Initech,Proposal,89000,SMB,APAC
+O1004,Umbrella Biotech,Negotiate,340000,Enterprise,NAMER
+O1005,Stark Industries,Qualify,210000,Enterprise,NAMER
+O1006,Wonka Foods,Closed Won,67000,Mid-Market,EMEA
+O1007,Acme Corp,Discovery,78000,Enterprise,NAMER
+O1008,Globex Ltd,Qualify,33000,SMB,EMEA
+O1009,Wayne Ent,Proposal,156000,Mid-Market,NAMER
+O1010,Initech,Qualify,22000,SMB,APAC

@@ -1,0 +1,9 @@
+segment,quarter,nps_score,respondents
+Enterprise,2025-Q1,42,180
+Enterprise,2025-Q2,38,195
+Mid-Market,2025-Q1,18,420
+Mid-Market,2025-Q2,24,445
+SMB,2025-Q1,-2,890
+SMB,2025-Q2,5,910
+Enterprise,2025-Q3,45,205
+Mid-Market,2025-Q3,28,460

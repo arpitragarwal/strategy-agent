@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
+import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
 import { flattenLeaves } from "@/lib/outline";
 import type { OutlineNode, NodeState, ProgressEntry, ReviewCheckpoint } from "@/lib/types";
 
@@ -26,6 +27,7 @@ type RunRow = {
 };
 
 type ArtifactPayload = {
+  userPrompt?: string;
   outline?: { roots?: OutlineNode[] };
   nodeStates?: Record<string, NodeState>;
   discovery?: string;
@@ -38,11 +40,33 @@ type ArtifactPayload = {
 type MemoryRow = {
   id: string;
   createdAt: string;
+  runStartedAt?: string | null;
   title: string;
   summary: string;
   topics: string;
   runId: string | null;
 };
+
+type QuantCatalogDataset = {
+  id: string;
+  relativePath: string;
+  domain: string;
+  description: string;
+  columns: string[];
+};
+
+const QUANT_DOMAIN_ORDER = ["crm", "cx", "finance", "support"] as const;
+
+function formatMemoryTimestamp(iso: string): string {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
 
 const REVIEW_LABELS: Record<ReviewCheckpoint, string> = {
   after_discovery: "Discovery",
@@ -170,6 +194,29 @@ function computePipelineSteps(args: {
   });
 }
 
+function DisclosureChevron({ nested }: { nested?: boolean }) {
+  const rotateClass = nested ? "group-open/log:rotate-90" : "group-open:rotate-90";
+  return (
+    <span
+      className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-700 shadow-sm"
+      aria-hidden
+    >
+      <svg
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        className={`h-5 w-5 shrink-0 transition-transform duration-200 ease-out ${rotateClass}`}
+        aria-hidden
+      >
+        <path
+          fillRule="evenodd"
+          d="M8.22 5.22a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 010-1.06z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </span>
+  );
+}
+
 function OutputPanel({
   title,
   subtitle,
@@ -191,16 +238,11 @@ function OutputPanel({
     <details
       open={open}
       onToggle={(e) => setOpen(e.currentTarget.open)}
-      className={`group rounded-xl border p-4 shadow-sm ${cardClassName}`}
+      className={`group rounded-xl border p-4 shadow-sm min-w-0 max-w-full ${cardClassName}`}
     >
-      <summary className="flex cursor-pointer list-none items-start gap-2 text-left [&::-webkit-details-marker]:hidden">
-        <span
-          className="mt-0.5 inline-block shrink-0 text-zinc-400 transition-transform duration-200 group-open:rotate-90"
-          aria-hidden
-        >
-          ▸
-        </span>
-        <div className="min-w-0 flex-1">
+      <summary className="flex cursor-pointer list-none items-start gap-3 text-left [&::-webkit-details-marker]:hidden">
+        <DisclosureChevron />
+        <div className="min-w-0 flex-1 pt-0.5">
           <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
             <div className="text-sm font-semibold leading-snug text-zinc-900 [&_span]:text-inherit">
               {title}
@@ -210,8 +252,119 @@ function OutputPanel({
           {subtitle ? <div className="mt-1 text-zinc-500">{subtitle}</div> : null}
         </div>
       </summary>
-      <div className="mt-3 border-t border-zinc-200/70 pt-3">{children}</div>
+      <div className="mt-3 border-t border-zinc-200/70 pt-3 min-w-0 max-w-full">{children}</div>
     </details>
+  );
+}
+
+function QuantDatasetsTreeBox() {
+  const [datasets, setDatasets] = useState<QuantCatalogDataset[] | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch("/api/quant/catalog");
+        const data = (await res.json().catch(() => ({}))) as {
+          datasets?: QuantCatalogDataset[];
+          error?: string;
+        };
+        if (!res.ok) {
+          if (!cancelled) setLoadError(data.error ?? res.statusText ?? "Request failed");
+          return;
+        }
+        if (!cancelled) setDatasets(Array.isArray(data.datasets) ? data.datasets : []);
+      } catch (e) {
+        if (!cancelled) setLoadError(e instanceof Error ? e.message : "Failed to load catalog");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const domainBlocks = useMemo(() => {
+    const m = new Map<string, QuantCatalogDataset[]>();
+    for (const d of QUANT_DOMAIN_ORDER) m.set(d, []);
+    for (const row of datasets ?? []) {
+      const list = m.get(row.domain) ?? [];
+      list.push(row);
+      m.set(row.domain, list);
+    }
+    return QUANT_DOMAIN_ORDER.map((domain) => ({
+      domain,
+      rows: (m.get(domain) ?? []).slice().sort((a, b) => a.relativePath.localeCompare(b.relativePath)),
+    })).filter((b) => b.rows.length > 0);
+  }, [datasets]);
+
+  function fileLabel(relativePath: string, domain: string): string {
+    const prefix = `${domain}/`;
+    return relativePath.startsWith(prefix) ? relativePath.slice(prefix.length) : relativePath;
+  }
+
+  return (
+    <div className="rounded-lg border border-zinc-200 bg-white shadow-sm overflow-hidden">
+      <div className="px-2.5 py-1.5 border-b border-zinc-100 bg-zinc-50/90">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600">Data files</p>
+        <p className="text-[9px] text-zinc-500 mt-0.5 leading-tight">
+          Click a file to open the CSV · hover for <span className="font-mono">datasetId</span>
+        </p>
+      </div>
+      <div className="p-2 max-h-[14rem] overflow-y-auto">
+        {loading ? (
+          <p className="text-[10px] text-zinc-500 font-mono">…</p>
+        ) : loadError ? (
+          <p className="text-[10px] text-rose-700">{loadError}</p>
+        ) : !domainBlocks.length ? (
+          <p className="text-[10px] text-zinc-500">No datasets.</p>
+        ) : (
+          <div className="font-mono text-[10px] leading-snug text-zinc-800 select-none">
+            <div className="text-zinc-700">data/dummy/</div>
+            {domainBlocks.map((block, di) => {
+              const domainLast = di === domainBlocks.length - 1;
+              const domainBranch = domainLast ? "└─ " : "├─ ";
+              const continuation = domainLast ? "   " : "│  ";
+              return (
+                <div key={block.domain}>
+                  <div className="flex whitespace-pre">
+                    <span className="text-zinc-400" aria-hidden>
+                      {domainBranch}
+                    </span>
+                    <span className="text-zinc-800">{block.domain}/</span>
+                  </div>
+                  {block.rows.map((row, fi) => {
+                    const fileLast = fi === block.rows.length - 1;
+                    const branch = fileLast ? "└─ " : "├─ ";
+                    const name = fileLabel(row.relativePath, block.domain);
+                    const href = `/api/quant/file/${row.id}`;
+                    return (
+                      <div key={row.id} className="flex whitespace-pre items-baseline" title={`${row.id} — ${row.description}`}>
+                        <span className="text-zinc-400" aria-hidden>
+                          {continuation}
+                          {branch}
+                        </span>
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sky-800 hover:text-sky-950 hover:underline underline-offset-2 decoration-sky-600/50 min-w-0 break-all select-text text-left"
+                        >
+                          {name}
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -325,12 +478,42 @@ function OutlineBranch({
       <div className="flex items-start gap-2 text-sm">
         {!hasKids && state ? <StatusDot status={state.status} /> : <span className="w-2" />}
         <div className="min-w-0 flex-1">
-          <div className="font-medium text-zinc-900">{node.title}</div>
+          <div className="font-medium text-zinc-900 break-words">{node.title}</div>
           {node.question ? (
-            <div className="text-zinc-500 text-xs mt-0.5">{node.question}</div>
+            <div className="text-zinc-500 text-xs mt-0.5 break-words">{node.question}</div>
           ) : null}
           {state?.summary ? (
-            <p className="text-zinc-600 text-xs mt-1 leading-relaxed">{state.summary}</p>
+            <p className="text-zinc-600 text-xs mt-1 leading-relaxed break-words">
+              {state.summary}
+            </p>
+          ) : null}
+          {state?.quant ? (
+            <div className="mt-2 rounded-lg border border-indigo-100 bg-indigo-50/60 px-2 py-2 max-w-full min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-indigo-900">
+                Quant check
+              </p>
+              {state.quant.error ? (
+                <p className="text-xs text-rose-700 mt-1">{state.quant.error}</p>
+              ) : (
+                <>
+                  <p className="text-[10px] text-indigo-900/80 mt-0.5">
+                    {state.quant.hypothesis_under_test}
+                  </p>
+                  {state.quant.narrative ? (
+                    <p className="text-xs text-indigo-950 mt-1">{state.quant.narrative}</p>
+                  ) : null}
+                  {(state.quant.vegaLiteSpecs ?? []).map((vl, i) => (
+                    <div
+                      key={i}
+                      className="mt-2 bg-white rounded-md border border-indigo-100 p-1 max-w-full min-w-0 overflow-x-auto"
+                    >
+                      <p className="text-[10px] text-zinc-600 px-1 break-words">{vl.title}</p>
+                      <VegaLiteEmbed spec={vl.spec} />
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
           ) : null}
         </div>
       </div>
@@ -442,8 +625,8 @@ export function StrategyConsole() {
     payload: unknown;
   }) {
     const p = art.payload as ArtifactPayload | null;
-    const title = art.title.replace(/\s*\(partial\)\s*$/i, "").trim();
-    setPrompt(title);
+    const fallbackTitle = art.title.replace(/\s*\(partial\)\s*$/i, "").trim();
+    setPrompt(p?.userPrompt?.trim() || fallbackTitle);
     setDiscovery(p?.discovery ?? "");
     setTreeReviewNotes(p?.treeReviewNotes ?? "");
     const nextRoots = p?.outline?.roots ?? [];
@@ -706,7 +889,7 @@ export function StrategyConsole() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-      <div className="space-y-6">
+      <div className="space-y-6 min-w-0">
         <header>
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
             Strategy Team AI Agents: Prototype
@@ -878,11 +1061,6 @@ export function StrategyConsole() {
           key={runId ? `pipeline-${runId}` : "pipeline-idle"}
           defaultExpanded
           title="Pipeline"
-          subtitle={
-            <p className="text-[10px] font-mono text-zinc-500">
-              Linear run — like a branch timeline; dim steps are still ahead.
-            </p>
-          }
           cardClassName="border-zinc-200 bg-zinc-50/80"
           summaryEnd={
             leavesTotal > 0 ? (
@@ -896,11 +1074,9 @@ export function StrategyConsole() {
             <PipelineTimeline steps={pipelineSteps} />
           </div>
           <details className="mt-3 group/log">
-            <summary className="cursor-pointer text-[10px] font-mono text-zinc-500 hover:text-zinc-700 list-none flex items-center gap-1.5 [&::-webkit-details-marker]:hidden">
-              <span className="text-zinc-400 group-open/log:rotate-90 transition-transform inline-block">
-                ▸
-              </span>
-              Activity log ({progress.length})
+            <summary className="cursor-pointer list-none flex items-start gap-3 text-left text-[10px] font-mono text-zinc-600 hover:text-zinc-800 [&::-webkit-details-marker]:hidden">
+              <DisclosureChevron nested />
+              <span className="pt-1.5">Activity log ({progress.length})</span>
             </summary>
             <ul className="mt-2 max-h-36 overflow-y-auto space-y-1 text-[10px] text-zinc-600 font-mono border-t border-zinc-200/80 pt-2">
               {progress.map((p, i) => (
@@ -934,17 +1110,21 @@ export function StrategyConsole() {
             }
             cardClassName="border-blue-200 bg-blue-50/90"
           >
-            <MarkdownBody content={treeReviewNotes} />
+            <div className="min-w-0 max-w-full max-h-[min(70vh,28rem)] overflow-y-auto overflow-x-auto overscroll-contain">
+              <MarkdownBody content={treeReviewNotes} />
+            </div>
           </OutputPanel>
         ) : null}
 
         {roots.length ? (
           <OutputPanel title="MECE outline & analysis" cardClassName="border-zinc-200 bg-white">
-            <ul className="space-y-1">
-              {roots.map((r) => (
-                <OutlineBranch key={r.id} node={r} states={nodeStates} />
-              ))}
-            </ul>
+            <div className="min-w-0 max-w-full overflow-x-auto overscroll-contain">
+              <ul className="space-y-1 min-w-0">
+                {roots.map((r) => (
+                  <OutlineBranch key={r.id} node={r} states={nodeStates} />
+                ))}
+              </ul>
+            </div>
           </OutputPanel>
         ) : null}
 
@@ -974,7 +1154,8 @@ export function StrategyConsole() {
         ) : null}
       </div>
 
-      <aside className="space-y-4">
+      <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start min-w-0">
+        <QuantDatasetsTreeBox />
         <OutputPanel
           title="Memory"
           subtitle={
@@ -999,6 +1180,17 @@ export function StrategyConsole() {
                   } ${busy ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
                   <div className="font-medium text-zinc-900 line-clamp-2">{m.title}</div>
+                  <p className="text-[10px] text-zinc-500 mt-1 font-mono tabular-nums">
+                    {m.runStartedAt
+                      ? <>Run started {formatMemoryTimestamp(m.runStartedAt)}</>
+                      : <>Saved {formatMemoryTimestamp(m.createdAt)}</>}
+                    {m.runStartedAt ? (
+                      <span className="text-zinc-400 font-sans normal-nums">
+                        {" "}
+                        · completed {formatMemoryTimestamp(m.createdAt)}
+                      </span>
+                    ) : null}
+                  </p>
                   {m.topics ? (
                     <div className="text-zinc-500 mt-1 text-[10px] uppercase tracking-wide">
                       {m.topics}

@@ -1,0 +1,9 @@
+ticket_id,priority,product,resolution_hours
+T50001,P1,Analytics,4.5
+T50002,P2,Core Platform,18.2
+T50003,P3,Billing,6.0
+T50004,P2,Analytics,22.0
+T50005,P1,Core Platform,3.1
+T50006,P3,Core Platform,44.0
+T50007,P2,Billing,9.5
+T50008,P4,Analytics,120.0
