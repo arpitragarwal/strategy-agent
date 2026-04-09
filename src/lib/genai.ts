@@ -14,8 +14,8 @@ export function getModelId(): string {
   return (
     process.env.GOOGLE_AI_MODEL?.trim() ||
     process.env.GEMINI_MODEL?.trim() ||
-    // Smaller Gemma 4 variant — confirm in AI Studio; fallback: gemma-4-31b-it
-    "gemma-4-26b-a4b-it"
+    // Gemma 4 dense 31B — override with GOOGLE_AI_MODEL if your key uses a different id.
+    "gemma-4-31b-it"
   );
 }
 

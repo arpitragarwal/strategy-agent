@@ -68,7 +68,7 @@ While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clar
 
 ## Model (open-weight Gemma 4)
 
-The app uses Google’s **Generative Language API** (`@google/generative-ai`) with a **model ID** you choose. That is the same API/key as “Gemini API,” but you should point it at **Gemma 4** (open-weight models Google hosts), e.g. `gemma-4-26b-a4b-it` or `gemma-4-31b-it`. Set `GOOGLE_AI_MODEL` in `.env` to the **smallest** Gemma 4 variant your [AI Studio](https://aistudio.google.com) project lists — that is usually cheaper than large proprietary Gemini models. See [Run Gemma with the Gemini API](https://ai.google.dev/gemma/docs/core/gemma_on_gemini_api).
+The app uses Google’s **Generative Language API** (`@google/generative-ai`) with a **model ID** you choose. That is the same API/key as “Gemini API,” but you should point it at **Gemma 4** (open-weight models Google hosts). The code default is **`gemma-4-31b-it`** (dense 31B). Set **`GOOGLE_AI_MODEL`** in `.env` to override (e.g. `gemma-4-26b-a4b-it` for the MoE variant if you want lower latency or different billing). Confirm the exact id in [AI Studio](https://aistudio.google.com). See [Run Gemma with the Gemini API](https://ai.google.dev/gemma/docs/core/gemma_on_gemini_api).
 
 Legacy env name `GEMINI_MODEL` is still read if `GOOGLE_AI_MODEL` is unset.
 
