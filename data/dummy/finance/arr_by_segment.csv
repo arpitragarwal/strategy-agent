@@ -1,5 +1,10 @@
-segment,arr_usd,logo_count
-Enterprise,18200000,42
-Mid-Market,9400000,118
-SMB,2100000,410
-Strategic,6200000,14
+segment,region,arr_usd,logo_count,nrr_pct,grr_pct
+Enterprise,AMER,82806371,167,200,95.1
+Enterprise,APAC,25063075,52,208,95
+Enterprise,EMEA,43029910,90,200,95.1
+Mid-Market,AMER,17833054,295,195,95.6
+Mid-Market,APAC,5710342,97,198,94.9
+Mid-Market,EMEA,11579490,173,207,95.2
+SMB,AMER,8237774,615,215,97
+SMB,APAC,2184456,201,197,95.6
+SMB,EMEA,3555528,310,196,94.3

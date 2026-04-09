@@ -1,8 +1,2001 @@
-account_id,account_name,industry,tier,region,employees
-A101,Acme Corp,Manufacturing,Strategic,NAMER,4200
-A102,Globex Ltd,Logistics,Growth,EMEA,890
-A103,Initech,Software,SMB,APAC,120
-A104,Umbrella Biotech,Life Sciences,Strategic,NAMER,7800
-A105,Stark Industries,Aerospace,Strategic,NAMER,12000
-A106,Wonka Foods,CPG,Growth,EMEA,2100
-A107,Wayne Ent,Media,Mid-Market,NAMER,340
+account_id,account_name,industry,tier,region,employees,primary_sku,arr_usd,contract_term_years,regional_price_index
+A00477,Granite Dynamics,Public Sector,Strategic,EMEA,322,Automation Edge,3421853,1,0.92
+A01611,Cobalt Bridge,Professional Services,Strategic,AMER,240,Core Suite,2731326,4,1
+A00234,Granite Labs Inc,Energy,Strategic,AMER,281,Core Suite,2410707,1,1
+A01790,BluePeak Bridge,Healthcare,Strategic,AMER,199,Analytics Pro,2291099,4,1
+A01386,BluePeak Logic Inc,Telecommunications,Strategic,AMER,201,Core Suite,2063098,4,1
+A01055,Silverline Dynamics Inc,Healthcare,Strategic,AMER,206,Automation Edge,1890689,4,1
+A01691,Northwind Bridge Inc,Retail,Strategic,AMER,208,Automation Edge,1850074,4,1
+A01193,Aurora Stream Inc,Public Sector,Strategic,AMER,188,Analytics Pro,1822977,2,1
+A01493,Vertex Bridge Ltd,Public Sector,Strategic,EMEA,230,Analytics Pro,1796831,5,0.92
+A01835,Granite Point Inc,Telecommunications,Strategic,APAC,181,Analytics Pro,1689993,2,0.86
+A00500,Vertex Cloud Inc,Public Sector,Strategic,AMER,244,Automation Edge,1528576,2,1
+A00155,Aurora Systems Inc,Retail,Strategic,EMEA,239,Analytics Pro,1524118,5,0.92
+A00076,Aurora Bridge Ltd,Financial Services,Strategic,AMER,220,Core Suite,1461563,4,1
+A01932,Silverline Labs,Logistics,Strategic,AMER,183,Automation Edge,1406694,5,1
+A01567,Meridian Works,Telecommunications,Strategic,AMER,196,Automation Edge,1377177,4,1
+A01517,Vertex Stream,Manufacturing,Strategic,AMER,202,Analytics Pro,1352330,1,1
+A00358,Meridian Labs,Financial Services,Strategic,AMER,162,Core Suite,1347292,2,1
+A00055,Pinnacle Bridge Inc,Public Sector,Strategic,EMEA,219,Analytics Pro,1330092,4,0.92
+A01525,BluePeak Cloud Inc,Financial Services,Strategic,AMER,183,Analytics Pro,1313946,4,1
+A01940,Cobalt Labs Inc,Telecommunications,Strategic,APAC,208,Core Suite,1308424,3,0.86
+A01371,BluePeak Systems,Public Sector,Strategic,APAC,178,Analytics Pro,1278202,2,0.86
+A01892,Aurora Cloud,Public Sector,Enterprise,EMEA,93,Automation Edge,1216477,3,0.92
+A00064,Pinnacle Labs,Energy,Strategic,EMEA,187,Analytics Pro,1193504,3,0.92
+A01981,Granite Dynamics Inc,Logistics,Strategic,EMEA,151,Analytics Pro,1177460,4,0.92
+A00068,Cobalt Systems Inc,Financial Services,Strategic,EMEA,200,Core Suite,1171078,2,0.92
+A01758,Granite Dynamics Inc,Public Sector,Strategic,EMEA,182,Core Suite,1166969,5,0.92
+A00516,Granite Labs Ltd,Healthcare,Strategic,EMEA,144,Core Suite,1118003,4,0.92
+A01548,Pinnacle Works,Financial Services,Strategic,EMEA,167,Core Suite,1113055,4,0.92
+A00608,Cobalt Labs Inc,Manufacturing,Strategic,AMER,146,Automation Edge,1095419,4,1
+A00329,Meridian Point Ltd,Professional Services,Strategic,AMER,216,Core Suite,1093928,1,1
+A01274,Northwind Cloud,Professional Services,Strategic,AMER,207,Automation Edge,1082048,4,1
+A01540,Aurora Stream Ltd,Professional Services,Strategic,AMER,182,Analytics Pro,1053890,5,1
+A01786,BluePeak Cloud Ltd,Technology,Strategic,APAC,218,Analytics Pro,1047668,2,0.86
+A01260,BluePeak Labs Inc,Financial Services,Strategic,EMEA,218,Automation Edge,1029734,5,0.92
+A00597,Parallel Cloud Ltd,Financial Services,Strategic,APAC,156,Automation Edge,1022323,4,0.86
+A01289,Vertex Dynamics,Technology,Strategic,APAC,168,Core Suite,1008033,1,0.86
+A01833,Vertex Labs Inc,Financial Services,Strategic,EMEA,147,Core Suite,1007533,5,0.92
+A01903,Granite Cloud,Manufacturing,Strategic,EMEA,156,Core Suite,1002987,3,0.92
+A01284,Cobalt Dynamics Inc,Technology,Enterprise,AMER,94,Core Suite,998478,3,1
+A00348,BluePeak Stream,Retail,Strategic,APAC,205,Analytics Pro,973864,1,0.86
+A01355,Parallel Systems,Financial Services,Enterprise,AMER,97,Automation Edge,970602,4,1
+A00372,Vertex Stream Inc,Manufacturing,Strategic,APAC,205,Core Suite,966046,3,0.86
+A01969,Cobalt Cloud Ltd,Professional Services,Strategic,AMER,179,Analytics Pro,964931,5,1
+A01631,Silverline Labs Inc,Financial Services,Strategic,AMER,148,Core Suite,918588,3,1
+A01317,Northwind Dynamics,Energy,Strategic,AMER,135,Analytics Pro,904322,4,1
+A01297,Vertex Systems Ltd,Manufacturing,Strategic,AMER,132,Automation Edge,903886,3,1
+A00534,Parallel Systems Inc,Professional Services,Strategic,AMER,124,Analytics Pro,892468,5,1
+A01079,Silverline Works,Healthcare,Strategic,EMEA,179,Analytics Pro,885507,2,0.92
+A01178,Pinnacle Dynamics,Public Sector,Strategic,AMER,128,Analytics Pro,874873,2,1
+A00327,BluePeak Labs Ltd,Technology,Enterprise,AMER,63,Automation Edge,874181,4,1
+A00644,Silverline Works,Technology,Strategic,APAC,120,Automation Edge,844996,3,0.86
+A00827,Parallel Labs Inc,Healthcare,Enterprise,AMER,84,Core Suite,840708,3,1
+A00308,Aurora Point,Energy,Enterprise,AMER,75,Core Suite,838864,4,1
+A00521,Cobalt Stream,Technology,Enterprise,EMEA,83,Analytics Pro,837704,1,0.92
+A01586,Vertex Stream Inc,Retail,Strategic,AMER,156,Analytics Pro,831071,1,1
+A00691,Granite Labs Inc,Healthcare,Strategic,AMER,158,Analytics Pro,827367,3,1
+A00894,Northwind Stream,Technology,Strategic,APAC,131,Analytics Pro,826853,4,0.86
+A00732,Pinnacle Works,Public Sector,Enterprise,APAC,86,Core Suite,814577,4,0.86
+A01680,Parallel Point Inc,Logistics,Strategic,AMER,188,Analytics Pro,806600,3,1
+A00105,Pinnacle Works,Healthcare,Enterprise,APAC,54,Analytics Pro,802803,3,0.86
+A01273,Parallel Dynamics Inc,Technology,Strategic,EMEA,182,Core Suite,797547,1,0.92
+A00458,Northwind Bridge Ltd,Technology,Enterprise,AMER,65,Core Suite,757056,5,1
+A01466,Meridian Labs Inc,Energy,Strategic,AMER,182,Core Suite,729936,5,1
+A00123,Northwind Grid,Public Sector,Strategic,AMER,172,Automation Edge,703035,1,1
+A01015,Aurora Cloud Inc,Public Sector,Enterprise,EMEA,73,Core Suite,699655,2,0.92
+A00743,Vertex Works Ltd,Healthcare,Enterprise,AMER,65,Analytics Pro,699579,3,1
+A01704,Silverline Systems Ltd,Manufacturing,Strategic,AMER,131,Core Suite,695901,2,1
+A00249,BluePeak Grid Inc,Energy,Enterprise,EMEA,64,Automation Edge,692459,4,0.92
+A00100,Vertex Dynamics Inc,Technology,Enterprise,AMER,79,Automation Edge,682434,3,1
+A00647,Cobalt Stream Ltd,Telecommunications,Strategic,AMER,133,Core Suite,677609,5,1
+A01557,Cobalt Bridge Ltd,Manufacturing,Strategic,APAC,163,Core Suite,663263,4,0.86
+A01068,Granite Stream Ltd,Technology,Strategic,EMEA,188,Automation Edge,656209,4,0.92
+A00031,Cobalt Cloud,Telecommunications,Strategic,AMER,157,Automation Edge,653744,2,1
+A01316,Parallel Systems,Public Sector,Strategic,AMER,162,Analytics Pro,646062,1,1
+A00363,Pinnacle Cloud Ltd,Technology,Enterprise,EMEA,71,Core Suite,643398,2,0.92
+A00213,Parallel Grid Inc,Retail,Enterprise,AMER,48,Analytics Pro,641937,4,1
+A01042,Northwind Stream Inc,Technology,Strategic,EMEA,154,Core Suite,639457,3,0.92
+A00567,Granite Stream,Telecommunications,Enterprise,AMER,59,Core Suite,636248,1,1
+A01249,Northwind Stream Ltd,Healthcare,Strategic,APAC,183,Analytics Pro,633757,1,0.86
+A01600,Vertex Systems,Manufacturing,Enterprise,AMER,78,Analytics Pro,627258,2,1
+A01856,Pinnacle Grid Ltd,Retail,Strategic,APAC,154,Core Suite,622185,2,0.86
+A00498,Silverline Dynamics Inc,Technology,Enterprise,APAC,58,Core Suite,619892,4,0.86
+A00214,Vertex Bridge,Telecommunications,Strategic,AMER,123,Analytics Pro,609481,4,1
+A00284,Silverline Stream Ltd,Financial Services,Strategic,AMER,181,Analytics Pro,604046,3,1
+A01542,Vertex Stream Inc,Telecommunications,Strategic,AMER,160,Core Suite,602289,4,1
+A01820,Vertex Bridge Inc,Professional Services,Enterprise,EMEA,56,Core Suite,594327,1,0.92
+A01519,Meridian Grid Ltd,Logistics,Strategic,EMEA,145,Core Suite,591820,1,0.92
+A00046,Northwind Point,Healthcare,Strategic,EMEA,154,Core Suite,579375,3,0.92
+A00050,BluePeak Cloud,Technology,Strategic,EMEA,153,Core Suite,569674,5,0.92
+A00557,Vertex Logic,Logistics,Enterprise,AMER,63,Analytics Pro,569639,1,1
+A01473,Northwind Cloud,Professional Services,Strategic,EMEA,139,Core Suite,561678,1,0.92
+A00019,BluePeak Stream,Technology,Strategic,APAC,173,Analytics Pro,560559,3,0.86
+A01367,Granite Labs Inc,Manufacturing,Strategic,EMEA,102,Core Suite,557196,1,0.92
+A00529,Cobalt Logic Inc,Telecommunications,Strategic,APAC,129,Automation Edge,552515,2,0.86
+A01477,Silverline Systems,Professional Services,Enterprise,AMER,44,Automation Edge,547438,5,1
+A00386,Vertex Cloud Inc,Retail,Enterprise,AMER,77,Analytics Pro,544929,5,1
+A01623,Granite Bridge Inc,Financial Services,Enterprise,AMER,68,Analytics Pro,542603,1,1
+A00962,Parallel Grid Ltd,Professional Services,Mid-Market,EMEA,56,Core Suite,535093,1,0.92
+A01711,Cobalt Labs,Financial Services,Enterprise,AMER,80,Analytics Pro,529181,4,1
+A01516,Vertex Bridge Ltd,Technology,Enterprise,AMER,65,Core Suite,527719,1,1
+A00248,Aurora Works Inc,Retail,Enterprise,AMER,68,Core Suite,526138,2,1
+A00664,Cobalt Dynamics Inc,Retail,Enterprise,EMEA,43,Core Suite,523541,3,0.92
+A00912,Northwind Dynamics Ltd,Financial Services,Enterprise,EMEA,47,Core Suite,513324,5,0.92
+A01596,Cobalt Dynamics Ltd,Logistics,Enterprise,EMEA,81,Automation Edge,505219,1,0.92
+A01050,Granite Logic Inc,Energy,Strategic,AMER,177,Automation Edge,501612,3,1
+A00217,Cobalt Logic,Professional Services,Strategic,EMEA,142,Core Suite,501155,4,0.92
+A01033,Meridian Point Ltd,Energy,Enterprise,EMEA,62,Analytics Pro,497668,4,0.92
+A01847,Silverline Works Ltd,Retail,Enterprise,AMER,42,Analytics Pro,483835,3,1
+A00823,Meridian Point Ltd,Retail,Strategic,EMEA,126,Core Suite,482642,5,0.92
+A01241,BluePeak Labs Ltd,Telecommunications,Enterprise,APAC,55,Core Suite,473587,1,0.86
+A00622,Parallel Works Inc,Healthcare,Enterprise,EMEA,60,Analytics Pro,472559,3,0.92
+A00490,Silverline Works Ltd,Technology,Strategic,AMER,145,Core Suite,468002,1,1
+A00279,Silverline Works Inc,Healthcare,Strategic,AMER,111,Automation Edge,467787,3,1
+A00384,Pinnacle Systems Ltd,Manufacturing,Enterprise,EMEA,75,Core Suite,466986,3,0.92
+A00734,BluePeak Stream,Technology,Enterprise,AMER,43,Core Suite,465146,5,1
+A01740,Silverline Point Ltd,Logistics,Enterprise,EMEA,47,Core Suite,461486,3,0.92
+A01888,Meridian Systems,Logistics,Enterprise,APAC,60,Core Suite,460200,3,0.86
+A00264,BluePeak Logic,Retail,Mid-Market,EMEA,65,Analytics Pro,456813,5,0.92
+A01675,Aurora Works,Public Sector,Enterprise,APAC,65,Analytics Pro,455276,2,0.86
+A01962,Parallel Dynamics,Energy,Enterprise,AMER,45,Analytics Pro,454770,5,1
+A01411,Vertex Grid Ltd,Financial Services,Enterprise,AMER,74,Automation Edge,451702,4,1
+A01396,BluePeak Stream Inc,Financial Services,Strategic,EMEA,117,Core Suite,449157,2,0.92
+A01019,Pinnacle Cloud,Healthcare,Mid-Market,AMER,75,Core Suite,447159,4,1
+A00023,Silverline Stream,Healthcare,Strategic,APAC,137,Automation Edge,437496,3,0.86
+A00083,Meridian Systems Inc,Financial Services,Strategic,AMER,115,Core Suite,431544,4,1
+A01135,BluePeak Bridge Ltd,Financial Services,Enterprise,AMER,59,Automation Edge,430382,4,1
+A00080,Parallel Works Inc,Professional Services,Strategic,EMEA,104,Analytics Pro,419228,3,0.92
+A01534,Silverline Works Inc,Public Sector,Enterprise,AMER,55,Core Suite,411943,5,1
+A00674,Pinnacle Logic Ltd,Professional Services,Strategic,AMER,163,Analytics Pro,409589,4,1
+A00888,Aurora Point Inc,Healthcare,Enterprise,AMER,76,Analytics Pro,409103,5,1
+A01008,Pinnacle Labs,Technology,Enterprise,AMER,53,Automation Edge,407697,5,1
+A00623,Vertex Systems Inc,Logistics,Enterprise,APAC,56,Core Suite,404092,4,0.86
+A01185,Pinnacle Point Ltd,Logistics,Strategic,AMER,151,Core Suite,400941,4,1
+A00093,BluePeak Bridge,Public Sector,Enterprise,AMER,58,Analytics Pro,398924,3,1
+A00450,Cobalt Stream,Public Sector,Enterprise,AMER,40,Analytics Pro,395458,3,1
+A00854,Meridian Labs Ltd,Healthcare,Enterprise,EMEA,50,Analytics Pro,393549,1,0.92
+A00471,BluePeak Cloud Inc,Energy,Enterprise,AMER,43,Core Suite,389586,4,1
+A00205,Vertex Logic Ltd,Retail,Enterprise,AMER,68,Core Suite,388955,4,1
+A00969,Vertex Point,Manufacturing,Enterprise,EMEA,64,Core Suite,386566,4,0.92
+A01922,Cobalt Systems Ltd,Public Sector,Enterprise,AMER,61,Core Suite,385110,5,1
+A00702,Vertex Cloud Ltd,Financial Services,Enterprise,AMER,50,Analytics Pro,383417,1,1
+A01861,Aurora Bridge Inc,Technology,Strategic,AMER,106,Core Suite,381943,3,1
+A00925,Silverline Stream Ltd,Energy,Enterprise,EMEA,67,Analytics Pro,379097,2,0.92
+A01982,BluePeak Systems Inc,Telecommunications,Enterprise,AMER,57,Core Suite,378738,3,1
+A01166,Meridian Systems,Logistics,Enterprise,AMER,71,Analytics Pro,376178,2,1
+A01683,Meridian Dynamics,Telecommunications,Enterprise,APAC,67,Analytics Pro,373570,3,0.86
+A00079,Pinnacle Works,Healthcare,Enterprise,APAC,59,Automation Edge,370849,4,0.86
+A01233,Northwind Point,Professional Services,Enterprise,APAC,71,Analytics Pro,370513,1,0.86
+A01607,Granite Works Ltd,Retail,Strategic,APAC,141,Core Suite,368279,4,0.86
+A00005,Granite Dynamics Inc,Professional Services,Mid-Market,AMER,65,Automation Edge,365744,1,1
+A01719,Vertex Labs Inc,Public Sector,Enterprise,AMER,52,Core Suite,361114,1,1
+A00538,Silverline Logic,Energy,Enterprise,APAC,49,Core Suite,357145,3,0.86
+A00774,Silverline Works Ltd,Energy,Enterprise,EMEA,50,Analytics Pro,354468,3,0.92
+A00385,Northwind Logic,Financial Services,Enterprise,AMER,39,Core Suite,352112,4,1
+A00835,Aurora Dynamics Ltd,Retail,Enterprise,AMER,68,Core Suite,350119,5,1
+A00057,Silverline Systems Ltd,Retail,Enterprise,AMER,65,Automation Edge,346455,5,1
+A01601,Cobalt Cloud Ltd,Financial Services,Enterprise,APAC,57,Analytics Pro,339475,5,0.86
+A01142,BluePeak Works Inc,Financial Services,Enterprise,AMER,38,Analytics Pro,326784,3,1
+A01418,Meridian Bridge,Public Sector,Enterprise,AMER,43,Analytics Pro,319736,1,1
+A00371,Cobalt Cloud,Retail,Mid-Market,EMEA,39,Core Suite,317890,1,0.92
+A01061,BluePeak Works,Energy,Strategic,AMER,123,Analytics Pro,307112,3,1
+A00866,Northwind Logic Ltd,Retail,Enterprise,AMER,49,Core Suite,303048,2,1
+A01324,Cobalt Cloud Inc,Retail,Enterprise,APAC,48,Automation Edge,301746,4,0.86
+A00246,Cobalt Point Ltd,Professional Services,Enterprise,AMER,72,Core Suite,297802,4,1
+A01100,BluePeak Cloud,Manufacturing,Mid-Market,EMEA,63,Core Suite,297072,3,0.92
+A00645,Pinnacle Grid Inc,Technology,Enterprise,AMER,35,Automation Edge,293598,2,1
+A00811,Granite Point,Logistics,Enterprise,AMER,52,Analytics Pro,292251,4,1
+A00369,Vertex Cloud Inc,Technology,Enterprise,AMER,62,Automation Edge,291848,4,1
+A00339,Silverline Dynamics,Financial Services,Enterprise,EMEA,65,Automation Edge,291212,2,0.92
+A01131,Pinnacle Stream Inc,Logistics,Enterprise,AMER,63,Core Suite,291181,1,1
+A00379,Silverline Works Inc,Technology,Enterprise,APAC,49,Analytics Pro,290970,3,0.86
+A00656,BluePeak Systems,Professional Services,Enterprise,AMER,44,Core Suite,290260,4,1
+A00067,BluePeak Stream Ltd,Retail,Strategic,AMER,141,Analytics Pro,289914,3,1
+A00585,Granite Dynamics,Manufacturing,Enterprise,AMER,44,Automation Edge,289715,2,1
+A00238,Northwind Stream,Public Sector,Enterprise,EMEA,39,Core Suite,286793,5,0.92
+A00532,Aurora Grid Ltd,Professional Services,Enterprise,EMEA,53,Analytics Pro,285246,3,0.92
+A00236,Meridian Works,Technology,Strategic,APAC,81,Automation Edge,283260,1,0.86
+A01017,Aurora Logic,Energy,Enterprise,EMEA,43,Core Suite,282637,3,0.92
+A00096,Granite Systems,Technology,Enterprise,AMER,34,Analytics Pro,280481,3,1
+A00792,Aurora Dynamics Ltd,Retail,Enterprise,AMER,53,Analytics Pro,280344,3,1
+A01132,Vertex Point Inc,Manufacturing,Enterprise,EMEA,38,Analytics Pro,278138,4,0.92
+A01379,Pinnacle Logic Ltd,Public Sector,Enterprise,APAC,38,Automation Edge,276961,5,0.86
+A01046,Parallel Cloud Inc,Telecommunications,Enterprise,AMER,63,Automation Edge,275183,2,1
+A01805,Cobalt Logic Ltd,Technology,Enterprise,AMER,45,Core Suite,272729,5,1
+A00158,Granite Labs,Public Sector,Enterprise,EMEA,51,Analytics Pro,271590,4,0.92
+A01817,Pinnacle Point Inc,Manufacturing,Enterprise,EMEA,63,Automation Edge,271427,5,0.92
+A01749,Cobalt Stream,Logistics,Enterprise,EMEA,70,Analytics Pro,270099,5,0.92
+A00906,Silverline Systems,Logistics,Enterprise,APAC,68,Automation Edge,268847,1,0.86
+A01187,Vertex Stream Ltd,Telecommunications,Mid-Market,EMEA,63,Core Suite,268023,5,0.92
+A01018,Granite Works Ltd,Manufacturing,Mid-Market,AMER,47,Analytics Pro,267548,3,1
+A00435,Aurora Works Ltd,Healthcare,Enterprise,AMER,59,Analytics Pro,266093,4,1
+A00239,Pinnacle Bridge,Public Sector,Enterprise,AMER,58,Automation Edge,264299,1,1
+A00380,Aurora Dynamics Inc,Financial Services,Enterprise,AMER,69,Analytics Pro,260334,1,1
+A01774,Meridian Cloud Ltd,Professional Services,Enterprise,AMER,35,Automation Edge,259822,4,1
+A00935,Pinnacle Stream Ltd,Technology,Enterprise,AMER,36,Core Suite,259729,4,1
+A01776,Parallel Systems Inc,Energy,Enterprise,EMEA,58,Automation Edge,257106,4,0.92
+A00367,Meridian Works,Logistics,Enterprise,AMER,42,Core Suite,257047,3,1
+A00086,Granite Grid,Logistics,Enterprise,AMER,45,Automation Edge,255837,2,1
+A01119,Parallel Cloud Inc,Technology,Enterprise,AMER,56,Analytics Pro,252836,3,1
+A01454,Parallel Dynamics,Public Sector,Enterprise,AMER,57,Core Suite,251687,1,1
+A01524,Granite Logic Inc,Financial Services,Enterprise,APAC,55,Analytics Pro,250123,3,0.86
+A00922,Pinnacle Stream,Healthcare,Enterprise,EMEA,62,Analytics Pro,249303,4,0.92
+A00349,Silverline Works Ltd,Manufacturing,Enterprise,APAC,53,Core Suite,248279,4,0.86
+A00917,Cobalt Dynamics Ltd,Financial Services,Enterprise,AMER,32,Core Suite,246458,3,1
+A00867,Northwind Cloud,Healthcare,Enterprise,EMEA,45,Core Suite,244764,2,0.92
+A01617,Meridian Bridge Ltd,Logistics,Enterprise,AMER,63,Automation Edge,244756,5,1
+A00678,Silverline Bridge Ltd,Telecommunications,Enterprise,EMEA,50,Automation Edge,240429,5,0.92
+A01007,Silverline Cloud Inc,Energy,Mid-Market,EMEA,53,Analytics Pro,239752,3,0.92
+A01700,Vertex Works Ltd,Manufacturing,Strategic,APAC,145,Automation Edge,237435,2,0.86
+A01880,Granite Dynamics Ltd,Energy,Enterprise,EMEA,34,Core Suite,236763,2,0.92
+A00554,Pinnacle Stream Inc,Logistics,Enterprise,EMEA,68,Core Suite,235019,1,0.92
+A00816,Aurora Labs Inc,Retail,Mid-Market,EMEA,50,Analytics Pro,233132,2,0.92
+A01181,Meridian Point Ltd,Logistics,Enterprise,APAC,43,Analytics Pro,232700,1,0.86
+A01831,Cobalt Bridge Ltd,Retail,Enterprise,AMER,33,Analytics Pro,232248,5,1
+A01013,Parallel Dynamics,Healthcare,Enterprise,AMER,68,Core Suite,231515,3,1
+A01556,BluePeak Point Ltd,Public Sector,Enterprise,AMER,53,Core Suite,227809,3,1
+A01342,Aurora Logic Inc,Manufacturing,Enterprise,AMER,43,Automation Edge,225785,2,1
+A01476,Vertex Cloud,Public Sector,Mid-Market,APAC,46,Automation Edge,224078,2,0.86
+A01734,Pinnacle Cloud,Technology,Enterprise,AMER,32,Analytics Pro,222987,3,1
+A01155,Meridian Grid,Logistics,Mid-Market,AMER,43,Analytics Pro,222506,3,1
+A00223,Granite Stream Ltd,Public Sector,Enterprise,APAC,40,Analytics Pro,220386,3,0.86
+A00304,Northwind Stream,Financial Services,Mid-Market,AMER,66,Automation Edge,218772,1,1
+A00670,Parallel Systems Inc,Healthcare,Enterprise,AMER,49,Core Suite,216944,3,1
+A01118,Pinnacle Cloud,Technology,Enterprise,AMER,41,Core Suite,215038,2,1
+A01590,Meridian Labs Inc,Technology,Mid-Market,EMEA,64,Analytics Pro,213706,1,0.92
+A01915,Aurora Dynamics,Public Sector,Enterprise,APAC,35,Analytics Pro,213652,1,0.86
+A00892,Cobalt Point Inc,Healthcare,Enterprise,AMER,51,Automation Edge,213587,5,1
+A01177,Northwind Logic Inc,Retail,Enterprise,EMEA,53,Analytics Pro,212570,3,0.92
+A01089,BluePeak Labs Inc,Professional Services,Enterprise,AMER,50,Core Suite,211104,4,1
+A01357,Parallel Stream,Healthcare,Mid-Market,EMEA,38,Core Suite,211080,1,0.92
+A00761,Northwind Grid,Manufacturing,Enterprise,EMEA,64,Analytics Pro,208994,5,0.92
+A00060,Northwind Logic,Public Sector,Mid-Market,EMEA,43,Analytics Pro,208212,2,0.92
+A00850,Vertex Cloud Inc,Manufacturing,Enterprise,AMER,36,Automation Edge,205773,1,1
+A00570,Pinnacle Bridge,Healthcare,Enterprise,AMER,45,Core Suite,205532,2,1
+A00837,Parallel Logic,Telecommunications,Enterprise,EMEA,65,Core Suite,205364,2,0.92
+A01736,Granite Systems Inc,Manufacturing,Mid-Market,AMER,60,Analytics Pro,205130,1,1
+A01268,Silverline Labs Ltd,Manufacturing,Mid-Market,AMER,44,Core Suite,204108,1,1
+A00063,Meridian Logic Ltd,Professional Services,Enterprise,EMEA,29,Analytics Pro,203435,2,0.92
+A01669,BluePeak Stream Ltd,Telecommunications,Enterprise,AMER,55,Core Suite,200437,4,1
+A01841,Granite Stream,Technology,Enterprise,AMER,30,Analytics Pro,196359,4,1
+A00605,Silverline Systems,Retail,Mid-Market,AMER,42,Analytics Pro,196085,1,1
+A01383,Meridian Grid Ltd,Energy,Enterprise,AMER,55,Automation Edge,195045,4,1
+A01420,Granite Grid Inc,Energy,Enterprise,AMER,64,Analytics Pro,193444,2,1
+A01243,Northwind Systems Inc,Logistics,Mid-Market,AMER,61,Analytics Pro,192533,2,1
+A01365,BluePeak Bridge Inc,Manufacturing,Enterprise,AMER,58,Core Suite,192419,5,1
+A01066,Meridian Point Ltd,Retail,Mid-Market,EMEA,62,Core Suite,192115,1,0.92
+A00325,Parallel Stream,Telecommunications,Mid-Market,EMEA,60,Core Suite,185227,2,0.92
+A00130,Vertex Grid Ltd,Financial Services,Mid-Market,AMER,30,Core Suite,185142,4,1
+A00128,Granite Works Inc,Logistics,Enterprise,AMER,40,Automation Edge,184852,5,1
+A01327,Silverline Works Ltd,Retail,Enterprise,EMEA,61,Analytics Pro,184321,3,0.92
+A01490,Meridian Works Ltd,Professional Services,Enterprise,AMER,37,Automation Edge,183777,1,1
+A00891,Pinnacle Grid Inc,Healthcare,Enterprise,APAC,41,Analytics Pro,183646,4,0.86
+A01532,BluePeak Systems Ltd,Public Sector,Enterprise,AMER,65,Analytics Pro,183129,4,1
+A00300,Parallel Bridge Inc,Healthcare,Enterprise,AMER,59,Analytics Pro,183100,3,1
+A00311,Aurora Point,Financial Services,Mid-Market,APAC,44,Core Suite,181821,3,0.86
+A00812,Granite Systems Ltd,Telecommunications,Enterprise,APAC,64,Analytics Pro,181024,2,0.86
+A00913,Aurora Point Ltd,Technology,Enterprise,EMEA,43,Core Suite,180768,3,0.92
+A00276,Granite Cloud Inc,Technology,Enterprise,AMER,42,Analytics Pro,178466,4,1
+A01931,BluePeak Point Inc,Public Sector,Mid-Market,AMER,41,Analytics Pro,177082,3,1
+A00927,Silverline Stream Inc,Healthcare,Enterprise,APAC,56,Automation Edge,176615,1,0.86
+A01637,Vertex Grid Ltd,Financial Services,Enterprise,AMER,60,Analytics Pro,176393,5,1
+A01225,Silverline Cloud Ltd,Manufacturing,Enterprise,AMER,26,Analytics Pro,175863,3,1
+A01111,Aurora Logic Inc,Energy,Enterprise,EMEA,41,Core Suite,175536,1,0.92
+A00115,Granite Dynamics Ltd,Energy,Enterprise,AMER,59,Core Suite,175132,2,1
+A00408,BluePeak Labs Inc,Financial Services,Mid-Market,AMER,59,Analytics Pro,174716,3,1
+A00040,BluePeak Point,Telecommunications,Enterprise,AMER,60,Core Suite,173744,1,1
+A00088,Silverline Dynamics Inc,Public Sector,Enterprise,AMER,38,Core Suite,172472,3,1
+A00963,Northwind Stream Ltd,Public Sector,Enterprise,AMER,57,Core Suite,172032,1,1
+A00423,Vertex Stream,Energy,Mid-Market,AMER,58,Analytics Pro,171318,2,1
+A01789,Aurora Logic,Financial Services,Enterprise,APAC,25,Analytics Pro,169547,1,0.86
+A01693,Cobalt Systems Inc,Telecommunications,Mid-Market,AMER,54,Core Suite,168235,1,1
+A01658,Aurora Bridge,Technology,Enterprise,AMER,58,Analytics Pro,167996,2,1
+A01577,Northwind Systems,Technology,Mid-Market,AMER,38,Core Suite,164281,1,1
+A01649,Meridian Stream Inc,Energy,Enterprise,AMER,26,Core Suite,162499,3,1
+A00741,Cobalt Cloud,Healthcare,Mid-Market,AMER,26,Analytics Pro,161989,1,1
+A00456,Parallel Stream Ltd,Healthcare,Mid-Market,EMEA,58,Core Suite,161918,2,0.92
+A01738,Pinnacle Point,Logistics,Enterprise,APAC,47,Automation Edge,161288,3,0.86
+A00967,Pinnacle Logic Inc,Professional Services,Mid-Market,AMER,58,Automation Edge,160042,2,1
+A00780,Cobalt Grid Inc,Technology,Enterprise,AMER,35,Analytics Pro,159914,4,1
+A01441,Parallel Point Inc,Manufacturing,Mid-Market,APAC,33,Analytics Pro,158687,2,0.86
+A01842,Aurora Logic Inc,Energy,Enterprise,AMER,27,Core Suite,157925,1,1
+A00237,Granite Bridge,Financial Services,Enterprise,EMEA,35,Automation Edge,157543,3,0.92
+A01960,Meridian Systems Ltd,Public Sector,Enterprise,AMER,38,Core Suite,157485,2,1
+A00070,Granite Logic,Logistics,Mid-Market,APAC,39,Core Suite,155120,3,0.86
+A00228,Pinnacle Labs Ltd,Technology,Mid-Market,AMER,24,Core Suite,154126,2,1
+A00841,Vertex Grid Inc,Manufacturing,Enterprise,EMEA,27,Core Suite,153100,3,0.92
+A00355,Northwind Logic Ltd,Telecommunications,Mid-Market,APAC,60,Analytics Pro,152904,1,0.86
+A00428,BluePeak Stream,Manufacturing,Mid-Market,AMER,30,Automation Edge,152844,1,1
+A00581,Silverline Point Inc,Manufacturing,Mid-Market,APAC,40,Analytics Pro,150289,2,0.86
+A01564,Meridian Labs,Telecommunications,Enterprise,AMER,48,Analytics Pro,148137,4,1
+A00673,BluePeak Stream,Logistics,Mid-Market,AMER,23,Automation Edge,148095,2,1
+A00806,BluePeak Dynamics Ltd,Professional Services,Enterprise,APAC,34,Core Suite,146791,3,0.86
+A00791,BluePeak Logic Inc,Public Sector,Mid-Market,AMER,56,Analytics Pro,145547,2,1
+A00472,Pinnacle Logic Ltd,Healthcare,Mid-Market,AMER,24,Core Suite,144655,2,1
+A01737,Vertex Cloud Ltd,Professional Services,Enterprise,AMER,54,Analytics Pro,142683,4,1
+A01735,Northwind Systems Inc,Manufacturing,Mid-Market,EMEA,39,Core Suite,141438,3,0.92
+A01956,Parallel Grid,Healthcare,Mid-Market,EMEA,57,Core Suite,139804,3,0.92
+A00607,Granite Works Ltd,Energy,Enterprise,AMER,35,Core Suite,139508,4,1
+A00137,Aurora Grid Inc,Logistics,Enterprise,AMER,54,Analytics Pro,139129,4,1
+A00216,Vertex Labs Ltd,Telecommunications,Enterprise,EMEA,28,Core Suite,138138,3,0.92
+A00972,Parallel Point,Telecommunications,Enterprise,AMER,39,Automation Edge,137985,3,1
+A00419,Pinnacle Systems Ltd,Energy,Mid-Market,EMEA,53,Automation Edge,137921,2,0.92
+A00801,Pinnacle Labs Ltd,Retail,Mid-Market,AMER,57,Automation Edge,137508,5,1
+A00344,Northwind Dynamics Inc,Healthcare,Mid-Market,AMER,23,Core Suite,136602,1,1
+A00058,Granite Systems Inc,Technology,Enterprise,EMEA,55,Core Suite,136069,3,0.92
+A00247,BluePeak Logic,Healthcare,Mid-Market,APAC,56,Core Suite,136048,1,0.86
+A00782,Parallel Labs Inc,Telecommunications,Enterprise,EMEA,26,Analytics Pro,134861,4,0.92
+A01520,Vertex Logic,Technology,Mid-Market,AMER,55,Core Suite,132945,1,1
+A01933,Cobalt Bridge,Public Sector,Mid-Market,APAC,35,Automation Edge,131758,2,0.86
+A01661,Vertex Stream Ltd,Public Sector,Mid-Market,AMER,28,Automation Edge,131679,2,1
+A01950,Parallel Works,Energy,Enterprise,EMEA,38,Analytics Pro,131568,5,0.92
+A00983,Cobalt Systems,Logistics,Mid-Market,EMEA,37,Analytics Pro,130055,1,0.92
+A01937,Parallel Systems Inc,Public Sector,Mid-Market,EMEA,56,Core Suite,128930,1,0.92
+A00047,Aurora Grid Inc,Public Sector,Mid-Market,EMEA,33,Core Suite,128542,5,0.92
+A00712,Cobalt Bridge Inc,Technology,Mid-Market,APAC,53,Analytics Pro,127842,3,0.86
+A01250,Northwind Works Inc,Logistics,Enterprise,AMER,32,Core Suite,127457,5,1
+A01432,Silverline Dynamics Inc,Healthcare,Enterprise,AMER,60,Core Suite,125282,2,1
+A00849,Parallel Labs Inc,Financial Services,Enterprise,EMEA,25,Core Suite,123778,3,0.92
+A01469,Granite Point,Public Sector,Mid-Market,AMER,30,Analytics Pro,123482,3,1
+A01832,Vertex Logic Ltd,Public Sector,Enterprise,APAC,57,Core Suite,123457,4,0.86
+A01437,Northwind Point Inc,Telecommunications,Mid-Market,AMER,37,Analytics Pro,122753,1,1
+A01414,Parallel Bridge,Retail,Enterprise,EMEA,28,Core Suite,122528,1,0.92
+A01448,BluePeak Systems Inc,Professional Services,Mid-Market,AMER,46,Core Suite,122482,1,1
+A01211,Pinnacle Dynamics Inc,Energy,Enterprise,EMEA,23,Core Suite,122206,2,0.92
+A00944,Parallel Stream Inc,Manufacturing,Mid-Market,EMEA,30,Core Suite,122022,1,0.92
+A01436,Pinnacle Logic Ltd,Public Sector,Enterprise,AMER,58,Analytics Pro,121767,2,1
+A00066,BluePeak Stream Ltd,Public Sector,Enterprise,EMEA,48,Automation Edge,121008,5,0.92
+A00394,Pinnacle Bridge Ltd,Technology,Mid-Market,AMER,32,Core Suite,120649,4,1
+A01498,Vertex Dynamics Ltd,Healthcare,Mid-Market,AMER,57,Core Suite,118234,1,1
+A01064,Silverline Works Inc,Financial Services,Enterprise,APAC,53,Core Suite,117715,3,0.86
+A01946,Cobalt Stream Ltd,Professional Services,Mid-Market,EMEA,23,Analytics Pro,115623,3,0.92
+A01207,Northwind Grid Inc,Energy,Mid-Market,EMEA,25,Core Suite,115013,1,0.92
+A01308,Meridian Grid Ltd,Logistics,Mid-Market,AMER,36,Analytics Pro,114253,2,1
+A00468,Pinnacle Grid Ltd,Energy,Mid-Market,AMER,38,Automation Edge,113101,3,1
+A01792,Granite Works Ltd,Public Sector,Mid-Market,EMEA,33,Core Suite,113064,3,0.92
+A01400,BluePeak Systems Inc,Logistics,Mid-Market,AMER,33,Analytics Pro,113036,1,1
+A01105,BluePeak Bridge Inc,Energy,Mid-Market,AMER,40,Analytics Pro,112354,1,1
+A01457,Aurora Cloud Ltd,Manufacturing,Mid-Market,AMER,43,Core Suite,112043,3,1
+A01898,Northwind Cloud,Healthcare,Mid-Market,AMER,28,Analytics Pro,111538,3,1
+A01823,Aurora Stream Ltd,Financial Services,Mid-Market,APAC,27,Analytics Pro,111448,2,0.86
+A00657,Aurora Systems Inc,Energy,Mid-Market,EMEA,35,Analytics Pro,111443,5,0.92
+A00887,Aurora Point,Healthcare,Mid-Market,AMER,43,Core Suite,111164,1,1
+A00631,Parallel Systems Inc,Healthcare,Enterprise,EMEA,36,Automation Edge,110052,2,0.92
+A01613,Northwind Systems Inc,Professional Services,Mid-Market,AMER,53,Core Suite,109115,1,1
+A01505,Meridian Cloud Inc,Professional Services,Enterprise,AMER,55,Core Suite,108635,2,1
+A01482,Granite Stream Ltd,Professional Services,SMB,AMER,48,Analytics Pro,108450,1,1
+A01232,Silverline Cloud,Professional Services,Mid-Market,EMEA,26,Core Suite,107537,1,0.92
+A01550,Pinnacle Point Ltd,Telecommunications,Mid-Market,EMEA,46,Analytics Pro,107142,2,0.92
+A01158,Meridian Cloud Inc,Logistics,Mid-Market,EMEA,26,Core Suite,106879,2,0.92
+A01133,Pinnacle Cloud Inc,Energy,Enterprise,AMER,59,Core Suite,106807,5,1
+A01351,Aurora Point,Public Sector,Enterprise,APAC,38,Core Suite,106472,1,0.86
+A01759,Granite Systems Ltd,Logistics,Mid-Market,EMEA,25,Core Suite,106459,1,0.92
+A00874,Aurora Dynamics Inc,Technology,Mid-Market,APAC,57,Analytics Pro,105682,2,0.86
+A01319,BluePeak Labs Ltd,Technology,Mid-Market,APAC,44,Automation Edge,105152,1,0.86
+A00413,Granite Works Inc,Energy,Mid-Market,EMEA,38,Core Suite,103933,1,0.92
+A01204,Aurora Grid,Professional Services,Mid-Market,AMER,24,Automation Edge,103288,1,1
+A01255,Parallel Bridge Inc,Technology,Mid-Market,AMER,43,Core Suite,103099,4,1
+A01629,Meridian Stream Inc,Financial Services,Enterprise,AMER,48,Core Suite,102705,2,1
+A01696,Parallel Stream,Retail,Enterprise,AMER,53,Core Suite,102569,4,1
+A01754,Vertex Works,Logistics,Mid-Market,AMER,53,Analytics Pro,102020,1,1
+A00260,Meridian Logic Ltd,Logistics,Mid-Market,AMER,58,Analytics Pro,101847,1,1
+A01838,Aurora Bridge,Healthcare,Mid-Market,AMER,38,Automation Edge,101843,2,1
+A01708,Meridian Logic,Energy,Mid-Market,AMER,23,Core Suite,101193,1,1
+A00261,Silverline Cloud,Manufacturing,Mid-Market,EMEA,37,Core Suite,101120,3,0.92
+A01645,Northwind Point Ltd,Logistics,Mid-Market,EMEA,54,Core Suite,101105,1,0.92
+A00074,Pinnacle Grid Ltd,Healthcare,Enterprise,AMER,55,Automation Edge,100920,4,1
+A00375,Parallel Works Inc,Financial Services,Mid-Market,AMER,36,Core Suite,100870,3,1
+A00865,Vertex Stream Inc,Public Sector,Mid-Market,AMER,48,Core Suite,100563,3,1
+A00432,BluePeak Point Ltd,Healthcare,Mid-Market,AMER,23,Automation Edge,100247,3,1
+A00025,Aurora Dynamics Ltd,Healthcare,Mid-Market,AMER,21,Automation Edge,99547,3,1
+A01913,Meridian Point Inc,Manufacturing,Enterprise,APAC,44,Analytics Pro,99428,4,0.86
+A01879,Vertex Cloud Inc,Manufacturing,Mid-Market,EMEA,20,Analytics Pro,99345,4,0.92
+A01713,Meridian Labs,Technology,Enterprise,EMEA,48,Core Suite,99054,4,0.92
+A00392,Northwind Bridge Inc,Energy,Mid-Market,AMER,43,Analytics Pro,98605,1,1
+A00195,BluePeak Stream Inc,Financial Services,Mid-Market,APAC,24,Automation Edge,98244,5,0.86
+A00921,BluePeak Stream Inc,Energy,Mid-Market,AMER,55,Analytics Pro,98041,4,1
+A00768,Meridian Stream Inc,Retail,Mid-Market,EMEA,21,Automation Edge,97739,2,0.92
+A01655,Meridian Works Inc,Retail,Mid-Market,EMEA,26,Core Suite,97209,2,0.92
+A00020,Pinnacle Systems Ltd,Technology,Mid-Market,EMEA,31,Analytics Pro,97058,2,0.92
+A00465,BluePeak Grid Ltd,Logistics,Mid-Market,AMER,47,Analytics Pro,96253,2,1
+A01408,Vertex Labs Inc,Telecommunications,Mid-Market,APAC,22,Analytics Pro,95846,5,0.86
+A01859,Aurora Dynamics Ltd,Telecommunications,Mid-Market,APAC,42,Analytics Pro,95836,1,0.86
+A00421,Vertex Bridge Ltd,Public Sector,Mid-Market,AMER,21,Core Suite,95671,2,1
+A01846,Cobalt Grid,Logistics,Enterprise,EMEA,30,Core Suite,95664,2,0.92
+A00800,BluePeak Cloud,Public Sector,Enterprise,AMER,30,Core Suite,95235,4,1
+A01760,BluePeak Systems Inc,Healthcare,Enterprise,AMER,38,Core Suite,94864,5,1
+A01102,Cobalt Point Ltd,Financial Services,Enterprise,AMER,33,Core Suite,94849,3,1
+A01535,Vertex Stream Inc,Financial Services,Mid-Market,AMER,50,Core Suite,92434,1,1
+A00446,Vertex Point Inc,Professional Services,Enterprise,AMER,23,Core Suite,92287,4,1
+A00924,Aurora Bridge Ltd,Manufacturing,Mid-Market,APAC,29,Core Suite,92157,2,0.86
+A01224,Silverline Dynamics,Public Sector,Mid-Market,EMEA,58,Core Suite,92138,1,0.92
+A01074,Cobalt Dynamics,Retail,Mid-Market,AMER,19,Automation Edge,92031,1,1
+A00305,Meridian Bridge Ltd,Public Sector,Mid-Market,AMER,46,Core Suite,91970,2,1
+A01024,Vertex Stream,Public Sector,Mid-Market,AMER,19,Core Suite,91385,4,1
+A00297,Parallel Logic,Retail,Enterprise,EMEA,20,Analytics Pro,91101,5,0.92
+A00899,Aurora Labs,Manufacturing,Mid-Market,EMEA,27,Core Suite,90403,2,0.92
+A00211,BluePeak Bridge,Financial Services,Mid-Market,EMEA,28,Core Suite,89057,2,0.92
+A00609,Pinnacle Works Inc,Telecommunications,Mid-Market,EMEA,47,Automation Edge,88235,3,0.92
+A00713,Cobalt Works,Retail,Mid-Market,AMER,23,Core Suite,87528,1,1
+A01446,Pinnacle Systems Inc,Telecommunications,SMB,AMER,28,Core Suite,87499,1,1
+A01603,Pinnacle Point,Healthcare,Enterprise,EMEA,43,Automation Edge,87365,3,0.92
+A00451,Silverline Systems,Technology,Mid-Market,AMER,34,Analytics Pro,87284,1,1
+A00651,Meridian Systems Ltd,Financial Services,Enterprise,AMER,42,Automation Edge,87232,3,1
+A01329,Pinnacle Stream,Manufacturing,Mid-Market,EMEA,56,Core Suite,87008,1,0.92
+A01755,Meridian Labs,Telecommunications,Mid-Market,APAC,44,Core Suite,86802,3,0.86
+A00065,Vertex Labs,Logistics,Enterprise,EMEA,40,Analytics Pro,86686,3,0.92
+A00427,Granite Bridge Ltd,Professional Services,Mid-Market,AMER,55,Analytics Pro,86557,5,1
+A01686,BluePeak Stream Inc,Professional Services,Mid-Market,AMER,22,Analytics Pro,86217,2,1
+A00141,Northwind Dynamics Inc,Healthcare,Mid-Market,EMEA,31,Automation Edge,85716,1,0.92
+A00044,Northwind Point Inc,Retail,Mid-Market,APAC,48,Core Suite,85100,3,0.86
+A00916,Aurora Dynamics Ltd,Healthcare,Enterprise,AMER,46,Core Suite,84594,1,1
+A01359,Silverline Labs Inc,Financial Services,Mid-Market,APAC,25,Core Suite,84289,3,0.86
+A01499,Northwind Grid Inc,Logistics,Mid-Market,EMEA,45,Analytics Pro,82919,1,0.92
+A00460,Vertex Cloud Ltd,Energy,Mid-Market,AMER,40,Analytics Pro,82478,1,1
+A00989,Aurora Logic,Telecommunications,Mid-Market,EMEA,38,Automation Edge,82353,2,0.92
+A00036,Silverline Labs,Logistics,Mid-Market,AMER,18,Automation Edge,81204,1,1
+A00481,Northwind Stream Ltd,Professional Services,SMB,AMER,22,Core Suite,80672,4,1
+A01625,Cobalt Bridge Inc,Professional Services,Enterprise,EMEA,39,Analytics Pro,80570,2,0.92
+A00191,Granite Dynamics Inc,Professional Services,Mid-Market,AMER,46,Core Suite,80489,1,1
+A00091,Vertex Systems Inc,Financial Services,SMB,AMER,35,Analytics Pro,80277,2,1
+A01077,Northwind Cloud Inc,Healthcare,Mid-Market,APAC,18,Core Suite,80270,4,0.86
+A00959,Parallel Cloud,Telecommunications,Mid-Market,AMER,31,Core Suite,80243,1,1
+A01083,Cobalt Point Ltd,Financial Services,Mid-Market,APAC,51,Core Suite,80149,1,0.86
+A00991,Silverline Logic Inc,Retail,Enterprise,APAC,44,Automation Edge,79477,2,0.86
+A01306,Aurora Labs,Public Sector,Mid-Market,AMER,32,Analytics Pro,79193,4,1
+A00723,Parallel Works Ltd,Telecommunications,Mid-Market,AMER,40,Core Suite,78931,3,1
+A01521,Parallel Labs Inc,Healthcare,Mid-Market,APAC,33,Analytics Pro,78841,2,0.86
+A00665,Vertex Works,Healthcare,Enterprise,AMER,38,Core Suite,78673,5,1
+A00923,Parallel Cloud Ltd,Telecommunications,Mid-Market,AMER,48,Analytics Pro,77911,1,1
+A01465,Northwind Cloud Inc,Technology,Mid-Market,AMER,47,Automation Edge,77708,3,1
+A00113,BluePeak Cloud Ltd,Healthcare,Enterprise,EMEA,24,Core Suite,77314,5,0.92
+A00511,Aurora Systems,Retail,Enterprise,EMEA,24,Core Suite,77147,4,0.92
+A00997,Northwind Systems Ltd,Professional Services,Mid-Market,AMER,27,Core Suite,76448,3,1
+A00331,Northwind Dynamics,Professional Services,Mid-Market,AMER,54,Core Suite,76268,1,1
+A00417,BluePeak Labs,Logistics,Mid-Market,AMER,31,Analytics Pro,75968,3,1
+A01373,Northwind Point Inc,Financial Services,Mid-Market,EMEA,42,Analytics Pro,75866,2,0.92
+A00362,Parallel Stream Inc,Logistics,Mid-Market,EMEA,25,Core Suite,75816,5,0.92
+A01312,Aurora Stream,Public Sector,Enterprise,EMEA,34,Core Suite,75776,4,0.92
+A00951,Meridian Stream,Logistics,Mid-Market,AMER,26,Automation Edge,75679,2,1
+A01657,Parallel Grid Ltd,Financial Services,Mid-Market,EMEA,36,Core Suite,75340,1,0.92
+A00537,Silverline Cloud Inc,Public Sector,Mid-Market,EMEA,26,Core Suite,75063,3,0.92
+A01539,BluePeak Labs Inc,Manufacturing,Mid-Market,AMER,33,Analytics Pro,74880,2,1
+A00056,Cobalt Cloud Inc,Healthcare,SMB,AMER,42,Analytics Pro,74725,3,1
+A01238,Cobalt Dynamics Ltd,Financial Services,Mid-Market,AMER,53,Core Suite,74662,3,1
+A01622,Cobalt Grid Inc,Retail,SMB,AMER,43,Analytics Pro,74310,1,1
+A01824,Parallel Dynamics Ltd,Financial Services,Mid-Market,AMER,54,Analytics Pro,74081,1,1
+A00176,Meridian Grid Inc,Professional Services,Mid-Market,APAC,25,Core Suite,73113,1,0.86
+A00663,Cobalt Point Ltd,Telecommunications,Mid-Market,AMER,46,Core Suite,73005,4,1
+A00545,Parallel Bridge Ltd,Retail,Mid-Market,AMER,33,Core Suite,72964,5,1
+A00879,Meridian Point Inc,Healthcare,Enterprise,AMER,30,Analytics Pro,72613,1,1
+A00666,Granite Bridge Ltd,Healthcare,Mid-Market,AMER,20,Core Suite,72498,1,1
+A00526,Parallel Systems Ltd,Manufacturing,Mid-Market,EMEA,38,Core Suite,72466,1,0.92
+A01070,Aurora Point Ltd,Telecommunications,Mid-Market,AMER,34,Automation Edge,72449,3,1
+A00483,Northwind Logic,Energy,Mid-Market,APAC,27,Core Suite,72259,1,0.86
+A01930,Pinnacle Bridge Ltd,Manufacturing,Mid-Market,AMER,30,Automation Edge,72242,4,1
+A01076,Granite Works Inc,Professional Services,Mid-Market,AMER,18,Core Suite,72173,1,1
+A01679,Granite Logic Ltd,Professional Services,Enterprise,AMER,36,Core Suite,72170,1,1
+A00449,Vertex Logic,Professional Services,Mid-Market,AMER,21,Analytics Pro,72144,3,1
+A00556,Pinnacle Cloud,Financial Services,Mid-Market,AMER,33,Core Suite,72130,3,1
+A01971,BluePeak Dynamics,Healthcare,Mid-Market,APAC,49,Automation Edge,72124,1,0.86
+A00359,Silverline Cloud Ltd,Technology,Mid-Market,APAC,18,Analytics Pro,71924,3,0.86
+A00356,Parallel Works,Healthcare,Mid-Market,EMEA,21,Core Suite,71877,2,0.92
+A00945,Vertex Dynamics Ltd,Telecommunications,Mid-Market,AMER,43,Core Suite,71546,1,1
+A01769,Parallel Cloud Ltd,Telecommunications,Enterprise,EMEA,43,Core Suite,71355,1,0.92
+A00616,Aurora Cloud Ltd,Professional Services,Mid-Market,AMER,20,Analytics Pro,71249,1,1
+A00271,Pinnacle Point,Energy,Mid-Market,APAC,54,Automation Edge,71094,2,0.86
+A01715,Northwind Grid,Financial Services,Mid-Market,AMER,16,Core Suite,71068,1,1
+A01229,Aurora Stream Inc,Technology,Mid-Market,AMER,39,Core Suite,70421,2,1
+A00910,Granite Bridge Ltd,Technology,Mid-Market,APAC,27,Analytics Pro,70135,1,0.86
+A01058,Northwind Point Inc,Telecommunications,Mid-Market,AMER,32,Core Suite,70044,1,1
+A01168,Cobalt Stream Inc,Logistics,Mid-Market,APAC,37,Automation Edge,69935,4,0.86
+A01951,Parallel Labs,Professional Services,Mid-Market,AMER,26,Automation Edge,69862,1,1
+A00365,Aurora Bridge Inc,Retail,Mid-Market,APAC,24,Core Suite,69819,1,0.86
+A01390,Aurora Point Inc,Telecommunications,SMB,AMER,16,Core Suite,69625,2,1
+A01030,BluePeak Point Ltd,Public Sector,Mid-Market,EMEA,50,Analytics Pro,69580,4,0.92
+A01997,Meridian Logic Inc,Healthcare,Mid-Market,EMEA,43,Core Suite,69532,1,0.92
+A00973,Meridian Systems Ltd,Healthcare,Mid-Market,AMER,41,Analytics Pro,68886,2,1
+A01827,Northwind Logic Inc,Retail,Enterprise,EMEA,31,Core Suite,68629,5,0.92
+A01043,Pinnacle Cloud Ltd,Public Sector,SMB,APAC,38,Analytics Pro,68494,4,0.86
+A00547,Vertex Bridge Ltd,Technology,Mid-Market,AMER,27,Automation Edge,68449,4,1
+A00108,BluePeak Bridge,Manufacturing,SMB,AMER,22,Analytics Pro,68208,2,1
+A00382,Silverline Bridge,Logistics,SMB,APAC,45,Analytics Pro,68194,2,0.86
+A01980,BluePeak Logic,Logistics,Mid-Market,APAC,49,Core Suite,67958,2,0.86
+A00269,Vertex Logic Inc,Energy,Mid-Market,EMEA,41,Automation Edge,67904,1,0.92
+A00920,Pinnacle Cloud,Technology,Mid-Market,AMER,42,Analytics Pro,67510,2,1
+A00735,Parallel Point Ltd,Financial Services,Enterprise,AMER,39,Analytics Pro,67133,4,1
+A00347,Pinnacle Bridge Inc,Healthcare,Mid-Market,AMER,34,Analytics Pro,66958,1,1
+A00771,Granite Labs,Financial Services,SMB,AMER,43,Core Suite,66953,1,1
+A01422,Silverline Systems Ltd,Telecommunications,Mid-Market,APAC,41,Analytics Pro,66827,3,0.86
+A01791,Pinnacle Stream Inc,Healthcare,Mid-Market,EMEA,16,Core Suite,66797,1,0.92
+A00290,Cobalt Works Inc,Professional Services,Mid-Market,AMER,25,Automation Edge,66742,2,1
+A01029,Vertex Cloud Inc,Healthcare,Enterprise,EMEA,46,Analytics Pro,66633,5,0.92
+A00077,Pinnacle Logic Inc,Energy,SMB,EMEA,27,Core Suite,66449,2,0.92
+A00903,Granite Dynamics Inc,Public Sector,Mid-Market,AMER,26,Analytics Pro,66369,3,1
+A00876,Northwind Cloud Inc,Technology,Mid-Market,EMEA,55,Analytics Pro,65942,1,0.92
+A01109,Northwind Labs,Energy,Mid-Market,AMER,50,Automation Edge,65862,2,1
+A01606,Northwind Logic,Energy,Mid-Market,EMEA,20,Core Suite,65814,2,0.92
+A01580,Aurora Cloud,Financial Services,Mid-Market,EMEA,51,Automation Edge,65666,1,0.92
+A01724,BluePeak Stream Ltd,Financial Services,Enterprise,EMEA,46,Analytics Pro,65524,4,0.92
+A01059,Pinnacle Systems Ltd,Telecommunications,Mid-Market,APAC,37,Analytics Pro,65043,3,0.86
+A01904,BluePeak Logic Ltd,Retail,Mid-Market,APAC,51,Automation Edge,64915,1,0.86
+A01484,Northwind Stream Inc,Energy,Mid-Market,APAC,25,Analytics Pro,64859,2,0.86
+A01970,Granite Dynamics Ltd,Energy,Mid-Market,EMEA,16,Automation Edge,64838,3,0.92
+A00309,Aurora Stream,Technology,Mid-Market,EMEA,23,Analytics Pro,64549,1,0.92
+A00562,Cobalt Grid Ltd,Retail,Mid-Market,AMER,26,Automation Edge,64391,2,1
+A01003,BluePeak Labs Ltd,Technology,Mid-Market,EMEA,39,Analytics Pro,64328,1,0.92
+A01208,Parallel Dynamics Inc,Public Sector,Enterprise,AMER,32,Analytics Pro,64064,1,1
+A01844,Meridian Cloud Inc,Public Sector,SMB,EMEA,41,Analytics Pro,63975,3,0.92
+A00426,Aurora Bridge Ltd,Public Sector,Mid-Market,AMER,17,Automation Edge,63464,2,1
+A01651,Aurora Grid Inc,Energy,Mid-Market,AMER,52,Analytics Pro,63177,2,1
+A01196,Cobalt Stream Inc,Technology,Mid-Market,AMER,51,Analytics Pro,63036,4,1
+A01783,Aurora Bridge,Manufacturing,Mid-Market,AMER,34,Analytics Pro,61955,1,1
+A00389,Meridian Labs Ltd,Manufacturing,Mid-Market,AMER,35,Core Suite,61948,1,1
+A01887,Pinnacle Dynamics Inc,Energy,Mid-Market,AMER,16,Core Suite,61838,1,1
+A00391,Pinnacle Point Ltd,Telecommunications,Mid-Market,AMER,54,Automation Edge,61684,1,1
+A01130,BluePeak Stream Ltd,Logistics,SMB,AMER,42,Analytics Pro,61486,2,1
+A01425,Vertex Grid,Public Sector,Enterprise,AMER,24,Core Suite,61431,5,1
+A00403,Northwind Grid Ltd,Manufacturing,Mid-Market,APAC,38,Automation Edge,61384,1,0.86
+A00947,Silverline Dynamics,Technology,Mid-Market,AMER,27,Core Suite,61343,2,1
+A01338,Cobalt Bridge Inc,Healthcare,Mid-Market,APAC,47,Automation Edge,61222,2,0.86
+A00550,Pinnacle Dynamics,Manufacturing,Mid-Market,AMER,22,Analytics Pro,61187,3,1
+A01267,Aurora Cloud Ltd,Telecommunications,Mid-Market,AMER,32,Automation Edge,61021,3,1
+A01621,Pinnacle Stream Ltd,Public Sector,Mid-Market,EMEA,16,Core Suite,60782,2,0.92
+A01160,Silverline Cloud Ltd,Energy,Mid-Market,APAC,37,Analytics Pro,60615,3,0.86
+A00796,Meridian Dynamics Ltd,Professional Services,Mid-Market,EMEA,26,Core Suite,60593,3,0.92
+A01385,Aurora Cloud Inc,Public Sector,Enterprise,AMER,22,Automation Edge,60111,2,1
+A01445,Cobalt Stream Ltd,Professional Services,SMB,APAC,46,Automation Edge,59938,1,0.86
+A00364,Silverline Point Inc,Public Sector,Mid-Market,APAC,54,Core Suite,59514,3,0.86
+A01146,Aurora Labs,Energy,Mid-Market,EMEA,24,Core Suite,59431,1,0.92
+A01350,BluePeak Cloud Inc,Retail,Mid-Market,AMER,45,Core Suite,59240,2,1
+A01480,BluePeak Grid Ltd,Retail,Mid-Market,AMER,21,Analytics Pro,59132,2,1
+A01209,Aurora Works,Healthcare,Mid-Market,AMER,53,Core Suite,59110,3,1
+A00914,Granite Cloud Inc,Public Sector,SMB,EMEA,32,Analytics Pro,59029,3,0.92
+A00961,Pinnacle Systems,Logistics,SMB,AMER,13,Core Suite,58959,2,1
+A01431,Cobalt Grid,Energy,Mid-Market,AMER,18,Core Suite,58856,1,1
+A00904,Pinnacle Systems Ltd,Public Sector,Mid-Market,EMEA,48,Analytics Pro,58819,4,0.92
+A00956,BluePeak Dynamics Inc,Retail,Mid-Market,EMEA,48,Analytics Pro,58563,2,0.92
+A01442,Meridian Cloud,Professional Services,Mid-Market,APAC,44,Analytics Pro,58347,4,0.86
+A00084,BluePeak Stream Inc,Financial Services,Mid-Market,AMER,16,Core Suite,58326,2,1
+A01347,Silverline Point Ltd,Professional Services,Mid-Market,AMER,20,Analytics Pro,58185,1,1
+A00118,Parallel Grid Ltd,Retail,Mid-Market,EMEA,19,Analytics Pro,57803,1,0.92
+A01688,Vertex Labs,Telecommunications,Mid-Market,APAC,28,Core Suite,57666,3,0.86
+A00864,Aurora Cloud Ltd,Energy,Mid-Market,APAC,14,Core Suite,56701,1,0.86
+A00852,Granite Grid Inc,Retail,Mid-Market,AMER,26,Analytics Pro,56650,1,1
+A01850,Cobalt Point Ltd,Financial Services,SMB,EMEA,22,Automation Edge,56362,4,0.92
+A01972,Meridian Cloud,Telecommunications,Mid-Market,EMEA,24,Analytics Pro,56238,1,0.92
+A00540,Granite Logic,Manufacturing,SMB,AMER,21,Analytics Pro,55769,3,1
+A01530,Pinnacle Systems Inc,Energy,Mid-Market,AMER,44,Core Suite,55712,1,1
+A01067,Aurora Logic Ltd,Professional Services,Mid-Market,AMER,50,Analytics Pro,55578,1,1
+A01235,BluePeak Dynamics Inc,Healthcare,Mid-Market,EMEA,53,Core Suite,55339,5,0.92
+A00652,Northwind Stream Inc,Financial Services,Mid-Market,EMEA,18,Automation Edge,55144,2,0.92
+A01991,Meridian Labs Ltd,Energy,Mid-Market,AMER,44,Analytics Pro,54978,3,1
+A01152,Cobalt Stream Inc,Manufacturing,Mid-Market,APAC,49,Automation Edge,54588,4,0.86
+A00157,Granite Logic Inc,Public Sector,Mid-Market,AMER,24,Analytics Pro,54336,1,1
+A00270,Granite Systems,Manufacturing,Mid-Market,AMER,17,Automation Edge,54250,2,1
+A00218,Meridian Systems Inc,Technology,Mid-Market,APAC,16,Core Suite,53508,3,0.86
+A00253,Granite Dynamics Ltd,Public Sector,Mid-Market,EMEA,32,Core Suite,53457,2,0.92
+A01006,Northwind Systems Inc,Logistics,Mid-Market,APAC,23,Automation Edge,53448,1,0.86
+A00357,BluePeak Works Ltd,Telecommunications,Mid-Market,AMER,26,Core Suite,53332,2,1
+A00072,Cobalt Grid Inc,Telecommunications,Mid-Market,AMER,50,Automation Edge,53308,2,1
+A01299,BluePeak Grid Ltd,Retail,SMB,AMER,22,Analytics Pro,53129,4,1
+A00934,Northwind Stream Inc,Professional Services,Mid-Market,EMEA,49,Analytics Pro,52686,2,0.92
+A01975,Aurora Systems Inc,Healthcare,Mid-Market,APAC,29,Analytics Pro,52237,2,0.86
+A01099,Northwind Systems Inc,Telecommunications,Mid-Market,APAC,32,Analytics Pro,52055,2,0.86
+A00167,Pinnacle Grid Inc,Technology,Mid-Market,AMER,22,Core Suite,51962,1,1
+A01153,Northwind Point,Financial Services,Mid-Market,EMEA,24,Automation Edge,51814,2,0.92
+A00844,Aurora Bridge Inc,Manufacturing,Mid-Market,EMEA,49,Automation Edge,51343,3,0.92
+A01731,Cobalt Cloud Ltd,Retail,Mid-Market,EMEA,24,Core Suite,51223,3,0.92
+A01884,Granite Cloud,Manufacturing,SMB,AMER,42,Core Suite,51217,5,1
+A01585,Silverline Systems,Public Sector,Mid-Market,AMER,18,Core Suite,51200,4,1
+A01283,Vertex Logic Inc,Technology,Mid-Market,EMEA,25,Core Suite,51193,1,0.92
+A00810,Silverline Labs Inc,Healthcare,Mid-Market,EMEA,16,Automation Edge,51187,2,0.92
+A00098,Vertex Cloud,Telecommunications,Mid-Market,APAC,45,Analytics Pro,51127,1,0.86
+A01785,Vertex Point Inc,Public Sector,Mid-Market,EMEA,32,Core Suite,51089,2,0.92
+A01470,Parallel Grid,Energy,Mid-Market,EMEA,26,Core Suite,51070,1,0.92
+A01345,Aurora Point Ltd,Professional Services,SMB,AMER,28,Analytics Pro,50824,4,1
+A00193,Silverline Dynamics Inc,Retail,SMB,EMEA,39,Automation Edge,50780,5,0.92
+A00476,Northwind Cloud Ltd,Technology,SMB,APAC,45,Core Suite,50763,1,0.86
+A00858,Pinnacle Grid,Financial Services,Mid-Market,AMER,17,Analytics Pro,50679,1,1
+A01492,Aurora Systems Inc,Logistics,Mid-Market,EMEA,28,Analytics Pro,50670,2,0.92
+A01303,BluePeak Systems Inc,Retail,Mid-Market,APAC,18,Automation Edge,50591,3,0.86
+A01051,BluePeak Cloud Ltd,Retail,Mid-Market,AMER,47,Core Suite,50334,1,1
+A01360,Meridian Logic,Healthcare,SMB,AMER,30,Core Suite,50130,1,1
+A01103,Aurora Dynamics Ltd,Technology,SMB,AMER,43,Core Suite,50089,1,1
+A01352,Silverline Point,Public Sector,Mid-Market,AMER,26,Analytics Pro,50036,2,1
+A00266,Pinnacle Stream Ltd,Healthcare,Mid-Market,EMEA,18,Core Suite,49937,2,0.92
+A00151,Silverline Dynamics Ltd,Retail,Mid-Market,APAC,53,Analytics Pro,49932,1,0.86
+A00424,Granite Systems,Logistics,Mid-Market,AMER,28,Analytics Pro,49927,1,1
+A00964,Parallel Cloud Inc,Manufacturing,Mid-Market,EMEA,49,Core Suite,49841,1,0.92
+A00186,BluePeak Grid Ltd,Manufacturing,SMB,AMER,37,Core Suite,49751,5,1
+A01676,Meridian Logic Ltd,Telecommunications,SMB,EMEA,35,Core Suite,49694,1,0.92
+A00133,Vertex Point,Retail,Enterprise,AMER,46,Analytics Pro,49646,3,1
+A01684,Pinnacle Works Ltd,Manufacturing,SMB,AMER,36,Core Suite,49548,3,1
+A00635,Granite Stream,Healthcare,Mid-Market,AMER,37,Analytics Pro,49451,4,1
+A01302,Parallel Systems Inc,Energy,Mid-Market,AMER,25,Core Suite,49266,2,1
+A00383,Cobalt Logic,Telecommunications,Mid-Market,AMER,24,Analytics Pro,49101,3,1
+A00278,Parallel Dynamics,Logistics,Mid-Market,AMER,41,Core Suite,49068,4,1
+A00568,Aurora Works Ltd,Public Sector,Mid-Market,AMER,28,Analytics Pro,48624,1,1
+A01429,Parallel Systems,Healthcare,SMB,AMER,12,Automation Edge,48275,3,1
+A00174,Aurora Bridge,Technology,Mid-Market,EMEA,42,Automation Edge,48273,2,0.92
+A01976,Cobalt Logic Ltd,Professional Services,Mid-Market,APAC,46,Analytics Pro,48250,2,0.86
+A00144,Pinnacle Dynamics,Logistics,SMB,EMEA,31,Analytics Pro,48242,4,0.92
+A01144,Parallel Point,Public Sector,SMB,AMER,29,Analytics Pro,48142,2,1
+A00648,Silverline Cloud Ltd,Retail,Mid-Market,AMER,21,Core Suite,48108,5,1
+A00949,Pinnacle Stream Ltd,Financial Services,SMB,AMER,16,Core Suite,48090,1,1
+A01354,Pinnacle Logic,Financial Services,Mid-Market,AMER,21,Core Suite,47639,5,1
+A00722,Parallel Point,Telecommunications,Mid-Market,AMER,40,Analytics Pro,47529,2,1
+A00268,Granite Works Ltd,Healthcare,Mid-Market,AMER,28,Automation Edge,47434,2,1
+A00950,Granite Stream,Telecommunications,Mid-Market,AMER,49,Core Suite,47327,3,1
+A01358,Cobalt Logic Ltd,Healthcare,SMB,AMER,28,Automation Edge,47233,3,1
+A00911,Parallel Bridge Inc,Healthcare,Mid-Market,APAC,26,Automation Edge,47115,1,0.86
+A01579,Parallel Works Inc,Technology,Mid-Market,APAC,23,Analytics Pro,46925,3,0.86
+A01638,Parallel Works Ltd,Energy,Mid-Market,AMER,21,Automation Edge,46893,1,1
+A01407,Vertex Grid,Telecommunications,Enterprise,APAC,21,Automation Edge,46821,3,0.86
+A01553,Pinnacle Works Ltd,Energy,SMB,AMER,38,Analytics Pro,46745,4,1
+A00387,Meridian Systems Ltd,Technology,Mid-Market,AMER,21,Core Suite,46663,2,1
+A00559,BluePeak Point,Energy,Mid-Market,AMER,50,Core Suite,46583,1,1
+A00546,Pinnacle Cloud Ltd,Financial Services,Mid-Market,APAC,14,Automation Edge,46486,1,0.86
+A00124,Parallel Dynamics Inc,Technology,SMB,AMER,42,Core Suite,46424,2,1
+A01988,Pinnacle Point Inc,Energy,Mid-Market,APAC,20,Analytics Pro,46373,1,0.86
+A01468,Aurora Stream Inc,Financial Services,Mid-Market,AMER,41,Core Suite,45927,1,1
+A00335,Pinnacle Systems Ltd,Retail,Mid-Market,AMER,15,Analytics Pro,45907,1,1
+A01104,Pinnacle Dynamics Ltd,Energy,SMB,AMER,20,Core Suite,45651,2,1
+A01092,Cobalt Logic Ltd,Financial Services,SMB,APAC,16,Analytics Pro,45543,1,0.86
+A00724,Parallel Cloud,Manufacturing,SMB,AMER,23,Core Suite,45535,1,1
+A01710,Parallel Dynamics,Retail,Mid-Market,EMEA,20,Analytics Pro,45489,1,0.92
+A01703,Cobalt Dynamics Inc,Telecommunications,SMB,AMER,29,Automation Edge,44997,1,1
+A00683,Pinnacle Systems Ltd,Telecommunications,Mid-Market,EMEA,43,Automation Edge,44969,1,0.92
+A01261,Aurora Labs Ltd,Energy,Mid-Market,EMEA,29,Analytics Pro,44801,1,0.92
+A01983,Vertex Labs Ltd,Public Sector,SMB,AMER,35,Core Suite,44768,5,1
+A01001,Aurora Logic Inc,Public Sector,Mid-Market,AMER,18,Analytics Pro,44641,1,1
+A01531,Meridian Grid Inc,Telecommunications,Mid-Market,AMER,51,Analytics Pro,44451,1,1
+A01134,Vertex Labs Inc,Telecommunications,Mid-Market,AMER,17,Automation Edge,44345,5,1
+A01231,Aurora Labs Inc,Technology,SMB,AMER,35,Analytics Pro,44302,1,1
+A01087,Pinnacle Point,Technology,Mid-Market,APAC,22,Analytics Pro,44228,1,0.86
+A00022,Cobalt Grid Ltd,Logistics,SMB,APAC,27,Automation Edge,44166,3,0.86
+A00560,Vertex Cloud Inc,Public Sector,SMB,AMER,40,Analytics Pro,44008,1,1
+A00486,Granite Bridge Inc,Technology,Mid-Market,AMER,35,Core Suite,43839,1,1
+A00718,BluePeak Grid Ltd,Professional Services,Mid-Market,AMER,31,Core Suite,43746,3,1
+A00610,Cobalt Cloud Ltd,Retail,Mid-Market,AMER,37,Core Suite,43740,4,1
+A00453,Parallel Cloud,Logistics,Mid-Market,EMEA,50,Core Suite,43666,3,0.92
+A00142,Vertex Cloud Inc,Healthcare,Mid-Market,EMEA,26,Core Suite,43579,2,0.92
+A01023,Silverline Logic Ltd,Logistics,SMB,AMER,40,Core Suite,43566,4,1
+A01081,BluePeak Systems Inc,Public Sector,SMB,AMER,32,Automation Edge,43479,1,1
+A00208,Cobalt Grid Ltd,Telecommunications,Mid-Market,AMER,35,Core Suite,43431,4,1
+A00095,Aurora Stream Ltd,Energy,Mid-Market,EMEA,23,Analytics Pro,43014,4,0.92
+A00007,Aurora Point,Financial Services,Mid-Market,EMEA,31,Automation Edge,42921,1,0.92
+A01954,Pinnacle Grid Ltd,Logistics,SMB,AMER,28,Automation Edge,42763,1,1
+A01554,Silverline Bridge Ltd,Professional Services,Mid-Market,AMER,37,Core Suite,42715,1,1
+A00770,Meridian Stream Ltd,Healthcare,Mid-Market,AMER,12,Automation Edge,42636,3,1
+A00675,BluePeak Stream,Manufacturing,Mid-Market,AMER,44,Core Suite,42598,4,1
+A00361,Northwind Bridge Ltd,Manufacturing,Mid-Market,AMER,17,Analytics Pro,42536,4,1
+A00960,Northwind Labs Ltd,Financial Services,Mid-Market,EMEA,29,Core Suite,42464,4,0.92
+A00341,Northwind Stream Inc,Financial Services,Mid-Market,EMEA,37,Core Suite,42433,3,0.92
+A00172,Northwind Bridge,Logistics,Mid-Market,EMEA,16,Automation Edge,42389,1,0.92
+A01395,Granite Stream Inc,Public Sector,Mid-Market,APAC,21,Analytics Pro,42091,3,0.86
+A01404,Meridian Point Inc,Logistics,Mid-Market,AMER,26,Core Suite,42075,4,1
+A00475,Northwind Grid Inc,Public Sector,Enterprise,EMEA,28,Core Suite,41980,4,0.92
+A00439,Granite Systems Ltd,Telecommunications,Mid-Market,EMEA,20,Analytics Pro,41903,2,0.92
+A01610,Granite Labs Ltd,Energy,Mid-Market,AMER,51,Core Suite,41726,3,1
+A00897,Vertex Labs,Manufacturing,SMB,EMEA,28,Analytics Pro,41710,1,0.92
+A01794,Aurora Systems Inc,Logistics,Mid-Market,AMER,31,Analytics Pro,41659,2,1
+A00720,Cobalt Grid Inc,Financial Services,Mid-Market,EMEA,38,Automation Edge,41635,1,0.92
+A01959,Silverline Logic,Technology,Mid-Market,AMER,29,Automation Edge,41599,2,1
+A01914,Parallel Stream Inc,Public Sector,Mid-Market,APAC,18,Core Suite,41502,4,0.86
+A00298,Silverline Grid Inc,Logistics,Mid-Market,AMER,17,Analytics Pro,41340,1,1
+A01138,Cobalt Logic Ltd,Public Sector,Mid-Market,APAC,43,Core Suite,41340,2,0.86
+A01862,BluePeak Labs Inc,Public Sector,Mid-Market,EMEA,43,Core Suite,41103,1,0.92
+A01423,Parallel Stream Ltd,Manufacturing,Mid-Market,AMER,38,Analytics Pro,41094,1,1
+A00781,Silverline Labs Inc,Public Sector,Mid-Market,AMER,44,Automation Edge,41038,1,1
+A01780,Granite Cloud Ltd,Professional Services,Mid-Market,AMER,35,Analytics Pro,41004,1,1
+A01770,Cobalt Works Ltd,Energy,SMB,APAC,23,Core Suite,40963,3,0.86
+A01035,Pinnacle Works Inc,Telecommunications,Mid-Market,EMEA,33,Core Suite,40908,3,0.92
+A01639,BluePeak Systems Inc,Manufacturing,SMB,AMER,28,Analytics Pro,40878,3,1
+A01875,Parallel Point Inc,Telecommunications,Mid-Market,AMER,37,Analytics Pro,40859,1,1
+A01430,Northwind Systems Ltd,Technology,SMB,EMEA,12,Analytics Pro,40801,2,0.92
+A00750,Granite Cloud Ltd,Healthcare,Mid-Market,EMEA,19,Core Suite,40781,1,0.92
+A01328,Northwind Bridge Inc,Healthcare,Mid-Market,EMEA,19,Analytics Pro,40732,1,0.92
+A01026,Cobalt Systems Inc,Telecommunications,SMB,EMEA,42,Core Suite,40625,3,0.92
+A00103,Cobalt Point Inc,Healthcare,Mid-Market,AMER,13,Automation Edge,40568,1,1
+A00758,Meridian Works,Public Sector,Mid-Market,AMER,39,Core Suite,40541,2,1
+A01280,Northwind Grid Ltd,Financial Services,Enterprise,EMEA,44,Analytics Pro,40402,4,0.92
+A01368,Pinnacle Dynamics Ltd,Public Sector,Mid-Market,AMER,14,Core Suite,40276,1,1
+A01757,Parallel Point Ltd,Logistics,Mid-Market,EMEA,36,Core Suite,40188,1,0.92
+A01572,Northwind Logic Inc,Healthcare,Mid-Market,AMER,33,Core Suite,39869,2,1
+A01164,Pinnacle Works Ltd,Financial Services,Mid-Market,EMEA,41,Core Suite,39812,2,0.92
+A01671,Aurora Labs Inc,Telecommunications,Mid-Market,AMER,28,Automation Edge,39657,2,1
+A01800,Northwind Stream Ltd,Manufacturing,Mid-Market,APAC,25,Analytics Pro,39464,1,0.86
+A00041,Vertex Labs Ltd,Professional Services,Mid-Market,AMER,27,Analytics Pro,39338,2,1
+A00289,Pinnacle Cloud Ltd,Retail,SMB,AMER,26,Core Suite,39328,2,1
+A00803,BluePeak Labs Inc,Professional Services,Mid-Market,EMEA,17,Core Suite,39022,2,0.92
+A00574,Pinnacle Grid Inc,Professional Services,Mid-Market,AMER,40,Analytics Pro,38903,2,1
+A00948,Cobalt Point Inc,Energy,Mid-Market,AMER,35,Analytics Pro,38898,4,1
+A00316,Cobalt Cloud,Energy,Mid-Market,AMER,41,Analytics Pro,38863,3,1
+A00638,Aurora Cloud Ltd,Telecommunications,Mid-Market,AMER,43,Core Suite,38741,3,1
+A01121,BluePeak Logic,Financial Services,SMB,EMEA,33,Analytics Pro,38537,3,0.92
+A00515,Aurora Stream,Energy,SMB,AMER,28,Analytics Pro,38514,1,1
+A00489,Pinnacle Point Ltd,Healthcare,Mid-Market,AMER,26,Analytics Pro,38511,3,1
+A01183,Aurora Dynamics,Technology,Mid-Market,AMER,39,Core Suite,38355,1,1
+A01412,Silverline Stream Inc,Logistics,Mid-Market,AMER,26,Analytics Pro,38348,2,1
+A00053,Aurora Logic Inc,Energy,Mid-Market,EMEA,40,Core Suite,38295,3,0.92
+A01873,Pinnacle Works Ltd,Logistics,Mid-Market,EMEA,44,Core Suite,38248,1,0.92
+A00033,Parallel Cloud Inc,Professional Services,Mid-Market,EMEA,25,Analytics Pro,38161,1,0.92
+A00143,Aurora Labs Ltd,Manufacturing,Mid-Market,EMEA,18,Core Suite,37985,1,0.92
+A01752,BluePeak Bridge Ltd,Professional Services,SMB,AMER,28,Analytics Pro,37909,1,1
+A00485,Parallel Cloud,Professional Services,SMB,EMEA,24,Analytics Pro,37703,2,0.92
+A01694,Aurora Grid,Manufacturing,Mid-Market,AMER,21,Analytics Pro,37417,3,1
+A01116,Silverline Systems Inc,Logistics,SMB,AMER,29,Analytics Pro,37396,1,1
+A00147,BluePeak Works Ltd,Financial Services,SMB,EMEA,29,Analytics Pro,37318,3,0.92
+A01377,Northwind Dynamics Ltd,Healthcare,Mid-Market,EMEA,51,Analytics Pro,37273,2,0.92
+A01894,Vertex Works Inc,Technology,Mid-Market,APAC,18,Core Suite,37271,4,0.86
+A01673,BluePeak Stream,Manufacturing,Mid-Market,EMEA,33,Core Suite,37241,1,0.92
+A00254,Vertex Bridge,Professional Services,Mid-Market,AMER,47,Analytics Pro,37056,3,1
+A01315,Aurora Systems,Financial Services,Mid-Market,EMEA,31,Analytics Pro,36943,2,0.92
+A01849,Silverline Grid Ltd,Manufacturing,SMB,APAC,40,Core Suite,36676,1,0.86
+A01194,Cobalt Grid Ltd,Professional Services,Mid-Market,AMER,40,Analytics Pro,36667,4,1
+A01272,Silverline Logic Ltd,Logistics,SMB,EMEA,14,Analytics Pro,36663,1,0.92
+A01210,Granite Labs Inc,Financial Services,Mid-Market,EMEA,34,Automation Edge,36635,1,0.92
+A01198,Meridian Dynamics,Retail,SMB,AMER,29,Analytics Pro,36583,1,1
+A01723,Northwind Point Ltd,Healthcare,Mid-Market,APAC,43,Core Suite,36579,1,0.86
+A01936,Parallel Stream,Energy,SMB,AMER,27,Analytics Pro,36455,1,1
+A00727,BluePeak Works Ltd,Logistics,Mid-Market,AMER,39,Analytics Pro,36451,1,1
+A00520,Northwind Systems Inc,Manufacturing,Mid-Market,EMEA,38,Core Suite,36409,3,0.92
+A01662,Aurora Works Inc,Energy,Mid-Market,APAC,12,Analytics Pro,36279,3,0.86
+A00863,Silverline Grid Ltd,Technology,Mid-Market,EMEA,33,Analytics Pro,36221,3,0.92
+A01257,Parallel Works Inc,Healthcare,Mid-Market,EMEA,41,Core Suite,36160,5,0.92
+A01450,Silverline Stream Inc,Healthcare,Mid-Market,APAC,45,Core Suite,36098,5,0.86
+A01569,Parallel Logic Inc,Telecommunications,Mid-Market,EMEA,12,Analytics Pro,36086,1,0.92
+A00152,Pinnacle Point Ltd,Energy,Mid-Market,APAC,27,Automation Edge,35858,1,0.86
+A01366,Vertex Logic Inc,Telecommunications,SMB,EMEA,25,Analytics Pro,35754,3,0.92
+A00965,Aurora Logic Ltd,Professional Services,SMB,APAC,21,Core Suite,35699,2,0.86
+A00889,BluePeak Works,Public Sector,SMB,AMER,19,Automation Edge,35651,3,1
+A01803,Parallel Works Ltd,Technology,Mid-Market,EMEA,19,Automation Edge,35533,2,0.92
+A01989,Granite Labs Ltd,Technology,Mid-Market,AMER,42,Core Suite,35461,3,1
+A00629,Vertex Bridge Inc,Technology,SMB,EMEA,14,Analytics Pro,35417,1,0.92
+A00976,BluePeak Stream Ltd,Financial Services,Mid-Market,AMER,28,Analytics Pro,35318,1,1
+A00968,Pinnacle Grid Inc,Logistics,Mid-Market,AMER,23,Automation Edge,35290,1,1
+A01509,Pinnacle Logic Inc,Healthcare,Mid-Market,AMER,22,Analytics Pro,35029,1,1
+A00561,Parallel Dynamics Ltd,Public Sector,Mid-Market,EMEA,19,Core Suite,34937,1,0.92
+A00484,Meridian Works,Public Sector,SMB,AMER,20,Core Suite,34932,2,1
+A00188,Silverline Stream Ltd,Professional Services,SMB,AMER,35,Core Suite,34792,3,1
+A00494,Meridian Bridge Ltd,Public Sector,Mid-Market,AMER,40,Automation Edge,34682,2,1
+A00939,Parallel Grid Inc,Professional Services,Mid-Market,AMER,25,Core Suite,34507,3,1
+A01200,Cobalt Point Ltd,Retail,Mid-Market,APAC,12,Automation Edge,34373,1,0.86
+A00092,Northwind Grid,Manufacturing,Mid-Market,EMEA,43,Analytics Pro,34242,1,0.92
+A00765,Cobalt Works Ltd,Financial Services,Mid-Market,AMER,40,Analytics Pro,34013,2,1
+A01565,Parallel Stream Ltd,Public Sector,SMB,APAC,26,Automation Edge,34002,2,0.86
+A00203,Pinnacle Cloud Ltd,Professional Services,SMB,AMER,26,Analytics Pro,33991,2,1
+A00048,Cobalt Cloud Ltd,Retail,Mid-Market,EMEA,29,Core Suite,33972,1,0.92
+A00250,Northwind Logic Inc,Telecommunications,SMB,AMER,23,Analytics Pro,33762,1,1
+A00928,Vertex Systems Ltd,Retail,SMB,AMER,12,Analytics Pro,33719,2,1
+A00464,Northwind Systems,Energy,Mid-Market,APAC,15,Analytics Pro,33685,4,0.86
+A00826,Meridian Works Ltd,Public Sector,SMB,AMER,20,Analytics Pro,33600,1,1
+A00097,Vertex Labs Inc,Public Sector,SMB,AMER,12,Core Suite,33511,5,1
+A01143,Silverline Bridge Inc,Energy,Mid-Market,APAC,19,Analytics Pro,33456,1,0.86
+A01891,Northwind Bridge Inc,Financial Services,SMB,AMER,17,Analytics Pro,33449,1,1
+A01290,Silverline Works Ltd,Logistics,Mid-Market,APAC,49,Core Suite,33420,2,0.86
+A01514,Meridian Systems,Retail,Mid-Market,APAC,22,Automation Edge,33118,1,0.86
+A00452,Vertex Dynamics Inc,Telecommunications,Mid-Market,APAC,40,Analytics Pro,33087,1,0.86
+A01619,Parallel Grid,Public Sector,SMB,AMER,35,Automation Edge,33038,3,1
+A01666,BluePeak Stream,Retail,Mid-Market,EMEA,42,Core Suite,33009,1,0.92
+A00524,Vertex Grid,Professional Services,SMB,AMER,29,Core Suite,32962,4,1
+A01020,Vertex Dynamics,Professional Services,SMB,EMEA,16,Core Suite,32951,2,0.92
+A01047,Northwind Grid,Manufacturing,Mid-Market,AMER,38,Core Suite,32896,5,1
+A00710,Silverline Point Ltd,Healthcare,SMB,EMEA,13,Automation Edge,32883,2,0.92
+A01961,Aurora Logic Inc,Retail,Mid-Market,APAC,45,Automation Edge,32774,4,0.86
+A01716,BluePeak Works Inc,Telecommunications,SMB,AMER,12,Core Suite,32701,1,1
+A00258,Vertex Works Ltd,Technology,Mid-Market,AMER,34,Core Suite,32649,1,1
+A01503,Pinnacle Point Inc,Financial Services,Mid-Market,AMER,47,Automation Edge,32492,2,1
+A00518,Parallel Point Ltd,Public Sector,SMB,AMER,41,Analytics Pro,32339,1,1
+A01320,Northwind Systems Ltd,Manufacturing,Mid-Market,AMER,30,Automation Edge,32321,4,1
+A00429,Northwind Logic Ltd,Financial Services,Mid-Market,AMER,28,Core Suite,32257,2,1
+A00618,Meridian Systems,Technology,Mid-Market,APAC,48,Analytics Pro,32127,2,0.86
+A00737,Pinnacle Grid Ltd,Retail,SMB,AMER,19,Core Suite,31971,1,1
+A01034,Cobalt Dynamics,Professional Services,Mid-Market,AMER,13,Core Suite,31912,3,1
+A00168,Meridian Works Ltd,Healthcare,SMB,AMER,41,Analytics Pro,31853,3,1
+A00505,Meridian Labs Ltd,Financial Services,SMB,EMEA,38,Analytics Pro,31796,2,0.92
+A00878,Northwind Logic,Manufacturing,SMB,AMER,28,Analytics Pro,31754,5,1
+A00553,Cobalt Point,Telecommunications,Mid-Market,APAC,19,Analytics Pro,31745,3,0.86
+A00759,Silverline Works,Public Sector,Mid-Market,AMER,37,Core Suite,31665,2,1
+A00171,Silverline Works Ltd,Retail,Mid-Market,EMEA,41,Automation Edge,31619,3,0.92
+A01424,BluePeak Grid,Manufacturing,Mid-Market,AMER,18,Automation Edge,31549,4,1
+A00755,Vertex Bridge Inc,Healthcare,SMB,EMEA,12,Core Suite,31505,3,0.92
+A00503,Vertex Stream,Retail,Mid-Market,AMER,27,Core Suite,31449,3,1
+A00694,Silverline Labs Inc,Retail,Mid-Market,EMEA,20,Core Suite,31437,5,0.92
+A00340,Granite Systems,Public Sector,Mid-Market,AMER,35,Core Suite,31289,5,1
+A00441,Pinnacle Labs Ltd,Energy,Mid-Market,AMER,20,Core Suite,31179,3,1
+A00998,Vertex Point Inc,Retail,Mid-Market,AMER,47,Core Suite,31132,5,1
+A00101,Aurora Systems Ltd,Technology,Mid-Market,AMER,32,Analytics Pro,31019,3,1
+A01458,Northwind Systems Ltd,Financial Services,Mid-Market,AMER,13,Analytics Pro,31011,2,1
+A01670,Meridian Cloud Inc,Energy,Mid-Market,AMER,27,Analytics Pro,30990,4,1
+A01052,Cobalt Logic Inc,Financial Services,SMB,AMER,13,Core Suite,30959,3,1
+A01576,Vertex Works,Technology,Mid-Market,AMER,37,Core Suite,30959,2,1
+A01522,Northwind Bridge Ltd,Healthcare,SMB,AMER,37,Core Suite,30952,1,1
+A01978,BluePeak Bridge Inc,Energy,Mid-Market,EMEA,36,Core Suite,30780,2,0.92
+A00707,Pinnacle Point,Logistics,Mid-Market,AMER,32,Analytics Pro,30605,4,1
+A00824,BluePeak Cloud,Financial Services,SMB,AMER,13,Core Suite,30555,1,1
+A00265,Pinnacle Stream Inc,Energy,Mid-Market,EMEA,16,Core Suite,30436,1,0.92
+A01128,Silverline Labs Inc,Public Sector,SMB,EMEA,22,Core Suite,30434,2,0.92
+A01054,Meridian Labs Inc,Manufacturing,Mid-Market,AMER,16,Analytics Pro,30395,3,1
+A01826,Silverline Bridge Ltd,Public Sector,Mid-Market,EMEA,12,Core Suite,30300,3,0.92
+A00119,Parallel Point,Financial Services,SMB,AMER,12,Core Suite,30224,4,1
+A00580,Cobalt Dynamics,Retail,Mid-Market,EMEA,45,Core Suite,30192,2,0.92
+A00855,Pinnacle Bridge Ltd,Manufacturing,Mid-Market,APAC,20,Core Suite,30150,1,0.86
+A01497,Vertex Bridge Ltd,Professional Services,Mid-Market,EMEA,13,Core Suite,30150,2,0.92
+A00994,Parallel Dynamics Ltd,Logistics,Mid-Market,AMER,50,Automation Edge,30123,3,1
+A01582,Vertex Dynamics,Public Sector,Mid-Market,EMEA,26,Analytics Pro,30101,3,0.92
+A00370,Parallel Stream Ltd,Professional Services,Mid-Market,AMER,12,Analytics Pro,29887,3,1
+A01213,Parallel Works Ltd,Public Sector,Mid-Market,EMEA,16,Core Suite,29877,2,0.92
+A01646,Aurora Bridge Inc,Logistics,SMB,AMER,16,Analytics Pro,29875,1,1
+A00606,Northwind Cloud,Manufacturing,SMB,EMEA,31,Core Suite,29788,1,0.92
+A01331,Vertex Stream,Manufacturing,SMB,EMEA,42,Analytics Pro,29682,4,0.92
+A00122,Aurora Grid,Telecommunications,SMB,AMER,40,Analytics Pro,29656,1,1
+A01277,Parallel Logic,Logistics,Mid-Market,EMEA,12,Automation Edge,29650,2,0.92
+A01137,Cobalt Bridge Inc,Telecommunications,Mid-Market,AMER,12,Automation Edge,29527,2,1
+A01979,Parallel Labs Inc,Healthcare,Mid-Market,EMEA,14,Analytics Pro,29466,2,0.92
+A00775,Cobalt Systems Ltd,Logistics,SMB,EMEA,15,Core Suite,29420,2,0.92
+A01967,Cobalt Bridge,Manufacturing,Mid-Market,AMER,49,Core Suite,29419,1,1
+A00011,Pinnacle Point Inc,Energy,Mid-Market,AMER,42,Core Suite,29270,4,1
+A01394,Northwind Point Ltd,Healthcare,SMB,AMER,17,Core Suite,29256,2,1
+A01031,Granite Works Ltd,Energy,SMB,AMER,26,Core Suite,29199,2,1
+A00984,Meridian Stream Inc,Logistics,SMB,APAC,25,Automation Edge,29181,2,0.86
+A00821,Cobalt Logic Ltd,Logistics,SMB,APAC,28,Core Suite,29114,2,0.86
+A01027,Granite Labs Inc,Energy,SMB,AMER,24,Core Suite,29056,3,1
+A00832,Vertex Systems Ltd,Professional Services,SMB,AMER,17,Analytics Pro,28983,4,1
+A00089,Cobalt Stream Ltd,Technology,Mid-Market,AMER,33,Automation Edge,28963,1,1
+A00958,Granite Point Ltd,Professional Services,Mid-Market,AMER,49,Analytics Pro,28958,2,1
+A00241,Vertex Stream,Telecommunications,SMB,AMER,25,Core Suite,28894,1,1
+A01314,Parallel Bridge,Technology,SMB,AMER,12,Core Suite,28872,2,1
+A00805,Vertex Cloud,Healthcare,Mid-Market,AMER,12,Core Suite,28697,1,1
+A01286,BluePeak Labs,Financial Services,SMB,AMER,12,Analytics Pro,28697,5,1
+A01093,Granite Logic,Financial Services,SMB,EMEA,12,Analytics Pro,28555,3,0.92
+A00731,BluePeak Bridge,Professional Services,Mid-Market,AMER,42,Analytics Pro,28516,5,1
+A00530,BluePeak Dynamics,Technology,Mid-Market,AMER,29,Core Suite,28478,1,1
+A00291,Parallel Grid,Logistics,Mid-Market,AMER,20,Automation Edge,28398,2,1
+A00459,Aurora Logic Ltd,Telecommunications,Mid-Market,AMER,48,Core Suite,28283,1,1
+A00420,Cobalt Labs,Healthcare,Mid-Market,EMEA,12,Analytics Pro,28237,1,0.92
+A00134,Pinnacle Dynamics Ltd,Telecommunications,SMB,AMER,41,Core Suite,28230,1,1
+A01881,Vertex Dynamics Ltd,Professional Services,Mid-Market,AMER,31,Analytics Pro,28204,3,1
+A00368,Aurora Works,Retail,SMB,EMEA,36,Analytics Pro,28088,4,0.92
+A01444,Meridian Works Inc,Public Sector,SMB,APAC,34,Automation Edge,28039,1,0.86
+A00698,BluePeak Bridge Inc,Energy,Mid-Market,EMEA,25,Analytics Pro,27929,1,0.92
+A01375,BluePeak Labs Inc,Retail,SMB,APAC,16,Analytics Pro,27832,3,0.86
+A01909,Cobalt Logic Inc,Telecommunications,SMB,EMEA,37,Core Suite,27826,2,0.92
+A00834,Parallel Logic Inc,Logistics,Mid-Market,APAC,38,Core Suite,27791,1,0.86
+A00374,Silverline Labs Ltd,Technology,SMB,AMER,40,Core Suite,27755,1,1
+A01511,Aurora Works,Technology,SMB,AMER,21,Analytics Pro,27625,1,1
+A01455,Aurora Systems,Manufacturing,Mid-Market,APAC,37,Automation Edge,27589,1,0.86
+A01965,Parallel Systems,Professional Services,Mid-Market,AMER,25,Analytics Pro,27575,3,1
+A01798,Cobalt Bridge Inc,Retail,Mid-Market,EMEA,24,Automation Edge,27403,1,0.92
+A01269,Silverline Dynamics,Healthcare,Mid-Market,AMER,48,Analytics Pro,27290,1,1
+A00442,Meridian Systems,Technology,Mid-Market,AMER,12,Automation Edge,27275,1,1
+A01073,Pinnacle Labs Ltd,Technology,Mid-Market,AMER,46,Core Suite,27178,2,1
+A00662,Parallel Works Ltd,Retail,SMB,AMER,40,Analytics Pro,27172,2,1
+A00014,Vertex Dynamics Ltd,Energy,SMB,AMER,40,Analytics Pro,27146,1,1
+A00877,Vertex Stream,Technology,Mid-Market,AMER,14,Analytics Pro,27128,4,1
+A00149,Meridian Works Inc,Retail,Mid-Market,EMEA,19,Analytics Pro,26942,2,0.92
+A01275,Meridian Stream Ltd,Retail,SMB,AMER,37,Analytics Pro,26924,1,1
+A00221,Vertex Bridge Inc,Public Sector,Mid-Market,AMER,41,Automation Edge,26908,1,1
+A00636,Granite Systems Inc,Technology,Mid-Market,AMER,18,Core Suite,26849,2,1
+A00884,BluePeak Systems Ltd,Healthcare,Mid-Market,APAC,32,Core Suite,26788,3,0.86
+A00669,Northwind Bridge,Manufacturing,SMB,EMEA,27,Analytics Pro,26774,2,0.92
+A00682,Silverline Point,Technology,SMB,AMER,36,Analytics Pro,26737,2,1
+A01032,Vertex Cloud Inc,Technology,SMB,AMER,13,Analytics Pro,26655,2,1
+A00138,Vertex Systems,Telecommunications,Mid-Market,AMER,46,Core Suite,26649,3,1
+A00981,Pinnacle Logic Inc,Financial Services,SMB,AMER,19,Analytics Pro,26548,4,1
+A00315,Northwind Labs Ltd,Telecommunications,SMB,APAC,23,Core Suite,26477,4,0.86
+A00164,Vertex Labs Inc,Professional Services,SMB,AMER,18,Core Suite,26325,3,1
+A01226,Northwind Systems Inc,Financial Services,SMB,AMER,38,Automation Edge,26316,3,1
+A00649,Aurora Cloud Inc,Energy,Mid-Market,AMER,29,Analytics Pro,26301,1,1
+A01244,Aurora Point,Manufacturing,SMB,AMER,18,Core Suite,26086,2,1
+A00551,Vertex Cloud,Professional Services,SMB,APAC,25,Core Suite,26085,4,0.86
+A01139,Pinnacle Bridge,Healthcare,Mid-Market,EMEA,44,Analytics Pro,26047,2,0.92
+A00388,Aurora Grid Ltd,Technology,SMB,AMER,37,Core Suite,26042,2,1
+A00767,Parallel Point Inc,Financial Services,Mid-Market,APAC,32,Automation Edge,26030,4,0.86
+A01905,Aurora Bridge Ltd,Healthcare,SMB,EMEA,26,Core Suite,25967,2,0.92
+A01810,Aurora Cloud Ltd,Energy,SMB,AMER,30,Core Suite,25937,3,1
+A01587,Cobalt Stream Inc,Energy,SMB,AMER,23,Automation Edge,25923,4,1
+A01857,Cobalt Stream Inc,Telecommunications,Mid-Market,AMER,45,Analytics Pro,25917,3,1
+A00161,Northwind Point,Energy,Mid-Market,AMER,19,Core Suite,25823,4,1
+A01242,BluePeak Grid Ltd,Technology,SMB,AMER,28,Core Suite,25801,2,1
+A01340,Granite Cloud Ltd,Professional Services,Mid-Market,APAC,12,Core Suite,25751,3,0.86
+A00829,BluePeak Cloud Inc,Healthcare,Mid-Market,APAC,23,Analytics Pro,25602,3,0.86
+A01512,Northwind Systems Inc,Energy,SMB,AMER,18,Core Suite,25326,3,1
+A00351,Aurora Grid Ltd,Manufacturing,Mid-Market,AMER,21,Core Suite,25303,1,1
+A01528,Granite Stream,Manufacturing,Mid-Market,AMER,37,Analytics Pro,25082,5,1
+A00283,Pinnacle Point Inc,Telecommunications,Mid-Market,AMER,36,Automation Edge,25062,2,1
+A00779,Parallel Labs,Technology,SMB,AMER,33,Core Suite,24997,1,1
+A01421,Silverline Logic Inc,Telecommunications,Mid-Market,AMER,43,Analytics Pro,24978,2,1
+A01677,Northwind Stream Ltd,Energy,Mid-Market,AMER,22,Analytics Pro,24906,1,1
+A00548,Meridian Systems Ltd,Manufacturing,Mid-Market,AMER,40,Core Suite,24840,3,1
+A00658,Granite Grid,Logistics,SMB,EMEA,24,Analytics Pro,24815,1,0.92
+A00496,Northwind Cloud,Healthcare,Mid-Market,EMEA,16,Analytics Pro,24799,2,0.92
+A00776,Aurora Stream Ltd,Energy,Mid-Market,APAC,47,Core Suite,24780,2,0.86
+A00736,Cobalt Logic Inc,Retail,Mid-Market,EMEA,28,Analytics Pro,24777,2,0.92
+A00885,Silverline Logic Inc,Logistics,SMB,AMER,30,Automation Edge,24755,3,1
+A00111,Pinnacle Grid Inc,Healthcare,SMB,APAC,18,Automation Edge,24745,3,0.86
+A01561,Meridian Dynamics Ltd,Telecommunications,SMB,EMEA,34,Core Suite,24554,2,0.92
+A00285,Aurora Bridge Ltd,Manufacturing,Mid-Market,EMEA,21,Automation Edge,24530,4,0.92
+A00312,Vertex Dynamics,Logistics,Mid-Market,EMEA,34,Core Suite,24205,2,0.92
+A01428,Granite Grid Inc,Telecommunications,Mid-Market,AMER,26,Analytics Pro,24169,5,1
+A00857,Pinnacle Works,Technology,SMB,AMER,33,Core Suite,24009,2,1
+A00194,Parallel Dynamics Ltd,Logistics,SMB,EMEA,21,Analytics Pro,23915,1,0.92
+A01508,Meridian Dynamics Inc,Technology,Mid-Market,AMER,12,Core Suite,23915,1,1
+A01730,BluePeak Logic Inc,Retail,SMB,AMER,38,Analytics Pro,23860,2,1
+A01005,Vertex Point,Healthcare,Mid-Market,AMER,48,Core Suite,23848,1,1
+A01372,Meridian Stream Inc,Healthcare,Mid-Market,APAC,26,Core Suite,23832,3,0.86
+A00117,Aurora Works Ltd,Financial Services,SMB,EMEA,35,Core Suite,23688,2,0.92
+A01834,Northwind Works Ltd,Telecommunications,Mid-Market,AMER,19,Analytics Pro,23616,1,1
+A00591,Parallel Labs Inc,Technology,Mid-Market,EMEA,36,Core Suite,23584,2,0.92
+A00688,BluePeak Point Inc,Logistics,SMB,AMER,36,Analytics Pro,23555,4,1
+A01543,Aurora Stream Inc,Financial Services,SMB,AMER,26,Core Suite,23536,3,1
+A00354,Pinnacle Grid,Telecommunications,SMB,AMER,36,Analytics Pro,23497,1,1
+A00235,Vertex Labs Ltd,Financial Services,SMB,EMEA,26,Core Suite,23351,1,0.92
+A01180,Pinnacle Dynamics Inc,Professional Services,SMB,EMEA,37,Analytics Pro,23336,2,0.92
+A01295,Northwind Systems Inc,Financial Services,SMB,AMER,18,Analytics Pro,23286,3,1
+A01705,Cobalt Point Inc,Manufacturing,SMB,APAC,17,Core Suite,23274,2,0.86
+A00982,Cobalt Labs Inc,Retail,Mid-Market,AMER,12,Core Suite,23238,3,1
+A01609,Meridian Dynamics,Public Sector,SMB,AMER,24,Analytics Pro,23117,2,1
+A01858,Vertex Systems Ltd,Energy,Mid-Market,EMEA,40,Automation Edge,23000,1,0.92
+A01877,Granite Dynamics,Financial Services,Mid-Market,AMER,31,Automation Edge,22862,3,1
+A01747,Meridian Stream Ltd,Public Sector,Mid-Market,EMEA,44,Analytics Pro,22635,4,0.92
+A01376,Pinnacle Labs Inc,Manufacturing,SMB,APAC,25,Automation Edge,22377,1,0.86
+A00189,Northwind Works,Professional Services,SMB,AMER,24,Analytics Pro,22343,2,1
+A01240,Parallel Cloud,Technology,SMB,AMER,29,Core Suite,22266,3,1
+A01977,Meridian Labs Ltd,Financial Services,SMB,AMER,28,Automation Edge,22175,1,1
+A00273,Granite Works Inc,Telecommunications,Mid-Market,EMEA,14,Core Suite,22117,3,0.92
+A01460,Vertex Stream,Professional Services,Mid-Market,AMER,38,Automation Edge,22064,3,1
+A00399,Parallel Logic Ltd,Energy,SMB,EMEA,20,Automation Edge,21900,2,0.92
+A01270,Aurora Logic Inc,Technology,SMB,AMER,20,Automation Edge,21851,2,1
+A00931,Meridian Labs,Energy,SMB,EMEA,36,Analytics Pro,21825,2,0.92
+A01570,Vertex Logic,Retail,Mid-Market,EMEA,34,Analytics Pro,21805,3,0.92
+A01478,Granite Stream Ltd,Telecommunications,Mid-Market,EMEA,16,Core Suite,21788,1,0.92
+A01293,Granite Stream Inc,Healthcare,Mid-Market,AMER,20,Core Suite,21770,2,1
+A00908,Granite Point,Healthcare,SMB,AMER,13,Analytics Pro,21758,3,1
+A00267,Parallel Stream Inc,Financial Services,SMB,AMER,37,Core Suite,21688,3,1
+A00661,Vertex Labs Ltd,Logistics,SMB,AMER,12,Analytics Pro,21676,4,1
+A01953,Parallel Stream,Retail,SMB,EMEA,32,Automation Edge,21649,3,0.92
+A01112,Pinnacle Point Ltd,Logistics,Mid-Market,EMEA,40,Core Suite,21633,3,0.92
+A01712,Aurora Labs Inc,Financial Services,Mid-Market,APAC,21,Automation Edge,21629,2,0.86
+A00028,BluePeak Systems,Manufacturing,SMB,EMEA,14,Core Suite,21551,1,0.92
+A01113,Pinnacle Cloud Inc,Public Sector,SMB,AMER,20,Core Suite,21548,1,1
+A00003,Pinnacle Bridge Inc,Professional Services,SMB,AMER,37,Core Suite,21543,2,1
+A00021,Pinnacle Logic,Healthcare,SMB,AMER,12,Analytics Pro,21520,3,1
+A01296,Aurora Logic Inc,Healthcare,SMB,EMEA,33,Core Suite,21478,2,0.92
+A01822,Northwind Stream,Public Sector,SMB,AMER,34,Analytics Pro,21318,3,1
+A01876,Meridian Labs,Energy,SMB,AMER,30,Automation Edge,21304,1,1
+A00706,Silverline Point Inc,Retail,Mid-Market,EMEA,13,Core Suite,21182,1,0.92
+A01415,BluePeak Stream Ltd,Professional Services,Mid-Market,AMER,32,Analytics Pro,21163,1,1
+A00243,Parallel Bridge Ltd,Manufacturing,SMB,AMER,16,Core Suite,21117,2,1
+A01648,Meridian Stream Inc,Technology,Mid-Market,EMEA,41,Analytics Pro,21064,1,0.92
+A01115,Northwind Dynamics Ltd,Logistics,SMB,APAC,25,Core Suite,21055,2,0.86
+A00299,Aurora Labs,Public Sector,Mid-Market,AMER,21,Core Suite,21040,1,1
+A01945,Granite Bridge Inc,Energy,Mid-Market,AMER,33,Automation Edge,20962,1,1
+A01709,Meridian Cloud Ltd,Telecommunications,SMB,EMEA,22,Core Suite,20911,1,0.92
+A01189,Meridian Systems Inc,Healthcare,SMB,AMER,24,Analytics Pro,20899,1,1
+A00901,Meridian Grid,Telecommunications,SMB,EMEA,27,Analytics Pro,20886,2,0.92
+A01127,Aurora Logic,Public Sector,SMB,AMER,20,Core Suite,20865,1,1
+A00345,Cobalt Dynamics,Public Sector,Mid-Market,AMER,38,Analytics Pro,20718,1,1
+A00853,Meridian Grid Ltd,Professional Services,SMB,APAC,28,Analytics Pro,20690,2,0.86
+A00919,Granite Dynamics Ltd,Telecommunications,Mid-Market,EMEA,18,Automation Edge,20630,3,0.92
+A00814,Northwind Grid Ltd,Financial Services,SMB,AMER,22,Automation Edge,20615,1,1
+A01949,Meridian Grid,Technology,Mid-Market,EMEA,16,Automation Edge,20613,2,0.92
+A00930,Parallel Grid,Manufacturing,Mid-Market,AMER,43,Analytics Pro,20563,1,1
+A01584,Granite Logic,Retail,SMB,AMER,21,Automation Edge,20557,5,1
+A01902,Silverline Systems,Healthcare,Mid-Market,EMEA,25,Analytics Pro,20535,2,0.92
+A00376,Silverline Stream Inc,Logistics,SMB,AMER,23,Analytics Pro,20526,1,1
+A01228,Cobalt Labs Ltd,Professional Services,Mid-Market,AMER,43,Core Suite,20466,1,1
+A00871,Northwind Logic,Financial Services,SMB,AMER,30,Analytics Pro,20415,2,1
+A00377,Pinnacle Systems Inc,Technology,SMB,AMER,25,Analytics Pro,20374,2,1
+A01202,Northwind Cloud Inc,Healthcare,SMB,AMER,41,Automation Edge,20350,1,1
+A01815,Northwind Works Ltd,Energy,SMB,APAC,25,Automation Edge,20340,5,0.86
+A01403,Granite Stream Ltd,Logistics,Mid-Market,EMEA,36,Automation Edge,20339,2,0.92
+A00641,Silverline Cloud Inc,Energy,SMB,AMER,16,Analytics Pro,20250,1,1
+A01323,BluePeak Dynamics,Telecommunications,Mid-Market,AMER,24,Analytics Pro,20159,1,1
+A01479,Vertex Systems Ltd,Healthcare,SMB,AMER,29,Core Suite,20104,2,1
+A00943,Parallel Dynamics Inc,Energy,Mid-Market,AMER,27,Automation Edge,20094,2,1
+A01203,Vertex Systems Ltd,Financial Services,Mid-Market,AMER,46,Analytics Pro,20094,1,1
+A00528,Pinnacle Labs Ltd,Manufacturing,SMB,APAC,37,Core Suite,20079,5,0.86
+A01663,BluePeak Logic Ltd,Manufacturing,SMB,EMEA,38,Core Suite,20029,3,0.92
+A01701,Northwind Bridge Inc,Logistics,SMB,EMEA,37,Core Suite,19983,2,0.92
+A01427,Aurora Bridge Inc,Energy,SMB,EMEA,22,Automation Edge,19972,2,0.92
+A01247,Granite Grid Ltd,Public Sector,SMB,EMEA,27,Analytics Pro,19844,2,0.92
+A01653,Cobalt Bridge,Financial Services,SMB,EMEA,16,Core Suite,19782,5,0.92
+A01746,Pinnacle Logic,Telecommunications,SMB,APAC,38,Core Suite,19712,1,0.86
+A00466,Aurora Grid,Logistics,SMB,EMEA,32,Core Suite,19682,3,0.92
+A00677,Granite Stream,Energy,SMB,AMER,20,Core Suite,19548,5,1
+A01205,Vertex Labs,Financial Services,SMB,EMEA,12,Core Suite,19548,2,0.92
+A01150,Northwind Stream,Telecommunications,SMB,EMEA,18,Analytics Pro,19530,2,0.92
+A01595,Silverline Point,Energy,SMB,AMER,18,Core Suite,19478,4,1
+A00199,Granite Bridge Inc,Technology,Mid-Market,EMEA,13,Core Suite,19291,1,0.92
+A00252,Silverline Dynamics Inc,Professional Services,SMB,AMER,12,Core Suite,19216,2,1
+A01174,Aurora Logic Ltd,Retail,SMB,AMER,22,Automation Edge,19216,1,1
+A00942,Pinnacle Bridge,Manufacturing,SMB,AMER,12,Automation Edge,19214,1,1
+A00763,BluePeak Systems Ltd,Professional Services,SMB,AMER,12,Analytics Pro,19172,1,1
+A01778,Northwind Bridge Inc,Financial Services,Mid-Market,AMER,21,Analytics Pro,19157,3,1
+A01782,Pinnacle Cloud,Telecommunications,SMB,AMER,16,Core Suite,19140,1,1
+A00059,Aurora Point Inc,Telecommunications,SMB,EMEA,18,Analytics Pro,19092,4,0.92
+A00696,Vertex Systems Inc,Retail,SMB,AMER,12,Core Suite,19082,1,1
+A00148,Vertex Systems,Manufacturing,SMB,AMER,15,Automation Edge,18952,3,1
+A00504,Aurora Labs Inc,Energy,SMB,AMER,29,Core Suite,18919,2,1
+A00838,Northwind Grid,Telecommunications,SMB,APAC,23,Core Suite,18877,2,0.86
+A01836,Pinnacle Logic Inc,Public Sector,Mid-Market,AMER,12,Automation Edge,18768,2,1
+A01689,Aurora Logic Inc,Logistics,Mid-Market,AMER,41,Analytics Pro,18615,1,1
+A01343,Aurora Bridge,Telecommunications,SMB,AMER,12,Core Suite,18594,1,1
+A00757,Pinnacle Grid Ltd,Public Sector,SMB,EMEA,12,Core Suite,18567,1,0.92
+A00061,Cobalt Bridge Ltd,Public Sector,SMB,AMER,12,Core Suite,18513,1,1
+A00756,Aurora Dynamics Inc,Telecommunications,SMB,EMEA,32,Core Suite,18479,3,0.92
+A01973,Meridian Dynamics,Technology,SMB,AMER,29,Analytics Pro,18429,5,1
+A01687,Granite Cloud Inc,Financial Services,SMB,EMEA,21,Core Suite,18368,5,0.92
+A00685,BluePeak Logic Ltd,Financial Services,Mid-Market,EMEA,44,Analytics Pro,18367,5,0.92
+A01647,Cobalt Bridge Ltd,Energy,SMB,EMEA,25,Core Suite,18309,3,0.92
+A00583,Parallel Labs Ltd,Technology,Mid-Market,APAC,31,Analytics Pro,18239,2,0.86
+A00493,Parallel Works Inc,Logistics,SMB,AMER,29,Analytics Pro,18207,1,1
+A00004,Meridian Systems Inc,Logistics,SMB,AMER,19,Analytics Pro,18179,1,1
+A01513,Aurora Dynamics Inc,Energy,SMB,APAC,12,Automation Edge,18148,3,0.86
+A00200,Aurora Dynamics,Technology,Mid-Market,AMER,23,Automation Edge,18030,2,1
+A00502,Vertex Logic,Healthcare,SMB,AMER,14,Analytics Pro,18010,2,1
+A01488,BluePeak Systems Inc,Retail,SMB,APAC,16,Core Suite,17977,5,0.86
+A01992,Pinnacle Dynamics Ltd,Energy,SMB,AMER,12,Analytics Pro,17892,2,1
+A00457,Parallel Grid,Technology,SMB,AMER,15,Automation Edge,17891,3,1
+A00957,Vertex Cloud Inc,Public Sector,Mid-Market,AMER,33,Core Suite,17883,3,1
+A00334,Cobalt Point Inc,Manufacturing,SMB,AMER,12,Analytics Pro,17875,1,1
+A00030,Granite Stream,Retail,Mid-Market,AMER,18,Core Suite,17871,2,1
+A01938,Pinnacle Grid,Healthcare,Mid-Market,AMER,28,Analytics Pro,17857,2,1
+A01942,Meridian Dynamics Inc,Professional Services,SMB,AMER,26,Analytics Pro,17846,2,1
+A01330,Silverline Logic Inc,Financial Services,SMB,AMER,15,Automation Edge,17842,2,1
+A00861,Aurora Dynamics,Logistics,SMB,EMEA,12,Core Suite,17757,1,0.92
+A01910,Granite Point Ltd,Telecommunications,SMB,AMER,32,Automation Edge,17712,1,1
+A01252,Pinnacle Cloud Inc,Financial Services,SMB,AMER,39,Analytics Pro,17689,2,1
+A00353,BluePeak Cloud Inc,Technology,Mid-Market,EMEA,12,Analytics Pro,17681,2,0.92
+A01088,BluePeak Grid,Technology,SMB,AMER,20,Analytics Pro,17667,1,1
+A00862,Meridian Point Inc,Manufacturing,SMB,AMER,24,Automation Edge,17653,2,1
+A00463,Vertex Labs,Professional Services,SMB,EMEA,12,Core Suite,17568,2,0.92
+A00845,Vertex Bridge,Professional Services,SMB,APAC,17,Core Suite,17545,1,0.86
+A01206,Aurora Labs,Public Sector,SMB,APAC,22,Core Suite,17533,4,0.86
+A01318,Vertex Labs Ltd,Professional Services,SMB,EMEA,18,Core Suite,17498,4,0.92
+A01037,Granite Cloud Ltd,Technology,Mid-Market,AMER,24,Core Suite,17408,1,1
+A00620,Pinnacle Bridge,Energy,SMB,AMER,39,Analytics Pro,17247,4,1
+A00162,Northwind Cloud,Logistics,SMB,AMER,33,Core Suite,17218,2,1
+A01124,Parallel Dynamics Inc,Manufacturing,SMB,EMEA,27,Automation Edge,17215,4,0.92
+A00013,Parallel Works,Retail,Mid-Market,AMER,34,Analytics Pro,17205,2,1
+A00181,Silverline Stream,Technology,Mid-Market,AMER,25,Core Suite,17196,1,1
+A01170,Granite Logic,Financial Services,SMB,AMER,26,Core Suite,17159,4,1
+A01136,Silverline Grid,Healthcare,SMB,AMER,12,Automation Edge,17157,3,1
+A00330,Silverline Works Ltd,Retail,SMB,AMER,40,Analytics Pro,17152,2,1
+A01281,Northwind Grid Ltd,Manufacturing,SMB,AMER,17,Core Suite,17136,1,1
+A01685,Northwind Systems Inc,Financial Services,SMB,AMER,12,Core Suite,17051,2,1
+A01304,Vertex Systems Inc,Financial Services,SMB,EMEA,38,Core Suite,17033,4,0.92
+A01745,Aurora Labs Ltd,Retail,SMB,AMER,27,Core Suite,17028,2,1
+A01640,Cobalt Labs Ltd,Logistics,SMB,APAC,25,Automation Edge,16967,1,0.86
+A00753,Pinnacle Stream,Logistics,Mid-Market,AMER,13,Automation Edge,16960,2,1
+A01804,Parallel Labs Inc,Manufacturing,Mid-Market,AMER,25,Analytics Pro,16945,1,1
+A01682,Northwind Labs Inc,Telecommunications,SMB,EMEA,22,Core Suite,16942,1,0.92
+A01443,Northwind Point Ltd,Technology,SMB,EMEA,16,Core Suite,16902,1,0.92
+A00470,Silverline Dynamics Ltd,Energy,SMB,APAC,12,Core Suite,16863,2,0.86
+A00778,Aurora Works Inc,Logistics,SMB,EMEA,14,Analytics Pro,16781,2,0.92
+A01718,Meridian Labs,Telecommunications,SMB,AMER,27,Automation Edge,16744,4,1
+A00400,Cobalt Dynamics Inc,Retail,SMB,EMEA,12,Core Suite,16719,2,0.92
+A00833,Meridian Labs Inc,Healthcare,SMB,APAC,24,Core Suite,16693,3,0.86
+A00286,Silverline Point Inc,Financial Services,SMB,AMER,35,Core Suite,16688,1,1
+A01184,Granite Bridge Ltd,Technology,Mid-Market,EMEA,39,Analytics Pro,16645,3,0.92
+A00409,Vertex Labs Ltd,Retail,SMB,AMER,22,Core Suite,16626,1,1
+A01668,Vertex Point Ltd,Manufacturing,SMB,AMER,37,Automation Edge,16593,1,1
+A01435,Vertex Dynamics Ltd,Manufacturing,SMB,AMER,24,Automation Edge,16583,4,1
+A01807,Meridian Point,Energy,SMB,AMER,36,Analytics Pro,16576,1,1
+A01763,Cobalt Dynamics Ltd,Public Sector,Mid-Market,APAC,34,Automation Edge,16560,1,0.86
+A00522,Cobalt Dynamics Ltd,Logistics,Mid-Market,AMER,18,Core Suite,16547,2,1
+A00407,Aurora Labs Ltd,Professional Services,Mid-Market,AMER,13,Core Suite,16504,4,1
+A01410,Silverline Grid Inc,Logistics,Mid-Market,APAC,18,Analytics Pro,16464,1,0.86
+A00708,Pinnacle Point,Professional Services,Mid-Market,APAC,37,Automation Edge,16436,4,0.86
+A01254,Northwind Cloud Ltd,Technology,SMB,EMEA,23,Analytics Pro,16375,1,0.92
+A00049,Granite Grid,Public Sector,SMB,AMER,34,Core Suite,16299,4,1
+A00332,Cobalt Logic Inc,Manufacturing,SMB,APAC,30,Core Suite,16223,2,0.86
+A01890,Meridian Logic,Retail,SMB,EMEA,21,Analytics Pro,16210,1,0.92
+A01575,Vertex Stream Inc,Professional Services,Mid-Market,AMER,45,Core Suite,16204,2,1
+A00012,Silverline Dynamics Ltd,Logistics,SMB,APAC,12,Core Suite,16202,5,0.86
+A00026,Granite Grid Ltd,Retail,SMB,EMEA,19,Analytics Pro,16190,1,0.92
+A01964,Cobalt Logic Ltd,Logistics,Mid-Market,AMER,33,Analytics Pro,16106,1,1
+A01753,Vertex Cloud Ltd,Manufacturing,SMB,AMER,37,Core Suite,16045,1,1
+A00324,Cobalt Labs Ltd,Financial Services,SMB,AMER,33,Analytics Pro,15992,4,1
+A00513,Silverline Works Inc,Energy,SMB,EMEA,12,Automation Edge,15933,2,0.92
+A01049,Meridian Labs,Professional Services,SMB,AMER,14,Automation Edge,15918,1,1
+A01549,Aurora Stream,Energy,SMB,EMEA,19,Core Suite,15828,1,0.92
+A01487,BluePeak Systems Ltd,Professional Services,SMB,APAC,30,Automation Edge,15774,1,0.86
+A00434,Vertex Systems Inc,Logistics,SMB,AMER,23,Analytics Pro,15747,2,1
+A01801,Silverline Point Inc,Healthcare,SMB,AMER,17,Automation Edge,15726,1,1
+A00082,Pinnacle Cloud Ltd,Technology,Mid-Market,APAC,34,Automation Edge,15672,3,0.86
+A01802,Vertex Dynamics,Telecommunications,Mid-Market,EMEA,35,Core Suite,15663,1,0.92
+A01009,BluePeak Logic Ltd,Healthcare,SMB,AMER,12,Automation Edge,15609,1,1
+A00840,Meridian Logic Ltd,Financial Services,SMB,AMER,21,Core Suite,15608,3,1
+A01285,Vertex Labs Ltd,Telecommunications,SMB,EMEA,12,Analytics Pro,15585,1,0.92
+A00564,Meridian Grid Inc,Technology,SMB,AMER,24,Analytics Pro,15504,5,1
+A01566,Parallel Cloud Inc,Professional Services,SMB,EMEA,30,Analytics Pro,15476,4,0.92
+A01191,Parallel Cloud,Public Sector,SMB,AMER,29,Core Suite,15450,2,1
+A01344,Aurora Point Ltd,Financial Services,SMB,APAC,25,Automation Edge,15397,1,0.86
+A01917,Granite Dynamics Ltd,Manufacturing,SMB,AMER,12,Automation Edge,15396,3,1
+A00395,Meridian Labs,Healthcare,SMB,EMEA,12,Core Suite,15358,5,0.92
+A00709,Meridian Dynamics Inc,Telecommunications,SMB,EMEA,37,Core Suite,15351,3,0.92
+A00131,Silverline Labs,Technology,SMB,EMEA,37,Core Suite,15220,4,0.92
+A00430,Silverline Cloud Inc,Financial Services,SMB,AMER,29,Automation Edge,15146,3,1
+A01652,Northwind Works Inc,Energy,SMB,AMER,12,Core Suite,15120,1,1
+A00156,Cobalt Labs,Healthcare,SMB,AMER,24,Automation Edge,15117,3,1
+A00730,Pinnacle Labs Ltd,Financial Services,SMB,EMEA,24,Core Suite,15112,3,0.92
+A00926,Vertex Bridge Ltd,Logistics,SMB,EMEA,30,Analytics Pro,15060,2,0.92
+A01948,Parallel Grid Ltd,Healthcare,SMB,EMEA,19,Core Suite,15059,1,0.92
+A01852,Vertex Cloud Ltd,Financial Services,SMB,APAC,14,Core Suite,14993,1,0.86
+A01393,Aurora Labs,Logistics,SMB,APAC,30,Analytics Pro,14972,1,0.86
+A00819,BluePeak Labs Inc,Public Sector,SMB,AMER,26,Core Suite,14928,3,1
+A01630,Aurora Cloud,Logistics,SMB,AMER,12,Core Suite,14882,3,1
+A00062,Northwind Labs Inc,Healthcare,Mid-Market,APAC,17,Core Suite,14855,4,0.86
+A01896,Pinnacle Systems Inc,Healthcare,Mid-Market,AMER,13,Analytics Pro,14809,2,1
+A01171,Northwind Logic Inc,Manufacturing,SMB,AMER,14,Analytics Pro,14775,1,1
+A00987,Silverline Cloud Ltd,Energy,SMB,EMEA,23,Core Suite,14768,3,0.92
+A00808,Granite Point Ltd,Technology,SMB,AMER,19,Analytics Pro,14742,5,1
+A01298,Northwind Stream Ltd,Healthcare,SMB,APAC,15,Analytics Pro,14734,1,0.86
+A00229,Cobalt Bridge Inc,Professional Services,SMB,AMER,24,Core Suite,14707,2,1
+A00689,Cobalt Systems Inc,Retail,SMB,AMER,34,Core Suite,14704,1,1
+A00784,Northwind Bridge Inc,Telecommunications,SMB,AMER,25,Analytics Pro,14704,5,1
+A01853,Vertex Systems Inc,Telecommunications,SMB,EMEA,25,Core Suite,14673,2,0.92
+A01659,Silverline Labs,Energy,SMB,AMER,14,Core Suite,14647,2,1
+A01552,Northwind Dynamics,Financial Services,SMB,APAC,34,Core Suite,14636,3,0.86
+A01911,Pinnacle Grid,Public Sector,SMB,EMEA,29,Analytics Pro,14631,3,0.92
+A00716,Meridian Systems Ltd,Retail,SMB,AMER,13,Core Suite,14630,1,1
+A01762,Vertex Labs Inc,Energy,Mid-Market,EMEA,22,Analytics Pro,14624,1,0.92
+A01518,Parallel Dynamics,Public Sector,SMB,EMEA,22,Analytics Pro,14567,1,0.92
+A00136,Northwind Labs Ltd,Manufacturing,SMB,AMER,24,Analytics Pro,14552,1,1
+A01262,Meridian Logic,Professional Services,Mid-Market,APAC,32,Core Suite,14547,1,0.86
+A00418,Meridian Bridge Inc,Retail,SMB,AMER,17,Core Suite,14537,2,1
+A00462,Pinnacle Bridge Inc,Telecommunications,SMB,AMER,18,Core Suite,14518,1,1
+A00575,Aurora Works Ltd,Professional Services,Mid-Market,EMEA,14,Analytics Pro,14418,1,0.92
+A00087,Aurora Point,Telecommunications,SMB,EMEA,29,Core Suite,14417,1,0.92
+A01765,Silverline Works Ltd,Energy,SMB,EMEA,20,Analytics Pro,14398,4,0.92
+A00514,BluePeak Point Inc,Public Sector,SMB,AMER,35,Analytics Pro,14389,1,1
+A00579,Granite Works Ltd,Technology,SMB,AMER,23,Core Suite,14345,3,1
+A00422,Northwind Works Ltd,Financial Services,Mid-Market,AMER,46,Analytics Pro,14282,3,1
+A01495,Aurora Logic Inc,Public Sector,SMB,AMER,39,Analytics Pro,14237,3,1
+A01721,BluePeak Dynamics Inc,Manufacturing,SMB,EMEA,40,Core Suite,14197,2,0.92
+A00323,BluePeak Point Ltd,Technology,Mid-Market,EMEA,26,Automation Edge,14193,2,0.92
+A00402,Granite Works,Public Sector,SMB,APAC,12,Automation Edge,14178,2,0.86
+A00436,BluePeak Cloud,Technology,SMB,AMER,17,Analytics Pro,14170,1,1
+A00310,Silverline Systems,Telecommunications,Mid-Market,AMER,23,Analytics Pro,14169,1,1
+A00859,Northwind Dynamics Ltd,Healthcare,Mid-Market,EMEA,31,Automation Edge,14154,1,0.92
+A01863,BluePeak Cloud Inc,Manufacturing,SMB,AMER,13,Core Suite,14148,1,1
+A01234,Cobalt Labs Ltd,Technology,SMB,AMER,34,Analytics Pro,14063,2,1
+A00187,Granite Dynamics Inc,Energy,SMB,APAC,35,Core Suite,14062,1,0.86
+A01362,Vertex Systems Inc,Manufacturing,SMB,APAC,14,Automation Edge,14026,5,0.86
+A01920,Granite Bridge,Logistics,SMB,AMER,13,Automation Edge,13950,2,1
+A01004,Cobalt Systems,Financial Services,SMB,AMER,14,Core Suite,13939,4,1
+A00139,Pinnacle Grid Ltd,Retail,Mid-Market,AMER,29,Core Suite,13910,3,1
+A00052,BluePeak Logic,Energy,Mid-Market,AMER,12,Analytics Pro,13892,1,1
+A00170,Parallel Bridge Inc,Healthcare,SMB,AMER,20,Automation Edge,13818,2,1
+A00621,Cobalt Cloud Inc,Logistics,SMB,AMER,23,Analytics Pro,13795,2,1
+A00760,Vertex Stream,Healthcare,SMB,AMER,27,Core Suite,13793,1,1
+A00454,Silverline Point Ltd,Professional Services,SMB,AMER,38,Analytics Pro,13778,1,1
+A00751,Parallel Cloud Ltd,Telecommunications,SMB,EMEA,18,Automation Edge,13775,2,0.92
+A01106,BluePeak Bridge,Telecommunications,SMB,AMER,29,Analytics Pro,13714,1,1
+A00045,Northwind Logic Inc,Financial Services,Mid-Market,AMER,22,Analytics Pro,13699,2,1
+A01361,Silverline Works Inc,Retail,Mid-Market,APAC,42,Automation Edge,13660,3,0.86
+A00654,Pinnacle Labs Ltd,Financial Services,SMB,AMER,27,Core Suite,13640,1,1
+A01483,Meridian Grid Ltd,Logistics,SMB,APAC,15,Analytics Pro,13635,2,0.86
+A01167,Granite Bridge Ltd,Healthcare,SMB,AMER,36,Automation Edge,13618,4,1
+A01533,BluePeak Bridge Ltd,Healthcare,SMB,EMEA,26,Automation Edge,13594,4,0.92
+A01494,Cobalt Works Ltd,Professional Services,SMB,AMER,34,Core Suite,13576,1,1
+A01123,Parallel Works,Telecommunications,Mid-Market,APAC,33,Automation Edge,13572,4,0.86
+A00499,Northwind Stream Ltd,Logistics,SMB,EMEA,35,Core Suite,13556,2,0.92
+A01699,Granite Logic Ltd,Financial Services,SMB,EMEA,12,Automation Edge,13522,1,0.92
+A00184,Parallel Grid,Financial Services,SMB,APAC,13,Automation Edge,13521,2,0.86
+A01462,Aurora Logic Ltd,Public Sector,Mid-Market,EMEA,23,Analytics Pro,13519,1,0.92
+A00425,Parallel Cloud,Financial Services,SMB,APAC,26,Analytics Pro,13509,2,0.86
+A01075,Northwind Works,Technology,Mid-Market,AMER,13,Core Suite,13507,2,1
+A01082,BluePeak Bridge Inc,Telecommunications,SMB,AMER,15,Analytics Pro,13470,1,1
+A01523,Granite Point,Professional Services,SMB,AMER,15,Analytics Pro,13462,3,1
+A00378,Meridian Works,Telecommunications,SMB,AMER,32,Automation Edge,13450,3,1
+A00590,Silverline Works,Energy,SMB,APAC,36,Core Suite,13447,5,0.86
+A01402,Granite Bridge,Financial Services,Mid-Market,AMER,13,Analytics Pro,13408,2,1
+A00747,Cobalt Bridge,Healthcare,SMB,APAC,34,Core Suite,13376,2,0.86
+A01722,BluePeak Works Inc,Energy,Mid-Market,EMEA,39,Core Suite,13309,3,0.92
+A01924,BluePeak Bridge,Financial Services,SMB,APAC,34,Core Suite,13263,3,0.86
+A00527,Cobalt Grid Inc,Professional Services,Mid-Market,AMER,15,Automation Edge,13239,2,1
+A01947,BluePeak Bridge,Public Sector,Mid-Market,EMEA,24,Core Suite,13235,1,0.92
+A00009,Parallel Stream Inc,Healthcare,SMB,AMER,17,Analytics Pro,13219,2,1
+A01571,Silverline Bridge Inc,Technology,SMB,AMER,34,Core Suite,13205,2,1
+A00615,Pinnacle Cloud Ltd,Professional Services,Mid-Market,AMER,42,Core Suite,13204,1,1
+A01591,Aurora Works Ltd,Healthcare,SMB,EMEA,32,Core Suite,13181,3,0.92
+A00612,Granite Systems Ltd,Retail,SMB,AMER,31,Core Suite,13132,1,1
+A01702,Northwind Cloud Ltd,Logistics,SMB,EMEA,12,Core Suite,13104,2,0.92
+A01821,Parallel Grid Ltd,Technology,Mid-Market,AMER,26,Automation Edge,13035,1,1
+A00907,Pinnacle Grid Ltd,Technology,SMB,AMER,36,Automation Edge,12907,1,1
+A00125,Meridian Logic Inc,Logistics,SMB,EMEA,38,Automation Edge,12902,3,0.92
+A00303,Northwind Cloud Ltd,Energy,SMB,EMEA,32,Core Suite,12883,1,0.92
+A00497,Meridian Cloud,Professional Services,Mid-Market,EMEA,46,Automation Edge,12882,1,0.92
+A01906,Silverline Logic,Public Sector,SMB,APAC,36,Core Suite,12826,1,0.86
+A01264,Vertex Stream Ltd,Energy,SMB,EMEA,37,Analytics Pro,12805,1,0.92
+A00628,Northwind Grid Inc,Professional Services,SMB,APAC,12,Analytics Pro,12778,3,0.86
+A00993,Cobalt Works Inc,Retail,SMB,AMER,30,Core Suite,12756,4,1
+A00681,BluePeak Labs Ltd,Energy,SMB,AMER,12,Core Suite,12742,4,1
+A01725,Parallel Dynamics,Professional Services,SMB,AMER,25,Core Suite,12733,1,1
+A01011,Cobalt Bridge Ltd,Financial Services,SMB,AMER,12,Automation Edge,12719,1,1
+A00145,Cobalt Works Ltd,Professional Services,SMB,AMER,29,Core Suite,12695,1,1
+A00742,Cobalt Grid,Telecommunications,SMB,AMER,38,Core Suite,12636,2,1
+A01889,Northwind Stream Inc,Technology,SMB,AMER,29,Analytics Pro,12593,2,1
+A00637,Granite Logic Inc,Manufacturing,SMB,EMEA,16,Analytics Pro,12584,3,0.92
+A01984,BluePeak Point Ltd,Logistics,Mid-Market,AMER,35,Core Suite,12581,3,1
+A01012,Parallel Works Inc,Public Sector,SMB,AMER,16,Automation Edge,12578,3,1
+A01080,Northwind Point,Public Sector,Mid-Market,AMER,17,Core Suite,12547,2,1
+A00535,BluePeak Grid,Public Sector,Mid-Market,AMER,39,Core Suite,12509,1,1
+A00672,Aurora Logic,Telecommunications,SMB,EMEA,36,Analytics Pro,12500,3,0.92
+A01282,Silverline Cloud Inc,Manufacturing,Mid-Market,APAC,17,Automation Edge,12489,3,0.86
+A00748,Granite Grid,Healthcare,SMB,APAC,34,Analytics Pro,12487,2,0.86
+A01337,BluePeak Bridge,Manufacturing,SMB,AMER,26,Core Suite,12487,4,1
+A01814,Pinnacle Point Inc,Energy,Mid-Market,AMER,23,Core Suite,12476,2,1
+A00328,Aurora Systems,Technology,SMB,EMEA,12,Core Suite,12475,1,0.92
+A00700,Parallel Systems,Professional Services,SMB,EMEA,35,Automation Edge,12441,1,0.92
+A00783,Meridian Dynamics Ltd,Logistics,SMB,AMER,30,Analytics Pro,12393,3,1
+A01955,Vertex Logic Ltd,Logistics,Mid-Market,EMEA,37,Core Suite,12383,2,0.92
+A01935,Aurora Grid Inc,Logistics,SMB,APAC,34,Core Suite,12371,2,0.86
+A00293,BluePeak Works Ltd,Professional Services,SMB,AMER,32,Analytics Pro,12365,1,1
+A01237,Meridian Stream,Retail,SMB,EMEA,12,Core Suite,12324,1,0.92
+A00405,Parallel Cloud Inc,Manufacturing,SMB,EMEA,19,Analytics Pro,12312,4,0.92
+A01063,Pinnacle Cloud Inc,Telecommunications,SMB,EMEA,14,Analytics Pro,12286,3,0.92
+A01291,Silverline Systems Ltd,Public Sector,SMB,AMER,20,Analytics Pro,12282,5,1
+A00073,Vertex Labs Inc,Public Sector,SMB,AMER,20,Analytics Pro,12221,2,1
+A01438,BluePeak Stream Ltd,Technology,SMB,APAC,16,Automation Edge,12219,2,0.86
+A00831,Silverline Bridge,Manufacturing,SMB,AMER,27,Core Suite,12150,2,1
+A00896,Aurora Stream,Healthcare,Mid-Market,AMER,12,Analytics Pro,12136,2,1
+A00294,BluePeak Logic,Manufacturing,Mid-Market,AMER,31,Automation Edge,12131,1,1
+A00230,Aurora Works,Professional Services,SMB,EMEA,27,Core Suite,12124,1,0.92
+A00220,Meridian Stream Ltd,Manufacturing,SMB,AMER,26,Automation Edge,12119,2,1
+A01908,Pinnacle Bridge,Healthcare,SMB,AMER,37,Analytics Pro,12029,4,1
+A00210,Aurora Bridge,Healthcare,SMB,AMER,21,Automation Edge,11975,3,1
+A01147,Parallel Point Ltd,Logistics,SMB,AMER,14,Core Suite,11968,5,1
+A01413,Meridian Cloud Inc,Technology,SMB,APAC,29,Automation Edge,11934,2,0.86
+A01819,Aurora Point Inc,Healthcare,SMB,AMER,14,Core Suite,11911,2,1
+A01449,BluePeak Cloud,Retail,SMB,AMER,17,Analytics Pro,11877,3,1
+A01901,Vertex Stream Inc,Healthcare,SMB,AMER,16,Core Suite,11874,1,1
+A00398,Granite Point Inc,Energy,SMB,AMER,14,Core Suite,11867,3,1
+A01500,BluePeak Dynamics,Healthcare,SMB,EMEA,26,Core Suite,11832,3,0.92
+A00018,BluePeak Bridge,Professional Services,SMB,AMER,38,Core Suite,11819,1,1
+A00596,Meridian Stream Ltd,Manufacturing,SMB,AMER,22,Analytics Pro,11798,3,1
+A01028,Parallel Bridge Inc,Technology,SMB,APAC,36,Analytics Pro,11798,1,0.86
+A00322,Silverline Dynamics Inc,Logistics,Mid-Market,EMEA,42,Automation Edge,11793,4,0.92
+A01190,Vertex Cloud,Energy,SMB,APAC,16,Analytics Pro,11752,2,0.86
+A01678,Cobalt Cloud,Energy,SMB,AMER,24,Core Suite,11750,2,1
+A01692,Northwind Systems Inc,Manufacturing,Mid-Market,AMER,13,Core Suite,11739,4,1
+A00794,BluePeak Logic Ltd,Manufacturing,Mid-Market,AMER,28,Analytics Pro,11736,3,1
+A01599,Aurora Systems Inc,Financial Services,SMB,EMEA,28,Core Suite,11718,1,0.92
+A01878,Granite Stream,Logistics,SMB,AMER,22,Analytics Pro,11716,1,1
+A00390,Meridian Stream,Energy,SMB,AMER,17,Analytics Pro,11712,1,1
+A01489,Meridian Systems Inc,Telecommunications,SMB,AMER,12,Analytics Pro,11705,2,1
+A00692,Parallel Grid Inc,Logistics,SMB,AMER,19,Core Suite,11696,1,1
+A01941,Granite Cloud Inc,Technology,SMB,APAC,26,Automation Edge,11692,3,0.86
+A01690,Aurora Dynamics Inc,Telecommunications,SMB,AMER,34,Core Suite,11669,1,1
+A00573,Northwind Cloud Ltd,Technology,SMB,APAC,23,Analytics Pro,11632,2,0.86
+A00970,Northwind Stream Ltd,Technology,SMB,APAC,22,Analytics Pro,11625,1,0.86
+A00799,Vertex Dynamics Ltd,Technology,SMB,APAC,24,Automation Edge,11580,4,0.86
+A00905,Cobalt Point Ltd,Professional Services,SMB,AMER,12,Core Suite,11572,1,1
+A00586,Cobalt Point Ltd,Professional Services,SMB,AMER,12,Core Suite,11570,2,1
+A01433,Pinnacle Grid,Logistics,SMB,AMER,23,Automation Edge,11551,4,1
+A00785,Meridian Cloud Inc,Telecommunications,SMB,EMEA,35,Automation Edge,11534,2,0.92
+A00882,Granite Point,Telecommunications,SMB,AMER,12,Core Suite,11529,1,1
+A00112,Meridian Grid Inc,Energy,SMB,AMER,12,Automation Edge,11499,2,1
+A00569,Parallel Bridge,Healthcare,SMB,AMER,19,Automation Edge,11497,2,1
+A01811,Parallel Labs Ltd,Logistics,SMB,APAC,29,Core Suite,11437,2,0.86
+A00565,BluePeak Logic,Retail,SMB,EMEA,27,Core Suite,11435,4,0.92
+A01370,Meridian Grid Ltd,Financial Services,SMB,EMEA,12,Analytics Pro,11367,3,0.92
+A01475,Vertex Grid Ltd,Manufacturing,SMB,AMER,15,Analytics Pro,11362,1,1
+A00206,Granite Labs Ltd,Technology,SMB,AMER,24,Analytics Pro,11338,5,1
+A01616,Aurora Systems Ltd,Healthcare,SMB,AMER,23,Analytics Pro,11335,3,1
+A00482,Cobalt Bridge Inc,Financial Services,SMB,AMER,12,Automation Edge,11235,3,1
+A00207,Cobalt Works Ltd,Telecommunications,SMB,AMER,39,Core Suite,11206,1,1
+A01417,Meridian Grid,Logistics,SMB,EMEA,27,Core Suite,11197,4,0.92
+A00582,Cobalt Bridge Inc,Telecommunications,SMB,EMEA,17,Core Suite,11155,1,0.92
+A01893,Cobalt Cloud Inc,Telecommunications,SMB,EMEA,23,Automation Edge,11147,2,0.92
+A00071,Silverline Dynamics,Financial Services,SMB,AMER,34,Core Suite,11094,5,1
+A01728,Aurora Systems Inc,Energy,SMB,APAC,12,Analytics Pro,11092,1,0.86
+A01987,BluePeak Dynamics Ltd,Logistics,Mid-Market,EMEA,45,Automation Edge,11078,1,0.92
+A00539,Silverline Point,Manufacturing,SMB,APAC,28,Automation Edge,11037,3,0.86
+A01714,Parallel Works,Financial Services,SMB,EMEA,12,Core Suite,11031,3,0.92
+A00643,BluePeak Grid Inc,Manufacturing,Mid-Market,AMER,16,Analytics Pro,11026,4,1
+A00717,Silverline Dynamics,Retail,SMB,AMER,13,Core Suite,11020,1,1
+A01401,Meridian Labs Inc,Energy,SMB,AMER,35,Core Suite,11011,1,1
+A00222,Northwind Point,Professional Services,SMB,APAC,20,Core Suite,11001,1,0.86
+A00373,Granite Grid Inc,Telecommunications,SMB,AMER,39,Core Suite,10950,1,1
+A00542,Northwind Bridge Inc,Telecommunications,SMB,EMEA,18,Core Suite,10889,1,0.92
+A00909,Vertex Cloud Ltd,Energy,Mid-Market,AMER,26,Analytics Pro,10887,2,1
+A01060,Parallel Stream Inc,Telecommunications,SMB,AMER,21,Automation Edge,10806,2,1
+A01860,Silverline Stream Inc,Financial Services,SMB,EMEA,21,Automation Edge,10773,4,0.92
+A01161,Pinnacle Labs,Healthcare,SMB,AMER,12,Automation Edge,10772,3,1
+A01175,BluePeak Dynamics Ltd,Healthcare,Mid-Market,AMER,20,Automation Edge,10772,1,1
+A00517,Pinnacle Point Inc,Professional Services,SMB,APAC,37,Automation Edge,10766,1,0.86
+A01996,BluePeak Bridge Inc,Manufacturing,SMB,APAC,16,Analytics Pro,10720,1,0.86
+A00001,Aurora Labs Ltd,Retail,SMB,EMEA,35,Analytics Pro,10684,2,0.92
+A01388,Meridian Dynamics,Professional Services,SMB,EMEA,34,Core Suite,10678,1,0.92
+A01265,Northwind Dynamics,Healthcare,SMB,AMER,29,Core Suite,10675,1,1
+A01056,Pinnacle Grid,Healthcare,SMB,EMEA,29,Core Suite,10635,1,0.92
+A01897,Parallel Bridge Ltd,Public Sector,SMB,AMER,12,Automation Edge,10630,2,1
+A00633,Silverline Bridge Inc,Technology,Mid-Market,EMEA,42,Core Suite,10629,2,0.92
+A01322,Silverline Logic,Logistics,SMB,APAC,12,Core Suite,10624,3,0.86
+A01812,Silverline Logic,Logistics,SMB,APAC,17,Core Suite,10612,1,0.86
+A01288,Parallel Grid Ltd,Financial Services,SMB,APAC,16,Core Suite,10583,1,0.86
+A00153,BluePeak Cloud Inc,Retail,SMB,AMER,12,Automation Edge,10579,3,1
+A00251,Pinnacle Bridge Inc,Financial Services,SMB,AMER,17,Core Suite,10567,3,1
+A01110,Aurora Cloud,Manufacturing,SMB,AMER,13,Core Suite,10477,2,1
+A00219,Parallel Grid Ltd,Technology,SMB,EMEA,38,Core Suite,10471,1,0.92
+A00281,Meridian Labs Inc,Financial Services,SMB,AMER,29,Core Suite,10465,2,1
+A01555,Cobalt Stream Inc,Public Sector,SMB,EMEA,37,Automation Edge,10408,2,0.92
+A00777,Northwind Point,Energy,SMB,AMER,16,Core Suite,10369,1,1
+A01597,Granite Stream Ltd,Technology,SMB,AMER,33,Core Suite,10361,3,1
+A01560,Aurora Stream,Retail,SMB,AMER,24,Core Suite,10355,2,1
+A01391,Pinnacle Stream Inc,Financial Services,SMB,AMER,25,Core Suite,10351,1,1
+A00639,Pinnacle Cloud Inc,Professional Services,SMB,EMEA,12,Analytics Pro,10338,3,0.92
+A01471,Cobalt Point Inc,Energy,SMB,APAC,21,Analytics Pro,10325,2,0.86
+A01808,Pinnacle Bridge Ltd,Manufacturing,SMB,EMEA,19,Core Suite,10316,2,0.92
+A00703,Aurora Dynamics,Healthcare,SMB,APAC,12,Automation Edge,10274,1,0.86
+A00006,Meridian Logic Ltd,Healthcare,SMB,AMER,26,Core Suite,10258,1,1
+A00245,Cobalt Works Inc,Financial Services,SMB,EMEA,13,Automation Edge,10254,4,0.92
+A00725,Silverline Labs,Professional Services,SMB,AMER,12,Core Suite,10238,2,1
+A01294,Meridian Systems Ltd,Energy,SMB,AMER,33,Analytics Pro,10190,1,1
+A00182,BluePeak Grid Inc,Energy,SMB,AMER,34,Analytics Pro,10172,1,1
+A00667,BluePeak Bridge Inc,Energy,SMB,APAC,20,Analytics Pro,10114,1,0.86
+A01140,Aurora Logic Ltd,Public Sector,SMB,EMEA,17,Analytics Pro,10084,3,0.92
+A01502,BluePeak Systems,Telecommunications,Mid-Market,APAC,12,Automation Edge,10077,4,0.86
+A01248,Cobalt Logic Inc,Healthcare,SMB,AMER,27,Core Suite,10046,4,1
+A00764,Silverline Point Inc,Manufacturing,SMB,APAC,13,Analytics Pro,10038,4,0.86
+A01378,Northwind Point Ltd,Logistics,SMB,EMEA,15,Analytics Pro,10030,3,0.92
+A01809,Parallel Logic,Financial Services,SMB,AMER,29,Automation Edge,10012,1,1
+A01062,Silverline Dynamics,Retail,SMB,AMER,12,Core Suite,10002,2,1
+A01245,Silverline Systems,Financial Services,SMB,AMER,12,Automation Edge,9966,4,1
+A01369,Meridian Logic Inc,Professional Services,Mid-Market,AMER,12,Analytics Pro,9940,2,1
+A01380,Meridian Systems Inc,Technology,SMB,AMER,24,Core Suite,9930,1,1
+A01957,Parallel Stream Ltd,Technology,SMB,AMER,20,Analytics Pro,9927,1,1
+A01336,Cobalt Systems Ltd,Financial Services,SMB,APAC,35,Analytics Pro,9919,1,0.86
+A00762,Northwind Labs Ltd,Financial Services,Mid-Market,EMEA,29,Automation Edge,9907,3,0.92
+A01397,Parallel Cloud Inc,Manufacturing,SMB,AMER,39,Core Suite,9895,1,1
+A01958,Granite Point Ltd,Energy,SMB,APAC,33,Analytics Pro,9856,3,0.86
+A01818,Silverline Point,Logistics,SMB,EMEA,22,Core Suite,9850,2,0.92
+A00035,Cobalt Dynamics,Financial Services,SMB,APAC,12,Core Suite,9844,2,0.86
+A01886,Cobalt Works Ltd,Technology,SMB,AMER,33,Automation Edge,9842,1,1
+A00729,Aurora Logic Ltd,Healthcare,SMB,EMEA,14,Automation Edge,9839,4,0.92
+A00843,Parallel Cloud,Healthcare,SMB,AMER,29,Core Suite,9815,2,1
+A01263,Cobalt Systems Ltd,Professional Services,SMB,EMEA,16,Analytics Pro,9806,3,0.92
+A01720,Cobalt Dynamics,Healthcare,SMB,EMEA,32,Core Suite,9795,1,0.92
+A01364,Pinnacle Logic Inc,Financial Services,SMB,EMEA,12,Core Suite,9759,2,0.92
+A01916,Cobalt Grid Ltd,Manufacturing,SMB,AMER,29,Automation Edge,9755,5,1
+A01220,BluePeak Cloud Ltd,Healthcare,SMB,AMER,20,Automation Edge,9708,5,1
+A01266,Pinnacle Stream Ltd,Telecommunications,SMB,APAC,12,Core Suite,9686,3,0.86
+A00326,Pinnacle Logic Inc,Technology,SMB,EMEA,12,Automation Edge,9657,1,0.92
+A00704,BluePeak Grid Inc,Energy,SMB,EMEA,34,Analytics Pro,9624,5,0.92
+A00512,Vertex Grid Ltd,Retail,SMB,APAC,12,Analytics Pro,9620,1,0.86
+A01045,Meridian Dynamics Inc,Logistics,SMB,AMER,31,Analytics Pro,9604,2,1
+A01870,Aurora Stream,Professional Services,SMB,AMER,12,Analytics Pro,9603,2,1
+A00893,Vertex Cloud Ltd,Telecommunications,SMB,APAC,25,Automation Edge,9602,1,0.86
+A01000,Aurora Logic Ltd,Public Sector,SMB,AMER,25,Analytics Pro,9602,2,1
+A01929,Granite Bridge Inc,Telecommunications,SMB,AMER,12,Analytics Pro,9562,2,1
+A01122,Northwind Point Ltd,Technology,SMB,APAC,12,Analytics Pro,9557,2,0.86
+A00201,BluePeak Cloud Inc,Manufacturing,SMB,EMEA,29,Core Suite,9550,1,0.92
+A01192,Meridian Point Ltd,Manufacturing,SMB,AMER,12,Analytics Pro,9550,1,1
+A01672,Pinnacle Point Ltd,Logistics,SMB,AMER,17,Analytics Pro,9539,2,1
+A01071,Vertex Bridge Inc,Technology,SMB,EMEA,12,Automation Edge,9505,3,0.92
+A00173,BluePeak Cloud Inc,Public Sector,SMB,EMEA,17,Automation Edge,9477,1,0.92
+A00277,Parallel Grid Inc,Financial Services,SMB,AMER,33,Core Suite,9465,3,1
+A01305,BluePeak Labs Inc,Telecommunications,SMB,EMEA,35,Analytics Pro,9403,3,0.92
+A01843,BluePeak Works Inc,Public Sector,SMB,AMER,12,Automation Edge,9397,4,1
+A00508,Parallel Grid,Telecommunications,SMB,APAC,13,Analytics Pro,9384,1,0.86
+A01641,BluePeak Systems,Financial Services,SMB,APAC,33,Analytics Pro,9383,1,0.86
+A00817,Cobalt Dynamics Ltd,Telecommunications,SMB,AMER,28,Automation Edge,9379,1,1
+A00190,Aurora Logic Ltd,Technology,SMB,AMER,38,Analytics Pro,9377,2,1
+A01108,Silverline Cloud Inc,Logistics,SMB,AMER,12,Analytics Pro,9375,2,1
+A00752,Meridian Logic,Technology,SMB,EMEA,26,Core Suite,9346,1,0.92
+A00937,Cobalt Logic,Financial Services,SMB,APAC,32,Automation Edge,9340,3,0.86
+A00319,Silverline Grid Inc,Professional Services,SMB,APAC,12,Analytics Pro,9334,3,0.86
+A01777,Silverline Bridge,Manufacturing,SMB,AMER,22,Automation Edge,9328,2,1
+A00233,BluePeak Systems,Public Sector,SMB,AMER,33,Core Suite,9283,2,1
+A00818,Pinnacle Bridge Ltd,Logistics,SMB,AMER,12,Automation Edge,9253,4,1
+A00509,Cobalt Logic Inc,Professional Services,SMB,AMER,12,Core Suite,9246,1,1
+A01459,Aurora Works Inc,Energy,SMB,AMER,12,Analytics Pro,9228,2,1
+A00414,Vertex Systems,Logistics,SMB,EMEA,36,Analytics Pro,9227,1,0.92
+A00366,Silverline Grid,Public Sector,SMB,AMER,24,Analytics Pro,9217,2,1
+A01784,Parallel Works Ltd,Financial Services,SMB,EMEA,23,Analytics Pro,9204,1,0.92
+A01963,Cobalt Stream Ltd,Retail,SMB,AMER,36,Core Suite,9200,1,1
+A00166,Aurora Works Ltd,Technology,SMB,AMER,28,Core Suite,9187,3,1
+A01504,Cobalt Works Inc,Technology,SMB,AMER,26,Automation Edge,9167,1,1
+A00820,BluePeak Grid Ltd,Retail,SMB,AMER,22,Automation Edge,9123,2,1
+A01872,Silverline Grid Ltd,Telecommunications,SMB,EMEA,12,Automation Edge,9113,1,0.92
+A01156,Pinnacle Labs,Telecommunications,SMB,AMER,14,Core Suite,9082,2,1
+A01287,Pinnacle Systems Inc,Technology,SMB,APAC,18,Analytics Pro,9067,1,0.86
+A01310,Parallel Stream,Energy,SMB,AMER,12,Core Suite,9038,1,1
+A00415,Pinnacle Systems Inc,Professional Services,SMB,APAC,24,Analytics Pro,9029,5,0.86
+A01664,Aurora Cloud Ltd,Technology,SMB,AMER,24,Core Suite,9023,2,1
+A00412,Northwind Works Ltd,Manufacturing,SMB,AMER,23,Automation Edge,9015,3,1
+A00360,Aurora Bridge Ltd,Energy,SMB,EMEA,17,Analytics Pro,8992,2,0.92
+A00447,Aurora Works Inc,Energy,SMB,APAC,26,Analytics Pro,8992,1,0.86
+A00769,Meridian Logic Inc,Logistics,SMB,EMEA,21,Analytics Pro,8989,2,0.92
+A00037,Pinnacle Systems,Professional Services,SMB,AMER,29,Automation Edge,8959,3,1
+A01256,Cobalt Point Ltd,Healthcare,SMB,AMER,33,Automation Edge,8952,3,1
+A00979,Cobalt Cloud Ltd,Professional Services,SMB,AMER,16,Core Suite,8930,4,1
+A00740,BluePeak Point Inc,Healthcare,Mid-Market,APAC,40,Analytics Pro,8916,1,0.86
+A00336,Northwind Labs Inc,Logistics,SMB,APAC,12,Automation Edge,8905,3,0.86
+A00952,Silverline Cloud,Financial Services,SMB,EMEA,12,Core Suite,8903,1,0.92
+A01120,Aurora Grid Inc,Manufacturing,SMB,AMER,21,Core Suite,8898,2,1
+A00571,Silverline Cloud,Professional Services,SMB,AMER,37,Core Suite,8885,1,1
+A00881,Parallel Bridge Inc,Logistics,SMB,APAC,21,Analytics Pro,8785,3,0.86
+A01405,Aurora Logic Inc,Telecommunications,SMB,EMEA,33,Analytics Pro,8785,1,0.92
+A00075,Silverline Works Ltd,Energy,SMB,AMER,29,Core Suite,8730,3,1
+A00198,Granite Grid,Telecommunications,SMB,EMEA,28,Core Suite,8718,1,0.92
+A01040,Parallel Systems Inc,Healthcare,SMB,AMER,21,Core Suite,8717,2,1
+A00684,BluePeak Point,Energy,SMB,AMER,18,Analytics Pro,8666,1,1
+A00868,Granite Logic Ltd,Telecommunications,SMB,EMEA,31,Automation Edge,8631,1,0.92
+A00988,Silverline Dynamics Ltd,Technology,SMB,EMEA,23,Core Suite,8607,1,0.92
+A01239,Granite Stream Inc,Financial Services,SMB,AMER,27,Core Suite,8606,4,1
+A01563,Vertex Point,Public Sector,SMB,AMER,12,Analytics Pro,8600,1,1
+A01002,Silverline Stream Ltd,Financial Services,SMB,AMER,29,Analytics Pro,8598,4,1
+A00789,Parallel Bridge Ltd,Financial Services,SMB,AMER,12,Core Suite,8579,1,1
+A01452,Cobalt Stream Inc,Technology,SMB,APAC,27,Core Suite,8534,3,0.86
+A00445,Parallel Cloud Inc,Professional Services,SMB,EMEA,33,Automation Edge,8516,5,0.92
+A01867,Vertex Point,Logistics,SMB,EMEA,12,Analytics Pro,8510,2,0.92
+A01766,Cobalt Bridge Inc,Technology,SMB,AMER,15,Core Suite,8508,2,1
+A00159,Northwind Systems,Public Sector,SMB,APAC,29,Analytics Pro,8498,1,0.86
+A01925,Northwind Works,Professional Services,SMB,EMEA,23,Automation Edge,8484,2,0.92
+A01451,Parallel Point,Healthcare,SMB,AMER,19,Analytics Pro,8466,3,1
+A01952,Northwind Point,Public Sector,SMB,EMEA,12,Analytics Pro,8461,2,0.92
+A00110,Silverline Cloud Inc,Professional Services,SMB,AMER,23,Analytics Pro,8441,1,1
+A01236,Cobalt Works,Professional Services,SMB,EMEA,19,Core Suite,8432,2,0.92
+A01855,Granite Systems Ltd,Professional Services,Mid-Market,EMEA,40,Analytics Pro,8428,3,0.92
+A01650,Granite Grid Ltd,Public Sector,SMB,AMER,36,Automation Edge,8410,2,1
+A01541,Vertex Cloud,Financial Services,SMB,AMER,12,Core Suite,8353,4,1
+A00042,Aurora Labs,Technology,SMB,AMER,22,Analytics Pro,8338,1,1
+A01101,Granite Works Inc,Technology,SMB,APAC,23,Automation Edge,8321,2,0.86
+A01339,Parallel Cloud,Technology,SMB,EMEA,27,Core Suite,8315,1,0.92
+A01583,Cobalt Cloud Inc,Logistics,SMB,AMER,12,Core Suite,8308,5,1
+A00754,Silverline Labs Ltd,Logistics,SMB,APAC,12,Core Suite,8273,1,0.86
+A00632,Granite Works Inc,Manufacturing,SMB,AMER,12,Core Suite,8256,2,1
+A01733,Silverline Systems Ltd,Healthcare,SMB,AMER,28,Core Suite,8246,3,1
+A00196,Northwind Bridge,Financial Services,SMB,AMER,19,Automation Edge,8242,3,1
+A00795,Vertex Works Inc,Manufacturing,SMB,AMER,33,Core Suite,8240,3,1
+A01865,Silverline Labs Inc,Professional Services,SMB,AMER,13,Analytics Pro,8209,2,1
+A01461,Meridian Logic,Logistics,SMB,EMEA,28,Automation Edge,8198,1,0.92
+A00846,Aurora Works Inc,Energy,SMB,EMEA,17,Core Suite,8193,1,0.92
+A00693,Cobalt Grid Ltd,Professional Services,SMB,APAC,15,Core Suite,8188,1,0.86
+A01923,BluePeak Works Inc,Technology,SMB,EMEA,12,Analytics Pro,8182,2,0.92
+A01588,Granite Labs Ltd,Telecommunications,SMB,AMER,14,Core Suite,8173,2,1
+A00971,Granite Logic Inc,Healthcare,SMB,EMEA,12,Core Suite,8134,1,0.92
+A01744,Granite Logic,Telecommunications,SMB,AMER,18,Automation Edge,8121,3,1
+A01090,Vertex Dynamics,Manufacturing,SMB,AMER,35,Analytics Pro,8113,5,1
+A00975,Vertex Grid Inc,Professional Services,SMB,AMER,38,Core Suite,8097,3,1
+A00455,Meridian Dynamics,Healthcare,SMB,AMER,15,Core Suite,8062,5,1
+A00002,Vertex Grid Ltd,Public Sector,SMB,APAC,12,Core Suite,8061,1,0.86
+A01581,Parallel Grid,Public Sector,SMB,AMER,17,Automation Edge,8058,3,1
+A01632,Granite Systems Ltd,Financial Services,SMB,APAC,15,Core Suite,8048,1,0.86
+A01697,Granite Stream,Public Sector,SMB,AMER,12,Core Suite,8026,2,1
+A00192,Cobalt Labs Inc,Retail,SMB,EMEA,38,Core Suite,7987,2,0.92
+A01578,Parallel Point Ltd,Technology,SMB,EMEA,12,Core Suite,7974,1,0.92
+A00749,Pinnacle Bridge Ltd,Financial Services,SMB,AMER,28,Core Suite,7973,3,1
+A00034,Granite Works,Healthcare,SMB,APAC,30,Analytics Pro,7960,1,0.86
+A01148,Vertex Stream,Logistics,Mid-Market,AMER,15,Analytics Pro,7955,2,1
+A01149,Parallel Cloud Ltd,Professional Services,SMB,AMER,26,Core Suite,7953,2,1
+A00178,Silverline Logic Ltd,Technology,SMB,AMER,34,Analytics Pro,7941,2,1
+A01292,Northwind Grid Inc,Technology,SMB,AMER,13,Analytics Pro,7915,2,1
+A01162,Meridian Stream,Logistics,SMB,EMEA,26,Core Suite,7905,2,0.92
+A00999,BluePeak Bridge Inc,Telecommunications,SMB,EMEA,28,Core Suite,7901,3,0.92
+A01761,Cobalt Point Inc,Technology,SMB,EMEA,25,Automation Edge,7900,2,0.92
+A00440,Parallel Cloud,Healthcare,SMB,AMER,12,Analytics Pro,7894,3,1
+A01374,Granite Systems,Energy,SMB,APAC,18,Core Suite,7872,2,0.86
+A01912,Silverline Systems,Logistics,SMB,AMER,32,Core Suite,7833,1,1
+A00946,Parallel Stream,Energy,SMB,APAC,12,Analytics Pro,7831,1,0.86
+A01538,Meridian Logic Ltd,Public Sector,SMB,EMEA,13,Analytics Pro,7820,2,0.92
+A01527,Parallel Stream,Logistics,SMB,AMER,25,Analytics Pro,7808,1,1
+A00262,Silverline Systems Inc,Financial Services,SMB,AMER,27,Core Suite,7798,2,1
+A01919,Granite Labs Ltd,Manufacturing,SMB,EMEA,22,Analytics Pro,7779,2,0.92
+A00719,Cobalt Grid Inc,Financial Services,SMB,AMER,37,Analytics Pro,7776,2,1
+A01173,BluePeak Works,Financial Services,SMB,EMEA,19,Analytics Pro,7769,2,0.92
+A00523,Vertex Labs Inc,Financial Services,SMB,AMER,33,Analytics Pro,7758,1,1
+A00602,Granite Works,Logistics,SMB,EMEA,20,Core Suite,7753,2,0.92
+A00492,Granite Works Ltd,Technology,SMB,AMER,12,Analytics Pro,7740,2,1
+A01163,Silverline Dynamics Inc,Retail,SMB,AMER,34,Analytics Pro,7734,1,1
+A01334,Silverline Bridge Inc,Public Sector,SMB,EMEA,20,Core Suite,7703,1,0.92
+A01772,Cobalt Grid Inc,Telecommunications,SMB,EMEA,13,Automation Edge,7697,2,0.92
+A00301,BluePeak Systems Inc,Technology,SMB,AMER,17,Automation Edge,7686,3,1
+A00839,BluePeak Point Inc,Financial Services,SMB,AMER,12,Automation Edge,7684,3,1
+A00226,Granite Cloud,Public Sector,SMB,AMER,18,Analytics Pro,7662,2,1
+A00848,BluePeak Point Ltd,Telecommunications,SMB,APAC,12,Core Suite,7656,1,0.86
+A00027,Granite Point Ltd,Professional Services,SMB,AMER,12,Core Suite,7629,1,1
+A00085,Vertex Systems Inc,Professional Services,SMB,AMER,12,Core Suite,7606,4,1
+A01307,Vertex Bridge Inc,Professional Services,SMB,EMEA,21,Core Suite,7606,2,0.92
+A00536,Aurora Point,Healthcare,SMB,AMER,22,Core Suite,7604,3,1
+A01426,Granite Bridge Ltd,Retail,SMB,AMER,20,Core Suite,7599,4,1
+A01510,Aurora Systems Ltd,Manufacturing,SMB,AMER,18,Core Suite,7582,3,1
+A01501,Vertex Bridge Inc,Public Sector,SMB,APAC,24,Analytics Pro,7566,2,0.86
+A01750,Silverline Point,Financial Services,SMB,AMER,27,Core Suite,7550,1,1
+A01439,Silverline Logic Ltd,Public Sector,SMB,AMER,25,Core Suite,7543,4,1
+A00966,Aurora Grid,Telecommunications,SMB,AMER,20,Analytics Pro,7534,1,1
+A00822,Pinnacle Grid Inc,Logistics,SMB,EMEA,32,Analytics Pro,7503,2,0.92
+A01246,Granite Cloud,Public Sector,SMB,EMEA,27,Core Suite,7503,2,0.92
+A01874,Pinnacle Works Ltd,Manufacturing,SMB,AMER,34,Automation Edge,7464,1,1
+A01837,Meridian Stream,Public Sector,SMB,AMER,16,Analytics Pro,7459,2,1
+A01635,Granite Systems,Financial Services,SMB,APAC,32,Analytics Pro,7422,2,0.86
+A01642,Aurora Stream Ltd,Manufacturing,SMB,APAC,14,Core Suite,7382,2,0.86
+A00107,Northwind Works Ltd,Technology,SMB,EMEA,33,Core Suite,7367,2,0.92
+A01447,BluePeak Systems Ltd,Telecommunications,SMB,AMER,38,Automation Edge,7367,4,1
+A01218,Pinnacle Labs Ltd,Logistics,SMB,AMER,23,Analytics Pro,7366,2,1
+A00212,Silverline Dynamics Inc,Healthcare,SMB,AMER,29,Analytics Pro,7363,3,1
+A00604,Meridian Point Inc,Energy,SMB,AMER,24,Core Suite,7363,4,1
+A01558,Parallel Systems Ltd,Healthcare,SMB,AMER,38,Core Suite,7358,1,1
+A00714,Vertex Cloud Inc,Public Sector,SMB,AMER,31,Analytics Pro,7357,1,1
+A00039,Northwind Labs,Technology,SMB,EMEA,25,Analytics Pro,7333,5,0.92
+A01994,Vertex Dynamics Ltd,Logistics,SMB,AMER,17,Analytics Pro,7278,3,1
+A00883,Parallel Works Ltd,Retail,SMB,EMEA,12,Analytics Pro,7251,2,0.92
+A00613,Parallel Bridge Inc,Logistics,SMB,APAC,31,Automation Edge,7231,4,0.86
+A01854,Vertex Labs Inc,Professional Services,SMB,APAC,20,Analytics Pro,7225,1,0.86
+A01624,Aurora Works Inc,Telecommunications,SMB,AMER,22,Core Suite,7213,1,1
+A01626,Northwind Works Inc,Telecommunications,SMB,AMER,12,Analytics Pro,7191,2,1
+A00985,Aurora Systems Inc,Retail,SMB,APAC,35,Core Suite,7179,2,0.86
+A00954,Pinnacle Cloud,Telecommunications,SMB,AMER,27,Core Suite,7125,2,1
+A00739,Cobalt Stream Inc,Telecommunications,SMB,EMEA,13,Automation Edge,7104,2,0.92
+A01781,Silverline Logic Ltd,Manufacturing,SMB,AMER,31,Automation Edge,7078,1,1
+A00915,Granite Logic Inc,Telecommunications,SMB,AMER,12,Analytics Pro,7037,2,1
+A00566,Silverline Labs,Telecommunications,SMB,APAC,12,Automation Edge,7034,1,0.86
+A01382,Granite Dynamics Ltd,Technology,SMB,AMER,24,Automation Edge,7015,3,1
+A01795,Vertex Cloud Ltd,Energy,SMB,APAC,27,Automation Edge,7009,1,0.86
+A01221,Cobalt Grid Inc,Telecommunications,SMB,AMER,24,Core Suite,7007,2,1
+A01335,Vertex Dynamics Inc,Public Sector,SMB,AMER,16,Automation Edge,7004,1,1
+A01332,Meridian Labs Inc,Healthcare,SMB,EMEA,17,Automation Edge,6963,2,0.92
+A01384,BluePeak Systems,Professional Services,SMB,AMER,12,Core Suite,6953,2,1
+A01219,Northwind Logic Ltd,Professional Services,SMB,AMER,28,Automation Edge,6944,5,1
+A01258,Aurora Systems Ltd,Public Sector,SMB,AMER,36,Core Suite,6944,1,1
+A00986,Aurora Point Inc,Energy,SMB,EMEA,23,Analytics Pro,6933,1,0.92
+A01215,Vertex Logic Ltd,Manufacturing,SMB,AMER,12,Core Suite,6919,2,1
+A00179,Granite Stream Ltd,Public Sector,SMB,APAC,27,Analytics Pro,6902,1,0.86
+A01568,Granite Grid Ltd,Public Sector,SMB,AMER,32,Core Suite,6901,3,1
+A00114,Granite Logic Ltd,Professional Services,SMB,EMEA,26,Analytics Pro,6898,1,0.92
+A01634,Cobalt Stream Ltd,Public Sector,SMB,AMER,12,Core Suite,6893,2,1
+A00437,Northwind Cloud,Financial Services,SMB,APAC,12,Automation Edge,6889,2,0.86
+A01926,Aurora Systems Ltd,Public Sector,SMB,AMER,12,Analytics Pro,6878,1,1
+A01186,Meridian Stream Inc,Public Sector,SMB,EMEA,19,Automation Edge,6860,4,0.92
+A01038,Meridian Point,Manufacturing,SMB,EMEA,22,Automation Edge,6855,1,0.92
+A01614,Cobalt Dynamics,Retail,SMB,AMER,34,Core Suite,6841,4,1
+A01114,Aurora Stream,Technology,SMB,AMER,29,Automation Edge,6838,3,1
+A01739,Aurora Bridge Ltd,Retail,SMB,APAC,18,Core Suite,6831,1,0.86
+A01141,Meridian Bridge Inc,Technology,SMB,AMER,17,Analytics Pro,6823,1,1
+A00936,Vertex Bridge,Technology,SMB,EMEA,12,Analytics Pro,6792,1,0.92
+A01496,Aurora Stream Inc,Manufacturing,SMB,APAC,12,Core Suite,6786,3,0.86
+A01097,Northwind Systems Inc,Technology,SMB,AMER,12,Analytics Pro,6785,3,1
+A00008,Northwind Works Inc,Professional Services,SMB,APAC,27,Analytics Pro,6770,2,0.86
+A01899,Silverline Logic,Financial Services,SMB,AMER,28,Core Suite,6720,1,1
+A01882,Granite Dynamics Inc,Retail,SMB,AMER,12,Automation Edge,6662,3,1
+A01806,BluePeak Labs Inc,Financial Services,SMB,AMER,28,Core Suite,6661,3,1
+A01416,Vertex Grid Ltd,Financial Services,SMB,EMEA,22,Core Suite,6654,3,0.92
+A01656,Meridian Labs,Technology,SMB,EMEA,29,Core Suite,6640,3,0.92
+A01300,Granite Cloud Inc,Manufacturing,SMB,AMER,12,Automation Edge,6594,2,1
+A00488,Meridian Dynamics Ltd,Manufacturing,SMB,AMER,17,Analytics Pro,6574,1,1
+A01816,Aurora Systems Ltd,Healthcare,SMB,AMER,32,Core Suite,6565,1,1
+A01172,Aurora Labs Ltd,Telecommunications,SMB,AMER,29,Core Suite,6561,1,1
+A00898,BluePeak Logic Ltd,Retail,SMB,APAC,23,Core Suite,6555,2,0.86
+A01756,Pinnacle Dynamics Ltd,Manufacturing,SMB,AMER,38,Core Suite,6543,4,1
+A00659,Pinnacle Systems Inc,Healthcare,SMB,EMEA,12,Automation Edge,6524,2,0.92
+A00828,Granite Logic,Energy,SMB,AMER,12,Analytics Pro,6514,1,1
+A00474,Northwind Systems,Manufacturing,SMB,EMEA,14,Analytics Pro,6498,3,0.92
+A00256,Aurora Cloud Ltd,Logistics,SMB,EMEA,32,Analytics Pro,6489,1,0.92
+A01864,Meridian Point Ltd,Telecommunications,SMB,EMEA,21,Core Suite,6482,3,0.92
+A00544,Silverline Bridge Inc,Retail,SMB,EMEA,22,Core Suite,6467,2,0.92
+A00809,Cobalt Systems Inc,Logistics,SMB,AMER,21,Core Suite,6467,4,1
+A00478,Aurora Logic Ltd,Technology,SMB,APAC,18,Analytics Pro,6454,3,0.86
+A01775,Northwind Point Ltd,Telecommunications,SMB,APAC,26,Analytics Pro,6443,3,0.86
+A01399,Aurora Grid Inc,Technology,SMB,EMEA,19,Core Suite,6435,1,0.92
+A00024,Meridian Stream Ltd,Public Sector,SMB,AMER,12,Core Suite,6410,5,1
+A00342,Cobalt Works Inc,Energy,Mid-Market,EMEA,16,Core Suite,6386,1,0.92
+A00094,Granite Dynamics,Manufacturing,SMB,APAC,27,Analytics Pro,6380,1,0.86
+A00941,Meridian Cloud Ltd,Professional Services,SMB,EMEA,12,Core Suite,6369,4,0.92
+A00225,Silverline Cloud Inc,Manufacturing,Mid-Market,EMEA,12,Analytics Pro,6365,1,0.92
+A00772,Meridian Dynamics,Logistics,SMB,APAC,19,Automation Edge,6354,2,0.86
+A01706,Aurora Logic Ltd,Manufacturing,SMB,APAC,22,Automation Edge,6350,3,0.86
+A00745,Parallel Cloud,Technology,SMB,APAC,30,Automation Edge,6340,2,0.86
+A00175,Granite Logic Inc,Energy,SMB,AMER,21,Automation Edge,6330,1,1
+A00381,Northwind Logic Ltd,Telecommunications,SMB,AMER,13,Core Suite,6318,3,1
+A01990,Aurora Works Inc,Professional Services,SMB,AMER,12,Analytics Pro,6315,4,1
+A00980,Pinnacle Bridge,Retail,SMB,APAC,12,Core Suite,6305,2,0.86
+A01053,Cobalt Logic,Technology,SMB,AMER,27,Automation Edge,6276,1,1
+A00169,Parallel Labs Inc,Public Sector,SMB,APAC,27,Automation Edge,6253,1,0.86
+A01717,Silverline Stream Ltd,Financial Services,SMB,AMER,25,Core Suite,6250,1,1
+A00655,Silverline Cloud Ltd,Technology,SMB,APAC,34,Core Suite,6246,4,0.86
+A00337,Granite Labs Inc,Public Sector,SMB,AMER,12,Core Suite,6241,2,1
+A01515,Aurora Works Inc,Telecommunications,SMB,AMER,14,Analytics Pro,6230,2,1
+A00587,Granite Systems Ltd,Retail,SMB,APAC,12,Core Suite,6145,4,0.86
+A01939,BluePeak Dynamics,Technology,SMB,APAC,12,Analytics Pro,6144,4,0.86
+A00680,Granite Cloud Inc,Technology,SMB,APAC,30,Core Suite,6142,4,0.86
+A00104,Parallel Works Inc,Public Sector,SMB,AMER,20,Analytics Pro,6130,1,1
+A00255,Parallel Systems Ltd,Retail,SMB,AMER,13,Analytics Pro,6121,4,1
+A01742,Cobalt Logic Ltd,Manufacturing,SMB,APAC,15,Core Suite,6078,3,0.86
+A01869,Aurora Grid,Manufacturing,SMB,AMER,12,Core Suite,6071,3,1
+A00940,Northwind Point,Technology,SMB,AMER,26,Automation Edge,6065,2,1
+A01851,Northwind Cloud Inc,Healthcare,SMB,AMER,25,Core Suite,6056,1,1
+A00804,Pinnacle Labs Inc,Public Sector,SMB,APAC,19,Automation Edge,6045,1,0.86
+A01165,Cobalt Works,Retail,SMB,EMEA,29,Automation Edge,6036,3,0.92
+A01741,Cobalt Point,Energy,SMB,AMER,12,Analytics Pro,6013,4,1
+A00227,Vertex Dynamics Ltd,Healthcare,SMB,AMER,22,Core Suite,6004,3,1
+A01021,Cobalt Stream Inc,Technology,SMB,APAC,12,Analytics Pro,6003,3,0.86
+A01768,Pinnacle Cloud Inc,Energy,SMB,AMER,37,Analytics Pro,6003,2,1
+A00016,Cobalt Cloud Inc,Professional Services,SMB,APAC,24,Analytics Pro,5986,1,0.86
+A00317,Parallel Systems Inc,Financial Services,SMB,EMEA,12,Automation Edge,5986,1,0.92
+A01474,Pinnacle Logic Inc,Manufacturing,SMB,EMEA,17,Analytics Pro,5985,1,0.92
+A01363,Cobalt Labs Inc,Public Sector,SMB,AMER,12,Automation Edge,5982,2,1
+A01271,Aurora Dynamics Ltd,Telecommunications,SMB,APAC,25,Analytics Pro,5972,3,0.86
+A01995,Pinnacle Bridge Ltd,Public Sector,SMB,EMEA,27,Core Suite,5972,2,0.92
+A00715,Aurora Labs Inc,Retail,SMB,APAC,12,Analytics Pro,5949,2,0.86
+A01743,Vertex Systems Ltd,Energy,SMB,AMER,18,Core Suite,5930,3,1
+A01188,Silverline Logic Ltd,Public Sector,Mid-Market,EMEA,17,Analytics Pro,5924,3,0.92
+A01311,BluePeak Grid Inc,Technology,SMB,AMER,12,Core Suite,5922,1,1
+A01353,Silverline Stream,Professional Services,SMB,AMER,23,Core Suite,5920,2,1
+A00183,Granite Labs,Retail,SMB,EMEA,37,Core Suite,5897,3,0.92
+A01636,Northwind Works Inc,Manufacturing,SMB,EMEA,30,Core Suite,5877,2,0.92
+A01326,Silverline Grid,Public Sector,SMB,AMER,12,Analytics Pro,5874,1,1
+A01928,Pinnacle Labs Ltd,Logistics,SMB,AMER,34,Core Suite,5867,3,1
+A01927,Pinnacle Cloud,Retail,SMB,EMEA,30,Analytics Pro,5856,2,0.92
+A00555,Pinnacle Dynamics Ltd,Telecommunications,SMB,EMEA,20,Core Suite,5839,3,0.92
+A01871,Parallel Works Inc,Logistics,SMB,AMER,12,Automation Edge,5833,4,1
+A01866,BluePeak Systems Ltd,Public Sector,SMB,AMER,36,Analytics Pro,5786,3,1
+A00306,Meridian Cloud Inc,Manufacturing,SMB,EMEA,31,Core Suite,5780,1,0.92
+A00443,Meridian Cloud Ltd,Public Sector,SMB,APAC,12,Automation Edge,5765,1,0.86
+A01222,Vertex Logic Ltd,Public Sector,SMB,AMER,26,Core Suite,5750,3,1
+A01660,Silverline Works,Professional Services,SMB,AMER,34,Automation Edge,5740,5,1
+A01559,Cobalt Bridge Inc,Energy,SMB,EMEA,16,Analytics Pro,5711,3,0.92
+A01883,Silverline Systems,Manufacturing,SMB,APAC,15,Core Suite,5700,1,0.86
+A00140,Granite Logic,Retail,SMB,AMER,36,Core Suite,5692,1,1
+A01201,Aurora Dynamics Inc,Manufacturing,SMB,EMEA,21,Core Suite,5692,2,0.92
+A00232,Vertex Labs Ltd,Manufacturing,SMB,AMER,28,Core Suite,5687,2,1
+A01044,Granite Logic Ltd,Healthcare,SMB,EMEA,30,Core Suite,5681,2,0.92
+A01117,Northwind Point,Financial Services,SMB,EMEA,33,Analytics Pro,5674,1,0.92
+A00307,Pinnacle Grid Inc,Professional Services,SMB,EMEA,12,Analytics Pro,5660,1,0.92
+A00873,Cobalt Grid Inc,Financial Services,SMB,EMEA,13,Core Suite,5651,2,0.92
+A00296,Parallel Grid Inc,Logistics,SMB,AMER,19,Analytics Pro,5646,2,1
+A00798,Pinnacle Systems,Energy,SMB,AMER,14,Analytics Pro,5646,1,1
+A01667,Vertex Systems Inc,Energy,SMB,EMEA,37,Automation Edge,5621,1,0.92
+A00487,Northwind Stream,Telecommunications,SMB,AMER,23,Automation Edge,5619,3,1
+A01612,Parallel Point Inc,Healthcare,Mid-Market,AMER,12,Analytics Pro,5615,2,1
+A01341,BluePeak Logic Inc,Retail,SMB,EMEA,16,Core Suite,5594,1,0.92
+A01086,Silverline Works Inc,Retail,SMB,AMER,12,Analytics Pro,5579,1,1
+A00154,Meridian Stream Ltd,Healthcare,SMB,EMEA,12,Core Suite,5574,3,0.92
+A00531,Parallel Dynamics Inc,Healthcare,SMB,AMER,32,Core Suite,5570,1,1
+A00932,Granite Grid Ltd,Logistics,SMB,AMER,12,Automation Edge,5566,5,1
+A01278,Cobalt Cloud,Technology,SMB,AMER,16,Automation Edge,5563,3,1
+A00872,Pinnacle Labs Ltd,Telecommunications,SMB,EMEA,23,Core Suite,5532,2,0.92
+A00588,Vertex Point,Logistics,SMB,AMER,33,Automation Edge,5523,2,1
+A01094,Cobalt Logic,Healthcare,SMB,AMER,12,Core Suite,5471,4,1
+A00479,Pinnacle Dynamics Inc,Public Sector,SMB,AMER,18,Core Suite,5452,2,1
+A00790,Pinnacle Point Ltd,Technology,SMB,EMEA,26,Automation Edge,5437,3,0.92
+A00860,Parallel Logic Ltd,Energy,SMB,AMER,12,Core Suite,5429,1,1
+A00690,Cobalt Systems,Telecommunications,SMB,AMER,24,Automation Edge,5391,1,1
+A01333,Meridian Works,Telecommunications,SMB,AMER,25,Core Suite,5367,1,1
+A01604,Granite Dynamics,Telecommunications,SMB,AMER,24,Analytics Pro,5367,2,1
+A00106,BluePeak Labs Ltd,Logistics,SMB,EMEA,25,Analytics Pro,5351,1,0.92
+A01434,BluePeak Cloud,Technology,SMB,AMER,33,Core Suite,5324,5,1
+A00533,Cobalt Stream Ltd,Technology,SMB,APAC,22,Analytics Pro,5315,1,0.86
+A00813,Cobalt Labs Inc,Energy,SMB,AMER,37,Analytics Pro,5313,1,1
+A00611,Northwind Works Ltd,Technology,SMB,AMER,27,Core Suite,5300,3,1
+A00397,Pinnacle Logic Ltd,Professional Services,SMB,AMER,15,Automation Edge,5284,2,1
+A00995,Cobalt Works Ltd,Financial Services,SMB,AMER,25,Analytics Pro,5282,3,1
+A00697,Cobalt Dynamics Ltd,Retail,SMB,EMEA,34,Core Suite,5278,2,0.92
+A00274,BluePeak Bridge Inc,Manufacturing,SMB,APAC,16,Analytics Pro,5246,1,0.86
+A01787,Parallel Dynamics Inc,Telecommunications,SMB,AMER,12,Automation Edge,5202,2,1
+A00650,Meridian Grid Inc,Technology,SMB,AMER,12,Core Suite,5178,1,1
+A01321,Aurora Stream,Financial Services,SMB,APAC,19,Analytics Pro,5131,3,0.86
+A00624,Meridian Labs Ltd,Telecommunications,SMB,AMER,31,Core Suite,5127,1,1
+A00410,Vertex Point Ltd,Retail,SMB,AMER,12,Core Suite,5120,4,1
+A01968,Pinnacle Systems,Professional Services,SMB,AMER,12,Core Suite,5112,1,1
+A01726,Granite Logic Inc,Financial Services,SMB,AMER,28,Core Suite,5095,2,1
+A01096,Granite Labs Inc,Technology,SMB,AMER,13,Core Suite,5084,1,1
+A00578,Parallel Stream,Logistics,SMB,AMER,29,Analytics Pro,5051,2,1
+A01440,Granite Cloud Ltd,Manufacturing,SMB,AMER,33,Automation Edge,5029,2,1
+A01507,Granite Logic Ltd,Energy,SMB,AMER,14,Analytics Pro,5010,2,1
+A01039,Silverline Stream,Telecommunications,SMB,EMEA,15,Analytics Pro,5009,2,0.92
+A00880,Granite Grid Ltd,Financial Services,SMB,APAC,26,Automation Edge,4990,4,0.86
+A01654,Northwind Works Inc,Manufacturing,SMB,EMEA,32,Automation Edge,4975,4,0.92
+A01644,Cobalt Stream,Logistics,SMB,AMER,12,Core Suite,4970,1,1
+A00129,Cobalt Point,Healthcare,SMB,AMER,20,Automation Edge,4968,2,1
+A00676,Granite Point Inc,Logistics,SMB,AMER,37,Analytics Pro,4956,3,1
+A01537,Granite Point Inc,Healthcare,SMB,APAC,17,Automation Edge,4950,4,0.86
+A01665,Aurora Logic Ltd,Financial Services,SMB,APAC,22,Automation Edge,4940,1,0.86
+A00594,Silverline Works,Professional Services,SMB,EMEA,30,Analytics Pro,4928,1,0.92
+A01732,Aurora Grid Inc,Telecommunications,SMB,EMEA,25,Automation Edge,4918,3,0.92
+A01799,Meridian Dynamics,Logistics,SMB,AMER,13,Core Suite,4913,3,1
+A00473,Vertex Bridge Inc,Energy,SMB,APAC,12,Automation Edge,4885,3,0.86
+A00726,Vertex Labs,Professional Services,SMB,EMEA,12,Analytics Pro,4859,3,0.92
+A00660,Aurora Grid Ltd,Financial Services,SMB,EMEA,33,Automation Edge,4850,2,0.92
+A01797,Aurora Point Inc,Energy,SMB,AMER,32,Core Suite,4817,1,1
+A00054,Granite Point Inc,Energy,SMB,AMER,20,Core Suite,4805,3,1
+A01022,Vertex Point Inc,Retail,SMB,EMEA,21,Analytics Pro,4805,2,0.92
+A01398,Silverline Bridge,Retail,SMB,AMER,14,Automation Edge,4792,2,1
+A00577,Granite Stream,Public Sector,SMB,AMER,36,Automation Edge,4768,1,1
+A00825,Pinnacle Systems Inc,Professional Services,SMB,EMEA,30,Core Suite,4744,1,0.92
+A00404,Pinnacle Point Inc,Retail,SMB,AMER,24,Core Suite,4739,2,1
+A00699,Cobalt Systems,Professional Services,SMB,EMEA,12,Core Suite,4723,1,0.92
+A01633,BluePeak Cloud Ltd,Logistics,SMB,AMER,32,Core Suite,4716,1,1
+A01154,BluePeak Bridge,Financial Services,SMB,AMER,34,Automation Edge,4705,2,1
+A01547,Vertex Labs,Retail,SMB,APAC,31,Analytics Pro,4684,5,0.86
+A00900,Meridian Systems Ltd,Energy,SMB,APAC,17,Analytics Pro,4682,3,0.86
+A01145,Northwind Bridge Inc,Public Sector,SMB,AMER,25,Automation Edge,4679,2,1
+A00746,Northwind Point Inc,Public Sector,SMB,AMER,17,Core Suite,4664,2,1
+A01829,Northwind Logic,Healthcare,SMB,EMEA,22,Automation Edge,4661,2,0.92
+A00444,Northwind Bridge Inc,Public Sector,SMB,APAC,37,Automation Edge,4645,3,0.86
+A01986,Granite Grid,Professional Services,SMB,APAC,28,Analytics Pro,4642,3,0.86
+A01592,Meridian Works Ltd,Financial Services,SMB,EMEA,15,Core Suite,4641,3,0.92
+A00121,Cobalt Works Inc,Energy,SMB,AMER,12,Automation Edge,4597,1,1
+A00711,BluePeak Stream Ltd,Retail,SMB,EMEA,18,Core Suite,4596,1,0.92
+A01041,Meridian Works Ltd,Energy,SMB,EMEA,15,Analytics Pro,4594,4,0.92
+A00875,Pinnacle Logic Ltd,Technology,SMB,EMEA,16,Core Suite,4589,1,0.92
+A00600,Silverline Cloud,Manufacturing,SMB,APAC,12,Analytics Pro,4581,1,0.86
+A00953,Parallel Logic Ltd,Financial Services,SMB,EMEA,16,Analytics Pro,4581,1,0.92
+A01593,Cobalt Stream Ltd,Public Sector,Mid-Market,AMER,35,Analytics Pro,4562,2,1
+A01589,Aurora Cloud,Telecommunications,SMB,AMER,12,Automation Edge,4556,1,1
+A00890,Parallel Dynamics,Logistics,Mid-Market,EMEA,28,Core Suite,4539,4,0.92
+A01065,Meridian Grid Inc,Healthcare,SMB,EMEA,27,Analytics Pro,4522,5,0.92
+A00593,Meridian Works,Manufacturing,SMB,APAC,27,Automation Edge,4519,1,0.86
+A00895,Silverline Cloud Ltd,Technology,SMB,EMEA,35,Core Suite,4519,2,0.92
+A01472,Northwind Grid,Telecommunications,SMB,APAC,30,Automation Edge,4518,1,0.86
+A01681,Pinnacle Grid Ltd,Manufacturing,SMB,EMEA,22,Core Suite,4502,2,0.92
+A00185,BluePeak Stream Ltd,Healthcare,SMB,APAC,15,Analytics Pro,4498,1,0.86
+A00302,Pinnacle Cloud Inc,Healthcare,SMB,AMER,15,Automation Edge,4491,1,1
+A00461,Northwind Cloud Inc,Telecommunications,SMB,AMER,29,Analytics Pro,4483,5,1
+A01793,Meridian Grid Ltd,Energy,SMB,AMER,14,Analytics Pro,4475,2,1
+A00599,Cobalt Grid,Energy,SMB,AMER,12,Core Suite,4470,2,1
+A00549,Granite Bridge Ltd,Retail,SMB,AMER,22,Core Suite,4469,1,1
+A00163,Parallel Stream,Logistics,SMB,AMER,13,Analytics Pro,4454,1,1
+A01999,Aurora Dynamics Ltd,Technology,SMB,AMER,16,Core Suite,4454,5,1
+A00480,Silverline Logic,Telecommunications,SMB,APAC,34,Core Suite,4453,2,0.86
+A01025,Pinnacle Grid Ltd,Energy,SMB,EMEA,16,Core Suite,4441,2,0.92
+A00990,BluePeak Labs,Professional Services,SMB,AMER,12,Automation Edge,4410,2,1
+A00738,Pinnacle Bridge Ltd,Technology,Mid-Market,AMER,43,Automation Edge,4407,3,1
+A00686,Granite Stream Ltd,Technology,SMB,APAC,12,Analytics Pro,4367,3,0.86
+A00146,BluePeak Works Inc,Professional Services,SMB,EMEA,12,Core Suite,4356,2,0.92
+A00977,Silverline Logic,Public Sector,SMB,APAC,12,Core Suite,4336,3,0.86
+A01057,BluePeak Systems Inc,Technology,SMB,EMEA,12,Core Suite,4333,3,0.92
+A00150,Parallel Logic Inc,Logistics,SMB,APAC,20,Analytics Pro,4323,1,0.86
+A00401,Vertex Works,Telecommunications,SMB,EMEA,18,Core Suite,4321,3,0.92
+A00160,Silverline Bridge Inc,Manufacturing,SMB,AMER,14,Core Suite,4316,4,1
+A00010,Pinnacle Works Ltd,Logistics,SMB,EMEA,15,Analytics Pro,4292,3,0.92
+A00029,Silverline Grid,Logistics,SMB,APAC,24,Analytics Pro,4280,4,0.86
+A00240,Meridian Works Ltd,Financial Services,SMB,AMER,12,Core Suite,4277,1,1
+A00918,Granite Bridge,Technology,SMB,APAC,16,Analytics Pro,4274,1,0.86
+A00802,Cobalt Cloud,Telecommunications,SMB,AMER,37,Core Suite,4268,1,1
+A00938,Parallel Point Inc,Energy,SMB,APAC,19,Core Suite,4233,3,0.86
+A01773,Pinnacle Stream Inc,Healthcare,SMB,EMEA,17,Core Suite,4195,2,0.92
+A00619,Aurora Cloud Ltd,Telecommunications,SMB,AMER,19,Analytics Pro,4194,1,1
+A01217,Northwind Works Ltd,Manufacturing,SMB,EMEA,12,Analytics Pro,4183,2,0.92
+A00507,Cobalt Dynamics Inc,Retail,SMB,AMER,29,Core Suite,4169,1,1
+A00552,Vertex Cloud Ltd,Professional Services,SMB,AMER,12,Core Suite,4168,2,1
+A01813,Pinnacle Bridge Ltd,Professional Services,SMB,AMER,18,Analytics Pro,4163,1,1
+A01276,BluePeak Logic Ltd,Logistics,SMB,EMEA,36,Core Suite,4142,1,0.92
+A01159,Vertex Point Ltd,Manufacturing,SMB,AMER,30,Automation Edge,4124,2,1
+A00015,Cobalt Cloud Inc,Energy,SMB,APAC,35,Core Suite,4111,2,0.86
+A00705,Northwind Logic,Retail,SMB,EMEA,35,Core Suite,4101,3,0.92
+A00180,Northwind Bridge Ltd,Energy,SMB,APAC,26,Automation Edge,4094,2,0.86
+A01674,Meridian Point Inc,Manufacturing,SMB,APAC,16,Core Suite,4070,2,0.86
+A01389,BluePeak Cloud Inc,Telecommunications,SMB,EMEA,25,Analytics Pro,4060,1,0.92
+A01998,Silverline Logic Ltd,Retail,SMB,AMER,29,Analytics Pro,4054,2,1
+A01751,Parallel Dynamics Ltd,Manufacturing,SMB,AMER,16,Analytics Pro,4051,2,1
+A01406,Meridian Systems,Financial Services,SMB,APAC,12,Automation Edge,4042,2,0.86
+A01643,Silverline Dynamics Inc,Healthcare,SMB,EMEA,24,Automation Edge,4021,4,0.92
+A00411,BluePeak Logic Inc,Retail,SMB,APAC,23,Automation Edge,4008,1,0.86
+A01943,Cobalt Point,Manufacturing,Mid-Market,APAC,37,Analytics Pro,3966,3,0.86
+A00797,Meridian Logic Inc,Technology,SMB,EMEA,24,Analytics Pro,3956,3,0.92
+A01223,Cobalt Stream Ltd,Technology,SMB,AMER,18,Analytics Pro,3936,1,1
+A01151,Meridian Bridge,Manufacturing,SMB,EMEA,13,Analytics Pro,3932,2,0.92
+A01605,Cobalt Point,Healthcare,SMB,AMER,32,Automation Edge,3926,1,1
+A00679,Granite Labs,Logistics,SMB,EMEA,32,Core Suite,3921,2,0.92
+A00766,Aurora Labs,Professional Services,SMB,EMEA,12,Core Suite,3903,1,0.92
+A01381,Pinnacle Works,Logistics,SMB,APAC,30,Analytics Pro,3896,2,0.86
+A00744,Aurora Stream Inc,Telecommunications,SMB,AMER,26,Core Suite,3892,3,1
+A00338,Vertex Dynamics Ltd,Technology,SMB,AMER,33,Automation Edge,3871,4,1
+A00627,Meridian Dynamics,Technology,SMB,EMEA,23,Core Suite,3853,2,0.92
+A01078,Meridian Systems Ltd,Professional Services,SMB,AMER,12,Automation Edge,3847,1,1
+A01727,Vertex Grid,Technology,SMB,EMEA,23,Core Suite,3845,1,0.92
+A01779,Granite Cloud,Manufacturing,SMB,AMER,24,Core Suite,3839,1,1
+A01253,Granite Point,Telecommunications,SMB,AMER,19,Analytics Pro,3832,4,1
+A01313,Parallel Dynamics,Public Sector,SMB,AMER,13,Core Suite,3832,1,1
+A00614,Parallel Point Ltd,Professional Services,SMB,AMER,19,Analytics Pro,3829,2,1
+A01536,BluePeak Bridge Inc,Telecommunications,SMB,EMEA,12,Analytics Pro,3823,2,0.92
+A00525,Aurora Systems,Healthcare,SMB,AMER,12,Core Suite,3814,2,1
+A00333,Granite Dynamics,Manufacturing,SMB,AMER,12,Core Suite,3800,2,1
+A01387,Northwind Dynamics Ltd,Energy,SMB,AMER,16,Automation Edge,3788,3,1
+A01182,BluePeak Systems,Financial Services,SMB,AMER,34,Analytics Pro,3778,1,1
+A01349,Cobalt Dynamics Inc,Technology,SMB,AMER,21,Core Suite,3763,3,1
+A01481,Aurora Grid,Financial Services,SMB,EMEA,29,Core Suite,3762,3,0.92
+A00851,Vertex Grid Inc,Public Sector,SMB,EMEA,25,Automation Edge,3755,3,0.92
+A01618,Vertex Bridge Inc,Telecommunications,SMB,AMER,12,Core Suite,3755,1,1
+A01934,Northwind Systems Ltd,Technology,SMB,EMEA,29,Analytics Pro,3737,1,0.92
+A00786,Aurora Grid,Telecommunications,SMB,AMER,21,Analytics Pro,3731,2,1
+A00978,Granite Works Ltd,Public Sector,SMB,AMER,12,Analytics Pro,3712,1,1
+A00467,Meridian Point Ltd,Energy,SMB,EMEA,26,Core Suite,3711,2,0.92
+A00933,Meridian Stream Inc,Financial Services,SMB,EMEA,35,Core Suite,3699,2,0.92
+A01526,Pinnacle Bridge Inc,Manufacturing,SMB,AMER,16,Automation Edge,3692,2,1
+A01179,Cobalt Dynamics,Public Sector,SMB,AMER,12,Automation Edge,3662,3,1
+A00687,Pinnacle Point Inc,Professional Services,SMB,APAC,33,Analytics Pro,3657,1,0.86
+A00695,BluePeak Systems Ltd,Retail,SMB,APAC,17,Core Suite,3657,1,0.86
+A01594,Cobalt Bridge,Energy,SMB,AMER,31,Analytics Pro,3650,2,1
+A00314,Pinnacle Labs,Logistics,SMB,AMER,33,Core Suite,3625,2,1
+A01195,Vertex Bridge Inc,Public Sector,SMB,EMEA,29,Analytics Pro,3619,5,0.92
+A00102,Silverline Systems Inc,Telecommunications,SMB,AMER,20,Automation Edge,3605,4,1
+A01048,Silverline Point,Healthcare,SMB,EMEA,23,Core Suite,3596,3,0.92
+A00177,Parallel Stream Inc,Public Sector,SMB,APAC,19,Analytics Pro,3593,1,0.86
+A00519,BluePeak Dynamics,Manufacturing,SMB,AMER,16,Automation Edge,3585,2,1
+A00081,Cobalt Works Ltd,Technology,SMB,EMEA,12,Automation Edge,3584,2,0.92
+A01072,Meridian Stream Inc,Retail,SMB,APAC,27,Analytics Pro,3582,2,0.86
+A01825,Meridian Point,Technology,SMB,AMER,12,Core Suite,3582,3,1
+A01301,Silverline Works Ltd,Healthcare,SMB,AMER,31,Automation Edge,3576,1,1
+A00996,Pinnacle Point,Professional Services,SMB,APAC,36,Core Suite,3574,1,0.86
+A01796,Vertex Systems Inc,Logistics,SMB,APAC,21,Analytics Pro,3573,3,0.86
+A00836,Silverline Stream,Logistics,SMB,APAC,12,Analytics Pro,3537,3,0.86
+A01562,Aurora Labs Ltd,Energy,SMB,AMER,29,Analytics Pro,3529,4,1
+A00815,Parallel Cloud Inc,Technology,SMB,EMEA,23,Analytics Pro,3507,3,0.92
+A01848,Meridian Grid,Energy,SMB,APAC,12,Analytics Pro,3506,2,0.86
+A01574,BluePeak Point,Retail,SMB,AMER,12,Analytics Pro,3505,2,1
+A00642,Cobalt Labs Inc,Financial Services,SMB,AMER,12,Core Suite,3501,1,1
+A01764,Silverline Systems,Retail,SMB,AMER,24,Automation Edge,3492,3,1
+A01918,Cobalt Bridge,Telecommunications,SMB,AMER,34,Core Suite,3488,4,1
+A00051,Pinnacle Works Inc,Healthcare,SMB,EMEA,12,Core Suite,3487,3,0.92
+A01895,Pinnacle Stream,Technology,SMB,EMEA,14,Core Suite,3487,2,0.92
+A01214,Pinnacle Cloud,Healthcare,SMB,APAC,16,Automation Edge,3483,3,0.86
+A01157,BluePeak Labs Ltd,Technology,SMB,EMEA,12,Core Suite,3466,3,0.92
+A00396,Granite Point,Healthcare,SMB,EMEA,33,Core Suite,3465,2,0.92
+A01199,Vertex Bridge,Healthcare,SMB,EMEA,20,Core Suite,3465,1,0.92
+A00433,BluePeak Grid,Energy,SMB,APAC,13,Analytics Pro,3462,5,0.86
+A00099,Northwind Point Inc,Manufacturing,SMB,AMER,29,Core Suite,3442,1,1
+A01129,BluePeak Works Inc,Healthcare,SMB,AMER,19,Core Suite,3419,4,1
+A00393,Aurora Stream Inc,Public Sector,SMB,AMER,12,Analytics Pro,3394,3,1
+A00126,Parallel Logic,Financial Services,SMB,EMEA,27,Core Suite,3369,3,0.92
+A01993,BluePeak Stream Ltd,Healthcare,SMB,EMEA,17,Core Suite,3344,1,0.92
+A00668,Silverline Systems Inc,Public Sector,SMB,EMEA,12,Core Suite,3325,3,0.92
+A00595,Aurora Dynamics Ltd,Technology,SMB,APAC,12,Automation Edge,3317,2,0.86
+A00257,BluePeak Works Ltd,Healthcare,SMB,AMER,20,Core Suite,3296,3,1
+A00625,Granite Labs Inc,Professional Services,SMB,AMER,14,Core Suite,3275,2,1
+A00847,Granite Dynamics Ltd,Telecommunications,SMB,APAC,12,Analytics Pro,3268,4,0.86
+A01464,BluePeak Labs Ltd,Telecommunications,SMB,EMEA,30,Analytics Pro,3243,2,0.92
+A00603,Silverline Works Inc,Financial Services,SMB,AMER,12,Core Suite,3232,2,1
+A01695,Meridian Stream Ltd,Logistics,SMB,AMER,13,Core Suite,3227,1,1
+A01598,Granite Labs,Healthcare,SMB,EMEA,12,Automation Edge,3221,4,0.92
+A00563,Meridian Bridge Inc,Energy,SMB,EMEA,17,Analytics Pro,3217,3,0.92
+A01309,Vertex Bridge Ltd,Telecommunications,SMB,EMEA,12,Analytics Pro,3185,2,0.92
+A01456,Cobalt Labs Inc,Energy,SMB,AMER,12,Analytics Pro,3180,1,1
+A01966,Northwind Systems Ltd,Healthcare,SMB,AMER,29,Automation Edge,3168,1,1
+A00773,BluePeak Labs Ltd,Retail,SMB,EMEA,16,Analytics Pro,3167,1,0.92
+A00598,Meridian Grid Inc,Retail,SMB,AMER,31,Analytics Pro,3165,3,1
+A01628,Vertex Logic Inc,Telecommunications,SMB,AMER,12,Analytics Pro,3164,1,1
+A01707,Parallel Cloud Ltd,Public Sector,SMB,EMEA,36,Core Suite,3156,5,0.92
+A00295,Aurora Bridge Inc,Manufacturing,SMB,EMEA,12,Analytics Pro,3132,2,0.92
+A00109,Vertex Works Inc,Public Sector,SMB,APAC,12,Automation Edge,3098,2,0.86
+A01828,Pinnacle Cloud Inc,Public Sector,SMB,EMEA,17,Core Suite,3095,1,0.92
+A00204,Parallel Labs,Logistics,SMB,EMEA,13,Analytics Pro,3089,2,0.92
+A01356,Meridian Point Ltd,Healthcare,SMB,AMER,30,Analytics Pro,3084,1,1
+A00132,Pinnacle Logic,Logistics,SMB,EMEA,12,Analytics Pro,3083,2,0.92
+A00292,Pinnacle Works Ltd,Energy,SMB,AMER,12,Analytics Pro,3083,2,1
+A01615,Parallel Labs Ltd,Technology,SMB,EMEA,16,Analytics Pro,3083,2,0.92
+A01346,Vertex Works Ltd,Financial Services,SMB,AMER,26,Automation Edge,3076,1,1
+A02000,Cobalt Stream Inc,Manufacturing,SMB,EMEA,35,Core Suite,3047,2,0.92
+A01169,Cobalt Works,Financial Services,SMB,AMER,21,Core Suite,3039,2,1
+A01107,Pinnacle Grid Inc,Telecommunications,SMB,AMER,34,Analytics Pro,3036,1,1
+A01767,Parallel Dynamics Inc,Retail,SMB,EMEA,35,Core Suite,3032,1,0.92
+A00313,Parallel Grid,Financial Services,SMB,AMER,14,Analytics Pro,3008,2,1
+A01620,Granite Grid Ltd,Manufacturing,SMB,AMER,25,Analytics Pro,3002,4,1
+A00135,Pinnacle Logic Inc,Public Sector,SMB,APAC,33,Core Suite,2982,2,0.86
+A01974,Pinnacle Grid Ltd,Energy,SMB,APAC,15,Core Suite,2977,1,0.86
+A00165,Vertex Logic,Technology,SMB,APAC,12,Analytics Pro,2971,3,0.86
+A00352,BluePeak Cloud Inc,Healthcare,SMB,AMER,17,Core Suite,2970,1,1
+A00032,Northwind Cloud,Manufacturing,SMB,APAC,36,Analytics Pro,2951,2,0.86
+A00495,Parallel Logic Ltd,Financial Services,SMB,AMER,23,Core Suite,2951,2,1
+A00017,Pinnacle Dynamics Ltd,Telecommunications,SMB,APAC,27,Analytics Pro,2946,3,0.86
+A01485,Granite Dynamics Ltd,Professional Services,SMB,AMER,15,Analytics Pro,2938,1,1
+A00510,Silverline Cloud Ltd,Technology,SMB,AMER,12,Analytics Pro,2925,2,1
+A00572,Granite Grid Inc,Professional Services,SMB,APAC,12,Core Suite,2908,1,0.86
+A00043,BluePeak Labs,Logistics,SMB,APAC,12,Automation Edge,2900,2,0.86
+A01036,Pinnacle Bridge Inc,Manufacturing,SMB,AMER,12,Core Suite,2892,2,1
+A00793,Vertex Logic Inc,Telecommunications,SMB,EMEA,16,Analytics Pro,2888,1,0.92
+A01325,BluePeak Grid Inc,Professional Services,SMB,AMER,12,Core Suite,2885,1,1
+A00263,Silverline Logic Ltd,Logistics,SMB,EMEA,12,Automation Edge,2864,1,0.92
+A00992,Pinnacle Grid Ltd,Retail,SMB,AMER,24,Core Suite,2861,1,1
+A00886,Northwind Labs Inc,Financial Services,SMB,EMEA,31,Core Suite,2850,1,0.92
+A00974,Meridian Dynamics Ltd,Retail,SMB,APAC,35,Analytics Pro,2847,1,0.86
+A00592,Meridian Logic,Energy,SMB,AMER,12,Analytics Pro,2846,1,1
+A00287,Aurora Works,Public Sector,SMB,APAC,17,Core Suite,2842,1,0.86
+A00215,Aurora Grid Ltd,Technology,SMB,AMER,12,Analytics Pro,2837,1,1
+A00830,Pinnacle Logic,Logistics,SMB,EMEA,15,Core Suite,2834,1,0.92
+A00541,Parallel Dynamics Inc,Telecommunications,SMB,EMEA,12,Automation Edge,2827,2,0.92
+A01216,Granite Stream Ltd,Healthcare,SMB,APAC,12,Core Suite,2812,2,0.86
+A01279,Pinnacle Cloud Inc,Telecommunications,SMB,EMEA,25,Analytics Pro,2808,2,0.92
+A01227,Granite Labs Ltd,Telecommunications,SMB,AMER,12,Analytics Pro,2799,4,1
+A01069,Silverline Logic,Healthcare,SMB,AMER,12,Core Suite,2784,3,1
+A01608,BluePeak Cloud,Manufacturing,SMB,EMEA,25,Automation Edge,2783,3,0.92
+A00842,Meridian Logic,Telecommunications,SMB,AMER,12,Analytics Pro,2774,1,1
+A00870,Meridian Dynamics,Manufacturing,SMB,EMEA,25,Core Suite,2751,2,0.92
+A01010,Pinnacle Logic Ltd,Healthcare,SMB,AMER,13,Core Suite,2749,2,1
+A00653,Granite Cloud Ltd,Retail,SMB,EMEA,12,Core Suite,2746,2,0.92
+A00701,Vertex Dynamics Ltd,Healthcare,SMB,AMER,28,Automation Edge,2741,1,1
+A00127,Pinnacle Cloud Ltd,Manufacturing,SMB,EMEA,37,Core Suite,2721,2,0.92
+A01944,Northwind Logic Ltd,Public Sector,SMB,AMER,20,Analytics Pro,2719,4,1
+A00242,Aurora Dynamics,Healthcare,SMB,APAC,15,Analytics Pro,2697,1,0.86
+A00318,Pinnacle Bridge,Financial Services,SMB,APAC,12,Core Suite,2696,3,0.86
+A00630,Aurora Works,Technology,SMB,APAC,29,Analytics Pro,2663,2,0.86
+A01197,Northwind Grid,Technology,SMB,AMER,31,Core Suite,2654,2,1
+A01900,Parallel Systems Ltd,Professional Services,SMB,AMER,18,Core Suite,2652,5,1
+A01085,Parallel Logic,Retail,SMB,AMER,36,Analytics Pro,2644,1,1
+A00202,Aurora Bridge Inc,Financial Services,SMB,AMER,13,Analytics Pro,2633,3,1
+A01091,Aurora Grid Ltd,Logistics,SMB,AMER,19,Analytics Pro,2624,1,1
+A00576,Aurora Point Inc,Public Sector,SMB,APAC,30,Core Suite,2623,3,0.86
+A00640,Granite Works,Logistics,SMB,APAC,16,Core Suite,2623,2,0.86
+A00558,Granite Bridge Inc,Retail,SMB,APAC,12,Automation Edge,2613,1,0.86
+A00491,Granite Logic Inc,Telecommunications,SMB,EMEA,12,Analytics Pro,2594,3,0.92
+A00869,Northwind Logic Ltd,Public Sector,SMB,AMER,30,Core Suite,2571,1,1
+A00320,BluePeak Dynamics,Manufacturing,SMB,AMER,28,Automation Edge,2529,2,1
+A01491,Aurora Point Ltd,Telecommunications,SMB,AMER,12,Core Suite,2513,2,1
+A01348,BluePeak Stream,Energy,SMB,AMER,12,Analytics Pro,2509,1,1
+A00244,Pinnacle Logic,Public Sector,SMB,AMER,31,Core Suite,2506,1,1
+A00078,Cobalt Labs Inc,Retail,SMB,AMER,27,Core Suite,2504,1,1
+A00346,Northwind Logic Inc,Financial Services,SMB,AMER,12,Automation Edge,2495,1,1
+A00120,Meridian Grid,Professional Services,SMB,AMER,23,Core Suite,2481,2,1
+A00955,Parallel Bridge Ltd,Energy,SMB,APAC,12,Analytics Pro,2479,1,0.86
+A01419,Parallel Bridge Ltd,Manufacturing,SMB,EMEA,12,Core Suite,2471,3,0.92
+A00069,Vertex Systems Inc,Retail,SMB,AMER,19,Automation Edge,2446,1,1
+A01095,Cobalt Labs,Professional Services,SMB,AMER,12,Core Suite,2445,2,1
+A00275,Northwind Works Inc,Logistics,SMB,AMER,21,Analytics Pro,2440,1,1
+A00728,Meridian Systems Inc,Public Sector,SMB,APAC,20,Core Suite,2432,5,0.86
+A00856,Meridian Systems,Logistics,SMB,AMER,21,Analytics Pro,2399,3,1
+A01529,Aurora Labs Ltd,Financial Services,SMB,EMEA,14,Analytics Pro,2369,2,0.92
+A00197,Vertex Grid Ltd,Financial Services,SMB,AMER,33,Core Suite,2367,3,1
+A00272,Meridian Dynamics,Logistics,SMB,AMER,34,Core Suite,2359,5,1
+A00902,Parallel Labs Ltd,Professional Services,SMB,AMER,35,Core Suite,2349,1,1
+A01098,Meridian Bridge,Energy,SMB,AMER,12,Analytics Pro,2343,1,1
+A00617,Granite Stream Ltd,Public Sector,SMB,AMER,12,Analytics Pro,2334,3,1
+A01830,BluePeak Logic Inc,Public Sector,SMB,EMEA,12,Core Suite,2333,4,0.92
+A01126,Silverline Bridge Inc,Logistics,SMB,AMER,24,Core Suite,2289,3,1
+A01544,Vertex Systems Ltd,Professional Services,SMB,AMER,34,Analytics Pro,2279,1,1
+A01125,Meridian Logic,Telecommunications,SMB,AMER,12,Core Suite,2277,1,1
+A00501,Pinnacle Dynamics,Public Sector,SMB,AMER,12,Analytics Pro,2275,3,1
+A00224,Aurora Dynamics Inc,Energy,SMB,EMEA,12,Core Suite,2271,1,0.92
+A00601,Vertex Bridge Inc,Technology,SMB,AMER,19,Analytics Pro,2237,2,1
+A01868,Meridian Works,Manufacturing,SMB,AMER,30,Core Suite,2204,1,1
+A01016,Pinnacle Grid Ltd,Retail,SMB,AMER,30,Core Suite,2192,3,1
+A01014,Silverline Stream Ltd,Logistics,SMB,AMER,33,Core Suite,2163,4,1
+A00038,BluePeak Stream,Public Sector,SMB,EMEA,17,Core Suite,2153,1,0.92
+A01985,Northwind Bridge Ltd,Professional Services,SMB,EMEA,35,Core Suite,2146,1,0.92
+A00589,Vertex Systems Ltd,Public Sector,SMB,AMER,32,Analytics Pro,2138,3,1
+A00584,Silverline Grid Ltd,Retail,SMB,AMER,13,Automation Edge,2130,1,1
+A01463,Meridian Cloud,Technology,SMB,EMEA,12,Core Suite,2127,1,0.92
+A01467,Pinnacle Works Ltd,Retail,SMB,AMER,30,Core Suite,2111,1,1
+A01788,Pinnacle Cloud Inc,Manufacturing,SMB,AMER,36,Core Suite,2105,1,1
+A01551,BluePeak Systems,Technology,SMB,AMER,26,Analytics Pro,2069,2,1
+A01230,Vertex Bridge Inc,Public Sector,SMB,AMER,12,Core Suite,2066,1,1
+A00406,Parallel Grid Inc,Technology,SMB,AMER,22,Core Suite,2005,2,1
+A01259,Vertex Point Ltd,Healthcare,SMB,AMER,22,Automation Edge,2005,4,1
+A00543,Northwind Stream Inc,Professional Services,SMB,AMER,21,Core Suite,1982,3,1
+A01251,Vertex Point Inc,Technology,SMB,AMER,36,Automation Edge,1899,4,1
+A00469,Meridian Works Inc,Manufacturing,SMB,AMER,12,Automation Edge,1896,2,1
+A01546,Aurora Bridge Inc,Technology,SMB,AMER,25,Automation Edge,1891,2,1
+A00416,Silverline Grid Ltd,Professional Services,SMB,AMER,22,Core Suite,1874,3,1
+A01698,BluePeak Stream Inc,Professional Services,SMB,EMEA,12,Automation Edge,1839,1,0.92
+A00259,Parallel Works Ltd,Public Sector,SMB,AMER,21,Core Suite,1811,5,1
+A01176,Pinnacle Point,Public Sector,SMB,AMER,31,Core Suite,1800,1,1
+A01084,Vertex Grid,Financial Services,SMB,AMER,20,Core Suite,1786,1,1
+A01409,Cobalt Grid Ltd,Public Sector,SMB,AMER,24,Core Suite,1760,5,1
+A00280,Aurora Bridge,Energy,SMB,AMER,19,Automation Edge,1691,1,1
+A01845,Aurora Dynamics,Telecommunications,SMB,EMEA,12,Automation Edge,1681,3,0.92
+A00807,Granite Grid Ltd,Logistics,SMB,AMER,22,Core Suite,1672,5,1
+A00506,BluePeak Labs Ltd,Public Sector,SMB,AMER,13,Core Suite,1657,1,1
+A00343,Aurora Works Inc,Healthcare,SMB,APAC,12,Core Suite,1630,4,0.86
+A00090,Parallel Labs,Technology,SMB,EMEA,18,Core Suite,1548,2,0.92
+A00438,BluePeak Cloud Inc,Retail,SMB,EMEA,33,Analytics Pro,1510,1,0.92
+A01885,Pinnacle Stream Ltd,Manufacturing,SMB,AMER,22,Analytics Pro,1472,3,1
+A01545,Vertex Dynamics Ltd,Telecommunications,SMB,AMER,12,Automation Edge,1469,5,1
+A00788,Parallel Labs Ltd,Financial Services,SMB,EMEA,36,Analytics Pro,1457,2,0.92
+A01840,Northwind Dynamics,Energy,SMB,EMEA,36,Core Suite,1451,3,0.92
+A00431,Meridian Cloud,Technology,SMB,AMER,22,Core Suite,1427,5,1
+A01453,Northwind Labs,Financial Services,SMB,EMEA,32,Core Suite,1378,1,0.92
+A00671,BluePeak Grid,Technology,SMB,EMEA,15,Analytics Pro,1354,4,0.92
+A01921,Northwind Dynamics Inc,Telecommunications,SMB,EMEA,12,Analytics Pro,1342,2,0.92
+A00116,Vertex Grid,Public Sector,SMB,EMEA,12,Analytics Pro,1339,3,0.92
+A01771,Aurora Point,Logistics,SMB,AMER,12,Core Suite,1324,1,1
+A00721,Northwind Labs Inc,Retail,SMB,APAC,35,Core Suite,1301,4,0.86
+A00733,Aurora Labs,Logistics,SMB,APAC,31,Analytics Pro,1284,2,0.86
+A01212,Silverline Dynamics Inc,Professional Services,SMB,EMEA,23,Analytics Pro,1273,2,0.92
+A01392,Silverline Labs Ltd,Professional Services,SMB,AMER,35,Core Suite,1237,2,1
+A00231,Cobalt Labs Inc,Healthcare,SMB,AMER,14,Analytics Pro,1235,3,1
+A00787,BluePeak Cloud,Technology,SMB,EMEA,35,Analytics Pro,1231,3,0.92
+A01506,Silverline Works,Healthcare,SMB,AMER,33,Analytics Pro,1207,3,1
+A00448,Cobalt Point Ltd,Professional Services,SMB,AMER,32,Analytics Pro,1191,3,1
+A00288,Vertex Grid Ltd,Energy,SMB,APAC,34,Core Suite,1188,3,0.86
+A00321,Cobalt Labs Inc,Logistics,SMB,AMER,12,Core Suite,1188,2,1
+A00282,Meridian Dynamics,Telecommunications,SMB,APAC,12,Analytics Pro,1187,2,0.86
+A00929,Cobalt Stream,Logistics,SMB,AMER,21,Analytics Pro,1184,2,1
+A01748,Parallel Dynamics Inc,Professional Services,SMB,EMEA,24,Core Suite,1142,1,0.92
+A01627,Granite Labs,Telecommunications,SMB,EMEA,12,Core Suite,1111,1,0.92
+A01729,Parallel Systems Inc,Financial Services,SMB,AMER,31,Core Suite,1100,2,1
+A00350,Silverline Logic Inc,Energy,SMB,EMEA,35,Analytics Pro,1048,3,0.92
+A01907,Meridian Point Ltd,Retail,SMB,AMER,34,Analytics Pro,1047,1,1
+A00646,Northwind Stream Ltd,Logistics,SMB,EMEA,12,Analytics Pro,1038,3,0.92
+A01839,Granite Grid Ltd,Public Sector,SMB,AMER,12,Analytics Pro,1038,3,1
+A00626,Parallel Dynamics Inc,Logistics,SMB,AMER,23,Analytics Pro,1012,2,1
+A01602,Silverline Grid Inc,Public Sector,SMB,AMER,32,Core Suite,985,4,1
+A00209,Granite Grid Ltd,Logistics,SMB,AMER,12,Core Suite,922,1,1
+A01486,BluePeak Logic,Telecommunications,SMB,EMEA,16,Analytics Pro,886,2,0.92
+A01573,Cobalt Bridge Inc,Retail,SMB,APAC,18,Core Suite,845,4,0.86
+A00634,Northwind Stream,Retail,SMB,APAC,12,Analytics Pro,353,3,0.86

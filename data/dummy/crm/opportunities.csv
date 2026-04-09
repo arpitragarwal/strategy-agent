@@ -1,11 +1,2014 @@
-opportunity_id,account_name,stage,amount,segment,owner_region
-O1001,Acme Corp,Qualify,120000,Enterprise,NAMER
-O1002,Globex Ltd,Discovery,45000,Mid-Market,EMEA
-O1003,Initech,Proposal,89000,SMB,APAC
-O1004,Umbrella Biotech,Negotiate,340000,Enterprise,NAMER
-O1005,Stark Industries,Qualify,210000,Enterprise,NAMER
-O1006,Wonka Foods,Closed Won,67000,Mid-Market,EMEA
-O1007,Acme Corp,Discovery,78000,Enterprise,NAMER
-O1008,Globex Ltd,Qualify,33000,SMB,EMEA
-O1009,Wayne Ent,Proposal,156000,Mid-Market,NAMER
-O1010,Initech,Qualify,22000,SMB,APAC
+opportunity_id,account_id,account_name,stage,amount,segment,owner_region,sku
+O000001,A00477,Granite Dynamics,Discovery,563119,Enterprise,EMEA,Automation Edge
+O000002,A00234,Granite Labs Inc,Proposal,597035,Enterprise,AMER,Analytics Pro
+O000003,A00234,Granite Labs Inc,Proposal,1323508,Enterprise,AMER,Core Suite
+O000004,A00234,Granite Labs Inc,Discovery,1348830,Enterprise,AMER,Core Suite
+O000005,A00234,Granite Labs Inc,Proposal,1255278,Enterprise,AMER,Analytics Pro
+O000006,A01790,BluePeak Bridge,Negotiate,243867,Enterprise,AMER,Analytics Pro
+O000007,A01386,BluePeak Logic Inc,Negotiate,1002913,Enterprise,AMER,Core Suite
+O000008,A01193,Aurora Stream Inc,Negotiate,165533,Enterprise,AMER,Core Suite
+O000009,A01193,Aurora Stream Inc,Discovery,792462,Enterprise,AMER,Analytics Pro
+O000010,A01193,Aurora Stream Inc,Proposal,220489,Enterprise,AMER,Analytics Pro
+O000011,A01193,Aurora Stream Inc,Discovery,617140,Enterprise,AMER,Analytics Pro
+O000012,A01493,Vertex Bridge Ltd,Qualify,182905,Enterprise,EMEA,Analytics Pro
+O000013,A01493,Vertex Bridge Ltd,Proposal,1258519,Enterprise,EMEA,Analytics Pro
+O000014,A01493,Vertex Bridge Ltd,Qualify,254662,Enterprise,EMEA,Core Suite
+O000015,A01835,Granite Point Inc,Discovery,850676,Enterprise,APAC,Analytics Pro
+O000016,A00500,Vertex Cloud Inc,Discovery,272842,Enterprise,AMER,Automation Edge
+O000017,A00500,Vertex Cloud Inc,Negotiate,519674,Enterprise,AMER,Automation Edge
+O000018,A00500,Vertex Cloud Inc,Qualify,437320,Enterprise,AMER,Automation Edge
+O000019,A00500,Vertex Cloud Inc,Proposal,567839,Enterprise,AMER,Automation Edge
+O000020,A00155,Aurora Systems Inc,Discovery,772875,Enterprise,EMEA,Core Suite
+O000021,A00076,Aurora Bridge Ltd,Negotiate,730901,Enterprise,AMER,Core Suite
+O000022,A00076,Aurora Bridge Ltd,Negotiate,729757,Enterprise,AMER,Core Suite
+O000023,A00076,Aurora Bridge Ltd,Proposal,301805,Enterprise,AMER,Core Suite
+O000024,A00076,Aurora Bridge Ltd,Qualify,503412,Enterprise,AMER,Core Suite
+O000025,A01932,Silverline Labs,Negotiate,661688,Enterprise,AMER,Automation Edge
+O000026,A01932,Silverline Labs,Discovery,281966,Enterprise,AMER,Automation Edge
+O000027,A01932,Silverline Labs,Negotiate,525422,Enterprise,AMER,Automation Edge
+O000028,A00358,Meridian Labs,Discovery,543988,Enterprise,AMER,Core Suite
+O000029,A00358,Meridian Labs,Qualify,235496,Enterprise,AMER,Core Suite
+O000030,A00358,Meridian Labs,Proposal,245217,Enterprise,AMER,Core Suite
+O000031,A00055,Pinnacle Bridge Inc,Discovery,429495,Enterprise,EMEA,Analytics Pro
+O000032,A01525,BluePeak Cloud Inc,Negotiate,183673,Enterprise,AMER,Analytics Pro
+O000033,A01525,BluePeak Cloud Inc,Discovery,170674,Enterprise,AMER,Automation Edge
+O000034,A01525,BluePeak Cloud Inc,Qualify,922463,Enterprise,AMER,Analytics Pro
+O000035,A01525,BluePeak Cloud Inc,Qualify,808914,Enterprise,AMER,Analytics Pro
+O000036,A01371,BluePeak Systems,Proposal,764845,Enterprise,APAC,Analytics Pro
+O000037,A01371,BluePeak Systems,Discovery,172742,Enterprise,APAC,Analytics Pro
+O000038,A01371,BluePeak Systems,Proposal,330795,Enterprise,APAC,Core Suite
+O000039,A01371,BluePeak Systems,Qualify,436983,Enterprise,APAC,Core Suite
+O000040,A01892,Aurora Cloud,Discovery,588172,Enterprise,EMEA,Automation Edge
+O000041,A01892,Aurora Cloud,Qualify,577415,Enterprise,EMEA,Core Suite
+O000042,A00064,Pinnacle Labs,Qualify,163130,Enterprise,EMEA,Analytics Pro
+O000043,A01981,Granite Dynamics Inc,Discovery,800675,Enterprise,EMEA,Analytics Pro
+O000044,A01981,Granite Dynamics Inc,Discovery,557236,Enterprise,EMEA,Analytics Pro
+O000045,A01981,Granite Dynamics Inc,Qualify,140836,Enterprise,EMEA,Analytics Pro
+O000046,A00068,Cobalt Systems Inc,Proposal,616361,Enterprise,EMEA,Core Suite
+O000047,A00068,Cobalt Systems Inc,Qualify,507660,Enterprise,EMEA,Core Suite
+O000048,A01758,Granite Dynamics Inc,Proposal,218946,Enterprise,EMEA,Analytics Pro
+O000049,A01758,Granite Dynamics Inc,Qualify,259680,Enterprise,EMEA,Analytics Pro
+O000050,A00516,Granite Labs Ltd,Discovery,249635,Enterprise,EMEA,Core Suite
+O000051,A00516,Granite Labs Ltd,Negotiate,451082,Enterprise,EMEA,Core Suite
+O000052,A00516,Granite Labs Ltd,Discovery,252559,Enterprise,EMEA,Core Suite
+O000053,A00516,Granite Labs Ltd,Discovery,402693,Enterprise,EMEA,Core Suite
+O000054,A00608,Cobalt Labs Inc,Negotiate,824524,Enterprise,AMER,Automation Edge
+O000055,A00329,Meridian Point Ltd,Discovery,252716,Enterprise,AMER,Core Suite
+O000056,A01274,Northwind Cloud,Discovery,569437,Enterprise,AMER,Automation Edge
+O000057,A01274,Northwind Cloud,Qualify,658990,Enterprise,AMER,Automation Edge
+O000058,A01274,Northwind Cloud,Qualify,377614,Enterprise,AMER,Automation Edge
+O000059,A01274,Northwind Cloud,Qualify,212734,Enterprise,AMER,Automation Edge
+O000060,A01540,Aurora Stream Ltd,Proposal,336258,Enterprise,AMER,Analytics Pro
+O000061,A01540,Aurora Stream Ltd,Discovery,907929,Enterprise,AMER,Analytics Pro
+O000062,A01540,Aurora Stream Ltd,Proposal,381661,Enterprise,AMER,Analytics Pro
+O000063,A01786,BluePeak Cloud Ltd,Discovery,120501,Enterprise,APAC,Core Suite
+O000064,A00597,Parallel Cloud Ltd,Discovery,608305,Enterprise,APAC,Automation Edge
+O000065,A01833,Vertex Labs Inc,Proposal,106501,Enterprise,EMEA,Analytics Pro
+O000066,A01903,Granite Cloud,Proposal,391101,Enterprise,EMEA,Core Suite
+O000067,A01903,Granite Cloud,Qualify,176505,Enterprise,EMEA,Core Suite
+O000068,A01903,Granite Cloud,Qualify,583337,Enterprise,EMEA,Analytics Pro
+O000069,A01903,Granite Cloud,Discovery,151587,Enterprise,EMEA,Core Suite
+O000070,A01284,Cobalt Dynamics Inc,Negotiate,152835,Enterprise,AMER,Core Suite
+O000071,A01284,Cobalt Dynamics Inc,Negotiate,277218,Enterprise,AMER,Core Suite
+O000072,A01355,Parallel Systems,Discovery,380876,Enterprise,AMER,Core Suite
+O000073,A01355,Parallel Systems,Discovery,242684,Enterprise,AMER,Automation Edge
+O000074,A01355,Parallel Systems,Qualify,127811,Enterprise,AMER,Automation Edge
+O000075,A00372,Vertex Stream Inc,Discovery,84434,Enterprise,APAC,Automation Edge
+O000076,A00372,Vertex Stream Inc,Discovery,213406,Enterprise,APAC,Core Suite
+O000077,A00372,Vertex Stream Inc,Proposal,141630,Enterprise,APAC,Core Suite
+O000078,A01969,Cobalt Cloud Ltd,Qualify,370226,Enterprise,AMER,Analytics Pro
+O000079,A01969,Cobalt Cloud Ltd,Discovery,182689,Enterprise,AMER,Core Suite
+O000080,A01969,Cobalt Cloud Ltd,Qualify,171019,Enterprise,AMER,Analytics Pro
+O000081,A01969,Cobalt Cloud Ltd,Qualify,304392,Enterprise,AMER,Analytics Pro
+O000082,A01297,Vertex Systems Ltd,Discovery,275750,Enterprise,AMER,Analytics Pro
+O000083,A00534,Parallel Systems Inc,Qualify,606364,Enterprise,AMER,Analytics Pro
+O000084,A00534,Parallel Systems Inc,Proposal,157181,Enterprise,AMER,Analytics Pro
+O000085,A00534,Parallel Systems Inc,Discovery,321069,Enterprise,AMER,Analytics Pro
+O000086,A00534,Parallel Systems Inc,Proposal,547571,Enterprise,AMER,Analytics Pro
+O000087,A01079,Silverline Works,Discovery,402448,Enterprise,EMEA,Analytics Pro
+O000088,A01178,Pinnacle Dynamics,Discovery,531623,Enterprise,AMER,Analytics Pro
+O000089,A01178,Pinnacle Dynamics,Discovery,468943,Enterprise,AMER,Analytics Pro
+O000090,A01178,Pinnacle Dynamics,Discovery,231841,Enterprise,AMER,Analytics Pro
+O000091,A00327,BluePeak Labs Ltd,Discovery,151180,Enterprise,AMER,Automation Edge
+O000092,A00308,Aurora Point,Proposal,182766,Enterprise,AMER,Core Suite
+O000093,A00308,Aurora Point,Discovery,297594,Enterprise,AMER,Core Suite
+O000094,A01586,Vertex Stream Inc,Qualify,385536,Enterprise,AMER,Analytics Pro
+O000095,A01586,Vertex Stream Inc,Discovery,507610,Enterprise,AMER,Automation Edge
+O000096,A00894,Northwind Stream,Proposal,627507,Enterprise,APAC,Analytics Pro
+O000097,A00894,Northwind Stream,Qualify,370598,Enterprise,APAC,Analytics Pro
+O000098,A00105,Pinnacle Works,Proposal,509205,Enterprise,APAC,Analytics Pro
+O000099,A00105,Pinnacle Works,Discovery,273483,Enterprise,APAC,Analytics Pro
+O000100,A00105,Pinnacle Works,Discovery,473295,Enterprise,APAC,Analytics Pro
+O000101,A01273,Parallel Dynamics Inc,Qualify,172882,Enterprise,EMEA,Automation Edge
+O000102,A01273,Parallel Dynamics Inc,Qualify,312616,Enterprise,EMEA,Core Suite
+O000103,A01273,Parallel Dynamics Inc,Qualify,252613,Enterprise,EMEA,Core Suite
+O000104,A00458,Northwind Bridge Ltd,Qualify,394723,Enterprise,AMER,Core Suite
+O000105,A01466,Meridian Labs Inc,Proposal,317901,Enterprise,AMER,Core Suite
+O000106,A00123,Northwind Grid,Proposal,555578,Enterprise,AMER,Automation Edge
+O000107,A00123,Northwind Grid,Negotiate,115580,Enterprise,AMER,Automation Edge
+O000108,A00123,Northwind Grid,Proposal,369546,Enterprise,AMER,Core Suite
+O000109,A01015,Aurora Cloud Inc,Discovery,76029,Enterprise,EMEA,Automation Edge
+O000110,A01015,Aurora Cloud Inc,Proposal,137748,Enterprise,EMEA,Core Suite
+O000111,A00743,Vertex Works Ltd,Proposal,457456,Enterprise,AMER,Analytics Pro
+O000112,A01704,Silverline Systems Ltd,Proposal,110765,Enterprise,AMER,Core Suite
+O000113,A01704,Silverline Systems Ltd,Qualify,115027,Enterprise,AMER,Analytics Pro
+O000114,A00249,BluePeak Grid Inc,Qualify,408323,Enterprise,EMEA,Automation Edge
+O000115,A00249,BluePeak Grid Inc,Proposal,151644,Enterprise,EMEA,Automation Edge
+O000116,A00249,BluePeak Grid Inc,Proposal,252500,Enterprise,EMEA,Automation Edge
+O000117,A01557,Cobalt Bridge Ltd,Qualify,310387,Enterprise,APAC,Core Suite
+O000118,A01557,Cobalt Bridge Ltd,Negotiate,249334,Enterprise,APAC,Core Suite
+O000119,A01316,Parallel Systems,Proposal,259864,Enterprise,AMER,Analytics Pro
+O000120,A01316,Parallel Systems,Discovery,464485,Enterprise,AMER,Analytics Pro
+O000121,A01316,Parallel Systems,Discovery,223158,Enterprise,AMER,Analytics Pro
+O000122,A01316,Parallel Systems,Qualify,161724,Enterprise,AMER,Analytics Pro
+O000123,A00213,Parallel Grid Inc,Discovery,316692,Enterprise,AMER,Analytics Pro
+O000124,A01249,Northwind Stream Ltd,Discovery,153965,Enterprise,APAC,Analytics Pro
+O000125,A01249,Northwind Stream Ltd,Discovery,275179,Enterprise,APAC,Analytics Pro
+O000126,A00498,Silverline Dynamics Inc,Proposal,103899,Enterprise,APAC,Core Suite
+O000127,A00498,Silverline Dynamics Inc,Discovery,252726,Enterprise,APAC,Core Suite
+O000128,A00498,Silverline Dynamics Inc,Discovery,138424,Enterprise,APAC,Core Suite
+O000129,A00284,Silverline Stream Ltd,Proposal,285391,Enterprise,AMER,Automation Edge
+O000130,A00284,Silverline Stream Ltd,Discovery,114308,Enterprise,AMER,Analytics Pro
+O000131,A00284,Silverline Stream Ltd,Proposal,237748,Enterprise,AMER,Analytics Pro
+O000132,A01542,Vertex Stream Inc,Discovery,203641,Enterprise,AMER,Core Suite
+O000133,A01820,Vertex Bridge Inc,Discovery,296541,Enterprise,EMEA,Core Suite
+O000134,A00046,Northwind Point,Discovery,256543,Enterprise,EMEA,Core Suite
+O000135,A00046,Northwind Point,Qualify,278759,Enterprise,EMEA,Analytics Pro
+O000136,A00050,BluePeak Cloud,Proposal,198608,Enterprise,EMEA,Core Suite
+O000137,A00050,BluePeak Cloud,Proposal,293539,Enterprise,EMEA,Core Suite
+O000138,A00050,BluePeak Cloud,Proposal,218436,Enterprise,EMEA,Core Suite
+O000139,A00050,BluePeak Cloud,Discovery,84247,Enterprise,EMEA,Core Suite
+O000140,A00557,Vertex Logic,Proposal,149101,Enterprise,AMER,Automation Edge
+O000141,A00557,Vertex Logic,Discovery,136418,Enterprise,AMER,Core Suite
+O000142,A00557,Vertex Logic,Negotiate,249295,Enterprise,AMER,Core Suite
+O000143,A01473,Northwind Cloud,Discovery,251958,Enterprise,EMEA,Analytics Pro
+O000144,A01473,Northwind Cloud,Qualify,93203,Enterprise,EMEA,Core Suite
+O000145,A01473,Northwind Cloud,Proposal,184979,Enterprise,EMEA,Core Suite
+O000146,A01473,Northwind Cloud,Proposal,186296,Enterprise,EMEA,Core Suite
+O000147,A01367,Granite Labs Inc,Negotiate,212177,Enterprise,EMEA,Core Suite
+O000148,A01367,Granite Labs Inc,Qualify,137809,Enterprise,EMEA,Core Suite
+O000149,A01367,Granite Labs Inc,Proposal,254613,Enterprise,EMEA,Core Suite
+O000150,A00529,Cobalt Logic Inc,Proposal,175048,Enterprise,APAC,Automation Edge
+O000151,A00529,Cobalt Logic Inc,Qualify,150718,Enterprise,APAC,Automation Edge
+O000152,A01477,Silverline Systems,Qualify,44591,Enterprise,AMER,Automation Edge
+O000153,A00386,Vertex Cloud Inc,Negotiate,116925,Enterprise,AMER,Core Suite
+O000154,A00386,Vertex Cloud Inc,Discovery,153394,Enterprise,AMER,Analytics Pro
+O000155,A00386,Vertex Cloud Inc,Negotiate,113446,Enterprise,AMER,Analytics Pro
+O000156,A01623,Granite Bridge Inc,Negotiate,156201,Enterprise,AMER,Analytics Pro
+O000157,A01623,Granite Bridge Inc,Proposal,231041,Enterprise,AMER,Analytics Pro
+O000158,A01711,Cobalt Labs,Discovery,187579,Enterprise,AMER,Analytics Pro
+O000159,A01711,Cobalt Labs,Discovery,178107,Enterprise,AMER,Analytics Pro
+O000160,A00248,Aurora Works Inc,Proposal,115727,Enterprise,AMER,Core Suite
+O000161,A00248,Aurora Works Inc,Discovery,361838,Enterprise,AMER,Core Suite
+O000162,A00248,Aurora Works Inc,Discovery,234125,Enterprise,AMER,Core Suite
+O000163,A00664,Cobalt Dynamics Inc,Discovery,170999,Enterprise,EMEA,Core Suite
+O000164,A00664,Cobalt Dynamics Inc,Discovery,295349,Enterprise,EMEA,Core Suite
+O000165,A00912,Northwind Dynamics Ltd,Proposal,362968,Enterprise,EMEA,Analytics Pro
+O000166,A01596,Cobalt Dynamics Ltd,Qualify,110674,Enterprise,EMEA,Automation Edge
+O000167,A01596,Cobalt Dynamics Ltd,Discovery,330508,Enterprise,EMEA,Automation Edge
+O000168,A01596,Cobalt Dynamics Ltd,Discovery,70257,Enterprise,EMEA,Automation Edge
+O000169,A01050,Granite Logic Inc,Proposal,276937,Enterprise,AMER,Automation Edge
+O000170,A01033,Meridian Point Ltd,Negotiate,112964,Enterprise,EMEA,Core Suite
+O000171,A01033,Meridian Point Ltd,Qualify,261670,Enterprise,EMEA,Automation Edge
+O000172,A01033,Meridian Point Ltd,Proposal,174980,Enterprise,EMEA,Analytics Pro
+O000173,A01847,Silverline Works Ltd,Qualify,71915,Enterprise,AMER,Analytics Pro
+O000174,A01241,BluePeak Labs Ltd,Qualify,75213,Enterprise,APAC,Core Suite
+O000175,A00622,Parallel Works Inc,Discovery,83443,Enterprise,EMEA,Analytics Pro
+O000176,A00622,Parallel Works Inc,Proposal,171571,Enterprise,EMEA,Analytics Pro
+O000177,A00622,Parallel Works Inc,Qualify,67145,Enterprise,EMEA,Analytics Pro
+O000178,A00490,Silverline Works Ltd,Proposal,150383,Enterprise,AMER,Core Suite
+O000179,A00490,Silverline Works Ltd,Discovery,75060,Enterprise,AMER,Analytics Pro
+O000180,A00490,Silverline Works Ltd,Negotiate,130373,Enterprise,AMER,Analytics Pro
+O000181,A00279,Silverline Works Inc,Qualify,94971,Enterprise,AMER,Automation Edge
+O000182,A01411,Vertex Grid Ltd,Qualify,55749,Enterprise,AMER,Automation Edge
+O000183,A01396,BluePeak Stream Inc,Discovery,110210,Enterprise,EMEA,Core Suite
+O000184,A01019,Pinnacle Cloud,Negotiate,92720,Mid-Market,AMER,Core Suite
+O000185,A01019,Pinnacle Cloud,Negotiate,153477,Mid-Market,AMER,Core Suite
+O000186,A00023,Silverline Stream,Proposal,300116,Enterprise,APAC,Analytics Pro
+O000187,A00023,Silverline Stream,Discovery,255979,Enterprise,APAC,Automation Edge
+O000188,A00023,Silverline Stream,Qualify,250627,Enterprise,APAC,Automation Edge
+O000189,A00023,Silverline Stream,Proposal,192243,Enterprise,APAC,Automation Edge
+O000190,A01534,Silverline Works Inc,Discovery,51973,Enterprise,AMER,Core Suite
+O000191,A01534,Silverline Works Inc,Discovery,79765,Enterprise,AMER,Core Suite
+O000192,A00674,Pinnacle Logic Ltd,Qualify,177620,Enterprise,AMER,Core Suite
+O000193,A00888,Aurora Point Inc,Proposal,245838,Enterprise,AMER,Analytics Pro
+O000194,A00888,Aurora Point Inc,Qualify,122945,Enterprise,AMER,Analytics Pro
+O000195,A00888,Aurora Point Inc,Discovery,62808,Enterprise,AMER,Analytics Pro
+O000196,A01008,Pinnacle Labs,Qualify,236893,Enterprise,AMER,Automation Edge
+O000197,A01185,Pinnacle Point Ltd,Qualify,205064,Enterprise,AMER,Core Suite
+O000198,A01185,Pinnacle Point Ltd,Proposal,108820,Enterprise,AMER,Analytics Pro
+O000199,A01185,Pinnacle Point Ltd,Qualify,173215,Enterprise,AMER,Core Suite
+O000200,A01185,Pinnacle Point Ltd,Proposal,130559,Enterprise,AMER,Analytics Pro
+O000201,A00093,BluePeak Bridge,Proposal,227257,Enterprise,AMER,Analytics Pro
+O000202,A00093,BluePeak Bridge,Qualify,183615,Enterprise,AMER,Analytics Pro
+O000203,A00450,Cobalt Stream,Proposal,234639,Enterprise,AMER,Core Suite
+O000204,A00854,Meridian Labs Ltd,Discovery,178756,Enterprise,EMEA,Core Suite
+O000205,A00854,Meridian Labs Ltd,Proposal,77127,Enterprise,EMEA,Analytics Pro
+O000206,A00854,Meridian Labs Ltd,Discovery,144590,Enterprise,EMEA,Analytics Pro
+O000207,A00205,Vertex Logic Ltd,Discovery,220960,Enterprise,AMER,Core Suite
+O000208,A00702,Vertex Cloud Ltd,Proposal,65279,Enterprise,AMER,Analytics Pro
+O000209,A00702,Vertex Cloud Ltd,Proposal,134762,Enterprise,AMER,Analytics Pro
+O000210,A00702,Vertex Cloud Ltd,Proposal,176805,Enterprise,AMER,Analytics Pro
+O000211,A01861,Aurora Bridge Inc,Qualify,155053,Enterprise,AMER,Core Suite
+O000212,A01861,Aurora Bridge Inc,Qualify,267120,Enterprise,AMER,Core Suite
+O000213,A01861,Aurora Bridge Inc,Discovery,194745,Enterprise,AMER,Core Suite
+O000214,A01861,Aurora Bridge Inc,Negotiate,131155,Enterprise,AMER,Core Suite
+O000215,A00925,Silverline Stream Ltd,Proposal,166272,Enterprise,EMEA,Analytics Pro
+O000216,A00925,Silverline Stream Ltd,Discovery,173338,Enterprise,EMEA,Automation Edge
+O000217,A01982,BluePeak Systems Inc,Qualify,168425,Enterprise,AMER,Core Suite
+O000218,A01982,BluePeak Systems Inc,Proposal,257988,Enterprise,AMER,Core Suite
+O000219,A01683,Meridian Dynamics,Negotiate,59260,Enterprise,APAC,Analytics Pro
+O000220,A00079,Pinnacle Works,Proposal,134971,Enterprise,APAC,Core Suite
+O000221,A00079,Pinnacle Works,Proposal,68590,Enterprise,APAC,Core Suite
+O000222,A00079,Pinnacle Works,Qualify,290565,Enterprise,APAC,Automation Edge
+O000223,A00005,Granite Dynamics Inc,Qualify,119682,Mid-Market,AMER,Automation Edge
+O000224,A00774,Silverline Works Ltd,Proposal,137049,Enterprise,EMEA,Analytics Pro
+O000225,A00835,Aurora Dynamics Ltd,Qualify,63582,Enterprise,AMER,Automation Edge
+O000226,A00835,Aurora Dynamics Ltd,Qualify,187594,Enterprise,AMER,Core Suite
+O000227,A00057,Silverline Systems Ltd,Negotiate,119070,Enterprise,AMER,Core Suite
+O000228,A00057,Silverline Systems Ltd,Discovery,138863,Enterprise,AMER,Automation Edge
+O000229,A01601,Cobalt Cloud Ltd,Qualify,54074,Enterprise,APAC,Analytics Pro
+O000230,A01418,Meridian Bridge,Qualify,49546,Enterprise,AMER,Analytics Pro
+O000231,A01061,BluePeak Works,Discovery,175339,Enterprise,AMER,Analytics Pro
+O000232,A01061,BluePeak Works,Qualify,65758,Enterprise,AMER,Analytics Pro
+O000233,A01061,BluePeak Works,Discovery,170194,Enterprise,AMER,Analytics Pro
+O000234,A01061,BluePeak Works,Discovery,60127,Enterprise,AMER,Analytics Pro
+O000235,A00866,Northwind Logic Ltd,Proposal,143629,Enterprise,AMER,Core Suite
+O000236,A01100,BluePeak Cloud,Qualify,131427,Mid-Market,EMEA,Core Suite
+O000237,A01100,BluePeak Cloud,Qualify,97284,Mid-Market,EMEA,Core Suite
+O000238,A01100,BluePeak Cloud,Proposal,155618,Mid-Market,EMEA,Core Suite
+O000239,A00645,Pinnacle Grid Inc,Proposal,72803,Enterprise,AMER,Automation Edge
+O000240,A00645,Pinnacle Grid Inc,Proposal,104673,Enterprise,AMER,Automation Edge
+O000241,A00369,Vertex Cloud Inc,Qualify,56348,Enterprise,AMER,Core Suite
+O000242,A00369,Vertex Cloud Inc,Proposal,94149,Enterprise,AMER,Automation Edge
+O000243,A01131,Pinnacle Stream Inc,Qualify,231280,Enterprise,AMER,Analytics Pro
+O000244,A01131,Pinnacle Stream Inc,Discovery,176000,Enterprise,AMER,Core Suite
+O000245,A00379,Silverline Works Inc,Qualify,49104,Enterprise,APAC,Core Suite
+O000246,A00656,BluePeak Systems,Negotiate,31952,Enterprise,AMER,Core Suite
+O000247,A00067,BluePeak Stream Ltd,Negotiate,103634,Enterprise,AMER,Analytics Pro
+O000248,A00067,BluePeak Stream Ltd,Proposal,131469,Enterprise,AMER,Core Suite
+O000249,A00067,BluePeak Stream Ltd,Proposal,124235,Enterprise,AMER,Analytics Pro
+O000250,A00067,BluePeak Stream Ltd,Negotiate,87948,Enterprise,AMER,Analytics Pro
+O000251,A00585,Granite Dynamics,Qualify,157832,Enterprise,AMER,Core Suite
+O000252,A00585,Granite Dynamics,Qualify,95577,Enterprise,AMER,Automation Edge
+O000253,A00238,Northwind Stream,Discovery,161376,Enterprise,EMEA,Automation Edge
+O000254,A00238,Northwind Stream,Qualify,183505,Enterprise,EMEA,Analytics Pro
+O000255,A00532,Aurora Grid Ltd,Qualify,136577,Enterprise,EMEA,Automation Edge
+O000256,A00532,Aurora Grid Ltd,Qualify,82737,Enterprise,EMEA,Core Suite
+O000257,A00236,Meridian Works,Discovery,136925,Enterprise,APAC,Automation Edge
+O000258,A00236,Meridian Works,Negotiate,33428,Enterprise,APAC,Automation Edge
+O000259,A00236,Meridian Works,Qualify,132681,Enterprise,APAC,Automation Edge
+O000260,A01017,Aurora Logic,Discovery,30595,Enterprise,EMEA,Analytics Pro
+O000261,A01017,Aurora Logic,Discovery,55435,Enterprise,EMEA,Core Suite
+O000262,A01017,Aurora Logic,Negotiate,165951,Enterprise,EMEA,Automation Edge
+O000263,A00792,Aurora Dynamics Ltd,Proposal,99439,Enterprise,AMER,Analytics Pro
+O000264,A00792,Aurora Dynamics Ltd,Proposal,203041,Enterprise,AMER,Analytics Pro
+O000265,A01379,Pinnacle Logic Ltd,Negotiate,80132,Enterprise,APAC,Automation Edge
+O000266,A01379,Pinnacle Logic Ltd,Negotiate,76381,Enterprise,APAC,Automation Edge
+O000267,A01046,Parallel Cloud Inc,Proposal,183691,Enterprise,AMER,Automation Edge
+O000268,A00158,Granite Labs,Discovery,176902,Enterprise,EMEA,Analytics Pro
+O000269,A01018,Granite Works Ltd,Qualify,218725,Mid-Market,AMER,Analytics Pro
+O000270,A00239,Pinnacle Bridge,Qualify,41693,Enterprise,AMER,Automation Edge
+O000271,A00239,Pinnacle Bridge,Qualify,115919,Enterprise,AMER,Core Suite
+O000272,A00380,Aurora Dynamics Inc,Proposal,181265,Enterprise,AMER,Core Suite
+O000273,A00380,Aurora Dynamics Inc,Proposal,128434,Enterprise,AMER,Core Suite
+O000274,A00380,Aurora Dynamics Inc,Negotiate,188062,Enterprise,AMER,Analytics Pro
+O000275,A01774,Meridian Cloud Ltd,Negotiate,39803,Enterprise,AMER,Automation Edge
+O000276,A01774,Meridian Cloud Ltd,Proposal,177227,Enterprise,AMER,Automation Edge
+O000277,A01774,Meridian Cloud Ltd,Discovery,73736,Enterprise,AMER,Automation Edge
+O000278,A00935,Pinnacle Stream Ltd,Proposal,55156,Enterprise,AMER,Automation Edge
+O000279,A00935,Pinnacle Stream Ltd,Discovery,40950,Enterprise,AMER,Analytics Pro
+O000280,A01776,Parallel Systems Inc,Negotiate,132303,Enterprise,EMEA,Automation Edge
+O000281,A00367,Meridian Works,Discovery,73938,Enterprise,AMER,Core Suite
+O000282,A00367,Meridian Works,Proposal,94361,Enterprise,AMER,Core Suite
+O000283,A00086,Granite Grid,Qualify,134954,Enterprise,AMER,Automation Edge
+O000284,A00086,Granite Grid,Proposal,20631,Enterprise,AMER,Automation Edge
+O000285,A00086,Granite Grid,Qualify,161731,Enterprise,AMER,Automation Edge
+O000286,A01119,Parallel Cloud Inc,Discovery,74740,Enterprise,AMER,Core Suite
+O000287,A01119,Parallel Cloud Inc,Qualify,119192,Enterprise,AMER,Analytics Pro
+O000288,A01119,Parallel Cloud Inc,Qualify,38101,Enterprise,AMER,Analytics Pro
+O000289,A01454,Parallel Dynamics,Negotiate,41839,Enterprise,AMER,Core Suite
+O000290,A01524,Granite Logic Inc,Proposal,192464,Enterprise,APAC,Analytics Pro
+O000291,A01524,Granite Logic Inc,Negotiate,132844,Enterprise,APAC,Analytics Pro
+O000292,A01524,Granite Logic Inc,Qualify,118947,Enterprise,APAC,Analytics Pro
+O000293,A00867,Northwind Cloud,Proposal,122305,Enterprise,EMEA,Core Suite
+O000294,A00867,Northwind Cloud,Discovery,47472,Enterprise,EMEA,Core Suite
+O000295,A00678,Silverline Bridge Ltd,Proposal,99628,Enterprise,EMEA,Automation Edge
+O000296,A01700,Vertex Works Ltd,Qualify,127786,Enterprise,APAC,Analytics Pro
+O000297,A01181,Meridian Point Ltd,Proposal,145662,Enterprise,APAC,Analytics Pro
+O000298,A01181,Meridian Point Ltd,Discovery,41292,Enterprise,APAC,Analytics Pro
+O000299,A01013,Parallel Dynamics,Discovery,97865,Enterprise,AMER,Core Suite
+O000300,A01556,BluePeak Point Ltd,Negotiate,101604,Enterprise,AMER,Core Suite
+O000301,A01556,BluePeak Point Ltd,Proposal,104314,Enterprise,AMER,Core Suite
+O000302,A01342,Aurora Logic Inc,Qualify,49355,Enterprise,AMER,Automation Edge
+O000303,A01476,Vertex Cloud,Discovery,98141,Mid-Market,APAC,Automation Edge
+O000304,A01476,Vertex Cloud,Discovery,106379,Mid-Market,APAC,Automation Edge
+O000305,A01734,Pinnacle Cloud,Qualify,59542,Enterprise,AMER,Analytics Pro
+O000306,A01734,Pinnacle Cloud,Negotiate,89393,Enterprise,AMER,Analytics Pro
+O000307,A01734,Pinnacle Cloud,Qualify,135676,Enterprise,AMER,Analytics Pro
+O000308,A01155,Meridian Grid,Proposal,21491,Mid-Market,AMER,Analytics Pro
+O000309,A00304,Northwind Stream,Qualify,57967,Mid-Market,AMER,Automation Edge
+O000310,A00670,Parallel Systems Inc,Discovery,89370,Enterprise,AMER,Automation Edge
+O000311,A00670,Parallel Systems Inc,Discovery,136899,Enterprise,AMER,Automation Edge
+O000312,A00670,Parallel Systems Inc,Discovery,43084,Enterprise,AMER,Analytics Pro
+O000313,A01118,Pinnacle Cloud,Discovery,107941,Enterprise,AMER,Core Suite
+O000314,A01915,Aurora Dynamics,Qualify,31596,Enterprise,APAC,Automation Edge
+O000315,A01915,Aurora Dynamics,Discovery,123122,Enterprise,APAC,Analytics Pro
+O000316,A01915,Aurora Dynamics,Proposal,85343,Enterprise,APAC,Core Suite
+O000317,A00892,Cobalt Point Inc,Proposal,60893,Enterprise,AMER,Core Suite
+O000318,A00892,Cobalt Point Inc,Discovery,94419,Enterprise,AMER,Automation Edge
+O000319,A00892,Cobalt Point Inc,Qualify,120841,Enterprise,AMER,Automation Edge
+O000320,A00761,Northwind Grid,Discovery,25470,Enterprise,EMEA,Analytics Pro
+O000321,A00850,Vertex Cloud Inc,Discovery,124563,Enterprise,AMER,Automation Edge
+O000322,A00837,Parallel Logic,Qualify,63373,Enterprise,EMEA,Core Suite
+O000323,A01268,Silverline Labs Ltd,Negotiate,61328,Mid-Market,AMER,Core Suite
+O000324,A01268,Silverline Labs Ltd,Proposal,138762,Mid-Market,AMER,Core Suite
+O000325,A01268,Silverline Labs Ltd,Qualify,55582,Mid-Market,AMER,Core Suite
+O000326,A00063,Meridian Logic Ltd,Discovery,124706,Enterprise,EMEA,Analytics Pro
+O000327,A00063,Meridian Logic Ltd,Discovery,116536,Enterprise,EMEA,Analytics Pro
+O000328,A01669,BluePeak Stream Ltd,Qualify,88742,Enterprise,AMER,Core Suite
+O000329,A01841,Granite Stream,Discovery,83643,Enterprise,AMER,Analytics Pro
+O000330,A00605,Silverline Systems,Negotiate,70284,Mid-Market,AMER,Analytics Pro
+O000331,A01383,Meridian Grid Ltd,Qualify,110067,Enterprise,AMER,Automation Edge
+O000332,A01383,Meridian Grid Ltd,Proposal,56067,Enterprise,AMER,Automation Edge
+O000333,A01383,Meridian Grid Ltd,Discovery,53743,Enterprise,AMER,Automation Edge
+O000334,A01365,BluePeak Bridge Inc,Negotiate,26475,Enterprise,AMER,Core Suite
+O000335,A00128,Granite Works Inc,Negotiate,81295,Enterprise,AMER,Core Suite
+O000336,A01490,Meridian Works Ltd,Qualify,72546,Enterprise,AMER,Automation Edge
+O000337,A00891,Pinnacle Grid Inc,Qualify,41808,Enterprise,APAC,Automation Edge
+O000338,A00891,Pinnacle Grid Inc,Discovery,24743,Enterprise,APAC,Analytics Pro
+O000339,A01532,BluePeak Systems Ltd,Discovery,74083,Enterprise,AMER,Analytics Pro
+O000340,A00311,Aurora Point,Negotiate,34668,Mid-Market,APAC,Core Suite
+O000341,A00812,Granite Systems Ltd,Discovery,17562,Enterprise,APAC,Analytics Pro
+O000342,A00812,Granite Systems Ltd,Proposal,21636,Enterprise,APAC,Analytics Pro
+O000343,A00812,Granite Systems Ltd,Qualify,118494,Enterprise,APAC,Analytics Pro
+O000344,A01931,BluePeak Point Inc,Discovery,96980,Mid-Market,AMER,Analytics Pro
+O000345,A01931,BluePeak Point Inc,Negotiate,44340,Mid-Market,AMER,Analytics Pro
+O000346,A01931,BluePeak Point Inc,Qualify,90785,Mid-Market,AMER,Analytics Pro
+O000347,A00927,Silverline Stream Inc,Qualify,18530,Enterprise,APAC,Automation Edge
+O000348,A00927,Silverline Stream Inc,Negotiate,83362,Enterprise,APAC,Automation Edge
+O000349,A01637,Vertex Grid Ltd,Proposal,97664,Enterprise,AMER,Automation Edge
+O000350,A01637,Vertex Grid Ltd,Qualify,99157,Enterprise,AMER,Analytics Pro
+O000351,A01637,Vertex Grid Ltd,Discovery,134397,Enterprise,AMER,Analytics Pro
+O000352,A01225,Silverline Cloud Ltd,Qualify,79262,Enterprise,AMER,Analytics Pro
+O000353,A01225,Silverline Cloud Ltd,Negotiate,14490,Enterprise,AMER,Core Suite
+O000354,A01111,Aurora Logic Inc,Qualify,37252,Enterprise,EMEA,Core Suite
+O000355,A00115,Granite Dynamics Ltd,Proposal,85321,Enterprise,AMER,Core Suite
+O000356,A00115,Granite Dynamics Ltd,Discovery,81772,Enterprise,AMER,Core Suite
+O000357,A00115,Granite Dynamics Ltd,Qualify,75800,Enterprise,AMER,Core Suite
+O000358,A00423,Vertex Stream,Qualify,27349,Mid-Market,AMER,Analytics Pro
+O000359,A01789,Aurora Logic,Qualify,90475,Enterprise,APAC,Analytics Pro
+O000360,A01789,Aurora Logic,Qualify,38436,Enterprise,APAC,Analytics Pro
+O000361,A00741,Cobalt Cloud,Negotiate,78066,Mid-Market,AMER,Analytics Pro
+O000362,A01738,Pinnacle Point,Qualify,89977,Enterprise,APAC,Automation Edge
+O000363,A01738,Pinnacle Point,Discovery,67717,Enterprise,APAC,Automation Edge
+O000364,A01738,Pinnacle Point,Qualify,39086,Enterprise,APAC,Automation Edge
+O000365,A01441,Parallel Point Inc,Discovery,67915,Mid-Market,APAC,Analytics Pro
+O000366,A01441,Parallel Point Inc,Qualify,17448,Mid-Market,APAC,Analytics Pro
+O000367,A01441,Parallel Point Inc,Negotiate,85528,Mid-Market,APAC,Automation Edge
+O000368,A01842,Aurora Logic Inc,Proposal,38873,Enterprise,AMER,Core Suite
+O000369,A01842,Aurora Logic Inc,Discovery,74730,Enterprise,AMER,Core Suite
+O000370,A00237,Granite Bridge,Discovery,95841,Enterprise,EMEA,Automation Edge
+O000371,A00355,Northwind Logic Ltd,Discovery,46475,Mid-Market,APAC,Analytics Pro
+O000372,A00355,Northwind Logic Ltd,Proposal,50549,Mid-Market,APAC,Analytics Pro
+O000373,A00355,Northwind Logic Ltd,Discovery,44388,Mid-Market,APAC,Analytics Pro
+O000374,A00581,Silverline Point Inc,Qualify,19520,Mid-Market,APAC,Analytics Pro
+O000375,A00581,Silverline Point Inc,Proposal,73639,Mid-Market,APAC,Automation Edge
+O000376,A00581,Silverline Point Inc,Discovery,32662,Mid-Market,APAC,Analytics Pro
+O000377,A00673,BluePeak Stream,Discovery,87340,Mid-Market,AMER,Automation Edge
+O000378,A00673,BluePeak Stream,Negotiate,37954,Mid-Market,AMER,Automation Edge
+O000379,A00791,BluePeak Logic Inc,Qualify,41232,Mid-Market,AMER,Analytics Pro
+O000380,A00791,BluePeak Logic Inc,Proposal,80995,Mid-Market,AMER,Analytics Pro
+O000381,A00607,Granite Works Ltd,Proposal,67529,Enterprise,AMER,Analytics Pro
+O000382,A00137,Aurora Grid Inc,Proposal,43272,Enterprise,AMER,Core Suite
+O000383,A00419,Pinnacle Systems Ltd,Proposal,53691,Mid-Market,EMEA,Automation Edge
+O000384,A00344,Northwind Dynamics Inc,Qualify,45835,Mid-Market,AMER,Automation Edge
+O000385,A00344,Northwind Dynamics Inc,Negotiate,70547,Mid-Market,AMER,Core Suite
+O000386,A00247,BluePeak Logic,Proposal,25222,Mid-Market,APAC,Automation Edge
+O000387,A00782,Parallel Labs Inc,Discovery,71043,Enterprise,EMEA,Analytics Pro
+O000388,A00782,Parallel Labs Inc,Proposal,83252,Enterprise,EMEA,Analytics Pro
+O000389,A00782,Parallel Labs Inc,Negotiate,33751,Enterprise,EMEA,Analytics Pro
+O000390,A01933,Cobalt Bridge,Discovery,75485,Mid-Market,APAC,Automation Edge
+O000391,A01661,Vertex Stream Ltd,Proposal,17024,Mid-Market,AMER,Automation Edge
+O000392,A01661,Vertex Stream Ltd,Discovery,53231,Mid-Market,AMER,Automation Edge
+O000393,A01661,Vertex Stream Ltd,Discovery,25484,Mid-Market,AMER,Automation Edge
+O000394,A01937,Parallel Systems Inc,Discovery,57607,Mid-Market,EMEA,Core Suite
+O000395,A01937,Parallel Systems Inc,Proposal,34380,Mid-Market,EMEA,Core Suite
+O000396,A01937,Parallel Systems Inc,Negotiate,101084,Mid-Market,EMEA,Automation Edge
+O000397,A00047,Aurora Grid Inc,Qualify,20614,Mid-Market,EMEA,Core Suite
+O000398,A00047,Aurora Grid Inc,Proposal,40921,Mid-Market,EMEA,Core Suite
+O000399,A01250,Northwind Works Inc,Discovery,22259,Enterprise,AMER,Core Suite
+O000400,A01250,Northwind Works Inc,Qualify,64529,Enterprise,AMER,Core Suite
+O000401,A01432,Silverline Dynamics Inc,Negotiate,16439,Enterprise,AMER,Core Suite
+O000402,A00849,Parallel Labs Inc,Negotiate,71571,Enterprise,EMEA,Analytics Pro
+O000403,A00849,Parallel Labs Inc,Discovery,85426,Enterprise,EMEA,Core Suite
+O000404,A01832,Vertex Logic Ltd,Proposal,61758,Enterprise,APAC,Core Suite
+O000405,A01832,Vertex Logic Ltd,Discovery,22856,Enterprise,APAC,Core Suite
+O000406,A01448,BluePeak Systems Inc,Discovery,36178,Mid-Market,AMER,Core Suite
+O000407,A01448,BluePeak Systems Inc,Proposal,12609,Mid-Market,AMER,Core Suite
+O000408,A01448,BluePeak Systems Inc,Discovery,25016,Mid-Market,AMER,Core Suite
+O000409,A00066,BluePeak Stream Ltd,Discovery,26707,Enterprise,EMEA,Automation Edge
+O000410,A00066,BluePeak Stream Ltd,Qualify,51663,Enterprise,EMEA,Automation Edge
+O000411,A00066,BluePeak Stream Ltd,Proposal,44027,Enterprise,EMEA,Core Suite
+O000412,A00394,Pinnacle Bridge Ltd,Qualify,46055,Mid-Market,AMER,Core Suite
+O000413,A01498,Vertex Dynamics Ltd,Discovery,11051,Mid-Market,AMER,Core Suite
+O000414,A01498,Vertex Dynamics Ltd,Discovery,31638,Mid-Market,AMER,Core Suite
+O000415,A01064,Silverline Works Inc,Discovery,66929,Enterprise,APAC,Core Suite
+O000416,A01064,Silverline Works Inc,Discovery,69384,Enterprise,APAC,Core Suite
+O000417,A01207,Northwind Grid Inc,Qualify,34658,Mid-Market,EMEA,Core Suite
+O000418,A00468,Pinnacle Grid Ltd,Discovery,72797,Mid-Market,AMER,Automation Edge
+O000419,A00468,Pinnacle Grid Ltd,Qualify,50471,Mid-Market,AMER,Automation Edge
+O000420,A00468,Pinnacle Grid Ltd,Negotiate,66184,Mid-Market,AMER,Automation Edge
+O000421,A01792,Granite Works Ltd,Qualify,20998,Mid-Market,EMEA,Analytics Pro
+O000422,A01792,Granite Works Ltd,Proposal,31244,Mid-Market,EMEA,Core Suite
+O000423,A01792,Granite Works Ltd,Qualify,33674,Mid-Market,EMEA,Core Suite
+O000424,A01457,Aurora Cloud Ltd,Discovery,22701,Mid-Market,AMER,Core Suite
+O000425,A01898,Northwind Cloud,Qualify,36296,Mid-Market,AMER,Analytics Pro
+O000426,A01898,Northwind Cloud,Negotiate,22420,Mid-Market,AMER,Analytics Pro
+O000427,A01898,Northwind Cloud,Discovery,61947,Mid-Market,AMER,Analytics Pro
+O000428,A01823,Aurora Stream Ltd,Qualify,23852,Mid-Market,APAC,Analytics Pro
+O000429,A00657,Aurora Systems Inc,Qualify,17060,Mid-Market,EMEA,Analytics Pro
+O000430,A00657,Aurora Systems Inc,Proposal,37363,Mid-Market,EMEA,Analytics Pro
+O000431,A00887,Aurora Point,Negotiate,59447,Mid-Market,AMER,Core Suite
+O000432,A00887,Aurora Point,Negotiate,20256,Mid-Market,AMER,Core Suite
+O000433,A00631,Parallel Systems Inc,Proposal,24743,Enterprise,EMEA,Automation Edge
+O000434,A01505,Meridian Cloud Inc,Qualify,46331,Enterprise,AMER,Core Suite
+O000435,A01482,Granite Stream Ltd,Qualify,18836,SMB,AMER,Analytics Pro
+O000436,A01482,Granite Stream Ltd,Qualify,42820,SMB,AMER,Automation Edge
+O000437,A01550,Pinnacle Point Ltd,Proposal,21688,Mid-Market,EMEA,Core Suite
+O000438,A01550,Pinnacle Point Ltd,Discovery,18651,Mid-Market,EMEA,Analytics Pro
+O000439,A01133,Pinnacle Cloud Inc,Qualify,38298,Enterprise,AMER,Automation Edge
+O000440,A01133,Pinnacle Cloud Inc,Qualify,54293,Enterprise,AMER,Core Suite
+O000441,A01319,BluePeak Labs Ltd,Discovery,39670,Mid-Market,APAC,Core Suite
+O000442,A01319,BluePeak Labs Ltd,Discovery,8770,Mid-Market,APAC,Automation Edge
+O000443,A01319,BluePeak Labs Ltd,Qualify,54478,Mid-Market,APAC,Analytics Pro
+O000444,A01204,Aurora Grid,Negotiate,30920,Mid-Market,AMER,Automation Edge
+O000445,A01204,Aurora Grid,Negotiate,9866,Mid-Market,AMER,Automation Edge
+O000446,A01696,Parallel Stream,Qualify,53448,Enterprise,AMER,Analytics Pro
+O000447,A01696,Parallel Stream,Qualify,39927,Enterprise,AMER,Core Suite
+O000448,A01754,Vertex Works,Discovery,70640,Mid-Market,AMER,Analytics Pro
+O000449,A01838,Aurora Bridge,Qualify,25832,Mid-Market,AMER,Automation Edge
+O000450,A01838,Aurora Bridge,Proposal,29536,Mid-Market,AMER,Automation Edge
+O000451,A01838,Aurora Bridge,Discovery,62711,Mid-Market,AMER,Automation Edge
+O000452,A01708,Meridian Logic,Negotiate,48876,Mid-Market,AMER,Core Suite
+O000453,A01708,Meridian Logic,Proposal,18425,Mid-Market,AMER,Core Suite
+O000454,A00261,Silverline Cloud,Discovery,45543,Mid-Market,EMEA,Core Suite
+O000455,A00261,Silverline Cloud,Discovery,28699,Mid-Market,EMEA,Core Suite
+O000456,A01645,Northwind Point Ltd,Proposal,59284,Mid-Market,EMEA,Core Suite
+O000457,A00074,Pinnacle Grid Ltd,Discovery,31322,Enterprise,AMER,Automation Edge
+O000458,A00074,Pinnacle Grid Ltd,Discovery,37570,Enterprise,AMER,Automation Edge
+O000459,A00025,Aurora Dynamics Ltd,Proposal,15851,Mid-Market,AMER,Automation Edge
+O000460,A01913,Meridian Point Inc,Proposal,54403,Enterprise,APAC,Analytics Pro
+O000461,A01913,Meridian Point Inc,Discovery,62812,Enterprise,APAC,Automation Edge
+O000462,A01879,Vertex Cloud Inc,Discovery,10645,Mid-Market,EMEA,Core Suite
+O000463,A01879,Vertex Cloud Inc,Proposal,35765,Mid-Market,EMEA,Analytics Pro
+O000464,A01879,Vertex Cloud Inc,Discovery,61882,Mid-Market,EMEA,Analytics Pro
+O000465,A01713,Meridian Labs,Proposal,42686,Enterprise,EMEA,Analytics Pro
+O000466,A01713,Meridian Labs,Discovery,39110,Enterprise,EMEA,Core Suite
+O000467,A01713,Meridian Labs,Discovery,20974,Enterprise,EMEA,Core Suite
+O000468,A00195,BluePeak Stream Inc,Negotiate,16601,Mid-Market,APAC,Automation Edge
+O000469,A00768,Meridian Stream Inc,Discovery,54787,Mid-Market,EMEA,Automation Edge
+O000470,A00768,Meridian Stream Inc,Discovery,59433,Mid-Market,EMEA,Automation Edge
+O000471,A00768,Meridian Stream Inc,Qualify,49393,Mid-Market,EMEA,Automation Edge
+O000472,A01655,Meridian Works Inc,Negotiate,28930,Mid-Market,EMEA,Core Suite
+O000473,A01655,Meridian Works Inc,Proposal,52021,Mid-Market,EMEA,Automation Edge
+O000474,A00020,Pinnacle Systems Ltd,Negotiate,69698,Mid-Market,EMEA,Analytics Pro
+O000475,A00020,Pinnacle Systems Ltd,Qualify,41974,Mid-Market,EMEA,Analytics Pro
+O000476,A00465,BluePeak Grid Ltd,Qualify,30015,Mid-Market,AMER,Analytics Pro
+O000477,A00465,BluePeak Grid Ltd,Qualify,47522,Mid-Market,AMER,Core Suite
+O000478,A00465,BluePeak Grid Ltd,Qualify,59470,Mid-Market,AMER,Analytics Pro
+O000479,A01760,BluePeak Systems Inc,Discovery,48772,Enterprise,AMER,Core Suite
+O000480,A01760,BluePeak Systems Inc,Proposal,37760,Enterprise,AMER,Core Suite
+O000481,A01760,BluePeak Systems Inc,Qualify,63746,Enterprise,AMER,Core Suite
+O000482,A01102,Cobalt Point Ltd,Discovery,20628,Enterprise,AMER,Core Suite
+O000483,A01102,Cobalt Point Ltd,Proposal,66674,Enterprise,AMER,Core Suite
+O000484,A01535,Vertex Stream Inc,Negotiate,18423,Mid-Market,AMER,Automation Edge
+O000485,A01535,Vertex Stream Inc,Qualify,29506,Mid-Market,AMER,Core Suite
+O000486,A00446,Vertex Point Inc,Proposal,32886,Enterprise,AMER,Core Suite
+O000487,A00446,Vertex Point Inc,Qualify,44179,Enterprise,AMER,Core Suite
+O000488,A00446,Vertex Point Inc,Discovery,67428,Enterprise,AMER,Analytics Pro
+O000489,A00924,Aurora Bridge Ltd,Qualify,30810,Mid-Market,APAC,Core Suite
+O000490,A00924,Aurora Bridge Ltd,Discovery,46683,Mid-Market,APAC,Core Suite
+O000491,A00924,Aurora Bridge Ltd,Qualify,22508,Mid-Market,APAC,Core Suite
+O000492,A01224,Silverline Dynamics,Proposal,42992,Mid-Market,EMEA,Core Suite
+O000493,A01224,Silverline Dynamics,Qualify,41480,Mid-Market,EMEA,Core Suite
+O000494,A01224,Silverline Dynamics,Discovery,8698,Mid-Market,EMEA,Core Suite
+O000495,A01074,Cobalt Dynamics,Discovery,31749,Mid-Market,AMER,Automation Edge
+O000496,A01074,Cobalt Dynamics,Proposal,47053,Mid-Market,AMER,Automation Edge
+O000497,A00305,Meridian Bridge Ltd,Negotiate,40041,Mid-Market,AMER,Core Suite
+O000498,A00305,Meridian Bridge Ltd,Proposal,26264,Mid-Market,AMER,Analytics Pro
+O000499,A00305,Meridian Bridge Ltd,Qualify,11833,Mid-Market,AMER,Core Suite
+O000500,A00297,Parallel Logic,Negotiate,56362,Enterprise,EMEA,Core Suite
+O000501,A00297,Parallel Logic,Qualify,58375,Enterprise,EMEA,Analytics Pro
+O000502,A00297,Parallel Logic,Proposal,45156,Enterprise,EMEA,Analytics Pro
+O000503,A00899,Aurora Labs,Discovery,18292,Mid-Market,EMEA,Core Suite
+O000504,A00899,Aurora Labs,Qualify,23459,Mid-Market,EMEA,Core Suite
+O000505,A00609,Pinnacle Works Inc,Qualify,25641,Mid-Market,EMEA,Analytics Pro
+O000506,A00609,Pinnacle Works Inc,Qualify,16073,Mid-Market,EMEA,Core Suite
+O000507,A00609,Pinnacle Works Inc,Discovery,48456,Mid-Market,EMEA,Automation Edge
+O000508,A00451,Silverline Systems,Negotiate,45129,Mid-Market,AMER,Analytics Pro
+O000509,A00451,Silverline Systems,Qualify,14866,Mid-Market,AMER,Analytics Pro
+O000510,A00427,Granite Bridge Ltd,Qualify,58207,Mid-Market,AMER,Analytics Pro
+O000511,A00427,Granite Bridge Ltd,Discovery,15927,Mid-Market,AMER,Core Suite
+O000512,A00427,Granite Bridge Ltd,Qualify,10775,Mid-Market,AMER,Analytics Pro
+O000513,A01686,BluePeak Stream Inc,Proposal,15114,Mid-Market,AMER,Analytics Pro
+O000514,A01686,BluePeak Stream Inc,Qualify,22665,Mid-Market,AMER,Analytics Pro
+O000515,A00044,Northwind Point Inc,Negotiate,42930,Mid-Market,APAC,Core Suite
+O000516,A00044,Northwind Point Inc,Discovery,17596,Mid-Market,APAC,Core Suite
+O000517,A01499,Northwind Grid Inc,Qualify,45078,Mid-Market,EMEA,Analytics Pro
+O000518,A00460,Vertex Cloud Ltd,Discovery,52165,Mid-Market,AMER,Analytics Pro
+O000519,A00460,Vertex Cloud Ltd,Qualify,21131,Mid-Market,AMER,Analytics Pro
+O000520,A00481,Northwind Stream Ltd,Qualify,15398,SMB,AMER,Core Suite
+O000521,A00481,Northwind Stream Ltd,Proposal,44328,SMB,AMER,Core Suite
+O000522,A01625,Cobalt Bridge Inc,Proposal,22638,Enterprise,EMEA,Analytics Pro
+O000523,A00191,Granite Dynamics Inc,Proposal,50388,Mid-Market,AMER,Automation Edge
+O000524,A00191,Granite Dynamics Inc,Proposal,28079,Mid-Market,AMER,Core Suite
+O000525,A00191,Granite Dynamics Inc,Qualify,19123,Mid-Market,AMER,Core Suite
+O000526,A00091,Vertex Systems Inc,Discovery,18019,SMB,AMER,Core Suite
+O000527,A00091,Vertex Systems Inc,Negotiate,49829,SMB,AMER,Automation Edge
+O000528,A00959,Parallel Cloud,Discovery,6901,Mid-Market,AMER,Core Suite
+O000529,A00959,Parallel Cloud,Discovery,6609,Mid-Market,AMER,Core Suite
+O000530,A01083,Cobalt Point Ltd,Qualify,47323,Mid-Market,APAC,Automation Edge
+O000531,A01083,Cobalt Point Ltd,Qualify,38481,Mid-Market,APAC,Core Suite
+O000532,A00723,Parallel Works Ltd,Proposal,10579,Mid-Market,AMER,Core Suite
+O000533,A00723,Parallel Works Ltd,Qualify,43728,Mid-Market,AMER,Core Suite
+O000534,A01521,Parallel Labs Inc,Discovery,46349,Mid-Market,APAC,Analytics Pro
+O000535,A00923,Parallel Cloud Ltd,Qualify,48704,Mid-Market,AMER,Analytics Pro
+O000536,A00923,Parallel Cloud Ltd,Proposal,52044,Mid-Market,AMER,Analytics Pro
+O000537,A00113,BluePeak Cloud Ltd,Qualify,17859,Enterprise,EMEA,Core Suite
+O000538,A00113,BluePeak Cloud Ltd,Discovery,13705,Enterprise,EMEA,Automation Edge
+O000539,A00113,BluePeak Cloud Ltd,Negotiate,36519,Enterprise,EMEA,Core Suite
+O000540,A00511,Aurora Systems,Negotiate,33851,Enterprise,EMEA,Core Suite
+O000541,A00997,Northwind Systems Ltd,Qualify,19867,Mid-Market,AMER,Core Suite
+O000542,A00417,BluePeak Labs,Negotiate,20033,Mid-Market,AMER,Analytics Pro
+O000543,A00417,BluePeak Labs,Discovery,55933,Mid-Market,AMER,Analytics Pro
+O000544,A00417,BluePeak Labs,Qualify,46949,Mid-Market,AMER,Analytics Pro
+O000545,A01373,Northwind Point Inc,Discovery,36752,Mid-Market,EMEA,Analytics Pro
+O000546,A01373,Northwind Point Inc,Proposal,42666,Mid-Market,EMEA,Analytics Pro
+O000547,A00362,Parallel Stream Inc,Proposal,11007,Mid-Market,EMEA,Core Suite
+O000548,A00362,Parallel Stream Inc,Discovery,39642,Mid-Market,EMEA,Core Suite
+O000549,A00362,Parallel Stream Inc,Qualify,30007,Mid-Market,EMEA,Core Suite
+O000550,A01312,Aurora Stream,Qualify,30134,Enterprise,EMEA,Core Suite
+O000551,A01312,Aurora Stream,Proposal,43646,Enterprise,EMEA,Core Suite
+O000552,A00537,Silverline Cloud Inc,Discovery,43693,Mid-Market,EMEA,Automation Edge
+O000553,A00056,Cobalt Cloud Inc,Discovery,63565,SMB,AMER,Analytics Pro
+O000554,A01238,Cobalt Dynamics Ltd,Proposal,13740,Mid-Market,AMER,Core Suite
+O000555,A01622,Cobalt Grid Inc,Discovery,21627,SMB,AMER,Analytics Pro
+O000556,A00176,Meridian Grid Inc,Qualify,24948,Mid-Market,APAC,Core Suite
+O000557,A00663,Cobalt Point Ltd,Proposal,47037,Mid-Market,AMER,Core Suite
+O000558,A00663,Cobalt Point Ltd,Negotiate,40164,Mid-Market,AMER,Analytics Pro
+O000559,A00663,Cobalt Point Ltd,Proposal,31750,Mid-Market,AMER,Core Suite
+O000560,A00545,Parallel Bridge Ltd,Qualify,7460,Mid-Market,AMER,Automation Edge
+O000561,A00545,Parallel Bridge Ltd,Negotiate,29458,Mid-Market,AMER,Core Suite
+O000562,A00545,Parallel Bridge Ltd,Qualify,30568,Mid-Market,AMER,Core Suite
+O000563,A00666,Granite Bridge Ltd,Discovery,16964,Mid-Market,AMER,Core Suite
+O000564,A00666,Granite Bridge Ltd,Qualify,41001,Mid-Market,AMER,Core Suite
+O000565,A00526,Parallel Systems Ltd,Qualify,16898,Mid-Market,EMEA,Core Suite
+O000566,A00526,Parallel Systems Ltd,Negotiate,33258,Mid-Market,EMEA,Core Suite
+O000567,A00526,Parallel Systems Ltd,Negotiate,9406,Mid-Market,EMEA,Core Suite
+O000568,A00483,Northwind Logic,Discovery,25238,Mid-Market,APAC,Core Suite
+O000569,A01930,Pinnacle Bridge Ltd,Proposal,22677,Mid-Market,AMER,Automation Edge
+O000570,A01930,Pinnacle Bridge Ltd,Qualify,14644,Mid-Market,AMER,Automation Edge
+O000571,A01076,Granite Works Inc,Proposal,17525,Mid-Market,AMER,Core Suite
+O000572,A01076,Granite Works Inc,Discovery,25515,Mid-Market,AMER,Analytics Pro
+O000573,A00556,Pinnacle Cloud,Qualify,28469,Mid-Market,AMER,Core Suite
+O000574,A00556,Pinnacle Cloud,Discovery,8366,Mid-Market,AMER,Core Suite
+O000575,A00556,Pinnacle Cloud,Discovery,19334,Mid-Market,AMER,Analytics Pro
+O000576,A00359,Silverline Cloud Ltd,Proposal,27773,Mid-Market,APAC,Core Suite
+O000577,A00359,Silverline Cloud Ltd,Negotiate,34671,Mid-Market,APAC,Core Suite
+O000578,A00359,Silverline Cloud Ltd,Proposal,47135,Mid-Market,APAC,Analytics Pro
+O000579,A00356,Parallel Works,Discovery,32318,Mid-Market,EMEA,Core Suite
+O000580,A00356,Parallel Works,Qualify,6051,Mid-Market,EMEA,Core Suite
+O000581,A00356,Parallel Works,Discovery,31383,Mid-Market,EMEA,Core Suite
+O000582,A01769,Parallel Cloud Ltd,Qualify,15857,Enterprise,EMEA,Core Suite
+O000583,A01769,Parallel Cloud Ltd,Qualify,19155,Enterprise,EMEA,Core Suite
+O000584,A00616,Aurora Cloud Ltd,Discovery,30427,Mid-Market,AMER,Analytics Pro
+O000585,A00271,Pinnacle Point,Discovery,19149,Mid-Market,APAC,Automation Edge
+O000586,A01229,Aurora Stream Inc,Qualify,29514,Mid-Market,AMER,Core Suite
+O000587,A00910,Granite Bridge Ltd,Discovery,21214,Mid-Market,APAC,Analytics Pro
+O000588,A00910,Granite Bridge Ltd,Proposal,41337,Mid-Market,APAC,Analytics Pro
+O000589,A01168,Cobalt Stream Inc,Qualify,26367,Mid-Market,APAC,Automation Edge
+O000590,A01951,Parallel Labs,Negotiate,37178,Mid-Market,AMER,Automation Edge
+O000591,A01951,Parallel Labs,Qualify,11280,Mid-Market,AMER,Automation Edge
+O000592,A00365,Aurora Bridge Inc,Qualify,11902,Mid-Market,APAC,Core Suite
+O000593,A00365,Aurora Bridge Inc,Qualify,43489,Mid-Market,APAC,Core Suite
+O000594,A01390,Aurora Point Inc,Discovery,44149,SMB,AMER,Analytics Pro
+O000595,A01390,Aurora Point Inc,Negotiate,16724,SMB,AMER,Core Suite
+O000596,A01030,BluePeak Point Ltd,Negotiate,6143,Mid-Market,EMEA,Analytics Pro
+O000597,A01997,Meridian Logic Inc,Negotiate,12689,Mid-Market,EMEA,Core Suite
+O000598,A00973,Meridian Systems Ltd,Proposal,20239,Mid-Market,AMER,Core Suite
+O000599,A00973,Meridian Systems Ltd,Qualify,45633,Mid-Market,AMER,Analytics Pro
+O000600,A00973,Meridian Systems Ltd,Qualify,44045,Mid-Market,AMER,Analytics Pro
+O000601,A00547,Vertex Bridge Ltd,Qualify,9592,Mid-Market,AMER,Automation Edge
+O000602,A00920,Pinnacle Cloud,Proposal,29560,Mid-Market,AMER,Analytics Pro
+O000603,A00920,Pinnacle Cloud,Proposal,27942,Mid-Market,AMER,Analytics Pro
+O000604,A00347,Pinnacle Bridge Inc,Qualify,30442,Mid-Market,AMER,Analytics Pro
+O000605,A00347,Pinnacle Bridge Inc,Discovery,8078,Mid-Market,AMER,Analytics Pro
+O000606,A00347,Pinnacle Bridge Inc,Qualify,33092,Mid-Market,AMER,Analytics Pro
+O000607,A01422,Silverline Systems Ltd,Qualify,12954,Mid-Market,APAC,Automation Edge
+O000608,A01422,Silverline Systems Ltd,Discovery,30152,Mid-Market,APAC,Analytics Pro
+O000609,A01422,Silverline Systems Ltd,Qualify,48728,Mid-Market,APAC,Core Suite
+O000610,A01029,Vertex Cloud Inc,Discovery,26947,Enterprise,EMEA,Analytics Pro
+O000611,A01029,Vertex Cloud Inc,Discovery,18968,Enterprise,EMEA,Analytics Pro
+O000612,A00077,Pinnacle Logic Inc,Negotiate,40057,SMB,EMEA,Core Suite
+O000613,A00903,Granite Dynamics Inc,Negotiate,15615,Mid-Market,AMER,Analytics Pro
+O000614,A01580,Aurora Cloud,Discovery,30447,Mid-Market,EMEA,Automation Edge
+O000615,A01580,Aurora Cloud,Qualify,19686,Mid-Market,EMEA,Analytics Pro
+O000616,A01580,Aurora Cloud,Negotiate,30946,Mid-Market,EMEA,Automation Edge
+O000617,A01724,BluePeak Stream Ltd,Qualify,6756,Enterprise,EMEA,Analytics Pro
+O000618,A01724,BluePeak Stream Ltd,Proposal,19279,Enterprise,EMEA,Analytics Pro
+O000619,A01724,BluePeak Stream Ltd,Proposal,30107,Enterprise,EMEA,Analytics Pro
+O000620,A01059,Pinnacle Systems Ltd,Discovery,39656,Mid-Market,APAC,Analytics Pro
+O000621,A01484,Northwind Stream Inc,Discovery,42440,Mid-Market,APAC,Analytics Pro
+O000622,A01484,Northwind Stream Inc,Qualify,17773,Mid-Market,APAC,Analytics Pro
+O000623,A01970,Granite Dynamics Ltd,Qualify,16527,Mid-Market,EMEA,Automation Edge
+O000624,A01970,Granite Dynamics Ltd,Qualify,7044,Mid-Market,EMEA,Automation Edge
+O000625,A00309,Aurora Stream,Proposal,30857,Mid-Market,EMEA,Analytics Pro
+O000626,A00309,Aurora Stream,Discovery,26114,Mid-Market,EMEA,Analytics Pro
+O000627,A00309,Aurora Stream,Qualify,30704,Mid-Market,EMEA,Core Suite
+O000628,A00562,Cobalt Grid Ltd,Discovery,12486,Mid-Market,AMER,Automation Edge
+O000629,A00562,Cobalt Grid Ltd,Proposal,20178,Mid-Market,AMER,Automation Edge
+O000630,A01003,BluePeak Labs Ltd,Proposal,38070,Mid-Market,EMEA,Analytics Pro
+O000631,A01003,BluePeak Labs Ltd,Proposal,8442,Mid-Market,EMEA,Analytics Pro
+O000632,A01651,Aurora Grid Inc,Proposal,23905,Mid-Market,AMER,Analytics Pro
+O000633,A01651,Aurora Grid Inc,Proposal,29159,Mid-Market,AMER,Analytics Pro
+O000634,A01783,Aurora Bridge,Discovery,50697,Mid-Market,AMER,Analytics Pro
+O000635,A01783,Aurora Bridge,Negotiate,36122,Mid-Market,AMER,Analytics Pro
+O000636,A00391,Pinnacle Point Ltd,Discovery,37989,Mid-Market,AMER,Analytics Pro
+O000637,A00391,Pinnacle Point Ltd,Negotiate,32665,Mid-Market,AMER,Automation Edge
+O000638,A00947,Silverline Dynamics,Discovery,5969,Mid-Market,AMER,Core Suite
+O000639,A01338,Cobalt Bridge Inc,Qualify,27471,Mid-Market,APAC,Analytics Pro
+O000640,A01338,Cobalt Bridge Inc,Proposal,9771,Mid-Market,APAC,Analytics Pro
+O000641,A01267,Aurora Cloud Ltd,Proposal,26804,Mid-Market,AMER,Automation Edge
+O000642,A01621,Pinnacle Stream Ltd,Discovery,20187,Mid-Market,EMEA,Core Suite
+O000643,A01621,Pinnacle Stream Ltd,Qualify,23802,Mid-Market,EMEA,Core Suite
+O000644,A00796,Meridian Dynamics Ltd,Negotiate,35845,Mid-Market,EMEA,Core Suite
+O000645,A00796,Meridian Dynamics Ltd,Discovery,39777,Mid-Market,EMEA,Core Suite
+O000646,A00796,Meridian Dynamics Ltd,Negotiate,23526,Mid-Market,EMEA,Core Suite
+O000647,A01445,Cobalt Stream Ltd,Negotiate,35827,SMB,APAC,Automation Edge
+O000648,A01445,Cobalt Stream Ltd,Discovery,24954,SMB,APAC,Automation Edge
+O000649,A00364,Silverline Point Inc,Proposal,21635,Mid-Market,APAC,Core Suite
+O000650,A00364,Silverline Point Inc,Negotiate,7203,Mid-Market,APAC,Core Suite
+O000651,A00364,Silverline Point Inc,Proposal,28542,Mid-Market,APAC,Core Suite
+O000652,A01146,Aurora Labs,Discovery,5593,Mid-Market,EMEA,Core Suite
+O000653,A01146,Aurora Labs,Proposal,30221,Mid-Market,EMEA,Core Suite
+O000654,A01146,Aurora Labs,Discovery,23751,Mid-Market,EMEA,Core Suite
+O000655,A01209,Aurora Works,Negotiate,27356,Mid-Market,AMER,Core Suite
+O000656,A01209,Aurora Works,Negotiate,8246,Mid-Market,AMER,Core Suite
+O000657,A01209,Aurora Works,Proposal,21556,Mid-Market,AMER,Core Suite
+O000658,A00914,Granite Cloud Inc,Proposal,26814,SMB,EMEA,Analytics Pro
+O000659,A00914,Granite Cloud Inc,Qualify,39981,SMB,EMEA,Analytics Pro
+O000660,A00961,Pinnacle Systems,Discovery,16060,SMB,AMER,Core Suite
+O000661,A00904,Pinnacle Systems Ltd,Qualify,7757,Mid-Market,EMEA,Analytics Pro
+O000662,A00904,Pinnacle Systems Ltd,Discovery,24962,Mid-Market,EMEA,Analytics Pro
+O000663,A00956,BluePeak Dynamics Inc,Proposal,40588,Mid-Market,EMEA,Analytics Pro
+O000664,A00956,BluePeak Dynamics Inc,Proposal,6066,Mid-Market,EMEA,Analytics Pro
+O000665,A00956,BluePeak Dynamics Inc,Discovery,9090,Mid-Market,EMEA,Analytics Pro
+O000666,A01442,Meridian Cloud,Discovery,5416,Mid-Market,APAC,Core Suite
+O000667,A00084,BluePeak Stream Inc,Proposal,9487,Mid-Market,AMER,Automation Edge
+O000668,A00084,BluePeak Stream Inc,Proposal,11956,Mid-Market,AMER,Automation Edge
+O000669,A00118,Parallel Grid Ltd,Discovery,31047,Mid-Market,EMEA,Analytics Pro
+O000670,A01688,Vertex Labs,Negotiate,20684,Mid-Market,APAC,Core Suite
+O000671,A01688,Vertex Labs,Proposal,21135,Mid-Market,APAC,Core Suite
+O000672,A00864,Aurora Cloud Ltd,Proposal,30882,Mid-Market,APAC,Core Suite
+O000673,A00864,Aurora Cloud Ltd,Qualify,30202,Mid-Market,APAC,Analytics Pro
+O000674,A00864,Aurora Cloud Ltd,Qualify,30689,Mid-Market,APAC,Automation Edge
+O000675,A01972,Meridian Cloud,Proposal,22663,Mid-Market,EMEA,Analytics Pro
+O000676,A01067,Aurora Logic Ltd,Discovery,25351,Mid-Market,AMER,Analytics Pro
+O000677,A01067,Aurora Logic Ltd,Proposal,23543,Mid-Market,AMER,Analytics Pro
+O000678,A01235,BluePeak Dynamics Inc,Proposal,30964,Mid-Market,EMEA,Core Suite
+O000679,A01235,BluePeak Dynamics Inc,Qualify,16005,Mid-Market,EMEA,Core Suite
+O000680,A00652,Northwind Stream Inc,Proposal,15824,Mid-Market,EMEA,Automation Edge
+O000681,A00652,Northwind Stream Inc,Discovery,31067,Mid-Market,EMEA,Automation Edge
+O000682,A00652,Northwind Stream Inc,Negotiate,17717,Mid-Market,EMEA,Core Suite
+O000683,A01152,Cobalt Stream Inc,Qualify,13536,Mid-Market,APAC,Automation Edge
+O000684,A01152,Cobalt Stream Inc,Negotiate,34097,Mid-Market,APAC,Automation Edge
+O000685,A01152,Cobalt Stream Inc,Discovery,29397,Mid-Market,APAC,Automation Edge
+O000686,A00157,Granite Logic Inc,Discovery,36888,Mid-Market,AMER,Analytics Pro
+O000687,A00157,Granite Logic Inc,Discovery,32070,Mid-Market,AMER,Analytics Pro
+O000688,A00157,Granite Logic Inc,Negotiate,20123,Mid-Market,AMER,Core Suite
+O000689,A00270,Granite Systems,Discovery,9002,Mid-Market,AMER,Automation Edge
+O000690,A00270,Granite Systems,Proposal,23274,Mid-Market,AMER,Automation Edge
+O000691,A00270,Granite Systems,Discovery,14521,Mid-Market,AMER,Automation Edge
+O000692,A00218,Meridian Systems Inc,Negotiate,32768,Mid-Market,APAC,Analytics Pro
+O000693,A00218,Meridian Systems Inc,Proposal,31712,Mid-Market,APAC,Automation Edge
+O000694,A00253,Granite Dynamics Ltd,Discovery,35582,Mid-Market,EMEA,Core Suite
+O000695,A00253,Granite Dynamics Ltd,Proposal,25175,Mid-Market,EMEA,Analytics Pro
+O000696,A00253,Granite Dynamics Ltd,Negotiate,32850,Mid-Market,EMEA,Core Suite
+O000697,A00357,BluePeak Works Ltd,Negotiate,32677,Mid-Market,AMER,Core Suite
+O000698,A00357,BluePeak Works Ltd,Discovery,10531,Mid-Market,AMER,Core Suite
+O000699,A00357,BluePeak Works Ltd,Discovery,11329,Mid-Market,AMER,Analytics Pro
+O000700,A01299,BluePeak Grid Ltd,Proposal,19927,SMB,AMER,Analytics Pro
+O000701,A01299,BluePeak Grid Ltd,Discovery,27791,SMB,AMER,Analytics Pro
+O000702,A01099,Northwind Systems Inc,Proposal,22193,Mid-Market,APAC,Analytics Pro
+O000703,A00167,Pinnacle Grid Inc,Negotiate,33663,Mid-Market,AMER,Analytics Pro
+O000704,A00167,Pinnacle Grid Inc,Proposal,17691,Mid-Market,AMER,Core Suite
+O000705,A01153,Northwind Point,Qualify,7068,Mid-Market,EMEA,Automation Edge
+O000706,A01731,Cobalt Cloud Ltd,Qualify,11923,Mid-Market,EMEA,Core Suite
+O000707,A01731,Cobalt Cloud Ltd,Qualify,5935,Mid-Market,EMEA,Core Suite
+O000708,A01731,Cobalt Cloud Ltd,Negotiate,24378,Mid-Market,EMEA,Core Suite
+O000709,A01585,Silverline Systems,Proposal,31186,Mid-Market,AMER,Analytics Pro
+O000710,A01585,Silverline Systems,Proposal,25787,Mid-Market,AMER,Core Suite
+O000711,A01585,Silverline Systems,Proposal,14022,Mid-Market,AMER,Core Suite
+O000712,A00810,Silverline Labs Inc,Discovery,15286,Mid-Market,EMEA,Core Suite
+O000713,A00810,Silverline Labs Inc,Negotiate,27486,Mid-Market,EMEA,Analytics Pro
+O000714,A00810,Silverline Labs Inc,Qualify,15431,Mid-Market,EMEA,Automation Edge
+O000715,A01470,Parallel Grid,Proposal,15001,Mid-Market,EMEA,Core Suite
+O000716,A01345,Aurora Point Ltd,Qualify,30704,SMB,AMER,Analytics Pro
+O000717,A01492,Aurora Systems Inc,Proposal,13594,Mid-Market,EMEA,Analytics Pro
+O000718,A01051,BluePeak Cloud Ltd,Negotiate,12955,Mid-Market,AMER,Core Suite
+O000719,A01051,BluePeak Cloud Ltd,Qualify,16182,Mid-Market,AMER,Core Suite
+O000720,A01051,BluePeak Cloud Ltd,Proposal,23078,Mid-Market,AMER,Core Suite
+O000721,A01360,Meridian Logic,Negotiate,22162,SMB,AMER,Automation Edge
+O000722,A01352,Silverline Point,Proposal,16306,Mid-Market,AMER,Automation Edge
+O000723,A01352,Silverline Point,Discovery,5412,Mid-Market,AMER,Analytics Pro
+O000724,A01352,Silverline Point,Proposal,19941,Mid-Market,AMER,Analytics Pro
+O000725,A00151,Silverline Dynamics Ltd,Qualify,7438,Mid-Market,APAC,Analytics Pro
+O000726,A00151,Silverline Dynamics Ltd,Discovery,21021,Mid-Market,APAC,Analytics Pro
+O000727,A00424,Granite Systems,Proposal,22763,Mid-Market,AMER,Analytics Pro
+O000728,A00186,BluePeak Grid Ltd,Negotiate,18704,SMB,AMER,Core Suite
+O000729,A00186,BluePeak Grid Ltd,Qualify,24432,SMB,AMER,Automation Edge
+O000730,A01676,Meridian Logic Ltd,Discovery,4413,SMB,EMEA,Core Suite
+O000731,A00133,Vertex Point,Qualify,23198,Enterprise,AMER,Analytics Pro
+O000732,A00133,Vertex Point,Qualify,12597,Enterprise,AMER,Analytics Pro
+O000733,A00133,Vertex Point,Negotiate,13029,Enterprise,AMER,Analytics Pro
+O000734,A01684,Pinnacle Works Ltd,Proposal,27175,SMB,AMER,Core Suite
+O000735,A00278,Parallel Dynamics,Proposal,22753,Mid-Market,AMER,Core Suite
+O000736,A01429,Parallel Systems,Negotiate,15254,SMB,AMER,Automation Edge
+O000737,A01976,Cobalt Logic Ltd,Proposal,14592,Mid-Market,APAC,Analytics Pro
+O000738,A01976,Cobalt Logic Ltd,Discovery,25429,Mid-Market,APAC,Analytics Pro
+O000739,A01144,Parallel Point,Discovery,35044,SMB,AMER,Analytics Pro
+O000740,A00722,Parallel Point,Negotiate,20020,Mid-Market,AMER,Analytics Pro
+O000741,A00722,Parallel Point,Proposal,29207,Mid-Market,AMER,Analytics Pro
+O000742,A00722,Parallel Point,Proposal,17782,Mid-Market,AMER,Analytics Pro
+O000743,A00268,Granite Works Ltd,Proposal,5879,Mid-Market,AMER,Automation Edge
+O000744,A01358,Cobalt Logic Ltd,Proposal,27339,SMB,AMER,Automation Edge
+O000745,A01358,Cobalt Logic Ltd,Negotiate,14838,SMB,AMER,Automation Edge
+O000746,A00911,Parallel Bridge Inc,Negotiate,26287,Mid-Market,APAC,Automation Edge
+O000747,A01638,Parallel Works Ltd,Discovery,7566,Mid-Market,AMER,Automation Edge
+O000748,A01638,Parallel Works Ltd,Discovery,19463,Mid-Market,AMER,Core Suite
+O000749,A01638,Parallel Works Ltd,Proposal,25298,Mid-Market,AMER,Automation Edge
+O000750,A01407,Vertex Grid,Discovery,31961,Enterprise,APAC,Automation Edge
+O000751,A01407,Vertex Grid,Proposal,8905,Enterprise,APAC,Automation Edge
+O000752,A01553,Pinnacle Works Ltd,Proposal,23005,SMB,AMER,Analytics Pro
+O000753,A00559,BluePeak Point,Proposal,14664,Mid-Market,AMER,Analytics Pro
+O000754,A00559,BluePeak Point,Proposal,9206,Mid-Market,AMER,Core Suite
+O000755,A00546,Pinnacle Cloud Ltd,Qualify,7915,Mid-Market,APAC,Core Suite
+O000756,A00546,Pinnacle Cloud Ltd,Proposal,24368,Mid-Market,APAC,Automation Edge
+O000757,A00546,Pinnacle Cloud Ltd,Discovery,25107,Mid-Market,APAC,Automation Edge
+O000758,A01468,Aurora Stream Inc,Proposal,12509,Mid-Market,AMER,Core Suite
+O000759,A01104,Pinnacle Dynamics Ltd,Negotiate,13523,SMB,AMER,Core Suite
+O000760,A01104,Pinnacle Dynamics Ltd,Qualify,9768,SMB,AMER,Core Suite
+O000761,A00724,Parallel Cloud,Negotiate,4583,SMB,AMER,Core Suite
+O000762,A01703,Cobalt Dynamics Inc,Discovery,14020,SMB,AMER,Automation Edge
+O000763,A01703,Cobalt Dynamics Inc,Proposal,21660,SMB,AMER,Automation Edge
+O000764,A00683,Pinnacle Systems Ltd,Proposal,21162,Mid-Market,EMEA,Automation Edge
+O000765,A01983,Vertex Labs Ltd,Proposal,13674,SMB,AMER,Core Suite
+O000766,A01001,Aurora Logic Inc,Discovery,18417,Mid-Market,AMER,Automation Edge
+O000767,A01531,Meridian Grid Inc,Discovery,19079,Mid-Market,AMER,Analytics Pro
+O000768,A01531,Meridian Grid Inc,Discovery,26531,Mid-Market,AMER,Analytics Pro
+O000769,A01531,Meridian Grid Inc,Discovery,31968,Mid-Market,AMER,Analytics Pro
+O000770,A01134,Vertex Labs Inc,Discovery,27563,Mid-Market,AMER,Automation Edge
+O000771,A01134,Vertex Labs Inc,Negotiate,22555,Mid-Market,AMER,Core Suite
+O000772,A01134,Vertex Labs Inc,Qualify,14304,Mid-Market,AMER,Automation Edge
+O000773,A01231,Aurora Labs Inc,Proposal,12148,SMB,AMER,Analytics Pro
+O000774,A00486,Granite Bridge Inc,Discovery,15448,Mid-Market,AMER,Core Suite
+O000775,A00718,BluePeak Grid Ltd,Discovery,19643,Mid-Market,AMER,Core Suite
+O000776,A00718,BluePeak Grid Ltd,Negotiate,8349,Mid-Market,AMER,Core Suite
+O000777,A00718,BluePeak Grid Ltd,Qualify,13017,Mid-Market,AMER,Core Suite
+O000778,A00610,Cobalt Cloud Ltd,Qualify,26773,Mid-Market,AMER,Core Suite
+O000779,A00610,Cobalt Cloud Ltd,Discovery,15449,Mid-Market,AMER,Core Suite
+O000780,A00453,Parallel Cloud,Discovery,11378,Mid-Market,EMEA,Analytics Pro
+O000781,A00453,Parallel Cloud,Proposal,22548,Mid-Market,EMEA,Automation Edge
+O000782,A00453,Parallel Cloud,Proposal,25389,Mid-Market,EMEA,Analytics Pro
+O000783,A01023,Silverline Logic Ltd,Qualify,29043,SMB,AMER,Core Suite
+O000784,A01081,BluePeak Systems Inc,Discovery,16549,SMB,AMER,Core Suite
+O000785,A00208,Cobalt Grid Ltd,Proposal,20019,Mid-Market,AMER,Analytics Pro
+O000786,A01554,Silverline Bridge Ltd,Discovery,21938,Mid-Market,AMER,Core Suite
+O000787,A01554,Silverline Bridge Ltd,Negotiate,15855,Mid-Market,AMER,Core Suite
+O000788,A00770,Meridian Stream Ltd,Qualify,16380,Mid-Market,AMER,Automation Edge
+O000789,A00770,Meridian Stream Ltd,Discovery,21429,Mid-Market,AMER,Automation Edge
+O000790,A00675,BluePeak Stream,Qualify,5353,Mid-Market,AMER,Core Suite
+O000791,A00361,Northwind Bridge Ltd,Proposal,18784,Mid-Market,AMER,Analytics Pro
+O000792,A00341,Northwind Stream Inc,Discovery,24822,Mid-Market,EMEA,Core Suite
+O000793,A00341,Northwind Stream Inc,Negotiate,9349,Mid-Market,EMEA,Automation Edge
+O000794,A00172,Northwind Bridge,Proposal,8385,Mid-Market,EMEA,Analytics Pro
+O000795,A01395,Granite Stream Inc,Discovery,21022,Mid-Market,APAC,Analytics Pro
+O000796,A01404,Meridian Point Inc,Discovery,22143,Mid-Market,AMER,Analytics Pro
+O000797,A01404,Meridian Point Inc,Negotiate,12458,Mid-Market,AMER,Core Suite
+O000798,A01610,Granite Labs Ltd,Proposal,16054,Mid-Market,AMER,Core Suite
+O000799,A00897,Vertex Labs,Discovery,12118,SMB,EMEA,Analytics Pro
+O000800,A01794,Aurora Systems Inc,Negotiate,8318,Mid-Market,AMER,Analytics Pro
+O000801,A01794,Aurora Systems Inc,Qualify,17828,Mid-Market,AMER,Analytics Pro
+O000802,A01794,Aurora Systems Inc,Qualify,28014,Mid-Market,AMER,Analytics Pro
+O000803,A01959,Silverline Logic,Negotiate,18302,Mid-Market,AMER,Automation Edge
+O000804,A01959,Silverline Logic,Qualify,10709,Mid-Market,AMER,Automation Edge
+O000805,A00298,Silverline Grid Inc,Discovery,9863,Mid-Market,AMER,Analytics Pro
+O000806,A00298,Silverline Grid Inc,Proposal,27438,Mid-Market,AMER,Analytics Pro
+O000807,A01138,Cobalt Logic Ltd,Discovery,15359,Mid-Market,APAC,Analytics Pro
+O000808,A01862,BluePeak Labs Inc,Qualify,12707,Mid-Market,EMEA,Core Suite
+O000809,A01862,BluePeak Labs Inc,Proposal,22791,Mid-Market,EMEA,Automation Edge
+O000810,A01862,BluePeak Labs Inc,Qualify,10414,Mid-Market,EMEA,Core Suite
+O000811,A00781,Silverline Labs Inc,Discovery,27189,Mid-Market,AMER,Automation Edge
+O000812,A00781,Silverline Labs Inc,Proposal,23554,Mid-Market,AMER,Automation Edge
+O000813,A01770,Cobalt Works Ltd,Proposal,26231,SMB,APAC,Core Suite
+O000814,A01430,Northwind Systems Ltd,Negotiate,6025,SMB,EMEA,Core Suite
+O000815,A01430,Northwind Systems Ltd,Proposal,19027,SMB,EMEA,Analytics Pro
+O000816,A00103,Cobalt Point Inc,Qualify,23211,Mid-Market,AMER,Core Suite
+O000817,A00758,Meridian Works,Proposal,4964,Mid-Market,AMER,Core Suite
+O000818,A00758,Meridian Works,Qualify,2878,Mid-Market,AMER,Core Suite
+O000819,A01368,Pinnacle Dynamics Ltd,Negotiate,22098,Mid-Market,AMER,Core Suite
+O000820,A01368,Pinnacle Dynamics Ltd,Negotiate,10470,Mid-Market,AMER,Automation Edge
+O000821,A01757,Parallel Point Ltd,Negotiate,21181,Mid-Market,EMEA,Core Suite
+O000822,A01572,Northwind Logic Inc,Proposal,15237,Mid-Market,AMER,Core Suite
+O000823,A01164,Pinnacle Works Ltd,Qualify,25760,Mid-Market,EMEA,Automation Edge
+O000824,A01164,Pinnacle Works Ltd,Discovery,11362,Mid-Market,EMEA,Automation Edge
+O000825,A01164,Pinnacle Works Ltd,Proposal,13975,Mid-Market,EMEA,Analytics Pro
+O000826,A01671,Aurora Labs Inc,Qualify,19127,Mid-Market,AMER,Automation Edge
+O000827,A01800,Northwind Stream Ltd,Discovery,18159,Mid-Market,APAC,Analytics Pro
+O000828,A00041,Vertex Labs Ltd,Discovery,3872,Mid-Market,AMER,Analytics Pro
+O000829,A00041,Vertex Labs Ltd,Qualify,7419,Mid-Market,AMER,Analytics Pro
+O000830,A00041,Vertex Labs Ltd,Discovery,32161,Mid-Market,AMER,Analytics Pro
+O000831,A00803,BluePeak Labs Inc,Qualify,12396,Mid-Market,EMEA,Analytics Pro
+O000832,A00803,BluePeak Labs Inc,Discovery,5945,Mid-Market,EMEA,Core Suite
+O000833,A00803,BluePeak Labs Inc,Qualify,5716,Mid-Market,EMEA,Core Suite
+O000834,A00574,Pinnacle Grid Inc,Proposal,25098,Mid-Market,AMER,Analytics Pro
+O000835,A00574,Pinnacle Grid Inc,Discovery,5659,Mid-Market,AMER,Analytics Pro
+O000836,A00574,Pinnacle Grid Inc,Qualify,15946,Mid-Market,AMER,Automation Edge
+O000837,A00948,Cobalt Point Inc,Qualify,5161,Mid-Market,AMER,Analytics Pro
+O000838,A01183,Aurora Dynamics,Qualify,21851,Mid-Market,AMER,Core Suite
+O000839,A01183,Aurora Dynamics,Proposal,8910,Mid-Market,AMER,Core Suite
+O000840,A00053,Aurora Logic Inc,Discovery,14733,Mid-Market,EMEA,Core Suite
+O000841,A00053,Aurora Logic Inc,Qualify,21964,Mid-Market,EMEA,Analytics Pro
+O000842,A00033,Parallel Cloud Inc,Qualify,4283,Mid-Market,EMEA,Analytics Pro
+O000843,A01752,BluePeak Bridge Ltd,Negotiate,4415,SMB,AMER,Automation Edge
+O000844,A01752,BluePeak Bridge Ltd,Qualify,26559,SMB,AMER,Analytics Pro
+O000845,A00485,Parallel Cloud,Qualify,19687,SMB,EMEA,Analytics Pro
+O000846,A00147,BluePeak Works Ltd,Discovery,23895,SMB,EMEA,Core Suite
+O000847,A00147,BluePeak Works Ltd,Proposal,4165,SMB,EMEA,Analytics Pro
+O000848,A01377,Northwind Dynamics Ltd,Qualify,7616,Mid-Market,EMEA,Analytics Pro
+O000849,A01377,Northwind Dynamics Ltd,Proposal,10491,Mid-Market,EMEA,Analytics Pro
+O000850,A00254,Vertex Bridge,Discovery,4297,Mid-Market,AMER,Analytics Pro
+O000851,A00254,Vertex Bridge,Qualify,23867,Mid-Market,AMER,Analytics Pro
+O000852,A01315,Aurora Systems,Negotiate,24346,Mid-Market,EMEA,Automation Edge
+O000853,A01272,Silverline Logic Ltd,Proposal,21981,SMB,EMEA,Analytics Pro
+O000854,A01210,Granite Labs Inc,Discovery,14561,Mid-Market,EMEA,Automation Edge
+O000855,A01198,Meridian Dynamics,Proposal,11871,SMB,AMER,Analytics Pro
+O000856,A01723,Northwind Point Ltd,Proposal,5721,Mid-Market,APAC,Core Suite
+O000857,A01936,Parallel Stream,Negotiate,21078,SMB,AMER,Automation Edge
+O000858,A00727,BluePeak Works Ltd,Discovery,14936,Mid-Market,AMER,Analytics Pro
+O000859,A00727,BluePeak Works Ltd,Discovery,21043,Mid-Market,AMER,Analytics Pro
+O000860,A00727,BluePeak Works Ltd,Qualify,14601,Mid-Market,AMER,Analytics Pro
+O000861,A00520,Northwind Systems Inc,Qualify,16661,Mid-Market,EMEA,Core Suite
+O000862,A01662,Aurora Works Inc,Negotiate,8851,Mid-Market,APAC,Automation Edge
+O000863,A00863,Silverline Grid Ltd,Proposal,18667,Mid-Market,EMEA,Analytics Pro
+O000864,A00863,Silverline Grid Ltd,Discovery,17492,Mid-Market,EMEA,Analytics Pro
+O000865,A01257,Parallel Works Inc,Qualify,15986,Mid-Market,EMEA,Core Suite
+O000866,A01569,Parallel Logic Inc,Proposal,18093,Mid-Market,EMEA,Analytics Pro
+O000867,A01569,Parallel Logic Inc,Discovery,18538,Mid-Market,EMEA,Analytics Pro
+O000868,A00889,BluePeak Works,Qualify,14728,SMB,AMER,Core Suite
+O000869,A00889,BluePeak Works,Qualify,22802,SMB,AMER,Automation Edge
+O000870,A01803,Parallel Works Ltd,Proposal,19132,Mid-Market,EMEA,Automation Edge
+O000871,A01803,Parallel Works Ltd,Qualify,19872,Mid-Market,EMEA,Automation Edge
+O000872,A01989,Granite Labs Ltd,Proposal,6028,Mid-Market,AMER,Core Suite
+O000873,A01989,Granite Labs Ltd,Negotiate,13202,Mid-Market,AMER,Core Suite
+O000874,A01989,Granite Labs Ltd,Qualify,8033,Mid-Market,AMER,Core Suite
+O000875,A00629,Vertex Bridge Inc,Discovery,4892,SMB,EMEA,Analytics Pro
+O000876,A00629,Vertex Bridge Inc,Proposal,15012,SMB,EMEA,Analytics Pro
+O000877,A01509,Pinnacle Logic Inc,Discovery,17109,Mid-Market,AMER,Analytics Pro
+O000878,A01509,Pinnacle Logic Inc,Negotiate,4862,Mid-Market,AMER,Analytics Pro
+O000879,A00561,Parallel Dynamics Ltd,Negotiate,10152,Mid-Market,EMEA,Core Suite
+O000880,A00561,Parallel Dynamics Ltd,Proposal,5186,Mid-Market,EMEA,Core Suite
+O000881,A00188,Silverline Stream Ltd,Negotiate,24217,SMB,AMER,Core Suite
+O000882,A00188,Silverline Stream Ltd,Discovery,3564,SMB,AMER,Core Suite
+O000883,A00494,Meridian Bridge Ltd,Proposal,7203,Mid-Market,AMER,Automation Edge
+O000884,A01200,Cobalt Point Ltd,Discovery,9843,Mid-Market,APAC,Automation Edge
+O000885,A01200,Cobalt Point Ltd,Discovery,9770,Mid-Market,APAC,Automation Edge
+O000886,A01200,Cobalt Point Ltd,Proposal,23981,Mid-Market,APAC,Automation Edge
+O000887,A00092,Northwind Grid,Discovery,8062,Mid-Market,EMEA,Analytics Pro
+O000888,A00765,Cobalt Works Ltd,Negotiate,8931,Mid-Market,AMER,Analytics Pro
+O000889,A00765,Cobalt Works Ltd,Qualify,5830,Mid-Market,AMER,Core Suite
+O000890,A00765,Cobalt Works Ltd,Negotiate,5823,Mid-Market,AMER,Analytics Pro
+O000891,A00048,Cobalt Cloud Ltd,Qualify,8327,Mid-Market,EMEA,Core Suite
+O000892,A00048,Cobalt Cloud Ltd,Qualify,5634,Mid-Market,EMEA,Core Suite
+O000893,A00048,Cobalt Cloud Ltd,Qualify,15771,Mid-Market,EMEA,Core Suite
+O000894,A00250,Northwind Logic Inc,Discovery,23249,SMB,AMER,Analytics Pro
+O000895,A00250,Northwind Logic Inc,Proposal,17788,SMB,AMER,Analytics Pro
+O000896,A00826,Meridian Works Ltd,Discovery,16130,SMB,AMER,Analytics Pro
+O000897,A01891,Northwind Bridge Inc,Proposal,11912,SMB,AMER,Core Suite
+O000898,A01891,Northwind Bridge Inc,Qualify,9281,SMB,AMER,Analytics Pro
+O000899,A01290,Silverline Works Ltd,Qualify,20605,Mid-Market,APAC,Core Suite
+O000900,A01290,Silverline Works Ltd,Negotiate,13984,Mid-Market,APAC,Core Suite
+O000901,A00452,Vertex Dynamics Inc,Qualify,4204,Mid-Market,APAC,Analytics Pro
+O000902,A00452,Vertex Dynamics Inc,Qualify,11092,Mid-Market,APAC,Analytics Pro
+O000903,A00452,Vertex Dynamics Inc,Discovery,7666,Mid-Market,APAC,Analytics Pro
+O000904,A01619,Parallel Grid,Proposal,8545,SMB,AMER,Automation Edge
+O000905,A01619,Parallel Grid,Proposal,5740,SMB,AMER,Automation Edge
+O000906,A01020,Vertex Dynamics,Qualify,11415,SMB,EMEA,Core Suite
+O000907,A01047,Northwind Grid,Proposal,17367,Mid-Market,AMER,Analytics Pro
+O000908,A01961,Aurora Logic Inc,Qualify,4825,Mid-Market,APAC,Automation Edge
+O000909,A01961,Aurora Logic Inc,Discovery,17420,Mid-Market,APAC,Automation Edge
+O000910,A01716,BluePeak Works Inc,Discovery,6638,SMB,AMER,Analytics Pro
+O000911,A00518,Parallel Point Ltd,Discovery,20375,SMB,AMER,Analytics Pro
+O000912,A00518,Parallel Point Ltd,Qualify,5819,SMB,AMER,Automation Edge
+O000913,A01320,Northwind Systems Ltd,Negotiate,8375,Mid-Market,AMER,Automation Edge
+O000914,A01320,Northwind Systems Ltd,Discovery,8421,Mid-Market,AMER,Automation Edge
+O000915,A00737,Pinnacle Grid Ltd,Qualify,8735,SMB,AMER,Core Suite
+O000916,A01034,Cobalt Dynamics,Proposal,12903,Mid-Market,AMER,Core Suite
+O000917,A01034,Cobalt Dynamics,Qualify,10529,Mid-Market,AMER,Core Suite
+O000918,A00505,Meridian Labs Ltd,Qualify,3282,SMB,EMEA,Analytics Pro
+O000919,A00878,Northwind Logic,Qualify,25687,SMB,AMER,Analytics Pro
+O000920,A00759,Silverline Works,Proposal,4731,Mid-Market,AMER,Core Suite
+O000921,A00759,Silverline Works,Negotiate,13284,Mid-Market,AMER,Core Suite
+O000922,A00171,Silverline Works Ltd,Discovery,7260,Mid-Market,EMEA,Analytics Pro
+O000923,A01424,BluePeak Grid,Discovery,21801,Mid-Market,AMER,Automation Edge
+O000924,A00755,Vertex Bridge Inc,Qualify,4851,SMB,EMEA,Analytics Pro
+O000925,A00755,Vertex Bridge Inc,Proposal,16233,SMB,EMEA,Core Suite
+O000926,A00694,Silverline Labs Inc,Proposal,5410,Mid-Market,EMEA,Core Suite
+O000927,A00340,Granite Systems,Proposal,18774,Mid-Market,AMER,Core Suite
+O000928,A00340,Granite Systems,Discovery,13563,Mid-Market,AMER,Automation Edge
+O000929,A00441,Pinnacle Labs Ltd,Qualify,12805,Mid-Market,AMER,Analytics Pro
+O000930,A00441,Pinnacle Labs Ltd,Negotiate,10319,Mid-Market,AMER,Core Suite
+O000931,A00101,Aurora Systems Ltd,Qualify,18911,Mid-Market,AMER,Analytics Pro
+O000932,A01670,Meridian Cloud Inc,Discovery,14390,Mid-Market,AMER,Automation Edge
+O000933,A01052,Cobalt Logic Inc,Discovery,11134,SMB,AMER,Core Suite
+O000934,A01052,Cobalt Logic Inc,Proposal,5438,SMB,AMER,Core Suite
+O000935,A01522,Northwind Bridge Ltd,Proposal,6250,SMB,AMER,Core Suite
+O000936,A01522,Northwind Bridge Ltd,Discovery,4857,SMB,AMER,Core Suite
+O000937,A01978,BluePeak Bridge Inc,Discovery,13583,Mid-Market,EMEA,Core Suite
+O000938,A01978,BluePeak Bridge Inc,Negotiate,6258,Mid-Market,EMEA,Automation Edge
+O000939,A01128,Silverline Labs Inc,Proposal,10704,SMB,EMEA,Core Suite
+O000940,A01054,Meridian Labs Inc,Negotiate,15103,Mid-Market,AMER,Automation Edge
+O000941,A01826,Silverline Bridge Ltd,Discovery,15413,Mid-Market,EMEA,Core Suite
+O000942,A01826,Silverline Bridge Ltd,Negotiate,14504,Mid-Market,EMEA,Core Suite
+O000943,A00119,Parallel Point,Qualify,11834,SMB,AMER,Core Suite
+O000944,A00119,Parallel Point,Qualify,10194,SMB,AMER,Automation Edge
+O000945,A00580,Cobalt Dynamics,Discovery,13611,Mid-Market,EMEA,Core Suite
+O000946,A00580,Cobalt Dynamics,Discovery,5368,Mid-Market,EMEA,Core Suite
+O000947,A00580,Cobalt Dynamics,Qualify,16210,Mid-Market,EMEA,Core Suite
+O000948,A00855,Pinnacle Bridge Ltd,Negotiate,12685,Mid-Market,APAC,Analytics Pro
+O000949,A00994,Parallel Dynamics Ltd,Qualify,12529,Mid-Market,AMER,Automation Edge
+O000950,A00994,Parallel Dynamics Ltd,Qualify,9000,Mid-Market,AMER,Analytics Pro
+O000951,A01582,Vertex Dynamics,Negotiate,13860,Mid-Market,EMEA,Analytics Pro
+O000952,A00370,Parallel Stream Ltd,Proposal,13447,Mid-Market,AMER,Analytics Pro
+O000953,A00370,Parallel Stream Ltd,Proposal,15796,Mid-Market,AMER,Analytics Pro
+O000954,A01646,Aurora Bridge Inc,Proposal,15696,SMB,AMER,Automation Edge
+O000955,A00606,Northwind Cloud,Qualify,12721,SMB,EMEA,Core Suite
+O000956,A00122,Aurora Grid,Discovery,3581,SMB,AMER,Analytics Pro
+O000957,A00122,Aurora Grid,Discovery,6382,SMB,AMER,Analytics Pro
+O000958,A01277,Parallel Logic,Discovery,3850,Mid-Market,EMEA,Automation Edge
+O000959,A01277,Parallel Logic,Qualify,13714,Mid-Market,EMEA,Automation Edge
+O000960,A01137,Cobalt Bridge Inc,Qualify,7303,Mid-Market,AMER,Core Suite
+O000961,A01137,Cobalt Bridge Inc,Qualify,5179,Mid-Market,AMER,Automation Edge
+O000962,A01979,Parallel Labs Inc,Proposal,17713,Mid-Market,EMEA,Analytics Pro
+O000963,A01979,Parallel Labs Inc,Qualify,5743,Mid-Market,EMEA,Analytics Pro
+O000964,A01967,Cobalt Bridge,Qualify,16043,Mid-Market,AMER,Core Suite
+O000965,A00011,Pinnacle Point Inc,Proposal,13321,Mid-Market,AMER,Core Suite
+O000966,A01394,Northwind Point Ltd,Qualify,4197,SMB,AMER,Core Suite
+O000967,A01394,Northwind Point Ltd,Proposal,2934,SMB,AMER,Core Suite
+O000968,A00821,Cobalt Logic Ltd,Qualify,3362,SMB,APAC,Core Suite
+O000969,A01027,Granite Labs Inc,Proposal,15036,SMB,AMER,Core Suite
+O000970,A01027,Granite Labs Inc,Qualify,15076,SMB,AMER,Analytics Pro
+O000971,A00089,Cobalt Stream Ltd,Discovery,12675,Mid-Market,AMER,Core Suite
+O000972,A00089,Cobalt Stream Ltd,Qualify,6574,Mid-Market,AMER,Automation Edge
+O000973,A00089,Cobalt Stream Ltd,Qualify,8578,Mid-Market,AMER,Automation Edge
+O000974,A00958,Granite Point Ltd,Negotiate,5013,Mid-Market,AMER,Analytics Pro
+O000975,A00958,Granite Point Ltd,Discovery,5499,Mid-Market,AMER,Analytics Pro
+O000976,A00958,Granite Point Ltd,Negotiate,7046,Mid-Market,AMER,Analytics Pro
+O000977,A01314,Parallel Bridge,Discovery,8202,SMB,AMER,Analytics Pro
+O000978,A00805,Vertex Cloud,Qualify,17673,Mid-Market,AMER,Core Suite
+O000979,A00805,Vertex Cloud,Discovery,15251,Mid-Market,AMER,Core Suite
+O000980,A01093,Granite Logic,Discovery,11202,SMB,EMEA,Core Suite
+O000981,A01093,Granite Logic,Negotiate,4048,SMB,EMEA,Analytics Pro
+O000982,A00530,BluePeak Dynamics,Negotiate,10281,Mid-Market,AMER,Analytics Pro
+O000983,A00368,Aurora Works,Proposal,8229,SMB,EMEA,Core Suite
+O000984,A00368,Aurora Works,Negotiate,12326,SMB,EMEA,Analytics Pro
+O000985,A01444,Meridian Works Inc,Discovery,3326,SMB,APAC,Automation Edge
+O000986,A00698,BluePeak Bridge Inc,Discovery,5427,Mid-Market,EMEA,Analytics Pro
+O000987,A00698,BluePeak Bridge Inc,Qualify,4152,Mid-Market,EMEA,Automation Edge
+O000988,A00698,BluePeak Bridge Inc,Qualify,6122,Mid-Market,EMEA,Analytics Pro
+O000989,A00834,Parallel Logic Inc,Discovery,16587,Mid-Market,APAC,Analytics Pro
+O000990,A00834,Parallel Logic Inc,Proposal,5182,Mid-Market,APAC,Core Suite
+O000991,A00834,Parallel Logic Inc,Proposal,14846,Mid-Market,APAC,Automation Edge
+O000992,A01511,Aurora Works,Discovery,7355,SMB,AMER,Analytics Pro
+O000993,A01455,Aurora Systems,Discovery,12365,Mid-Market,APAC,Core Suite
+O000994,A00442,Meridian Systems,Qualify,10512,Mid-Market,AMER,Automation Edge
+O000995,A01073,Pinnacle Labs Ltd,Discovery,10226,Mid-Market,AMER,Core Suite
+O000996,A01073,Pinnacle Labs Ltd,Qualify,11464,Mid-Market,AMER,Analytics Pro
+O000997,A01073,Pinnacle Labs Ltd,Proposal,4432,Mid-Market,AMER,Core Suite
+O000998,A00014,Vertex Dynamics Ltd,Negotiate,12466,SMB,AMER,Analytics Pro
+O000999,A00014,Vertex Dynamics Ltd,Negotiate,16403,SMB,AMER,Automation Edge
+O001000,A00149,Meridian Works Inc,Proposal,5719,Mid-Market,EMEA,Analytics Pro
+O001001,A00149,Meridian Works Inc,Proposal,10782,Mid-Market,EMEA,Analytics Pro
+O001002,A01275,Meridian Stream Ltd,Proposal,6897,SMB,AMER,Analytics Pro
+O001003,A01275,Meridian Stream Ltd,Qualify,14187,SMB,AMER,Analytics Pro
+O001004,A00884,BluePeak Systems Ltd,Qualify,2623,Mid-Market,APAC,Core Suite
+O001005,A00884,BluePeak Systems Ltd,Discovery,9105,Mid-Market,APAC,Core Suite
+O001006,A00669,Northwind Bridge,Discovery,2940,SMB,EMEA,Analytics Pro
+O001007,A00981,Pinnacle Logic Inc,Qualify,15661,SMB,AMER,Analytics Pro
+O001008,A00981,Pinnacle Logic Inc,Negotiate,9366,SMB,AMER,Analytics Pro
+O001009,A00315,Northwind Labs Ltd,Negotiate,8473,SMB,APAC,Automation Edge
+O001010,A00315,Northwind Labs Ltd,Discovery,14615,SMB,APAC,Core Suite
+O001011,A01244,Aurora Point,Discovery,11389,SMB,AMER,Core Suite
+O001012,A01244,Aurora Point,Proposal,9880,SMB,AMER,Core Suite
+O001013,A00551,Vertex Cloud,Qualify,3731,SMB,APAC,Core Suite
+O001014,A00551,Vertex Cloud,Proposal,13860,SMB,APAC,Core Suite
+O001015,A01810,Aurora Cloud Ltd,Negotiate,9589,SMB,AMER,Core Suite
+O001016,A01810,Aurora Cloud Ltd,Proposal,15088,SMB,AMER,Core Suite
+O001017,A01587,Cobalt Stream Inc,Qualify,10709,SMB,AMER,Automation Edge
+O001018,A01587,Cobalt Stream Inc,Proposal,11875,SMB,AMER,Automation Edge
+O001019,A01857,Cobalt Stream Inc,Negotiate,15800,Mid-Market,AMER,Analytics Pro
+O001020,A01857,Cobalt Stream Inc,Proposal,6245,Mid-Market,AMER,Core Suite
+O001021,A01857,Cobalt Stream Inc,Negotiate,3988,Mid-Market,AMER,Analytics Pro
+O001022,A00161,Northwind Point,Qualify,8633,Mid-Market,AMER,Core Suite
+O001023,A00161,Northwind Point,Proposal,13453,Mid-Market,AMER,Core Suite
+O001024,A00161,Northwind Point,Negotiate,10688,Mid-Market,AMER,Automation Edge
+O001025,A01242,BluePeak Grid Ltd,Discovery,12011,SMB,AMER,Automation Edge
+O001026,A01512,Northwind Systems Inc,Qualify,3596,SMB,AMER,Analytics Pro
+O001027,A01512,Northwind Systems Inc,Discovery,14602,SMB,AMER,Core Suite
+O001028,A00351,Aurora Grid Ltd,Qualify,3913,Mid-Market,AMER,Core Suite
+O001029,A00351,Aurora Grid Ltd,Qualify,4432,Mid-Market,AMER,Core Suite
+O001030,A00658,Granite Grid,Discovery,5074,SMB,EMEA,Analytics Pro
+O001031,A00496,Northwind Cloud,Negotiate,16058,Mid-Market,EMEA,Analytics Pro
+O001032,A00496,Northwind Cloud,Proposal,4765,Mid-Market,EMEA,Analytics Pro
+O001033,A00885,Silverline Logic Inc,Negotiate,4781,SMB,AMER,Automation Edge
+O001034,A00111,Pinnacle Grid Inc,Discovery,6173,SMB,APAC,Analytics Pro
+O001035,A00285,Aurora Bridge Ltd,Qualify,16794,Mid-Market,EMEA,Automation Edge
+O001036,A01428,Granite Grid Inc,Qualify,5670,Mid-Market,AMER,Analytics Pro
+O001037,A01428,Granite Grid Inc,Discovery,6528,Mid-Market,AMER,Analytics Pro
+O001038,A00857,Pinnacle Works,Negotiate,3513,SMB,AMER,Core Suite
+O001039,A01508,Meridian Dynamics Inc,Proposal,2309,Mid-Market,AMER,Core Suite
+O001040,A01508,Meridian Dynamics Inc,Proposal,13226,Mid-Market,AMER,Core Suite
+O001041,A01508,Meridian Dynamics Inc,Proposal,15063,Mid-Market,AMER,Core Suite
+O001042,A01005,Vertex Point,Proposal,8122,Mid-Market,AMER,Core Suite
+O001043,A01005,Vertex Point,Discovery,8094,Mid-Market,AMER,Automation Edge
+O001044,A01372,Meridian Stream Inc,Proposal,7343,Mid-Market,APAC,Core Suite
+O001045,A01372,Meridian Stream Inc,Proposal,3102,Mid-Market,APAC,Core Suite
+O001046,A01372,Meridian Stream Inc,Qualify,7787,Mid-Market,APAC,Core Suite
+O001047,A00117,Aurora Works Ltd,Proposal,9633,SMB,EMEA,Core Suite
+O001048,A00117,Aurora Works Ltd,Qualify,11603,SMB,EMEA,Core Suite
+O001049,A00688,BluePeak Point Inc,Qualify,5518,SMB,AMER,Automation Edge
+O001050,A01543,Aurora Stream Inc,Negotiate,10415,SMB,AMER,Core Suite
+O001051,A01543,Aurora Stream Inc,Negotiate,9902,SMB,AMER,Core Suite
+O001052,A00235,Vertex Labs Ltd,Discovery,7558,SMB,EMEA,Analytics Pro
+O001053,A01295,Northwind Systems Inc,Discovery,14686,SMB,AMER,Analytics Pro
+O001054,A01295,Northwind Systems Inc,Discovery,8495,SMB,AMER,Analytics Pro
+O001055,A00982,Cobalt Labs Inc,Negotiate,4543,Mid-Market,AMER,Core Suite
+O001056,A00982,Cobalt Labs Inc,Proposal,11005,Mid-Market,AMER,Core Suite
+O001057,A01858,Vertex Systems Ltd,Discovery,11007,Mid-Market,EMEA,Automation Edge
+O001058,A01858,Vertex Systems Ltd,Discovery,2476,Mid-Market,EMEA,Automation Edge
+O001059,A01877,Granite Dynamics,Qualify,15017,Mid-Market,AMER,Analytics Pro
+O001060,A01747,Meridian Stream Ltd,Proposal,10039,Mid-Market,EMEA,Analytics Pro
+O001061,A00189,Northwind Works,Proposal,3610,SMB,AMER,Core Suite
+O001062,A01240,Parallel Cloud,Negotiate,6702,SMB,AMER,Core Suite
+O001063,A01977,Meridian Labs Ltd,Qualify,3803,SMB,AMER,Automation Edge
+O001064,A01460,Vertex Stream,Discovery,12170,Mid-Market,AMER,Automation Edge
+O001065,A00399,Parallel Logic Ltd,Discovery,6519,SMB,EMEA,Automation Edge
+O001066,A00399,Parallel Logic Ltd,Proposal,10289,SMB,EMEA,Analytics Pro
+O001067,A01570,Vertex Logic,Negotiate,4616,Mid-Market,EMEA,Analytics Pro
+O001068,A01570,Vertex Logic,Qualify,10552,Mid-Market,EMEA,Analytics Pro
+O001069,A00908,Granite Point,Qualify,9441,SMB,AMER,Analytics Pro
+O001070,A01953,Parallel Stream,Negotiate,8620,SMB,EMEA,Automation Edge
+O001071,A01953,Parallel Stream,Proposal,9734,SMB,EMEA,Automation Edge
+O001072,A01112,Pinnacle Point Ltd,Negotiate,14566,Mid-Market,EMEA,Core Suite
+O001073,A01112,Pinnacle Point Ltd,Qualify,2379,Mid-Market,EMEA,Core Suite
+O001074,A01112,Pinnacle Point Ltd,Negotiate,13184,Mid-Market,EMEA,Core Suite
+O001075,A01712,Aurora Labs Inc,Qualify,7704,Mid-Market,APAC,Automation Edge
+O001076,A01712,Aurora Labs Inc,Discovery,12660,Mid-Market,APAC,Automation Edge
+O001077,A01712,Aurora Labs Inc,Negotiate,2482,Mid-Market,APAC,Core Suite
+O001078,A00003,Pinnacle Bridge Inc,Negotiate,4089,SMB,AMER,Core Suite
+O001079,A00021,Pinnacle Logic,Negotiate,6232,SMB,AMER,Analytics Pro
+O001080,A01296,Aurora Logic Inc,Proposal,11641,SMB,EMEA,Automation Edge
+O001081,A00706,Silverline Point Inc,Negotiate,8993,Mid-Market,EMEA,Core Suite
+O001082,A01115,Northwind Dynamics Ltd,Discovery,13093,SMB,APAC,Core Suite
+O001083,A01115,Northwind Dynamics Ltd,Proposal,5407,SMB,APAC,Core Suite
+O001084,A01945,Granite Bridge Inc,Proposal,7378,Mid-Market,AMER,Automation Edge
+O001085,A01945,Granite Bridge Inc,Negotiate,10328,Mid-Market,AMER,Automation Edge
+O001086,A01709,Meridian Cloud Ltd,Proposal,6667,SMB,EMEA,Core Suite
+O001087,A01709,Meridian Cloud Ltd,Proposal,3762,SMB,EMEA,Core Suite
+O001088,A01189,Meridian Systems Inc,Qualify,9368,SMB,AMER,Analytics Pro
+O001089,A01189,Meridian Systems Inc,Qualify,2282,SMB,AMER,Analytics Pro
+O001090,A00901,Meridian Grid,Proposal,14116,SMB,EMEA,Core Suite
+O001091,A00901,Meridian Grid,Qualify,7560,SMB,EMEA,Core Suite
+O001092,A01127,Aurora Logic,Qualify,4084,SMB,AMER,Core Suite
+O001093,A01127,Aurora Logic,Proposal,7471,SMB,AMER,Core Suite
+O001094,A00345,Cobalt Dynamics,Discovery,9957,Mid-Market,AMER,Analytics Pro
+O001095,A00345,Cobalt Dynamics,Proposal,4539,Mid-Market,AMER,Analytics Pro
+O001096,A00853,Meridian Grid Ltd,Negotiate,10552,SMB,APAC,Analytics Pro
+O001097,A00919,Granite Dynamics Ltd,Discovery,3374,Mid-Market,EMEA,Automation Edge
+O001098,A00814,Northwind Grid Ltd,Proposal,12975,SMB,AMER,Automation Edge
+O001099,A00814,Northwind Grid Ltd,Discovery,5755,SMB,AMER,Automation Edge
+O001100,A01949,Meridian Grid,Discovery,1868,Mid-Market,EMEA,Automation Edge
+O001101,A01949,Meridian Grid,Negotiate,11274,Mid-Market,EMEA,Automation Edge
+O001102,A01949,Meridian Grid,Discovery,11371,Mid-Market,EMEA,Automation Edge
+O001103,A00930,Parallel Grid,Qualify,2362,Mid-Market,AMER,Analytics Pro
+O001104,A00930,Parallel Grid,Proposal,2690,Mid-Market,AMER,Analytics Pro
+O001105,A00376,Silverline Stream Inc,Proposal,12829,SMB,AMER,Analytics Pro
+O001106,A00377,Pinnacle Systems Inc,Proposal,4200,SMB,AMER,Analytics Pro
+O001107,A01815,Northwind Works Ltd,Proposal,6634,SMB,APAC,Automation Edge
+O001108,A01403,Granite Stream Ltd,Qualify,8511,Mid-Market,EMEA,Core Suite
+O001109,A01403,Granite Stream Ltd,Qualify,4579,Mid-Market,EMEA,Automation Edge
+O001110,A01323,BluePeak Dynamics,Qualify,11438,Mid-Market,AMER,Automation Edge
+O001111,A01323,BluePeak Dynamics,Proposal,13619,Mid-Market,AMER,Analytics Pro
+O001112,A01323,BluePeak Dynamics,Qualify,13566,Mid-Market,AMER,Analytics Pro
+O001113,A01479,Vertex Systems Ltd,Negotiate,6992,SMB,AMER,Automation Edge
+O001114,A01479,Vertex Systems Ltd,Discovery,14370,SMB,AMER,Core Suite
+O001115,A00528,Pinnacle Labs Ltd,Discovery,1977,SMB,APAC,Core Suite
+O001116,A01427,Aurora Bridge Inc,Qualify,3902,SMB,EMEA,Automation Edge
+O001117,A01427,Aurora Bridge Inc,Proposal,11659,SMB,EMEA,Automation Edge
+O001118,A01247,Granite Grid Ltd,Discovery,12896,SMB,EMEA,Analytics Pro
+O001119,A01746,Pinnacle Logic,Qualify,9811,SMB,APAC,Core Suite
+O001120,A00466,Aurora Grid,Discovery,1627,SMB,EMEA,Core Suite
+O001121,A00466,Aurora Grid,Proposal,4834,SMB,EMEA,Core Suite
+O001122,A01595,Silverline Point,Proposal,5582,SMB,AMER,Core Suite
+O001123,A01595,Silverline Point,Qualify,6637,SMB,AMER,Core Suite
+O001124,A01174,Aurora Logic Ltd,Negotiate,4633,SMB,AMER,Automation Edge
+O001125,A00942,Pinnacle Bridge,Discovery,2458,SMB,AMER,Automation Edge
+O001126,A01778,Northwind Bridge Inc,Proposal,8847,Mid-Market,AMER,Analytics Pro
+O001127,A01782,Pinnacle Cloud,Qualify,7123,SMB,AMER,Core Suite
+O001128,A00696,Vertex Systems Inc,Negotiate,10099,SMB,AMER,Core Suite
+O001129,A00696,Vertex Systems Inc,Proposal,10082,SMB,AMER,Core Suite
+O001130,A00148,Vertex Systems,Proposal,2069,SMB,AMER,Automation Edge
+O001131,A00148,Vertex Systems,Qualify,8257,SMB,AMER,Automation Edge
+O001132,A00838,Northwind Grid,Proposal,6030,SMB,APAC,Core Suite
+O001133,A00838,Northwind Grid,Proposal,9854,SMB,APAC,Core Suite
+O001134,A01836,Pinnacle Logic Inc,Negotiate,9994,Mid-Market,AMER,Automation Edge
+O001135,A00756,Aurora Dynamics Inc,Proposal,4578,SMB,EMEA,Core Suite
+O001136,A00756,Aurora Dynamics Inc,Qualify,8706,SMB,EMEA,Core Suite
+O001137,A00685,BluePeak Logic Ltd,Discovery,9403,Mid-Market,EMEA,Analytics Pro
+O001138,A00685,BluePeak Logic Ltd,Qualify,2657,Mid-Market,EMEA,Automation Edge
+O001139,A01647,Cobalt Bridge Ltd,Proposal,7594,SMB,EMEA,Core Suite
+O001140,A00004,Meridian Systems Inc,Negotiate,3002,SMB,AMER,Analytics Pro
+O001141,A00957,Vertex Cloud Inc,Qualify,5089,Mid-Market,AMER,Core Suite
+O001142,A00957,Vertex Cloud Inc,Qualify,8376,Mid-Market,AMER,Core Suite
+O001143,A00334,Cobalt Point Inc,Qualify,6061,SMB,AMER,Analytics Pro
+O001144,A00334,Cobalt Point Inc,Discovery,5160,SMB,AMER,Analytics Pro
+O001145,A01942,Meridian Dynamics Inc,Qualify,1631,SMB,AMER,Analytics Pro
+O001146,A01330,Silverline Logic Inc,Qualify,1718,SMB,AMER,Core Suite
+O001147,A01252,Pinnacle Cloud Inc,Proposal,8208,SMB,AMER,Analytics Pro
+O001148,A00353,BluePeak Cloud Inc,Discovery,3833,Mid-Market,EMEA,Analytics Pro
+O001149,A01088,BluePeak Grid,Negotiate,8270,SMB,AMER,Analytics Pro
+O001150,A00463,Vertex Labs,Discovery,3324,SMB,EMEA,Core Suite
+O001151,A00463,Vertex Labs,Discovery,3712,SMB,EMEA,Analytics Pro
+O001152,A00845,Vertex Bridge,Negotiate,1427,SMB,APAC,Analytics Pro
+O001153,A00845,Vertex Bridge,Discovery,9123,SMB,APAC,Core Suite
+O001154,A01318,Vertex Labs Ltd,Discovery,10254,SMB,EMEA,Core Suite
+O001155,A01037,Granite Cloud Ltd,Negotiate,4738,Mid-Market,AMER,Core Suite
+O001156,A01037,Granite Cloud Ltd,Discovery,10917,Mid-Market,AMER,Core Suite
+O001157,A00181,Silverline Stream,Negotiate,11645,Mid-Market,AMER,Core Suite
+O001158,A00330,Silverline Works Ltd,Discovery,9359,SMB,AMER,Analytics Pro
+O001159,A00330,Silverline Works Ltd,Qualify,6670,SMB,AMER,Analytics Pro
+O001160,A01685,Northwind Systems Inc,Qualify,6368,SMB,AMER,Core Suite
+O001161,A01745,Aurora Labs Ltd,Qualify,9106,SMB,AMER,Automation Edge
+O001162,A01640,Cobalt Labs Ltd,Proposal,4954,SMB,APAC,Automation Edge
+O001163,A01682,Northwind Labs Inc,Proposal,6017,SMB,EMEA,Core Suite
+O001164,A01443,Northwind Point Ltd,Proposal,2706,SMB,EMEA,Core Suite
+O001165,A01443,Northwind Point Ltd,Proposal,9058,SMB,EMEA,Core Suite
+O001166,A00778,Aurora Works Inc,Proposal,9549,SMB,EMEA,Analytics Pro
+O001167,A01718,Meridian Labs,Qualify,10327,SMB,AMER,Core Suite
+O001168,A00833,Meridian Labs Inc,Proposal,2230,SMB,APAC,Core Suite
+O001169,A00286,Silverline Point Inc,Qualify,1849,SMB,AMER,Core Suite
+O001170,A00409,Vertex Labs Ltd,Proposal,7818,SMB,AMER,Core Suite
+O001171,A00409,Vertex Labs Ltd,Qualify,3201,SMB,AMER,Core Suite
+O001172,A01807,Meridian Point,Qualify,10785,SMB,AMER,Analytics Pro
+O001173,A01807,Meridian Point,Discovery,7647,SMB,AMER,Analytics Pro
+O001174,A00522,Cobalt Dynamics Ltd,Proposal,8959,Mid-Market,AMER,Core Suite
+O001175,A00407,Aurora Labs Ltd,Discovery,3542,Mid-Market,AMER,Core Suite
+O001176,A00407,Aurora Labs Ltd,Qualify,10837,Mid-Market,AMER,Core Suite
+O001177,A00407,Aurora Labs Ltd,Discovery,2192,Mid-Market,AMER,Core Suite
+O001178,A00708,Pinnacle Point,Qualify,2453,Mid-Market,APAC,Automation Edge
+O001179,A00708,Pinnacle Point,Qualify,8228,Mid-Market,APAC,Analytics Pro
+O001180,A01254,Northwind Cloud Ltd,Proposal,12063,SMB,EMEA,Analytics Pro
+O001181,A00049,Granite Grid,Qualify,3124,SMB,AMER,Core Suite
+O001182,A00332,Cobalt Logic Inc,Proposal,4643,SMB,APAC,Core Suite
+O001183,A01890,Meridian Logic,Negotiate,2269,SMB,EMEA,Analytics Pro
+O001184,A00012,Silverline Dynamics Ltd,Qualify,3888,SMB,APAC,Core Suite
+O001185,A00012,Silverline Dynamics Ltd,Discovery,10615,SMB,APAC,Core Suite
+O001186,A00026,Granite Grid Ltd,Discovery,3665,SMB,EMEA,Analytics Pro
+O001187,A01964,Cobalt Logic Ltd,Proposal,11231,Mid-Market,AMER,Analytics Pro
+O001188,A00324,Cobalt Labs Ltd,Discovery,11389,SMB,AMER,Analytics Pro
+O001189,A00324,Cobalt Labs Ltd,Qualify,10641,SMB,AMER,Analytics Pro
+O001190,A01049,Meridian Labs,Proposal,10935,SMB,AMER,Automation Edge
+O001191,A01049,Meridian Labs,Proposal,6569,SMB,AMER,Core Suite
+O001192,A01487,BluePeak Systems Ltd,Proposal,5800,SMB,APAC,Automation Edge
+O001193,A00434,Vertex Systems Inc,Proposal,9225,SMB,AMER,Core Suite
+O001194,A00082,Pinnacle Cloud Ltd,Discovery,2886,Mid-Market,APAC,Automation Edge
+O001195,A00082,Pinnacle Cloud Ltd,Qualify,5591,Mid-Market,APAC,Core Suite
+O001196,A00082,Pinnacle Cloud Ltd,Proposal,8286,Mid-Market,APAC,Automation Edge
+O001197,A01802,Vertex Dynamics,Discovery,4137,Mid-Market,EMEA,Core Suite
+O001198,A01009,BluePeak Logic Ltd,Discovery,2777,SMB,AMER,Automation Edge
+O001199,A00840,Meridian Logic Ltd,Proposal,3689,SMB,AMER,Automation Edge
+O001200,A01285,Vertex Labs Ltd,Qualify,7394,SMB,EMEA,Analytics Pro
+O001201,A00564,Meridian Grid Inc,Negotiate,4257,SMB,AMER,Automation Edge
+O001202,A00564,Meridian Grid Inc,Discovery,7324,SMB,AMER,Analytics Pro
+O001203,A01566,Parallel Cloud Inc,Qualify,10255,SMB,EMEA,Analytics Pro
+O001204,A01191,Parallel Cloud,Qualify,9606,SMB,AMER,Core Suite
+O001205,A01191,Parallel Cloud,Proposal,3651,SMB,AMER,Automation Edge
+O001206,A01344,Aurora Point Ltd,Negotiate,1451,SMB,APAC,Automation Edge
+O001207,A01344,Aurora Point Ltd,Discovery,11384,SMB,APAC,Automation Edge
+O001208,A00395,Meridian Labs,Discovery,2184,SMB,EMEA,Core Suite
+O001209,A00131,Silverline Labs,Proposal,6438,SMB,EMEA,Core Suite
+O001210,A00430,Silverline Cloud Inc,Proposal,2738,SMB,AMER,Automation Edge
+O001211,A01652,Northwind Works Inc,Negotiate,4382,SMB,AMER,Analytics Pro
+O001212,A00730,Pinnacle Labs Ltd,Qualify,2030,SMB,EMEA,Automation Edge
+O001213,A00926,Vertex Bridge Ltd,Proposal,9503,SMB,EMEA,Analytics Pro
+O001214,A00926,Vertex Bridge Ltd,Negotiate,2584,SMB,EMEA,Analytics Pro
+O001215,A01948,Parallel Grid Ltd,Qualify,10650,SMB,EMEA,Automation Edge
+O001216,A01948,Parallel Grid Ltd,Proposal,7457,SMB,EMEA,Core Suite
+O001217,A01852,Vertex Cloud Ltd,Discovery,7962,SMB,APAC,Core Suite
+O001218,A01852,Vertex Cloud Ltd,Qualify,5281,SMB,APAC,Core Suite
+O001219,A00819,BluePeak Labs Inc,Qualify,5122,SMB,AMER,Analytics Pro
+O001220,A00062,Northwind Labs Inc,Qualify,1437,Mid-Market,APAC,Core Suite
+O001221,A00062,Northwind Labs Inc,Discovery,7953,Mid-Market,APAC,Core Suite
+O001222,A00062,Northwind Labs Inc,Qualify,5121,Mid-Market,APAC,Core Suite
+O001223,A01171,Northwind Logic Inc,Qualify,2454,SMB,AMER,Analytics Pro
+O001224,A01171,Northwind Logic Inc,Qualify,4574,SMB,AMER,Analytics Pro
+O001225,A00987,Silverline Cloud Ltd,Qualify,7167,SMB,EMEA,Core Suite
+O001226,A00808,Granite Point Ltd,Proposal,7595,SMB,AMER,Analytics Pro
+O001227,A00229,Cobalt Bridge Inc,Negotiate,7380,SMB,AMER,Core Suite
+O001228,A00229,Cobalt Bridge Inc,Proposal,8155,SMB,AMER,Core Suite
+O001229,A01659,Silverline Labs,Discovery,2232,SMB,AMER,Core Suite
+O001230,A01659,Silverline Labs,Discovery,9469,SMB,AMER,Analytics Pro
+O001231,A01552,Northwind Dynamics,Proposal,8292,SMB,APAC,Core Suite
+O001232,A01552,Northwind Dynamics,Qualify,9051,SMB,APAC,Core Suite
+O001233,A00136,Northwind Labs Ltd,Discovery,6910,SMB,AMER,Analytics Pro
+O001234,A00136,Northwind Labs Ltd,Qualify,9030,SMB,AMER,Automation Edge
+O001235,A01262,Meridian Logic,Discovery,8994,Mid-Market,APAC,Core Suite
+O001236,A01262,Meridian Logic,Discovery,5155,Mid-Market,APAC,Analytics Pro
+O001237,A00418,Meridian Bridge Inc,Discovery,7764,SMB,AMER,Core Suite
+O001238,A00418,Meridian Bridge Inc,Qualify,6905,SMB,AMER,Core Suite
+O001239,A00462,Pinnacle Bridge Inc,Proposal,4092,SMB,AMER,Core Suite
+O001240,A00575,Aurora Works Ltd,Discovery,3117,Mid-Market,EMEA,Analytics Pro
+O001241,A00087,Aurora Point,Discovery,1570,SMB,EMEA,Core Suite
+O001242,A01765,Silverline Works Ltd,Discovery,10760,SMB,EMEA,Analytics Pro
+O001243,A01765,Silverline Works Ltd,Negotiate,4500,SMB,EMEA,Analytics Pro
+O001244,A00579,Granite Works Ltd,Discovery,6943,SMB,AMER,Analytics Pro
+O001245,A00579,Granite Works Ltd,Negotiate,5158,SMB,AMER,Automation Edge
+O001246,A00422,Northwind Works Ltd,Discovery,6709,Mid-Market,AMER,Analytics Pro
+O001247,A01495,Aurora Logic Inc,Negotiate,6289,SMB,AMER,Analytics Pro
+O001248,A01495,Aurora Logic Inc,Discovery,8374,SMB,AMER,Analytics Pro
+O001249,A01721,BluePeak Dynamics Inc,Proposal,4011,SMB,EMEA,Core Suite
+O001250,A01721,BluePeak Dynamics Inc,Discovery,2644,SMB,EMEA,Core Suite
+O001251,A00402,Granite Works,Proposal,6364,SMB,APAC,Automation Edge
+O001252,A01863,BluePeak Cloud Inc,Qualify,9684,SMB,AMER,Analytics Pro
+O001253,A01234,Cobalt Labs Ltd,Negotiate,5735,SMB,AMER,Analytics Pro
+O001254,A01362,Vertex Systems Inc,Qualify,3912,SMB,APAC,Automation Edge
+O001255,A01362,Vertex Systems Inc,Qualify,8038,SMB,APAC,Automation Edge
+O001256,A01920,Granite Bridge,Negotiate,4132,SMB,AMER,Automation Edge
+O001257,A01920,Granite Bridge,Proposal,7872,SMB,AMER,Automation Edge
+O001258,A01004,Cobalt Systems,Discovery,2742,SMB,AMER,Core Suite
+O001259,A01004,Cobalt Systems,Discovery,7001,SMB,AMER,Core Suite
+O001260,A00052,BluePeak Logic,Qualify,5737,Mid-Market,AMER,Analytics Pro
+O001261,A00052,BluePeak Logic,Proposal,4842,Mid-Market,AMER,Analytics Pro
+O001262,A00052,BluePeak Logic,Proposal,6460,Mid-Market,AMER,Analytics Pro
+O001263,A00170,Parallel Bridge Inc,Discovery,8545,SMB,AMER,Automation Edge
+O001264,A00170,Parallel Bridge Inc,Negotiate,5697,SMB,AMER,Automation Edge
+O001265,A00621,Cobalt Cloud Inc,Discovery,7757,SMB,AMER,Analytics Pro
+O001266,A00621,Cobalt Cloud Inc,Proposal,8637,SMB,AMER,Analytics Pro
+O001267,A00760,Vertex Stream,Proposal,3135,SMB,AMER,Core Suite
+O001268,A00654,Pinnacle Labs Ltd,Qualify,4637,SMB,AMER,Core Suite
+O001269,A01483,Meridian Grid Ltd,Discovery,6300,SMB,APAC,Analytics Pro
+O001270,A01483,Meridian Grid Ltd,Proposal,4597,SMB,APAC,Automation Edge
+O001271,A01533,BluePeak Bridge Ltd,Proposal,6351,SMB,EMEA,Automation Edge
+O001272,A01494,Cobalt Works Ltd,Qualify,2356,SMB,AMER,Core Suite
+O001273,A01123,Parallel Works,Discovery,2102,Mid-Market,APAC,Analytics Pro
+O001274,A01699,Granite Logic Ltd,Discovery,9806,SMB,EMEA,Automation Edge
+O001275,A01699,Granite Logic Ltd,Discovery,6449,SMB,EMEA,Automation Edge
+O001276,A00184,Parallel Grid,Discovery,8856,SMB,APAC,Automation Edge
+O001277,A00425,Parallel Cloud,Negotiate,4558,SMB,APAC,Analytics Pro
+O001278,A00425,Parallel Cloud,Proposal,1881,SMB,APAC,Analytics Pro
+O001279,A01082,BluePeak Bridge Inc,Negotiate,6979,SMB,AMER,Analytics Pro
+O001280,A01082,BluePeak Bridge Inc,Discovery,1752,SMB,AMER,Automation Edge
+O001281,A01523,Granite Point,Discovery,6335,SMB,AMER,Analytics Pro
+O001282,A00590,Silverline Works,Discovery,1184,SMB,APAC,Core Suite
+O001283,A00747,Cobalt Bridge,Qualify,1451,SMB,APAC,Core Suite
+O001284,A00747,Cobalt Bridge,Qualify,8644,SMB,APAC,Analytics Pro
+O001285,A01722,BluePeak Works Inc,Discovery,5413,Mid-Market,EMEA,Core Suite
+O001286,A01722,BluePeak Works Inc,Discovery,7777,Mid-Market,EMEA,Core Suite
+O001287,A01947,BluePeak Bridge,Proposal,3462,Mid-Market,EMEA,Analytics Pro
+O001288,A00615,Pinnacle Cloud Ltd,Proposal,2990,Mid-Market,AMER,Core Suite
+O001289,A00615,Pinnacle Cloud Ltd,Discovery,6770,Mid-Market,AMER,Core Suite
+O001290,A00615,Pinnacle Cloud Ltd,Qualify,5839,Mid-Market,AMER,Core Suite
+O001291,A01591,Aurora Works Ltd,Proposal,2109,SMB,EMEA,Automation Edge
+O001292,A01591,Aurora Works Ltd,Proposal,4393,SMB,EMEA,Core Suite
+O001293,A00612,Granite Systems Ltd,Qualify,3453,SMB,AMER,Core Suite
+O001294,A01702,Northwind Cloud Ltd,Proposal,6598,SMB,EMEA,Core Suite
+O001295,A00907,Pinnacle Grid Ltd,Proposal,3865,SMB,AMER,Automation Edge
+O001296,A00125,Meridian Logic Inc,Qualify,5014,SMB,EMEA,Automation Edge
+O001297,A00303,Northwind Cloud Ltd,Negotiate,4814,SMB,EMEA,Core Suite
+O001298,A00303,Northwind Cloud Ltd,Negotiate,3904,SMB,EMEA,Core Suite
+O001299,A00497,Meridian Cloud,Qualify,5870,Mid-Market,EMEA,Automation Edge
+O001300,A00497,Meridian Cloud,Qualify,5011,Mid-Market,EMEA,Core Suite
+O001301,A01906,Silverline Logic,Qualify,7015,SMB,APAC,Automation Edge
+O001302,A01906,Silverline Logic,Discovery,2460,SMB,APAC,Core Suite
+O001303,A01264,Vertex Stream Ltd,Negotiate,4313,SMB,EMEA,Analytics Pro
+O001304,A00628,Northwind Grid Inc,Discovery,3450,SMB,APAC,Analytics Pro
+O001305,A00628,Northwind Grid Inc,Qualify,2465,SMB,APAC,Analytics Pro
+O001306,A00993,Cobalt Works Inc,Qualify,4984,SMB,AMER,Core Suite
+O001307,A00993,Cobalt Works Inc,Proposal,4648,SMB,AMER,Core Suite
+O001308,A01725,Parallel Dynamics,Qualify,6899,SMB,AMER,Core Suite
+O001309,A01725,Parallel Dynamics,Negotiate,4215,SMB,AMER,Automation Edge
+O001310,A01011,Cobalt Bridge Ltd,Proposal,1469,SMB,AMER,Automation Edge
+O001311,A01011,Cobalt Bridge Ltd,Negotiate,5939,SMB,AMER,Automation Edge
+O001312,A00145,Cobalt Works Ltd,Proposal,5944,SMB,AMER,Core Suite
+O001313,A00145,Cobalt Works Ltd,Discovery,3403,SMB,AMER,Core Suite
+O001314,A01889,Northwind Stream Inc,Proposal,4282,SMB,AMER,Analytics Pro
+O001315,A01889,Northwind Stream Inc,Discovery,3044,SMB,AMER,Analytics Pro
+O001316,A00637,Granite Logic Inc,Proposal,3738,SMB,EMEA,Core Suite
+O001317,A01012,Parallel Works Inc,Qualify,5792,SMB,AMER,Automation Edge
+O001318,A00672,Aurora Logic,Qualify,2240,SMB,EMEA,Analytics Pro
+O001319,A00672,Aurora Logic,Discovery,5177,SMB,EMEA,Analytics Pro
+O001320,A01282,Silverline Cloud Inc,Qualify,3011,Mid-Market,APAC,Automation Edge
+O001321,A00748,Granite Grid,Qualify,9800,SMB,APAC,Analytics Pro
+O001322,A00748,Granite Grid,Proposal,3190,SMB,APAC,Core Suite
+O001323,A01337,BluePeak Bridge,Discovery,6368,SMB,AMER,Core Suite
+O001324,A01337,BluePeak Bridge,Discovery,2762,SMB,AMER,Core Suite
+O001325,A00700,Parallel Systems,Qualify,7565,SMB,EMEA,Automation Edge
+O001326,A01955,Vertex Logic Ltd,Proposal,963,Mid-Market,EMEA,Core Suite
+O001327,A01955,Vertex Logic Ltd,Negotiate,1674,Mid-Market,EMEA,Core Suite
+O001328,A00293,BluePeak Works Ltd,Proposal,6027,SMB,AMER,Analytics Pro
+O001329,A00293,BluePeak Works Ltd,Negotiate,4659,SMB,AMER,Automation Edge
+O001330,A01063,Pinnacle Cloud Inc,Discovery,6215,SMB,EMEA,Analytics Pro
+O001331,A01438,BluePeak Stream Ltd,Discovery,2760,SMB,APAC,Automation Edge
+O001332,A00831,Silverline Bridge,Proposal,6389,SMB,AMER,Core Suite
+O001333,A00896,Aurora Stream,Qualify,7610,Mid-Market,AMER,Analytics Pro
+O001334,A00230,Aurora Works,Discovery,5448,SMB,EMEA,Core Suite
+O001335,A00230,Aurora Works,Proposal,8986,SMB,EMEA,Analytics Pro
+O001336,A01908,Pinnacle Bridge,Qualify,3854,SMB,AMER,Analytics Pro
+O001337,A01147,Parallel Point Ltd,Negotiate,5144,SMB,AMER,Core Suite
+O001338,A01147,Parallel Point Ltd,Proposal,4692,SMB,AMER,Core Suite
+O001339,A01413,Meridian Cloud Inc,Discovery,5212,SMB,APAC,Automation Edge
+O001340,A01413,Meridian Cloud Inc,Negotiate,6747,SMB,APAC,Automation Edge
+O001341,A01449,BluePeak Cloud,Proposal,4863,SMB,AMER,Analytics Pro
+O001342,A00398,Granite Point Inc,Discovery,3350,SMB,AMER,Core Suite
+O001343,A01500,BluePeak Dynamics,Qualify,2221,SMB,EMEA,Core Suite
+O001344,A00018,BluePeak Bridge,Qualify,3016,SMB,AMER,Core Suite
+O001345,A01028,Parallel Bridge Inc,Qualify,1376,SMB,APAC,Analytics Pro
+O001346,A01190,Vertex Cloud,Discovery,5242,SMB,APAC,Analytics Pro
+O001347,A01190,Vertex Cloud,Discovery,7624,SMB,APAC,Core Suite
+O001348,A01692,Northwind Systems Inc,Proposal,1963,Mid-Market,AMER,Core Suite
+O001349,A01692,Northwind Systems Inc,Proposal,2811,Mid-Market,AMER,Core Suite
+O001350,A01692,Northwind Systems Inc,Negotiate,5468,Mid-Market,AMER,Core Suite
+O001351,A01599,Aurora Systems Inc,Negotiate,5228,SMB,EMEA,Core Suite
+O001352,A00390,Meridian Stream,Qualify,6427,SMB,AMER,Analytics Pro
+O001353,A01489,Meridian Systems Inc,Qualify,1152,SMB,AMER,Automation Edge
+O001354,A01489,Meridian Systems Inc,Discovery,6497,SMB,AMER,Analytics Pro
+O001355,A00573,Northwind Cloud Ltd,Qualify,1186,SMB,APAC,Core Suite
+O001356,A00970,Northwind Stream Ltd,Discovery,7031,SMB,APAC,Analytics Pro
+O001357,A00799,Vertex Dynamics Ltd,Negotiate,3319,SMB,APAC,Automation Edge
+O001358,A00905,Cobalt Point Ltd,Qualify,4495,SMB,AMER,Core Suite
+O001359,A00586,Cobalt Point Ltd,Qualify,2213,SMB,AMER,Core Suite
+O001360,A01433,Pinnacle Grid,Proposal,7690,SMB,AMER,Automation Edge
+O001361,A01433,Pinnacle Grid,Negotiate,2258,SMB,AMER,Analytics Pro
+O001362,A00785,Meridian Cloud Inc,Discovery,2129,SMB,EMEA,Automation Edge
+O001363,A00882,Granite Point,Discovery,5742,SMB,AMER,Core Suite
+O001364,A00112,Meridian Grid Inc,Proposal,2255,SMB,AMER,Automation Edge
+O001365,A00112,Meridian Grid Inc,Negotiate,3300,SMB,AMER,Automation Edge
+O001366,A01811,Parallel Labs Ltd,Discovery,2438,SMB,APAC,Core Suite
+O001367,A01811,Parallel Labs Ltd,Discovery,1238,SMB,APAC,Automation Edge
+O001368,A00565,BluePeak Logic,Negotiate,3633,SMB,EMEA,Core Suite
+O001369,A01370,Meridian Grid Ltd,Negotiate,7232,SMB,EMEA,Analytics Pro
+O001370,A01616,Aurora Systems Ltd,Negotiate,7814,SMB,AMER,Analytics Pro
+O001371,A01616,Aurora Systems Ltd,Qualify,5450,SMB,AMER,Analytics Pro
+O001372,A00482,Cobalt Bridge Inc,Qualify,4999,SMB,AMER,Automation Edge
+O001373,A00482,Cobalt Bridge Inc,Negotiate,2002,SMB,AMER,Automation Edge
+O001374,A00207,Cobalt Works Ltd,Qualify,5994,SMB,AMER,Core Suite
+O001375,A01417,Meridian Grid,Proposal,1040,SMB,EMEA,Core Suite
+O001376,A01417,Meridian Grid,Proposal,4357,SMB,EMEA,Core Suite
+O001377,A00582,Cobalt Bridge Inc,Qualify,4463,SMB,EMEA,Core Suite
+O001378,A01893,Cobalt Cloud Inc,Negotiate,1867,SMB,EMEA,Automation Edge
+O001379,A00539,Silverline Point,Negotiate,1816,SMB,APAC,Automation Edge
+O001380,A00539,Silverline Point,Qualify,8298,SMB,APAC,Automation Edge
+O001381,A01714,Parallel Works,Proposal,4333,SMB,EMEA,Analytics Pro
+O001382,A01714,Parallel Works,Proposal,5537,SMB,EMEA,Core Suite
+O001383,A00643,BluePeak Grid Inc,Discovery,5020,Mid-Market,AMER,Analytics Pro
+O001384,A01401,Meridian Labs Inc,Discovery,5175,SMB,AMER,Core Suite
+O001385,A01401,Meridian Labs Inc,Qualify,4381,SMB,AMER,Automation Edge
+O001386,A00222,Northwind Point,Discovery,6847,SMB,APAC,Core Suite
+O001387,A00373,Granite Grid Inc,Qualify,6165,SMB,AMER,Core Suite
+O001388,A00542,Northwind Bridge Inc,Proposal,6240,SMB,EMEA,Core Suite
+O001389,A00542,Northwind Bridge Inc,Discovery,3366,SMB,EMEA,Core Suite
+O001390,A01860,Silverline Stream Inc,Qualify,1227,SMB,EMEA,Automation Edge
+O001391,A01860,Silverline Stream Inc,Qualify,4888,SMB,EMEA,Automation Edge
+O001392,A01175,BluePeak Dynamics Ltd,Qualify,5705,Mid-Market,AMER,Automation Edge
+O001393,A01175,BluePeak Dynamics Ltd,Proposal,5896,Mid-Market,AMER,Analytics Pro
+O001394,A01175,BluePeak Dynamics Ltd,Discovery,4798,Mid-Market,AMER,Core Suite
+O001395,A01996,BluePeak Bridge Inc,Qualify,949,SMB,APAC,Core Suite
+O001396,A01996,BluePeak Bridge Inc,Proposal,6382,SMB,APAC,Analytics Pro
+O001397,A00001,Aurora Labs Ltd,Qualify,1956,SMB,EMEA,Analytics Pro
+O001398,A00001,Aurora Labs Ltd,Proposal,4954,SMB,EMEA,Automation Edge
+O001399,A01056,Pinnacle Grid,Discovery,5255,SMB,EMEA,Core Suite
+O001400,A01897,Parallel Bridge Ltd,Discovery,4082,SMB,AMER,Analytics Pro
+O001401,A01322,Silverline Logic,Qualify,4198,SMB,APAC,Core Suite
+O001402,A00281,Meridian Labs Inc,Proposal,1811,SMB,AMER,Core Suite
+O001403,A01597,Granite Stream Ltd,Negotiate,3943,SMB,AMER,Analytics Pro
+O001404,A01597,Granite Stream Ltd,Proposal,7027,SMB,AMER,Core Suite
+O001405,A01560,Aurora Stream,Qualify,5975,SMB,AMER,Automation Edge
+O001406,A01560,Aurora Stream,Discovery,6038,SMB,AMER,Core Suite
+O001407,A01391,Pinnacle Stream Inc,Negotiate,3204,SMB,AMER,Core Suite
+O001408,A01391,Pinnacle Stream Inc,Discovery,6069,SMB,AMER,Core Suite
+O001409,A00639,Pinnacle Cloud Inc,Proposal,7226,SMB,EMEA,Analytics Pro
+O001410,A01808,Pinnacle Bridge Ltd,Proposal,2011,SMB,EMEA,Core Suite
+O001411,A01808,Pinnacle Bridge Ltd,Qualify,5740,SMB,EMEA,Core Suite
+O001412,A00006,Meridian Logic Ltd,Discovery,6498,SMB,AMER,Core Suite
+O001413,A00245,Cobalt Works Inc,Qualify,3101,SMB,EMEA,Core Suite
+O001414,A00725,Silverline Labs,Qualify,5304,SMB,AMER,Core Suite
+O001415,A00667,BluePeak Bridge Inc,Proposal,1322,SMB,APAC,Analytics Pro
+O001416,A01248,Cobalt Logic Inc,Discovery,4978,SMB,AMER,Core Suite
+O001417,A00764,Silverline Point Inc,Proposal,1184,SMB,APAC,Analytics Pro
+O001418,A00764,Silverline Point Inc,Qualify,1666,SMB,APAC,Core Suite
+O001419,A01378,Northwind Point Ltd,Discovery,1545,SMB,EMEA,Analytics Pro
+O001420,A01378,Northwind Point Ltd,Discovery,3932,SMB,EMEA,Analytics Pro
+O001421,A01809,Parallel Logic,Proposal,4416,SMB,AMER,Automation Edge
+O001422,A01245,Silverline Systems,Discovery,5501,SMB,AMER,Automation Edge
+O001423,A01369,Meridian Logic Inc,Qualify,6292,Mid-Market,AMER,Analytics Pro
+O001424,A01369,Meridian Logic Inc,Negotiate,1987,Mid-Market,AMER,Analytics Pro
+O001425,A01380,Meridian Systems Inc,Proposal,2133,SMB,AMER,Core Suite
+O001426,A01957,Parallel Stream Ltd,Proposal,4654,SMB,AMER,Analytics Pro
+O001427,A01957,Parallel Stream Ltd,Qualify,2911,SMB,AMER,Analytics Pro
+O001428,A01958,Granite Point Ltd,Discovery,2033,SMB,APAC,Core Suite
+O001429,A01958,Granite Point Ltd,Discovery,943,SMB,APAC,Core Suite
+O001430,A01818,Silverline Point,Discovery,6169,SMB,EMEA,Core Suite
+O001431,A01818,Silverline Point,Qualify,3188,SMB,EMEA,Core Suite
+O001432,A00035,Cobalt Dynamics,Qualify,1723,SMB,APAC,Automation Edge
+O001433,A01886,Cobalt Works Ltd,Qualify,6705,SMB,AMER,Automation Edge
+O001434,A00843,Parallel Cloud,Discovery,4737,SMB,AMER,Core Suite
+O001435,A01263,Cobalt Systems Ltd,Qualify,6107,SMB,EMEA,Automation Edge
+O001436,A01720,Cobalt Dynamics,Proposal,4975,SMB,EMEA,Automation Edge
+O001437,A01364,Pinnacle Logic Inc,Discovery,1378,SMB,EMEA,Core Suite
+O001438,A01364,Pinnacle Logic Inc,Qualify,3781,SMB,EMEA,Analytics Pro
+O001439,A01916,Cobalt Grid Ltd,Discovery,3219,SMB,AMER,Automation Edge
+O001440,A01916,Cobalt Grid Ltd,Discovery,7503,SMB,AMER,Automation Edge
+O001441,A00512,Vertex Grid Ltd,Qualify,3521,SMB,APAC,Analytics Pro
+O001442,A01045,Meridian Dynamics Inc,Discovery,5316,SMB,AMER,Analytics Pro
+O001443,A01870,Aurora Stream,Discovery,3020,SMB,AMER,Analytics Pro
+O001444,A01000,Aurora Logic Ltd,Qualify,902,SMB,AMER,Analytics Pro
+O001445,A01000,Aurora Logic Ltd,Discovery,2591,SMB,AMER,Analytics Pro
+O001446,A01929,Granite Bridge Inc,Proposal,4703,SMB,AMER,Automation Edge
+O001447,A01929,Granite Bridge Inc,Discovery,2097,SMB,AMER,Analytics Pro
+O001448,A01122,Northwind Point Ltd,Discovery,5652,SMB,APAC,Analytics Pro
+O001449,A01122,Northwind Point Ltd,Negotiate,5091,SMB,APAC,Core Suite
+O001450,A00201,BluePeak Cloud Inc,Proposal,3994,SMB,EMEA,Core Suite
+O001451,A00201,BluePeak Cloud Inc,Negotiate,2554,SMB,EMEA,Core Suite
+O001452,A01192,Meridian Point Ltd,Negotiate,1219,SMB,AMER,Core Suite
+O001453,A01192,Meridian Point Ltd,Discovery,5701,SMB,AMER,Analytics Pro
+O001454,A01672,Pinnacle Point Ltd,Proposal,5709,SMB,AMER,Core Suite
+O001455,A00173,BluePeak Cloud Inc,Discovery,1150,SMB,EMEA,Automation Edge
+O001456,A00277,Parallel Grid Inc,Discovery,6093,SMB,AMER,Core Suite
+O001457,A01843,BluePeak Works Inc,Discovery,7023,SMB,AMER,Analytics Pro
+O001458,A01843,BluePeak Works Inc,Qualify,2584,SMB,AMER,Automation Edge
+O001459,A01641,BluePeak Systems,Negotiate,7604,SMB,APAC,Analytics Pro
+O001460,A01641,BluePeak Systems,Qualify,5500,SMB,APAC,Analytics Pro
+O001461,A00817,Cobalt Dynamics Ltd,Discovery,1165,SMB,AMER,Core Suite
+O001462,A00817,Cobalt Dynamics Ltd,Negotiate,2259,SMB,AMER,Automation Edge
+O001463,A00190,Aurora Logic Ltd,Qualify,1471,SMB,AMER,Analytics Pro
+O001464,A00190,Aurora Logic Ltd,Proposal,3228,SMB,AMER,Analytics Pro
+O001465,A01108,Silverline Cloud Inc,Discovery,4983,SMB,AMER,Analytics Pro
+O001466,A01108,Silverline Cloud Inc,Proposal,2734,SMB,AMER,Analytics Pro
+O001467,A00752,Meridian Logic,Qualify,2103,SMB,EMEA,Core Suite
+O001468,A00937,Cobalt Logic,Negotiate,3252,SMB,APAC,Core Suite
+O001469,A00937,Cobalt Logic,Qualify,4266,SMB,APAC,Automation Edge
+O001470,A00319,Silverline Grid Inc,Qualify,2895,SMB,APAC,Analytics Pro
+O001471,A00319,Silverline Grid Inc,Proposal,1976,SMB,APAC,Analytics Pro
+O001472,A01777,Silverline Bridge,Qualify,3647,SMB,AMER,Automation Edge
+O001473,A01777,Silverline Bridge,Proposal,2930,SMB,AMER,Core Suite
+O001474,A00233,BluePeak Systems,Qualify,1274,SMB,AMER,Core Suite
+O001475,A00818,Pinnacle Bridge Ltd,Proposal,5849,SMB,AMER,Automation Edge
+O001476,A00818,Pinnacle Bridge Ltd,Negotiate,2770,SMB,AMER,Automation Edge
+O001477,A00366,Silverline Grid,Qualify,2218,SMB,AMER,Analytics Pro
+O001478,A00366,Silverline Grid,Qualify,2133,SMB,AMER,Analytics Pro
+O001479,A01784,Parallel Works Ltd,Qualify,2772,SMB,EMEA,Automation Edge
+O001480,A01963,Cobalt Stream Ltd,Qualify,6231,SMB,AMER,Core Suite
+O001481,A00166,Aurora Works Ltd,Qualify,5518,SMB,AMER,Analytics Pro
+O001482,A00166,Aurora Works Ltd,Discovery,4585,SMB,AMER,Core Suite
+O001483,A01504,Cobalt Works Inc,Qualify,2663,SMB,AMER,Core Suite
+O001484,A01504,Cobalt Works Inc,Discovery,5801,SMB,AMER,Automation Edge
+O001485,A01872,Silverline Grid Ltd,Discovery,6860,SMB,EMEA,Automation Edge
+O001486,A01872,Silverline Grid Ltd,Discovery,5224,SMB,EMEA,Automation Edge
+O001487,A01287,Pinnacle Systems Inc,Discovery,2734,SMB,APAC,Analytics Pro
+O001488,A00415,Pinnacle Systems Inc,Proposal,6481,SMB,APAC,Analytics Pro
+O001489,A00415,Pinnacle Systems Inc,Proposal,4182,SMB,APAC,Automation Edge
+O001490,A01664,Aurora Cloud Ltd,Discovery,3999,SMB,AMER,Analytics Pro
+O001491,A00360,Aurora Bridge Ltd,Proposal,1142,SMB,EMEA,Analytics Pro
+O001492,A00037,Pinnacle Systems,Qualify,5819,SMB,AMER,Automation Edge
+O001493,A00037,Pinnacle Systems,Proposal,5241,SMB,AMER,Automation Edge
+O001494,A00336,Northwind Labs Inc,Qualify,5813,SMB,APAC,Automation Edge
+O001495,A00336,Northwind Labs Inc,Proposal,4348,SMB,APAC,Automation Edge
+O001496,A00952,Silverline Cloud,Discovery,5318,SMB,EMEA,Automation Edge
+O001497,A00952,Silverline Cloud,Negotiate,917,SMB,EMEA,Core Suite
+O001498,A01120,Aurora Grid Inc,Discovery,1518,SMB,AMER,Analytics Pro
+O001499,A00571,Silverline Cloud,Negotiate,991,SMB,AMER,Core Suite
+O001500,A00571,Silverline Cloud,Negotiate,1928,SMB,AMER,Core Suite
+O001501,A00881,Parallel Bridge Inc,Discovery,1513,SMB,APAC,Analytics Pro
+O001502,A00881,Parallel Bridge Inc,Negotiate,3112,SMB,APAC,Automation Edge
+O001503,A00075,Silverline Works Ltd,Proposal,4048,SMB,AMER,Core Suite
+O001504,A00075,Silverline Works Ltd,Negotiate,3501,SMB,AMER,Core Suite
+O001505,A00684,BluePeak Point,Proposal,2957,SMB,AMER,Analytics Pro
+O001506,A00684,BluePeak Point,Discovery,3762,SMB,AMER,Analytics Pro
+O001507,A00868,Granite Logic Ltd,Proposal,3584,SMB,EMEA,Automation Edge
+O001508,A00988,Silverline Dynamics Ltd,Discovery,5469,SMB,EMEA,Analytics Pro
+O001509,A00988,Silverline Dynamics Ltd,Discovery,1293,SMB,EMEA,Core Suite
+O001510,A01239,Granite Stream Inc,Discovery,1630,SMB,AMER,Core Suite
+O001511,A01239,Granite Stream Inc,Proposal,3952,SMB,AMER,Core Suite
+O001512,A01452,Cobalt Stream Inc,Discovery,3862,SMB,APAC,Core Suite
+O001513,A00445,Parallel Cloud Inc,Qualify,3960,SMB,EMEA,Automation Edge
+O001514,A00445,Parallel Cloud Inc,Discovery,5088,SMB,EMEA,Automation Edge
+O001515,A01766,Cobalt Bridge Inc,Discovery,4018,SMB,AMER,Automation Edge
+O001516,A00159,Northwind Systems,Discovery,4590,SMB,APAC,Analytics Pro
+O001517,A00159,Northwind Systems,Qualify,1062,SMB,APAC,Analytics Pro
+O001518,A01925,Northwind Works,Discovery,1558,SMB,EMEA,Automation Edge
+O001519,A01925,Northwind Works,Qualify,6168,SMB,EMEA,Automation Edge
+O001520,A01451,Parallel Point,Qualify,2823,SMB,AMER,Analytics Pro
+O001521,A01451,Parallel Point,Proposal,2745,SMB,AMER,Analytics Pro
+O001522,A01952,Northwind Point,Discovery,4151,SMB,EMEA,Analytics Pro
+O001523,A01236,Cobalt Works,Proposal,5803,SMB,EMEA,Analytics Pro
+O001524,A01236,Cobalt Works,Qualify,4403,SMB,EMEA,Core Suite
+O001525,A01650,Granite Grid Ltd,Proposal,2933,SMB,AMER,Automation Edge
+O001526,A01650,Granite Grid Ltd,Qualify,2127,SMB,AMER,Automation Edge
+O001527,A00042,Aurora Labs,Proposal,3190,SMB,AMER,Analytics Pro
+O001528,A01101,Granite Works Inc,Proposal,1186,SMB,APAC,Automation Edge
+O001529,A01339,Parallel Cloud,Qualify,3126,SMB,EMEA,Core Suite
+O001530,A01583,Cobalt Cloud Inc,Negotiate,2085,SMB,AMER,Core Suite
+O001531,A01583,Cobalt Cloud Inc,Proposal,4604,SMB,AMER,Core Suite
+O001532,A00632,Granite Works Inc,Proposal,4357,SMB,AMER,Core Suite
+O001533,A00196,Northwind Bridge,Discovery,3786,SMB,AMER,Automation Edge
+O001534,A00196,Northwind Bridge,Proposal,3070,SMB,AMER,Automation Edge
+O001535,A01461,Meridian Logic,Negotiate,2004,SMB,EMEA,Automation Edge
+O001536,A01461,Meridian Logic,Qualify,881,SMB,EMEA,Core Suite
+O001537,A00846,Aurora Works Inc,Qualify,834,SMB,EMEA,Core Suite
+O001538,A00846,Aurora Works Inc,Discovery,3931,SMB,EMEA,Core Suite
+O001539,A00693,Cobalt Grid Ltd,Negotiate,3257,SMB,APAC,Core Suite
+O001540,A01923,BluePeak Works Inc,Qualify,3552,SMB,EMEA,Analytics Pro
+O001541,A01588,Granite Labs Ltd,Negotiate,4106,SMB,AMER,Core Suite
+O001542,A01744,Granite Logic,Negotiate,5046,SMB,AMER,Automation Edge
+O001543,A01090,Vertex Dynamics,Qualify,1158,SMB,AMER,Analytics Pro
+O001544,A01090,Vertex Dynamics,Proposal,3655,SMB,AMER,Analytics Pro
+O001545,A00455,Meridian Dynamics,Discovery,1990,SMB,AMER,Core Suite
+O001546,A00455,Meridian Dynamics,Proposal,2463,SMB,AMER,Core Suite
+O001547,A00002,Vertex Grid Ltd,Discovery,1623,SMB,APAC,Core Suite
+O001548,A01581,Parallel Grid,Proposal,1181,SMB,AMER,Core Suite
+O001549,A01581,Parallel Grid,Proposal,4476,SMB,AMER,Core Suite
+O001550,A00192,Cobalt Labs Inc,Negotiate,828,SMB,EMEA,Core Suite
+O001551,A01578,Parallel Point Ltd,Qualify,3097,SMB,EMEA,Core Suite
+O001552,A00749,Pinnacle Bridge Ltd,Negotiate,988,SMB,AMER,Core Suite
+O001553,A00749,Pinnacle Bridge Ltd,Qualify,2920,SMB,AMER,Core Suite
+O001554,A01148,Vertex Stream,Negotiate,5185,Mid-Market,AMER,Analytics Pro
+O001555,A01148,Vertex Stream,Qualify,953,Mid-Market,AMER,Analytics Pro
+O001556,A00178,Silverline Logic Ltd,Discovery,2299,SMB,AMER,Analytics Pro
+O001557,A00178,Silverline Logic Ltd,Proposal,4708,SMB,AMER,Analytics Pro
+O001558,A01292,Northwind Grid Inc,Negotiate,2525,SMB,AMER,Automation Edge
+O001559,A01162,Meridian Stream,Proposal,3025,SMB,EMEA,Automation Edge
+O001560,A00999,BluePeak Bridge Inc,Negotiate,4751,SMB,EMEA,Analytics Pro
+O001561,A00999,BluePeak Bridge Inc,Proposal,1864,SMB,EMEA,Core Suite
+O001562,A00440,Parallel Cloud,Negotiate,928,SMB,AMER,Analytics Pro
+O001563,A01527,Parallel Stream,Negotiate,2914,SMB,AMER,Analytics Pro
+O001564,A00262,Silverline Systems Inc,Negotiate,6483,SMB,AMER,Analytics Pro
+O001565,A01919,Granite Labs Ltd,Negotiate,4967,SMB,EMEA,Analytics Pro
+O001566,A00719,Cobalt Grid Inc,Negotiate,3714,SMB,AMER,Analytics Pro
+O001567,A00719,Cobalt Grid Inc,Proposal,2805,SMB,AMER,Analytics Pro
+O001568,A00523,Vertex Labs Inc,Proposal,4605,SMB,AMER,Analytics Pro
+O001569,A00523,Vertex Labs Inc,Discovery,5116,SMB,AMER,Analytics Pro
+O001570,A00602,Granite Works,Negotiate,3298,SMB,EMEA,Analytics Pro
+O001571,A00492,Granite Works Ltd,Discovery,2712,SMB,AMER,Analytics Pro
+O001572,A00301,BluePeak Systems Inc,Proposal,2698,SMB,AMER,Automation Edge
+O001573,A00226,Granite Cloud,Qualify,4450,SMB,AMER,Analytics Pro
+O001574,A00085,Vertex Systems Inc,Qualify,5509,SMB,AMER,Analytics Pro
+O001575,A00536,Aurora Point,Discovery,2100,SMB,AMER,Core Suite
+O001576,A01426,Granite Bridge Ltd,Discovery,3265,SMB,AMER,Automation Edge
+O001577,A01426,Granite Bridge Ltd,Proposal,2045,SMB,AMER,Core Suite
+O001578,A01501,Vertex Bridge Inc,Qualify,1271,SMB,APAC,Analytics Pro
+O001579,A01439,Silverline Logic Ltd,Qualify,5014,SMB,AMER,Core Suite
+O001580,A00822,Pinnacle Grid Inc,Proposal,2502,SMB,EMEA,Analytics Pro
+O001581,A00822,Pinnacle Grid Inc,Discovery,2598,SMB,EMEA,Analytics Pro
+O001582,A01246,Granite Cloud,Discovery,3986,SMB,EMEA,Core Suite
+O001583,A01874,Pinnacle Works Ltd,Qualify,2728,SMB,AMER,Automation Edge
+O001584,A01837,Meridian Stream,Proposal,4239,SMB,AMER,Analytics Pro
+O001585,A01635,Granite Systems,Discovery,1713,SMB,APAC,Analytics Pro
+O001586,A01635,Granite Systems,Discovery,5171,SMB,APAC,Analytics Pro
+O001587,A01642,Aurora Stream Ltd,Qualify,1625,SMB,APAC,Core Suite
+O001588,A00107,Northwind Works Ltd,Discovery,2928,SMB,EMEA,Core Suite
+O001589,A00107,Northwind Works Ltd,Proposal,3601,SMB,EMEA,Core Suite
+O001590,A01558,Parallel Systems Ltd,Discovery,4425,SMB,AMER,Core Suite
+O001591,A00714,Vertex Cloud Inc,Discovery,890,SMB,AMER,Analytics Pro
+O001592,A00714,Vertex Cloud Inc,Discovery,2044,SMB,AMER,Analytics Pro
+O001593,A01994,Vertex Dynamics Ltd,Proposal,1850,SMB,AMER,Analytics Pro
+O001594,A01994,Vertex Dynamics Ltd,Discovery,3150,SMB,AMER,Analytics Pro
+O001595,A00883,Parallel Works Ltd,Qualify,2306,SMB,EMEA,Analytics Pro
+O001596,A00883,Parallel Works Ltd,Discovery,3421,SMB,EMEA,Analytics Pro
+O001597,A00613,Parallel Bridge Inc,Proposal,1872,SMB,APAC,Analytics Pro
+O001598,A00613,Parallel Bridge Inc,Proposal,3905,SMB,APAC,Automation Edge
+O001599,A01854,Vertex Labs Inc,Discovery,3341,SMB,APAC,Analytics Pro
+O001600,A01624,Aurora Works Inc,Proposal,2942,SMB,AMER,Core Suite
+O001601,A01626,Northwind Works Inc,Qualify,3015,SMB,AMER,Analytics Pro
+O001602,A01626,Northwind Works Inc,Discovery,1424,SMB,AMER,Analytics Pro
+O001603,A00985,Aurora Systems Inc,Qualify,1973,SMB,APAC,Core Suite
+O001604,A00739,Cobalt Stream Inc,Qualify,5115,SMB,EMEA,Automation Edge
+O001605,A00739,Cobalt Stream Inc,Qualify,4084,SMB,EMEA,Automation Edge
+O001606,A01382,Granite Dynamics Ltd,Discovery,1095,SMB,AMER,Automation Edge
+O001607,A01795,Vertex Cloud Ltd,Discovery,5434,SMB,APAC,Automation Edge
+O001608,A01795,Vertex Cloud Ltd,Qualify,1728,SMB,APAC,Automation Edge
+O001609,A01221,Cobalt Grid Inc,Negotiate,2405,SMB,AMER,Automation Edge
+O001610,A01332,Meridian Labs Inc,Qualify,2268,SMB,EMEA,Analytics Pro
+O001611,A01332,Meridian Labs Inc,Qualify,1585,SMB,EMEA,Automation Edge
+O001612,A01384,BluePeak Systems,Discovery,1310,SMB,AMER,Core Suite
+O001613,A01258,Aurora Systems Ltd,Negotiate,2462,SMB,AMER,Core Suite
+O001614,A01215,Vertex Logic Ltd,Proposal,1380,SMB,AMER,Core Suite
+O001615,A01215,Vertex Logic Ltd,Qualify,2204,SMB,AMER,Core Suite
+O001616,A00179,Granite Stream Ltd,Qualify,2216,SMB,APAC,Analytics Pro
+O001617,A01568,Granite Grid Ltd,Qualify,1992,SMB,AMER,Core Suite
+O001618,A00437,Northwind Cloud,Qualify,1637,SMB,APAC,Automation Edge
+O001619,A01926,Aurora Systems Ltd,Qualify,4151,SMB,AMER,Analytics Pro
+O001620,A01186,Meridian Stream Inc,Qualify,2611,SMB,EMEA,Automation Edge
+O001621,A01038,Meridian Point,Qualify,820,SMB,EMEA,Core Suite
+O001622,A01114,Aurora Stream,Negotiate,3466,SMB,AMER,Analytics Pro
+O001623,A01114,Aurora Stream,Qualify,1167,SMB,AMER,Automation Edge
+O001624,A01739,Aurora Bridge Ltd,Discovery,2779,SMB,APAC,Core Suite
+O001625,A01141,Meridian Bridge Inc,Proposal,2798,SMB,AMER,Analytics Pro
+O001626,A01496,Aurora Stream Inc,Qualify,1915,SMB,APAC,Automation Edge
+O001627,A01496,Aurora Stream Inc,Qualify,3129,SMB,APAC,Core Suite
+O001628,A01097,Northwind Systems Inc,Discovery,3810,SMB,AMER,Analytics Pro
+O001629,A01097,Northwind Systems Inc,Proposal,4029,SMB,AMER,Analytics Pro
+O001630,A01899,Silverline Logic,Discovery,4031,SMB,AMER,Core Suite
+O001631,A01806,BluePeak Labs Inc,Qualify,4426,SMB,AMER,Core Suite
+O001632,A01416,Vertex Grid Ltd,Proposal,3794,SMB,EMEA,Core Suite
+O001633,A01416,Vertex Grid Ltd,Qualify,3613,SMB,EMEA,Core Suite
+O001634,A01656,Meridian Labs,Qualify,2783,SMB,EMEA,Automation Edge
+O001635,A01656,Meridian Labs,Discovery,2741,SMB,EMEA,Core Suite
+O001636,A01816,Aurora Systems Ltd,Negotiate,1762,SMB,AMER,Core Suite
+O001637,A01816,Aurora Systems Ltd,Discovery,1518,SMB,AMER,Core Suite
+O001638,A00898,BluePeak Logic Ltd,Proposal,3002,SMB,APAC,Core Suite
+O001639,A00898,BluePeak Logic Ltd,Qualify,2292,SMB,APAC,Core Suite
+O001640,A01756,Pinnacle Dynamics Ltd,Qualify,3538,SMB,AMER,Core Suite
+O001641,A01756,Pinnacle Dynamics Ltd,Negotiate,4206,SMB,AMER,Core Suite
+O001642,A00659,Pinnacle Systems Inc,Discovery,3329,SMB,EMEA,Automation Edge
+O001643,A00659,Pinnacle Systems Inc,Discovery,2749,SMB,EMEA,Automation Edge
+O001644,A00828,Granite Logic,Proposal,3207,SMB,AMER,Analytics Pro
+O001645,A00474,Northwind Systems,Discovery,2249,SMB,EMEA,Core Suite
+O001646,A00256,Aurora Cloud Ltd,Negotiate,3413,SMB,EMEA,Core Suite
+O001647,A00256,Aurora Cloud Ltd,Qualify,1695,SMB,EMEA,Analytics Pro
+O001648,A01864,Meridian Point Ltd,Negotiate,3641,SMB,EMEA,Core Suite
+O001649,A01864,Meridian Point Ltd,Proposal,1819,SMB,EMEA,Core Suite
+O001650,A00809,Cobalt Systems Inc,Qualify,1819,SMB,AMER,Core Suite
+O001651,A00478,Aurora Logic Ltd,Discovery,3383,SMB,APAC,Analytics Pro
+O001652,A00478,Aurora Logic Ltd,Discovery,4647,SMB,APAC,Analytics Pro
+O001653,A01775,Northwind Point Ltd,Proposal,3846,SMB,APAC,Analytics Pro
+O001654,A01399,Aurora Grid Inc,Qualify,2551,SMB,EMEA,Core Suite
+O001655,A01399,Aurora Grid Inc,Qualify,1431,SMB,EMEA,Analytics Pro
+O001656,A00024,Meridian Stream Ltd,Qualify,4449,SMB,AMER,Automation Edge
+O001657,A00024,Meridian Stream Ltd,Discovery,1158,SMB,AMER,Core Suite
+O001658,A00342,Cobalt Works Inc,Proposal,3378,Mid-Market,EMEA,Core Suite
+O001659,A00772,Meridian Dynamics,Discovery,1132,SMB,APAC,Core Suite
+O001660,A00175,Granite Logic Inc,Qualify,852,SMB,AMER,Automation Edge
+O001661,A01990,Aurora Works Inc,Discovery,633,SMB,AMER,Analytics Pro
+O001662,A01990,Aurora Works Inc,Qualify,1285,SMB,AMER,Analytics Pro
+O001663,A01053,Cobalt Logic,Discovery,3624,SMB,AMER,Core Suite
+O001664,A01053,Cobalt Logic,Qualify,1277,SMB,AMER,Automation Edge
+O001665,A00337,Granite Labs Inc,Qualify,899,SMB,AMER,Core Suite
+O001666,A00337,Granite Labs Inc,Qualify,4229,SMB,AMER,Core Suite
+O001667,A01515,Aurora Works Inc,Proposal,4477,SMB,AMER,Automation Edge
+O001668,A01515,Aurora Works Inc,Discovery,4737,SMB,AMER,Automation Edge
+O001669,A00587,Granite Systems Ltd,Proposal,2947,SMB,APAC,Core Suite
+O001670,A00587,Granite Systems Ltd,Negotiate,4342,SMB,APAC,Core Suite
+O001671,A00680,Granite Cloud Inc,Negotiate,731,SMB,APAC,Core Suite
+O001672,A00255,Parallel Systems Ltd,Discovery,2492,SMB,AMER,Analytics Pro
+O001673,A00255,Parallel Systems Ltd,Discovery,4470,SMB,AMER,Analytics Pro
+O001674,A00940,Northwind Point,Qualify,1365,SMB,AMER,Automation Edge
+O001675,A00940,Northwind Point,Discovery,2234,SMB,AMER,Automation Edge
+O001676,A01851,Northwind Cloud Inc,Proposal,3561,SMB,AMER,Core Suite
+O001677,A01851,Northwind Cloud Inc,Proposal,3728,SMB,AMER,Core Suite
+O001678,A01165,Cobalt Works,Qualify,3247,SMB,EMEA,Core Suite
+O001679,A01165,Cobalt Works,Discovery,627,SMB,EMEA,Analytics Pro
+O001680,A01768,Pinnacle Cloud Inc,Discovery,3729,SMB,AMER,Analytics Pro
+O001681,A00317,Parallel Systems Inc,Proposal,1575,SMB,EMEA,Automation Edge
+O001682,A01474,Pinnacle Logic Inc,Qualify,2438,SMB,EMEA,Analytics Pro
+O001683,A01474,Pinnacle Logic Inc,Negotiate,2263,SMB,EMEA,Analytics Pro
+O001684,A01363,Cobalt Labs Inc,Negotiate,2223,SMB,AMER,Automation Edge
+O001685,A00183,Granite Labs,Negotiate,3553,SMB,EMEA,Core Suite
+O001686,A00183,Granite Labs,Qualify,3941,SMB,EMEA,Automation Edge
+O001687,A01928,Pinnacle Labs Ltd,Qualify,939,SMB,AMER,Core Suite
+O001688,A01928,Pinnacle Labs Ltd,Proposal,2528,SMB,AMER,Core Suite
+O001689,A01927,Pinnacle Cloud,Discovery,3299,SMB,EMEA,Automation Edge
+O001690,A01866,BluePeak Systems Ltd,Negotiate,3324,SMB,AMER,Automation Edge
+O001691,A01866,BluePeak Systems Ltd,Negotiate,1799,SMB,AMER,Analytics Pro
+O001692,A00443,Meridian Cloud Ltd,Qualify,2968,SMB,APAC,Automation Edge
+O001693,A00443,Meridian Cloud Ltd,Discovery,2669,SMB,APAC,Core Suite
+O001694,A01222,Vertex Logic Ltd,Qualify,807,SMB,AMER,Core Suite
+O001695,A01660,Silverline Works,Qualify,625,SMB,AMER,Automation Edge
+O001696,A01660,Silverline Works,Proposal,881,SMB,AMER,Automation Edge
+O001697,A01883,Silverline Systems,Discovery,1612,SMB,APAC,Automation Edge
+O001698,A00140,Granite Logic,Qualify,2961,SMB,AMER,Core Suite
+O001699,A00140,Granite Logic,Qualify,789,SMB,AMER,Analytics Pro
+O001700,A01201,Aurora Dynamics Inc,Discovery,1549,SMB,EMEA,Core Suite
+O001701,A01201,Aurora Dynamics Inc,Negotiate,594,SMB,EMEA,Core Suite
+O001702,A00232,Vertex Labs Ltd,Qualify,1338,SMB,AMER,Core Suite
+O001703,A00232,Vertex Labs Ltd,Qualify,2941,SMB,AMER,Core Suite
+O001704,A01117,Northwind Point,Qualify,2586,SMB,EMEA,Core Suite
+O001705,A00307,Pinnacle Grid Inc,Negotiate,2936,SMB,EMEA,Analytics Pro
+O001706,A00296,Parallel Grid Inc,Qualify,4206,SMB,AMER,Analytics Pro
+O001707,A00798,Pinnacle Systems,Qualify,3332,SMB,AMER,Analytics Pro
+O001708,A00798,Pinnacle Systems,Negotiate,3773,SMB,AMER,Analytics Pro
+O001709,A01667,Vertex Systems Inc,Proposal,2053,SMB,EMEA,Automation Edge
+O001710,A01667,Vertex Systems Inc,Proposal,3565,SMB,EMEA,Automation Edge
+O001711,A00487,Northwind Stream,Discovery,2789,SMB,AMER,Automation Edge
+O001712,A01612,Parallel Point Inc,Discovery,3420,Mid-Market,AMER,Analytics Pro
+O001713,A01086,Silverline Works Inc,Qualify,692,SMB,AMER,Analytics Pro
+O001714,A00932,Granite Grid Ltd,Proposal,1404,SMB,AMER,Automation Edge
+O001715,A00932,Granite Grid Ltd,Discovery,2411,SMB,AMER,Automation Edge
+O001716,A01278,Cobalt Cloud,Discovery,1913,SMB,AMER,Automation Edge
+O001717,A00872,Pinnacle Labs Ltd,Discovery,2259,SMB,EMEA,Automation Edge
+O001718,A00588,Vertex Point,Qualify,2934,SMB,AMER,Automation Edge
+O001719,A01094,Cobalt Logic,Proposal,2878,SMB,AMER,Core Suite
+O001720,A00790,Pinnacle Point Ltd,Discovery,1367,SMB,EMEA,Automation Edge
+O001721,A00790,Pinnacle Point Ltd,Negotiate,1846,SMB,EMEA,Automation Edge
+O001722,A00860,Parallel Logic Ltd,Discovery,2822,SMB,AMER,Core Suite
+O001723,A01333,Meridian Works,Proposal,3334,SMB,AMER,Core Suite
+O001724,A01604,Granite Dynamics,Discovery,1362,SMB,AMER,Automation Edge
+O001725,A00533,Cobalt Stream Ltd,Qualify,3968,SMB,APAC,Analytics Pro
+O001726,A00813,Cobalt Labs Inc,Proposal,3676,SMB,AMER,Analytics Pro
+O001727,A00813,Cobalt Labs Inc,Proposal,3114,SMB,AMER,Analytics Pro
+O001728,A00611,Northwind Works Ltd,Discovery,2769,SMB,AMER,Core Suite
+O001729,A00611,Northwind Works Ltd,Qualify,3339,SMB,AMER,Core Suite
+O001730,A00995,Cobalt Works Ltd,Qualify,1694,SMB,AMER,Analytics Pro
+O001731,A00697,Cobalt Dynamics Ltd,Proposal,627,SMB,EMEA,Core Suite
+O001732,A00697,Cobalt Dynamics Ltd,Discovery,2045,SMB,EMEA,Core Suite
+O001733,A00274,BluePeak Bridge Inc,Qualify,3252,SMB,APAC,Analytics Pro
+O001734,A00274,BluePeak Bridge Inc,Discovery,1739,SMB,APAC,Core Suite
+O001735,A01321,Aurora Stream,Proposal,2935,SMB,APAC,Analytics Pro
+O001736,A00410,Vertex Point Ltd,Proposal,2704,SMB,AMER,Analytics Pro
+O001737,A00410,Vertex Point Ltd,Qualify,632,SMB,AMER,Core Suite
+O001738,A01968,Pinnacle Systems,Proposal,1681,SMB,AMER,Core Suite
+O001739,A00578,Parallel Stream,Discovery,2626,SMB,AMER,Analytics Pro
+O001740,A01440,Granite Cloud Ltd,Proposal,2724,SMB,AMER,Automation Edge
+O001741,A01440,Granite Cloud Ltd,Qualify,2920,SMB,AMER,Automation Edge
+O001742,A01507,Granite Logic Ltd,Discovery,1245,SMB,AMER,Analytics Pro
+O001743,A01507,Granite Logic Ltd,Proposal,2954,SMB,AMER,Analytics Pro
+O001744,A01039,Silverline Stream,Proposal,2904,SMB,EMEA,Analytics Pro
+O001745,A00880,Granite Grid Ltd,Qualify,3390,SMB,APAC,Automation Edge
+O001746,A01654,Northwind Works Inc,Proposal,3543,SMB,EMEA,Automation Edge
+O001747,A01654,Northwind Works Inc,Discovery,1236,SMB,EMEA,Automation Edge
+O001748,A01644,Cobalt Stream,Qualify,1636,SMB,AMER,Core Suite
+O001749,A00129,Cobalt Point,Negotiate,1284,SMB,AMER,Automation Edge
+O001750,A00129,Cobalt Point,Discovery,3288,SMB,AMER,Analytics Pro
+O001751,A00676,Granite Point Inc,Qualify,642,SMB,AMER,Analytics Pro
+O001752,A01537,Granite Point Inc,Negotiate,2107,SMB,APAC,Core Suite
+O001753,A01665,Aurora Logic Ltd,Discovery,2676,SMB,APAC,Automation Edge
+O001754,A01799,Meridian Dynamics,Discovery,662,SMB,AMER,Core Suite
+O001755,A00473,Vertex Bridge Inc,Qualify,3633,SMB,APAC,Automation Edge
+O001756,A00660,Aurora Grid Ltd,Qualify,2682,SMB,EMEA,Automation Edge
+O001757,A00054,Granite Point Inc,Negotiate,1226,SMB,AMER,Core Suite
+O001758,A00054,Granite Point Inc,Discovery,2553,SMB,AMER,Core Suite
+O001759,A01022,Vertex Point Inc,Discovery,2865,SMB,EMEA,Analytics Pro
+O001760,A01022,Vertex Point Inc,Negotiate,3144,SMB,EMEA,Analytics Pro
+O001761,A00825,Pinnacle Systems Inc,Negotiate,1316,SMB,EMEA,Core Suite
+O001762,A00825,Pinnacle Systems Inc,Qualify,595,SMB,EMEA,Core Suite
+O001763,A00699,Cobalt Systems,Negotiate,2876,SMB,EMEA,Core Suite
+O001764,A00699,Cobalt Systems,Qualify,2271,SMB,EMEA,Automation Edge
+O001765,A01633,BluePeak Cloud Ltd,Proposal,1047,SMB,AMER,Core Suite
+O001766,A01547,Vertex Labs,Proposal,2903,SMB,APAC,Analytics Pro
+O001767,A00900,Meridian Systems Ltd,Qualify,2757,SMB,APAC,Analytics Pro
+O001768,A00746,Northwind Point Inc,Negotiate,2117,SMB,AMER,Core Suite
+O001769,A01829,Northwind Logic,Negotiate,1965,SMB,EMEA,Analytics Pro
+O001770,A00444,Northwind Bridge Inc,Proposal,415,SMB,APAC,Automation Edge
+O001771,A00444,Northwind Bridge Inc,Qualify,2414,SMB,APAC,Automation Edge
+O001772,A01986,Granite Grid,Discovery,1793,SMB,APAC,Analytics Pro
+O001773,A01041,Meridian Works Ltd,Discovery,2288,SMB,EMEA,Analytics Pro
+O001774,A01041,Meridian Works Ltd,Discovery,847,SMB,EMEA,Analytics Pro
+O001775,A00875,Pinnacle Logic Ltd,Qualify,1860,SMB,EMEA,Core Suite
+O001776,A00953,Parallel Logic Ltd,Discovery,1033,SMB,EMEA,Analytics Pro
+O001777,A01589,Aurora Cloud,Proposal,686,SMB,AMER,Automation Edge
+O001778,A00890,Parallel Dynamics,Qualify,2254,Mid-Market,EMEA,Automation Edge
+O001779,A00890,Parallel Dynamics,Discovery,2352,Mid-Market,EMEA,Automation Edge
+O001780,A01065,Meridian Grid Inc,Proposal,1090,SMB,EMEA,Core Suite
+O001781,A01472,Northwind Grid,Qualify,1857,SMB,APAC,Core Suite
+O001782,A01472,Northwind Grid,Proposal,1264,SMB,APAC,Automation Edge
+O001783,A01681,Pinnacle Grid Ltd,Discovery,2334,SMB,EMEA,Core Suite
+O001784,A01681,Pinnacle Grid Ltd,Proposal,855,SMB,EMEA,Core Suite
+O001785,A00302,Pinnacle Cloud Inc,Discovery,663,SMB,AMER,Automation Edge
+O001786,A00461,Northwind Cloud Inc,Proposal,1965,SMB,AMER,Analytics Pro
+O001787,A00549,Granite Bridge Ltd,Qualify,1473,SMB,AMER,Automation Edge
+O001788,A00163,Parallel Stream,Negotiate,3020,SMB,AMER,Analytics Pro
+O001789,A00163,Parallel Stream,Negotiate,2246,SMB,AMER,Analytics Pro
+O001790,A00738,Pinnacle Bridge Ltd,Negotiate,1483,Mid-Market,AMER,Automation Edge
+O001791,A00738,Pinnacle Bridge Ltd,Proposal,1393,Mid-Market,AMER,Automation Edge
+O001792,A00738,Pinnacle Bridge Ltd,Discovery,2599,Mid-Market,AMER,Automation Edge
+O001793,A00146,BluePeak Works Inc,Negotiate,771,SMB,EMEA,Core Suite
+O001794,A00401,Vertex Works,Qualify,2308,SMB,EMEA,Core Suite
+O001795,A00160,Silverline Bridge Inc,Discovery,2051,SMB,AMER,Core Suite
+O001796,A00029,Silverline Grid,Qualify,1936,SMB,APAC,Analytics Pro
+O001797,A00029,Silverline Grid,Qualify,1966,SMB,APAC,Analytics Pro
+O001798,A00918,Granite Bridge,Negotiate,1189,SMB,APAC,Core Suite
+O001799,A00802,Cobalt Cloud,Qualify,2301,SMB,AMER,Core Suite
+O001800,A00619,Aurora Cloud Ltd,Discovery,1365,SMB,AMER,Analytics Pro
+O001801,A00619,Aurora Cloud Ltd,Qualify,1046,SMB,AMER,Analytics Pro
+O001802,A00552,Vertex Cloud Ltd,Qualify,1628,SMB,AMER,Core Suite
+O001803,A01276,BluePeak Logic Ltd,Qualify,2588,SMB,EMEA,Core Suite
+O001804,A01276,BluePeak Logic Ltd,Proposal,1719,SMB,EMEA,Core Suite
+O001805,A00015,Cobalt Cloud Inc,Discovery,1895,SMB,APAC,Core Suite
+O001806,A00705,Northwind Logic,Discovery,541,SMB,EMEA,Core Suite
+O001807,A00705,Northwind Logic,Negotiate,1404,SMB,EMEA,Core Suite
+O001808,A00180,Northwind Bridge Ltd,Discovery,1568,SMB,APAC,Automation Edge
+O001809,A00180,Northwind Bridge Ltd,Proposal,503,SMB,APAC,Automation Edge
+O001810,A01389,BluePeak Cloud Inc,Discovery,384,SMB,EMEA,Analytics Pro
+O001811,A01643,Silverline Dynamics Inc,Negotiate,1940,SMB,EMEA,Automation Edge
+O001812,A01643,Silverline Dynamics Inc,Discovery,1839,SMB,EMEA,Automation Edge
+O001813,A01943,Cobalt Point,Proposal,1625,Mid-Market,APAC,Analytics Pro
+O001814,A01943,Cobalt Point,Proposal,947,Mid-Market,APAC,Analytics Pro
+O001815,A01943,Cobalt Point,Discovery,1137,Mid-Market,APAC,Analytics Pro
+O001816,A00797,Meridian Logic Inc,Proposal,671,SMB,EMEA,Analytics Pro
+O001817,A01223,Cobalt Stream Ltd,Negotiate,743,SMB,AMER,Automation Edge
+O001818,A01151,Meridian Bridge,Proposal,1425,SMB,EMEA,Analytics Pro
+O001819,A01151,Meridian Bridge,Negotiate,866,SMB,EMEA,Analytics Pro
+O001820,A01605,Cobalt Point,Negotiate,372,SMB,AMER,Automation Edge
+O001821,A00766,Aurora Labs,Qualify,552,SMB,EMEA,Core Suite
+O001822,A00766,Aurora Labs,Qualify,1782,SMB,EMEA,Core Suite
+O001823,A01381,Pinnacle Works,Qualify,2929,SMB,APAC,Analytics Pro
+O001824,A00744,Aurora Stream Inc,Qualify,2001,SMB,AMER,Analytics Pro
+O001825,A00744,Aurora Stream Inc,Negotiate,403,SMB,AMER,Core Suite
+O001826,A00338,Vertex Dynamics Ltd,Qualify,1796,SMB,AMER,Automation Edge
+O001827,A00338,Vertex Dynamics Ltd,Negotiate,1505,SMB,AMER,Automation Edge
+O001828,A01727,Vertex Grid,Proposal,1456,SMB,EMEA,Core Suite
+O001829,A01727,Vertex Grid,Proposal,790,SMB,EMEA,Core Suite
+O001830,A01779,Granite Cloud,Qualify,1025,SMB,AMER,Automation Edge
+O001831,A01387,Northwind Dynamics Ltd,Qualify,635,SMB,AMER,Automation Edge
+O001832,A00851,Vertex Grid Inc,Discovery,1572,SMB,EMEA,Automation Edge
+O001833,A01618,Vertex Bridge Inc,Negotiate,2618,SMB,AMER,Analytics Pro
+O001834,A00786,Aurora Grid,Qualify,2637,SMB,AMER,Analytics Pro
+O001835,A00786,Aurora Grid,Discovery,1574,SMB,AMER,Core Suite
+O001836,A00933,Meridian Stream Inc,Discovery,514,SMB,EMEA,Core Suite
+O001837,A01179,Cobalt Dynamics,Proposal,413,SMB,AMER,Core Suite
+O001838,A00695,BluePeak Systems Ltd,Negotiate,1111,SMB,APAC,Core Suite
+O001839,A01594,Cobalt Bridge,Proposal,1205,SMB,AMER,Automation Edge
+O001840,A00314,Pinnacle Labs,Proposal,914,SMB,AMER,Analytics Pro
+O001841,A00177,Parallel Stream Inc,Qualify,1861,SMB,APAC,Analytics Pro
+O001842,A00177,Parallel Stream Inc,Qualify,1175,SMB,APAC,Core Suite
+O001843,A00519,BluePeak Dynamics,Proposal,1806,SMB,AMER,Analytics Pro
+O001844,A00519,BluePeak Dynamics,Qualify,651,SMB,AMER,Core Suite
+O001845,A00081,Cobalt Works Ltd,Negotiate,1402,SMB,EMEA,Automation Edge
+O001846,A00081,Cobalt Works Ltd,Qualify,2281,SMB,EMEA,Automation Edge
+O001847,A01072,Meridian Stream Inc,Discovery,1114,SMB,APAC,Analytics Pro
+O001848,A01072,Meridian Stream Inc,Proposal,2136,SMB,APAC,Analytics Pro
+O001849,A01825,Meridian Point,Discovery,1950,SMB,AMER,Core Suite
+O001850,A01825,Meridian Point,Qualify,1460,SMB,AMER,Core Suite
+O001851,A01301,Silverline Works Ltd,Proposal,2011,SMB,AMER,Analytics Pro
+O001852,A00996,Pinnacle Point,Discovery,800,SMB,APAC,Analytics Pro
+O001853,A00836,Silverline Stream,Discovery,1053,SMB,APAC,Analytics Pro
+O001854,A00815,Parallel Cloud Inc,Discovery,1975,SMB,EMEA,Analytics Pro
+O001855,A01848,Meridian Grid,Discovery,628,SMB,APAC,Analytics Pro
+O001856,A01848,Meridian Grid,Qualify,2358,SMB,APAC,Analytics Pro
+O001857,A01764,Silverline Systems,Discovery,1223,SMB,AMER,Automation Edge
+O001858,A01918,Cobalt Bridge,Negotiate,1674,SMB,AMER,Core Suite
+O001859,A00051,Pinnacle Works Inc,Discovery,1911,SMB,EMEA,Core Suite
+O001860,A01895,Pinnacle Stream,Negotiate,1900,SMB,EMEA,Core Suite
+O001861,A01895,Pinnacle Stream,Qualify,358,SMB,EMEA,Analytics Pro
+O001862,A01214,Pinnacle Cloud,Negotiate,815,SMB,APAC,Automation Edge
+O001863,A01214,Pinnacle Cloud,Proposal,580,SMB,APAC,Core Suite
+O001864,A01157,BluePeak Labs Ltd,Discovery,1047,SMB,EMEA,Core Suite
+O001865,A00396,Granite Point,Proposal,1457,SMB,EMEA,Core Suite
+O001866,A00396,Granite Point,Discovery,1077,SMB,EMEA,Automation Edge
+O001867,A00433,BluePeak Grid,Qualify,551,SMB,APAC,Analytics Pro
+O001868,A01129,BluePeak Works Inc,Proposal,1450,SMB,AMER,Core Suite
+O001869,A01129,BluePeak Works Inc,Proposal,1227,SMB,AMER,Core Suite
+O001870,A01993,BluePeak Stream Ltd,Discovery,627,SMB,EMEA,Core Suite
+O001871,A00668,Silverline Systems Inc,Negotiate,1946,SMB,EMEA,Analytics Pro
+O001872,A00668,Silverline Systems Inc,Negotiate,717,SMB,EMEA,Automation Edge
+O001873,A00257,BluePeak Works Ltd,Qualify,766,SMB,AMER,Core Suite
+O001874,A00625,Granite Labs Inc,Proposal,551,SMB,AMER,Automation Edge
+O001875,A00625,Granite Labs Inc,Negotiate,1741,SMB,AMER,Core Suite
+O001876,A00847,Granite Dynamics Ltd,Discovery,1406,SMB,APAC,Analytics Pro
+O001877,A00603,Silverline Works Inc,Discovery,503,SMB,AMER,Core Suite
+O001878,A01695,Meridian Stream Ltd,Discovery,273,SMB,AMER,Automation Edge
+O001879,A01309,Vertex Bridge Ltd,Discovery,627,SMB,EMEA,Analytics Pro
+O001880,A01309,Vertex Bridge Ltd,Discovery,1406,SMB,EMEA,Automation Edge
+O001881,A01456,Cobalt Labs Inc,Negotiate,2444,SMB,AMER,Analytics Pro
+O001882,A01456,Cobalt Labs Inc,Discovery,1871,SMB,AMER,Analytics Pro
+O001883,A00773,BluePeak Labs Ltd,Negotiate,608,SMB,EMEA,Analytics Pro
+O001884,A00598,Meridian Grid Inc,Proposal,2078,SMB,AMER,Analytics Pro
+O001885,A01628,Vertex Logic Inc,Discovery,608,SMB,AMER,Analytics Pro
+O001886,A01628,Vertex Logic Inc,Discovery,733,SMB,AMER,Analytics Pro
+O001887,A01707,Parallel Cloud Ltd,Qualify,710,SMB,EMEA,Automation Edge
+O001888,A01707,Parallel Cloud Ltd,Negotiate,1192,SMB,EMEA,Core Suite
+O001889,A00295,Aurora Bridge Inc,Qualify,1032,SMB,EMEA,Analytics Pro
+O001890,A00295,Aurora Bridge Inc,Proposal,1909,SMB,EMEA,Analytics Pro
+O001891,A00109,Vertex Works Inc,Discovery,644,SMB,APAC,Analytics Pro
+O001892,A00109,Vertex Works Inc,Proposal,765,SMB,APAC,Automation Edge
+O001893,A00204,Parallel Labs,Proposal,315,SMB,EMEA,Core Suite
+O001894,A01107,Pinnacle Grid Inc,Qualify,2166,SMB,AMER,Core Suite
+O001895,A01107,Pinnacle Grid Inc,Discovery,1896,SMB,AMER,Analytics Pro
+O001896,A01620,Granite Grid Ltd,Qualify,851,SMB,AMER,Analytics Pro
+O001897,A01974,Pinnacle Grid Ltd,Discovery,537,SMB,APAC,Core Suite
+O001898,A01974,Pinnacle Grid Ltd,Qualify,1251,SMB,APAC,Core Suite
+O001899,A00165,Vertex Logic,Proposal,1125,SMB,APAC,Analytics Pro
+O001900,A00495,Parallel Logic Ltd,Discovery,1860,SMB,AMER,Core Suite
+O001901,A00495,Parallel Logic Ltd,Discovery,378,SMB,AMER,Analytics Pro
+O001902,A00510,Silverline Cloud Ltd,Qualify,750,SMB,AMER,Analytics Pro
+O001903,A00043,BluePeak Labs,Negotiate,801,SMB,APAC,Automation Edge
+O001904,A00043,BluePeak Labs,Proposal,1360,SMB,APAC,Automation Edge
+O001905,A00793,Vertex Logic Inc,Qualify,636,SMB,EMEA,Analytics Pro
+O001906,A01325,BluePeak Grid Inc,Proposal,542,SMB,AMER,Core Suite
+O001907,A01325,BluePeak Grid Inc,Qualify,816,SMB,AMER,Core Suite
+O001908,A00263,Silverline Logic Ltd,Proposal,1196,SMB,EMEA,Automation Edge
+O001909,A00263,Silverline Logic Ltd,Proposal,1125,SMB,EMEA,Automation Edge
+O001910,A00992,Pinnacle Grid Ltd,Qualify,1108,SMB,AMER,Core Suite
+O001911,A00886,Northwind Labs Inc,Negotiate,1830,SMB,EMEA,Core Suite
+O001912,A00886,Northwind Labs Inc,Proposal,410,SMB,EMEA,Core Suite
+O001913,A00974,Meridian Dynamics Ltd,Discovery,1876,SMB,APAC,Analytics Pro
+O001914,A00974,Meridian Dynamics Ltd,Negotiate,725,SMB,APAC,Core Suite
+O001915,A00592,Meridian Logic,Discovery,686,SMB,AMER,Analytics Pro
+O001916,A00287,Aurora Works,Qualify,1400,SMB,APAC,Core Suite
+O001917,A00287,Aurora Works,Proposal,1266,SMB,APAC,Core Suite
+O001918,A01216,Granite Stream Ltd,Negotiate,489,SMB,APAC,Core Suite
+O001919,A01279,Pinnacle Cloud Inc,Qualify,880,SMB,EMEA,Analytics Pro
+O001920,A01279,Pinnacle Cloud Inc,Qualify,1563,SMB,EMEA,Automation Edge
+O001921,A01069,Silverline Logic,Proposal,524,SMB,AMER,Core Suite
+O001922,A01608,BluePeak Cloud,Qualify,1093,SMB,EMEA,Automation Edge
+O001923,A01010,Pinnacle Logic Ltd,Negotiate,2004,SMB,AMER,Core Suite
+O001924,A00653,Granite Cloud Ltd,Negotiate,1257,SMB,EMEA,Analytics Pro
+O001925,A00127,Pinnacle Cloud Ltd,Qualify,778,SMB,EMEA,Core Suite
+O001926,A00127,Pinnacle Cloud Ltd,Proposal,510,SMB,EMEA,Core Suite
+O001927,A00630,Aurora Works,Qualify,1831,SMB,APAC,Analytics Pro
+O001928,A01197,Northwind Grid,Negotiate,1012,SMB,AMER,Core Suite
+O001929,A01085,Parallel Logic,Proposal,625,SMB,AMER,Analytics Pro
+O001930,A01085,Parallel Logic,Proposal,450,SMB,AMER,Automation Edge
+O001931,A00576,Aurora Point Inc,Discovery,1466,SMB,APAC,Analytics Pro
+O001932,A00576,Aurora Point Inc,Qualify,1169,SMB,APAC,Core Suite
+O001933,A00640,Granite Works,Proposal,1781,SMB,APAC,Core Suite
+O001934,A00640,Granite Works,Negotiate,1287,SMB,APAC,Core Suite
+O001935,A00320,BluePeak Dynamics,Qualify,845,SMB,AMER,Automation Edge
+O001936,A00320,BluePeak Dynamics,Discovery,1815,SMB,AMER,Automation Edge
+O001937,A01348,BluePeak Stream,Discovery,1107,SMB,AMER,Analytics Pro
+O001938,A00244,Pinnacle Logic,Proposal,587,SMB,AMER,Core Suite
+O001939,A00244,Pinnacle Logic,Proposal,1172,SMB,AMER,Core Suite
+O001940,A00078,Cobalt Labs Inc,Proposal,571,SMB,AMER,Core Suite
+O001941,A00078,Cobalt Labs Inc,Qualify,275,SMB,AMER,Core Suite
+O001942,A00346,Northwind Logic Inc,Qualify,721,SMB,AMER,Automation Edge
+O001943,A00346,Northwind Logic Inc,Proposal,1610,SMB,AMER,Automation Edge
+O001944,A00120,Meridian Grid,Proposal,858,SMB,AMER,Core Suite
+O001945,A00120,Meridian Grid,Discovery,911,SMB,AMER,Core Suite
+O001946,A00955,Parallel Bridge Ltd,Negotiate,283,SMB,APAC,Analytics Pro
+O001947,A01419,Parallel Bridge Ltd,Discovery,850,SMB,EMEA,Core Suite
+O001948,A00069,Vertex Systems Inc,Proposal,1604,SMB,AMER,Automation Edge
+O001949,A00275,Northwind Works Inc,Qualify,208,SMB,AMER,Analytics Pro
+O001950,A00275,Northwind Works Inc,Negotiate,563,SMB,AMER,Analytics Pro
+O001951,A00856,Meridian Systems,Discovery,1353,SMB,AMER,Automation Edge
+O001952,A00197,Vertex Grid Ltd,Proposal,767,SMB,AMER,Core Suite
+O001953,A00197,Vertex Grid Ltd,Negotiate,987,SMB,AMER,Core Suite
+O001954,A01830,BluePeak Logic Inc,Qualify,835,SMB,EMEA,Core Suite
+O001955,A01830,BluePeak Logic Inc,Discovery,1183,SMB,EMEA,Core Suite
+O001956,A01126,Silverline Bridge Inc,Proposal,258,SMB,AMER,Core Suite
+O001957,A01544,Vertex Systems Ltd,Proposal,583,SMB,AMER,Analytics Pro
+O001958,A01544,Vertex Systems Ltd,Discovery,787,SMB,AMER,Analytics Pro
+O001959,A00224,Aurora Dynamics Inc,Discovery,797,SMB,EMEA,Core Suite
+O001960,A01868,Meridian Works,Discovery,922,SMB,AMER,Core Suite
+O001961,A01868,Meridian Works,Qualify,1428,SMB,AMER,Core Suite
+O001962,A01016,Pinnacle Grid Ltd,Proposal,1467,SMB,AMER,Automation Edge
+O001963,A01016,Pinnacle Grid Ltd,Discovery,1213,SMB,AMER,Core Suite
+O001964,A01014,Silverline Stream Ltd,Qualify,483,SMB,AMER,Core Suite
+O001965,A01014,Silverline Stream Ltd,Negotiate,1250,SMB,AMER,Core Suite
+O001966,A00038,BluePeak Stream,Proposal,663,SMB,EMEA,Automation Edge
+O001967,A00038,BluePeak Stream,Discovery,1013,SMB,EMEA,Core Suite
+O001968,A00584,Silverline Grid Ltd,Qualify,1304,SMB,AMER,Automation Edge
+O001969,A01463,Meridian Cloud,Discovery,213,SMB,EMEA,Automation Edge
+O001970,A01463,Meridian Cloud,Proposal,464,SMB,EMEA,Core Suite
+O001971,A01467,Pinnacle Works Ltd,Negotiate,590,SMB,AMER,Automation Edge
+O001972,A01788,Pinnacle Cloud Inc,Qualify,172,SMB,AMER,Core Suite
+O001973,A01551,BluePeak Systems,Proposal,922,SMB,AMER,Analytics Pro
+O001974,A01230,Vertex Bridge Inc,Negotiate,1124,SMB,AMER,Core Suite
+O001975,A01259,Vertex Point Ltd,Proposal,1006,SMB,AMER,Automation Edge
+O001976,A01259,Vertex Point Ltd,Negotiate,945,SMB,AMER,Automation Edge
+O001977,A00543,Northwind Stream Inc,Proposal,630,SMB,AMER,Core Suite
+O001978,A00543,Northwind Stream Inc,Negotiate,286,SMB,AMER,Core Suite
+O001979,A01251,Vertex Point Inc,Discovery,970,SMB,AMER,Automation Edge
+O001980,A01251,Vertex Point Inc,Discovery,775,SMB,AMER,Automation Edge
+O001981,A00469,Meridian Works Inc,Proposal,620,SMB,AMER,Automation Edge
+O001982,A00469,Meridian Works Inc,Proposal,911,SMB,AMER,Automation Edge
+O001983,A01546,Aurora Bridge Inc,Proposal,960,SMB,AMER,Automation Edge
+O001984,A01546,Aurora Bridge Inc,Proposal,1077,SMB,AMER,Core Suite
+O001985,A00416,Silverline Grid Ltd,Discovery,461,SMB,AMER,Core Suite
+O001986,A01698,BluePeak Stream Inc,Negotiate,982,SMB,EMEA,Automation Edge
+O001987,A01698,BluePeak Stream Inc,Qualify,531,SMB,EMEA,Automation Edge
+O001988,A00259,Parallel Works Ltd,Qualify,684,SMB,AMER,Core Suite
+O001989,A01176,Pinnacle Point,Negotiate,939,SMB,AMER,Core Suite
+O001990,A01409,Cobalt Grid Ltd,Qualify,1030,SMB,AMER,Core Suite
+O001991,A00807,Granite Grid Ltd,Discovery,909,SMB,AMER,Core Suite
+O001992,A00438,BluePeak Cloud Inc,Discovery,440,SMB,EMEA,Analytics Pro
+O001993,A01885,Pinnacle Stream Ltd,Qualify,784,SMB,AMER,Automation Edge
+O001994,A01545,Vertex Dynamics Ltd,Discovery,424,SMB,AMER,Automation Edge
+O001995,A01545,Vertex Dynamics Ltd,Negotiate,773,SMB,AMER,Analytics Pro
+O001996,A00431,Meridian Cloud,Qualify,110,SMB,AMER,Core Suite
+O001997,A01453,Northwind Labs,Negotiate,134,SMB,EMEA,Core Suite
+O001998,A00671,BluePeak Grid,Proposal,247,SMB,EMEA,Analytics Pro
+O001999,A01921,Northwind Dynamics Inc,Proposal,756,SMB,EMEA,Analytics Pro
+O002000,A01771,Aurora Point,Proposal,209,SMB,AMER,Core Suite
+O002001,A00721,Northwind Labs Inc,Proposal,176,SMB,APAC,Core Suite
+O002002,A00721,Northwind Labs Inc,Proposal,234,SMB,APAC,Core Suite
+O002003,A00733,Aurora Labs,Discovery,942,SMB,APAC,Analytics Pro
+O002004,A01392,Silverline Labs Ltd,Qualify,306,SMB,AMER,Core Suite
+O002005,A00448,Cobalt Point Ltd,Qualify,742,SMB,AMER,Analytics Pro
+O002006,A00929,Cobalt Stream,Discovery,194,SMB,AMER,Analytics Pro
+O002007,A01907,Meridian Point Ltd,Negotiate,110,SMB,AMER,Analytics Pro
+O002008,A01907,Meridian Point Ltd,Negotiate,633,SMB,AMER,Core Suite
+O002009,A00646,Northwind Stream Ltd,Qualify,709,SMB,EMEA,Analytics Pro
+O002010,A00626,Parallel Dynamics Inc,Proposal,249,SMB,AMER,Automation Edge
+O002011,A00626,Parallel Dynamics Inc,Qualify,204,SMB,AMER,Analytics Pro
+O002012,A01573,Cobalt Bridge Inc,Qualify,278,SMB,APAC,Core Suite
+O002013,A00634,Northwind Stream,Negotiate,227,SMB,APAC,Analytics Pro

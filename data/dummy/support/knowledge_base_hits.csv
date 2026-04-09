@@ -1,6 +1,7 @@
-article_slug,views,deflection_proxy
-reset-password,4200,890
-api-rate-limits,3100,640
-sso-setup,2800,520
-billing-invoices,1900,310
-export-data,1500,240
+article_slug,views,deflection_proxy,related_sku
+sso-setup-enterprise,5945,1261,Core Suite
+analytics-pro-embed-api,2481,396,Analytics Pro
+workflow-automation-triggers,2643,755,Automation Edge
+core-suite-user-provisioning,3802,927,Core Suite
+analytics-data-export-governance,964,1502,Analytics Pro
+invoice-and-tax-regions,6334,1479,Core Suite
