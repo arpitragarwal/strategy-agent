@@ -40,10 +40,7 @@ type ArtifactPayload = {
 type MemoryRow = {
   id: string;
   createdAt: string;
-  runStartedAt?: string | null;
   title: string;
-  summary: string;
-  topics: string;
   runId: string | null;
 };
 
@@ -1265,53 +1262,30 @@ export function StrategyConsole() {
 
       <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start min-w-0">
         <QuantDatasetsTreeBox />
-        <OutputPanel
-          title="Memory"
-          subtitle={
-            <p className="text-xs text-zinc-600">
-              Click an entry to load the full discovery, outline, and synthesis in the main panel. Summaries
-              are also fed into the next discovery pass.
-            </p>
-          }
-          cardClassName="border-zinc-200 bg-zinc-50/80"
-        >
-          <ul className="space-y-3 max-h-[70vh] overflow-y-auto">
+        <OutputPanel title="Memory" cardClassName="border-zinc-200 bg-zinc-50/80">
+          <ul className="space-y-1 max-h-[min(40vh,18rem)] overflow-y-auto">
             {memory.map((m) => (
               <li key={m.id}>
                 <button
                   type="button"
                   disabled={busy}
                   onClick={() => void openMemoryEntry(m)}
-                  className={`w-full text-left text-xs border rounded-lg p-2 transition-colors ${
+                  className={`w-full text-left text-[11px] leading-snug border rounded-md px-2 py-1 transition-colors ${
                     selectedMemoryId === m.id
                       ? "border-emerald-500 bg-emerald-50/90 ring-1 ring-emerald-200"
                       : "border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300"
                   } ${busy ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
-                  <div className="font-medium text-zinc-900 line-clamp-2">{m.title}</div>
-                  <p className="text-[10px] text-zinc-500 mt-1 font-mono tabular-nums">
-                    {m.runStartedAt
-                      ? <>Run started {formatMemoryTimestamp(m.runStartedAt)}</>
-                      : <>Saved {formatMemoryTimestamp(m.createdAt)}</>}
-                    {m.runStartedAt ? (
-                      <span className="text-zinc-400 font-sans normal-nums">
-                        {" "}
-                        · completed {formatMemoryTimestamp(m.createdAt)}
-                      </span>
-                    ) : null}
+                  <div className="font-medium text-zinc-900 line-clamp-1">{m.title}</div>
+                  <p className="text-[9px] text-zinc-400 mt-0.5 font-mono tabular-nums truncate">
+                    {formatMemoryTimestamp(m.createdAt)}
                   </p>
-                  {m.topics ? (
-                    <div className="text-zinc-500 mt-1 text-[10px] uppercase tracking-wide">
-                      {m.topics}
-                    </div>
-                  ) : null}
-                  <p className="text-zinc-600 mt-1 line-clamp-4">{m.summary}</p>
                   <span className="sr-only">Open saved run</span>
                 </button>
               </li>
             ))}
             {!memory.length ? (
-              <li className="text-zinc-500 text-xs">No saved analyses yet.</li>
+              <li className="text-zinc-500 text-[10px]">None yet.</li>
             ) : null}
           </ul>
         </OutputPanel>

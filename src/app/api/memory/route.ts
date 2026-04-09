@@ -10,10 +10,7 @@ export async function GET() {
     select: {
       id: true,
       createdAt: true,
-      runStartedAt: true,
       title: true,
-      summary: true,
-      topics: true,
       runId: true,
     },
   });

@@ -159,10 +159,20 @@ async function recordRedirect(runId: string, note: string, send: StreamSender) {
   send({ type: "progress", entry });
 }
 
-function memoryArtifactLabel(runId: string, createdAt: Date, partial: boolean): string {
-  const d = createdAt.toISOString().slice(0, 10);
-  const tail = runId.length >= 6 ? runId.slice(-6) : runId;
-  return partial ? `Saved analysis (partial) · ${d} · ${tail}` : `Saved analysis · ${d} · ${tail}`;
+const MEMORY_ARTIFACT_TITLE_MAX = 88;
+
+/** Short list title derived from the user's strategy question (goal prompt). */
+function memoryArtifactTitle(strategyQuestion: string, partial: boolean): string {
+  let s = strategyQuestion.replace(/\s+/g, " ").trim();
+  if (!s) s = "Strategy analysis";
+  if (s.length > MEMORY_ARTIFACT_TITLE_MAX) {
+    const cut = s.slice(0, MEMORY_ARTIFACT_TITLE_MAX - 1);
+    const lastSpace = cut.lastIndexOf(" ");
+    s =
+      (lastSpace > MEMORY_ARTIFACT_TITLE_MAX >> 1 ? cut.slice(0, lastSpace) : cut) +
+      "…";
+  }
+  return partial ? `${s} (partial)` : s;
 }
 
 function analysesMarkdown(
@@ -308,7 +318,7 @@ async function finalizePartialSynthesis(
     : "partial";
   await prisma.memoryArtifact.create({
     data: {
-      title: memoryArtifactLabel(runId, run.createdAt, true),
+      title: memoryArtifactTitle(run.prompt, true),
       summary: synthesis.slice(0, 4000),
       topics,
       runStartedAt: run.createdAt,
@@ -686,7 +696,7 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
     .join(", ");
   await prisma.memoryArtifact.create({
     data: {
-      title: memoryArtifactLabel(runId, run.createdAt, false),
+      title: memoryArtifactTitle(run.prompt, false),
       summary: synthesis.slice(0, 4000),
       topics,
       runStartedAt: run.createdAt,
