@@ -368,50 +368,36 @@ function QuantDatasetsTreeBox() {
   );
 }
 
+/**
+ * Step list without a vertical spine — avoids misaligned segments when row heights differ.
+ * Status: numbered circle → check when done; active ring + “Now” chip.
+ */
 function PipelineTimeline({
   steps,
 }: {
   steps: { meta: (typeof PIPELINE)[number]; status: PipelineStepStatus; detail?: string }[];
 }) {
   return (
-    <ol className="select-none pl-0 font-mono text-[11px] leading-tight list-none">
+    <ol className="m-0 list-none divide-y divide-zinc-200/90 pl-0 font-mono text-[11px] leading-tight">
       {steps.map(({ meta, status, detail }, i) => {
-        const isLast = i === steps.length - 1;
-        const prev = i > 0 ? steps[i - 1].status : null;
-        const nodeClass =
+        const n = i + 1;
+        const badgeClass =
           status === "complete"
-            ? "bg-emerald-500 border-emerald-700 shadow-[0_0_0_2px_rgba(16,185,129,0.2)]"
+            ? "border-emerald-600 bg-emerald-600 text-white"
             : status === "active"
-              ? "bg-amber-400 border-amber-700 ring-2 ring-amber-200/90 animate-pulse"
-              : "bg-zinc-50 border-zinc-300";
+              ? "border-amber-500 bg-amber-50 text-amber-950 ring-2 ring-amber-200/90 animate-pulse"
+              : "border-zinc-200 bg-zinc-50 text-zinc-400";
 
         return (
-          <li key={meta.id} className="flex gap-3">
-            <div className="flex w-6 shrink-0 flex-col items-center pt-0.5">
-              {i > 0 && prev ? (
-                <div
-                  className={`h-4 w-[3px] shrink-0 rounded-full ${
-                    prev === "complete"
-                      ? "bg-emerald-400"
-                      : prev === "active"
-                        ? "bg-gradient-to-b from-amber-400 to-amber-300"
-                        : "bg-zinc-200"
-                  }`}
-                  aria-hidden
-                />
-              ) : null}
-              <span
-                className={`relative z-[1] h-2.5 w-2.5 shrink-0 rounded-full border-2 ${nodeClass}`}
-                title={status}
-              />
-              {!isLast ? (
-                <div
-                  className={`mt-0 min-h-[14px] w-[3px] flex-1 rounded-full ${status === "complete" ? "bg-emerald-400" : status === "active" ? "bg-gradient-to-b from-amber-400 to-zinc-200" : "bg-zinc-200"}`}
-                  aria-hidden
-                />
-              ) : null}
+          <li key={meta.id} className="flex gap-3 py-3 first:pt-0 last:pb-0">
+            <div
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-[11px] font-semibold tabular-nums ${badgeClass}`}
+              title={status}
+              aria-hidden
+            >
+              {status === "complete" ? "✓" : n}
             </div>
-            <div className={`min-w-0 flex-1 ${isLast ? "pb-0" : "pb-3"}`}>
+            <div className="min-w-0 flex-1 pt-0.5">
               <div
                 className={
                   status === "upcoming"
@@ -425,11 +411,6 @@ function PipelineTimeline({
                 {status === "active" ? (
                   <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase text-amber-900">
                     Now
-                  </span>
-                ) : null}
-                {status === "complete" ? (
-                  <span className="ml-2 text-emerald-600" aria-hidden>
-                    ✓
                   </span>
                 ) : null}
               </div>
