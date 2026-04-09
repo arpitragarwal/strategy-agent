@@ -50,7 +50,7 @@ export function contextClarificationPlanPrompt(input: {
 
 Your jobs:
 1. **Specificity check** — Read the goal for underspecified phrases (e.g. "the largest customer segment", "fastest-growing region", "main vertical") where naming the entity would sharpen the rest of the pipeline. Call this out in specificity_notes.
-2. **Data-first disambiguation** — When prototype spreadsheet data (see catalog) can pin down those entities, emit quant_plans (up to **4**). Use filter → groupby → sort (desc) → limit patterns. Use exact datasetId values from the catalog.
+2. **Data-first disambiguation** — When prototype spreadsheet data (see catalog) can pin down those entities, emit quant_plans (up to **4**). Prefer **filter → join (if multiple tables) → project (optional, to select columns) → groupby → sort (desc) → limit**. Use exact datasetId values from the catalog and documented join keys.
 3. **Human clarification** — Only if something important still cannot be resolved from the data (e.g. strategic definition not in CSVs, required time horizon missing, user intent ambiguous), add concise clarifying_questions (max **5** strings). If data can fully ground the goal for this workspace, use [].
 
 User goal / question:
@@ -71,7 +71,9 @@ Shape:
   "clarifying_questions": [ "string", ... ]
 }
 
-Quant plan steps (same ops as elsewhere): filter, groupby, sort, limit. chart optional {{ "type":"bar"|"line", "x","y", "title"? }}.
+Quant plan steps: **filter**, **join** (multi-table), **project**, **groupby**, **sort**, **limit**. chart optional {{ "type":"bar"|"line", "x","y", "title"? }}.
+- **join:** \`{ "op":"join", "rightDatasetId":"crm/accounts", "on":[["account_id","account_id"]], "how":"left", "rightPrefix":"acc_" }\` — \`on\` is an array of [leftCol, rightCol] pairs, all must match. **rightPrefix** prefixes every column from the right file (default \`r_\`). Use distinct prefixes for chained joins.
+- **project:** \`{ "op":"project", "columns":["segment","amount","acc_arr_usd"] }\` — keep only listed columns (use names present *after* prior steps).
 
 If retrieve_memory had nothing useful and the goal is already concrete, specificity_notes can be brief, quant_plans can be [], clarifying_questions can be [].`;
 }
@@ -273,9 +275,13 @@ Quantitative plans: when numeric evidence from these CSVs would strengthen confi
 
 Allowed quant.steps operations (execute in order):
 - {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
+- {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
+- {"op":"project","columns":["col1","col2",...]} — optional; drop columns before groupby/chart (use actual names after joins, e.g. r_arr_usd or acc_arr_usd).
 - {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
 - {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
 - {"op":"limit","n": number}
+
+For **cross-table** hypotheses (e.g. pipeline amount by account ARR band), use **join** to **crm/accounts** (or as documented in the catalog) rather than reasoning from a single file.
 
 Optional "chart": {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} referencing columns present AFTER all steps.
 

@@ -109,7 +109,7 @@ async function analyzeLeafToDoneState(params: {
     }),
     {
       repairHint:
-        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps, optional chart).',
+        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps: filter/join/project/groupby/sort/limit, optional chart).',
     },
   );
   let quantResult = undefined;
@@ -720,7 +720,7 @@ async function runContextClarificationPhase(
         }),
         {
           repairHint:
-            'Keys: "specificity_notes" (string), "quant_plans" (array, max 4 objects: hypothesis_under_test, datasetId, steps, optional chart), "clarifying_questions" (array, max 5 short strings).',
+            'Keys: "specificity_notes" (string), "quant_plans" (array, max 4 objects: hypothesis_under_test, datasetId, steps with filter/join/project/groupby/sort/limit, optional chart), "clarifying_questions" (array, max 5 short strings).',
         },
       ),
     );

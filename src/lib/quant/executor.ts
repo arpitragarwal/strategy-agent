@@ -95,6 +95,83 @@ function validateColumns(rows: Record<string, unknown>[], cols: string[], ctx: s
   }
 }
 
+function compositeKey(row: Record<string, unknown>, cols: string[]): string {
+  return cols.map((c) => String(row[c] ?? "")).join("\u0001");
+}
+
+function applyJoin(
+  leftRows: Record<string, unknown>[],
+  step: Extract<QuantOp, { op: "join" }>,
+  stepIdx: number,
+): Record<string, unknown>[] {
+  if (!step.on?.length) {
+    throw new Error(
+      `Step ${stepIdx} join: "on" must be a non-empty array of [leftCol, rightCol] pairs`,
+    );
+  }
+  const rightRows = loadCsvAsObjects(step.rightDatasetId);
+  const how = step.how ?? "left";
+  const prefix = step.rightPrefix ?? "r_";
+
+  const leftKeyCols = step.on.map(([l]) => l);
+  const rightKeyCols = step.on.map(([, r]) => r);
+
+  if (!leftRows.length) {
+    return how === "inner" ? [] : [];
+  }
+  validateColumns(leftRows, leftKeyCols, `Step ${stepIdx} join (left)`);
+  if (!rightRows.length) {
+    if (how === "inner") return [];
+    return leftRows.map((r) => ({ ...r }));
+  }
+  validateColumns(rightRows, rightKeyCols, `Step ${stepIdx} join (right)`);
+
+  const index = new Map<string, Record<string, unknown>[]>();
+  for (const r of rightRows) {
+    const k = compositeKey(r, rightKeyCols);
+    if (!index.has(k)) index.set(k, []);
+    index.get(k)!.push(r);
+  }
+
+  const out: Record<string, unknown>[] = [];
+  for (const l of leftRows) {
+    const k = compositeKey(l, leftKeyCols);
+    const matches = index.get(k) ?? [];
+    if (matches.length === 0) {
+      if (how === "left") out.push({ ...l });
+      continue;
+    }
+    for (const r of matches) {
+      const merged: Record<string, unknown> = { ...l };
+      for (const [col, val] of Object.entries(r)) {
+        merged[`${prefix}${col}`] = val;
+      }
+      for (const [lc, rc] of step.on) {
+        if (lc === rc) {
+          delete merged[`${prefix}${rc}`];
+        }
+      }
+      out.push(merged);
+    }
+  }
+  return out;
+}
+
+function applyProject(
+  rows: Record<string, unknown>[],
+  step: Extract<QuantOp, { op: "project" }>,
+  stepIdx: number,
+): Record<string, unknown>[] {
+  validateColumns(rows, step.columns, `Step ${stepIdx} project`);
+  return rows.map((r) => {
+    const o: Record<string, unknown> = {};
+    for (const c of step.columns) {
+      o[c] = r[c];
+    }
+    return o;
+  });
+}
+
 function inferVegaType(
   rows: Record<string, unknown>[],
   field: string,
@@ -129,9 +206,11 @@ function buildVegaLiteSpec(
 
 export function executeQuantPlan(plan: QuantPlan): QuantResult {
   const executedAt = new Date().toISOString();
+  const datasetIdsUsed = new Set<string>([plan.datasetId]);
   const safe: QuantResult = {
     hypothesis_under_test: plan.hypothesis_under_test,
     datasetId: plan.datasetId,
+    datasetIdsUsed: [plan.datasetId],
     tables: [],
     vegaLiteSpecs: [],
     executedAt,
@@ -160,8 +239,15 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
         rows = applySort(rows, step);
       } else if (step.op === "limit") {
         rows = rows.slice(0, Math.max(0, Math.min(step.n, 10_000)));
+      } else if (step.op === "join") {
+        datasetIdsUsed.add(step.rightDatasetId);
+        rows = applyJoin(rows, step, stepIdx);
+      } else if (step.op === "project") {
+        rows = applyProject(rows, step, stepIdx);
       }
     }
+
+    safe.datasetIdsUsed = [...datasetIdsUsed];
 
     const cols = Object.keys(rows[0] ?? {});
     safe.tables.push({ name: "result", columns: cols, rows });
@@ -175,14 +261,16 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
       });
     }
 
+    const multi = datasetIdsUsed.size > 1;
     if (rows.length === 1 && cols.length <= 6) {
       safe.narrative = cols.map((c) => `${c}: ${rows[0]![c]}`).join("; ");
     } else {
-      safe.narrative = `${rows.length} row(s) after pipeline.`;
+      safe.narrative = `${rows.length} row(s) after pipeline${multi ? ` (${[...datasetIdsUsed].join(" + ")})` : ""}.`;
     }
 
     return safe;
   } catch (e) {
+    safe.datasetIdsUsed = [...datasetIdsUsed];
     safe.error = e instanceof Error ? e.message : String(e);
     return safe;
   }

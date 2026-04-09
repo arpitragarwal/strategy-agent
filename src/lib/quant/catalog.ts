@@ -106,11 +106,25 @@ export function getDatasetMeta(datasetId: string): DatasetMeta | undefined {
   return byId.get(datasetId);
 }
 
+/** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
+export const QUANT_JOIN_RELATIONSHIPS = [
+  "**account_id** — crm/opportunities, crm/contacts, support/tickets → join to **crm/accounts** on [[\"account_id\",\"account_id\"]] for tier, arr_usd, industry, region, primary_sku, etc.",
+  "**Segment + region** — crm/opportunities has segment and owner_region; **cx/survey_nps** has segment and region — use [[\"segment\",\"segment\"],[\"owner_region\",\"region\"]] (column names differ on the left).",
+  "**Tickets + accounts** — support/tickets → crm/accounts on account_id for ARR / tier / SKU context.",
+  "**Chained joins** — start from one datasetId, then multiple join steps. Use distinct **rightPrefix** values (e.g. acc_, sup_) if you join more than one table so column names do not overwrite each other.",
+] as const;
+
 export function buildDataCatalogMarkdown(): string {
   const lines = [
     "## Available quantitative datasets (CSV prototypes)",
     "",
-    "Use `datasetId` exactly as listed. Design `steps` using only columns that exist in that file.",
+    "Use datasetId as the **primary (left) table**. Add **join** steps to bring in other catalog tables; right-hand columns appear with **rightPrefix** (default r_). Use **project** to keep only the columns you need before **groupby** / **chart**.",
+    "",
+    "### Multi-table joins",
+    "",
+    ...QUANT_JOIN_RELATIONSHIPS.map((s) => `- ${s}`),
+    "",
+    "Use datasetId values exactly as listed below. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
     "",
   ];
   const byDomain: Record<string, DatasetMeta[]> = { crm: [], cx: [], finance: [], support: [] };
