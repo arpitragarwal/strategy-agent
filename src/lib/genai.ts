@@ -7,6 +7,7 @@ import {
   type GenerativeModel,
 } from "@google/generative-ai";
 import { parseModelJson } from "./json";
+import { recordTokenUsageFromGenerateResponse } from "./tokenUsage";
 
 /** Model ID for generateContent (e.g. open-weight Gemma 4 on the Google AI API). */
 export function getModelId(): string {
@@ -173,6 +174,8 @@ async function generateContentOnce(model: GenerativeModel, prompt: string): Prom
       "The model returned no output (no candidates). Often caused by filtering, or JSON mode not supported for this model.",
     );
   }
+
+  recordTokenUsageFromGenerateResponse(response as { usageMetadata?: unknown });
 
   let text: string;
   try {

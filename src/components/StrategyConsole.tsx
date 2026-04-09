@@ -15,6 +15,16 @@ import type {
 
 type RunMode = "end_to_end" | "step_by_step";
 
+type TokenUsageSnapshot = {
+  input?: number;
+  output?: number;
+  total?: number;
+  calls?: number;
+  byPhase?: Record<string, { input: number; output: number }>;
+  modelId?: string;
+  recordedAt?: string;
+};
+
 type RunRow = {
   id: string;
   status?: string;
@@ -31,7 +41,19 @@ type RunRow = {
   synthesis: string | null;
   synthesisIsPartial: boolean | null;
   progressLog: unknown;
+  tokenUsage?: unknown;
 };
+
+function formatTokenUsageSummary(u: TokenUsageSnapshot | null): string | null {
+  if (!u) return null;
+  const input = typeof u.input === "number" ? u.input : 0;
+  const output = typeof u.output === "number" ? u.output : 0;
+  if (!input && !output && !(typeof u.calls === "number" && u.calls > 0)) {
+    return null;
+  }
+  const calls = typeof u.calls === "number" ? `${u.calls} calls` : null;
+  return ["Tokens:", `${input} in / ${output} out`, calls].filter(Boolean).join(" ");
+}
 
 type ArtifactPayload = {
   userPrompt?: string;
@@ -708,6 +730,7 @@ export function StrategyConsole() {
   const [pausedAt, setPausedAt] = useState<ReviewCheckpoint | null>(null);
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
+  const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
   const endedWithPauseRef = useRef(false);
 
   const [treeExpandOverrides, setTreeExpandOverrides] = useState<Record<string, boolean>>({});
@@ -726,6 +749,16 @@ export function StrategyConsole() {
   useEffect(() => {
     setTreeExpandOverrides({});
   }, [runId]);
+
+  const refreshRunMeta = useCallback(async (id: string) => {
+    const res = await fetch(`/api/runs/${id}`);
+    if (!res.ok) return;
+    const run = (await res.json()) as RunRow;
+    const raw = run.tokenUsage;
+    setTokenUsage(
+      raw && typeof raw === "object" ? (raw as TokenUsageSnapshot) : null,
+    );
+  }, []);
 
   const isTreeBranchExpanded = useCallback(
     (id: string, depth: number, hasChildren: boolean) => {
@@ -770,6 +803,7 @@ export function StrategyConsole() {
     setSelectedMemoryId(null);
     setPausedAt(null);
     setClarificationDraft("");
+    setTokenUsage(null);
   };
 
   function hydrateFromRun(run: RunRow) {
@@ -816,6 +850,8 @@ export function StrategyConsole() {
     if (run.runMode === "end_to_end" || run.runMode === "step_by_step") {
       setRunMode(run.runMode);
     }
+    const tu = run.tokenUsage;
+    setTokenUsage(tu && typeof tu === "object" ? (tu as TokenUsageSnapshot) : null);
   }
 
   function hydrateFromArtifact(art: {
@@ -962,6 +998,7 @@ export function StrategyConsole() {
               setBusy(false);
               setControlMessage(null);
               src.close();
+              void refreshRunMeta(id);
               break;
             case "complete":
               src.close();
@@ -969,11 +1006,13 @@ export function StrategyConsole() {
               setPausedAt(null);
               setControlMessage(null);
               void loadMemory();
+              void refreshRunMeta(id);
               break;
             case "error":
               src.close();
               setError(msg.message ?? "Unknown error");
               setBusy(false);
+              void refreshRunMeta(id);
               break;
             default:
               break;
@@ -992,7 +1031,7 @@ export function StrategyConsole() {
         setError((prev) => prev ?? "Stream connection lost");
       };
     },
-    [loadMemory],
+    [loadMemory, refreshRunMeta],
   );
 
   const startRun = async (mode: RunMode) => {
@@ -1037,6 +1076,11 @@ export function StrategyConsole() {
     }
     attachRunStream(runId);
   };
+
+  const tokenUsageSummary = useMemo(
+    () => (runId ? formatTokenUsageSummary(tokenUsage) : null),
+    [runId, tokenUsage],
+  );
 
   const leavesTotal = useMemo(() => {
     if (roots.length) return flattenLeaves(roots).length;
@@ -1159,6 +1203,9 @@ export function StrategyConsole() {
           </p>
           {runId ? (
             <p className="text-xs text-zinc-500 font-mono break-all">run {runId}</p>
+          ) : null}
+          {tokenUsageSummary ? (
+            <p className="text-xs text-zinc-500">{tokenUsageSummary}</p>
           ) : null}
 
           {pausedAt && runId && !busy ? (

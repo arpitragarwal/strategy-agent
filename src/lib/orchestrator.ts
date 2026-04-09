@@ -19,7 +19,13 @@ import {
   type ContextClarificationPlanJson,
   type DiscoveryMemoryRoute,
 } from "./agents/prompts";
-import { generateJson, generateText } from "./genai";
+import { generateJson, generateText, getModelId } from "./genai";
+import {
+  mergeTokenUsageIntoStored,
+  runTokenTrackingContext,
+  RunTokenUsageAccumulator,
+  withTokenPhase,
+} from "./tokenUsage";
 import {
   type OutlineDoc,
   flattenLeaves,
@@ -567,12 +573,14 @@ async function finalizePartialSynthesis(
   send({ type: "progress", entry: entryStart });
 
   const analysesMd = analysesMarkdown(roots, states);
-  const managerNotes = await generateText(
-    partialManagerPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      analysesMarkdown: analysesMd,
-    }),
+  const managerNotes = await withTokenPhase("partial_manager", () =>
+    generateText(
+      partialManagerPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        analysesMarkdown: analysesMd,
+      }),
+    ),
   );
   await prisma.strategyRun.update({
     where: { id: runId },
@@ -580,14 +588,16 @@ async function finalizePartialSynthesis(
   });
   send({ type: "manager", notes: managerNotes });
 
-  const synthesis = await generateText(
-    partialSynthesisPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      managerNotes,
-      analysesMarkdown: analysesMd,
-      userInstruction: userNote ?? undefined,
-    }),
+  const synthesis = await withTokenPhase("partial_synthesis", () =>
+    generateText(
+      partialSynthesisPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        managerNotes,
+        analysesMarkdown: analysesMd,
+        userInstruction: userNote ?? undefined,
+      }),
+    ),
   );
   await prisma.strategyRun.update({
     where: { id: runId },
@@ -667,6 +677,7 @@ async function runContextClarificationPhase(
   send: StreamSender,
   emit: (stage: string, message: string) => Promise<void>,
 ) {
+  await withTokenPhase("context", async () => {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   await emit("context", "Starting pipeline — context & clarification");
   let route: DiscoveryMemoryRoute = { retrieve_memory: false, queries: [] };
@@ -762,6 +773,7 @@ async function runContextClarificationPhase(
   send({ type: "discovery", text: discoveryText });
   await emit("context", "Context & clarification draft saved");
   await pauseForHumanReview(runId, send, "after_discovery");
+  });
 }
 
 async function runStructureRevisionPhase(
@@ -769,6 +781,7 @@ async function runStructureRevisionPhase(
   send: StreamSender,
   emit: (stage: string, message: string) => Promise<void>,
 ) {
+  await withTokenPhase("structure", async () => {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   const discoveryText = run.discoveryOutput ?? "";
   if (!discoveryText) {
@@ -827,12 +840,14 @@ async function runStructureRevisionPhase(
     `Initial hypothesis tree (${flattenLeaves(roots).length} leaves) — manager review`,
   );
 
-  const treeReviewNotes = await generateText(
-    managerMeceReviewPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      outlineJson: JSON.stringify(firstOutline, null, 2),
-    }),
+  const treeReviewNotes = await withTokenPhase("manager_tree", () =>
+    generateText(
+      managerMeceReviewPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        outlineJson: JSON.stringify(firstOutline, null, 2),
+      }),
+    ),
   );
   await prisma.strategyRun.update({
     where: { id: runId },
@@ -901,6 +916,7 @@ async function runStructureRevisionPhase(
   );
 
   await pauseForHumanReview(runId, send, "after_structure");
+  });
 }
 
 async function runLeafAnalysisPhase(
@@ -921,87 +937,97 @@ async function runLeafAnalysisPhase(
   const leaves = flattenLeaves(roots);
   const concurrency = analysisConcurrency();
   let offset = 0;
+  let stoppedEarlyForPartial = false;
 
-  while (offset < leaves.length) {
-    const ctrl = await consumeControl(runId);
-    if (ctrl?.action === "synthesize_now") {
-      await finalizePartialSynthesis(runId, send, ctrl.note);
-      return;
-    }
-    if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
-      await recordRedirect(runId, ctrl.note.trim(), send);
-    }
+  await withTokenPhase("analysis", async () => {
+    while (offset < leaves.length) {
+      const ctrl = await consumeControl(runId);
+      if (ctrl?.action === "synthesize_now") {
+        await finalizePartialSynthesis(runId, send, ctrl.note);
+        stoppedEarlyForPartial = true;
+        return;
+      }
+      if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
+        await recordRedirect(runId, ctrl.note.trim(), send);
+      }
 
-    const redirectRow = await prisma.strategyRun.findUniqueOrThrow({
-      where: { id: runId },
-      select: { redirectContext: true },
-    });
-    const redirectContext =
-      redirectRow.redirectContext?.trim() || undefined;
-    const batch = leaves.slice(offset, offset + concurrency);
-    offset += batch.length;
+      const redirectRow = await prisma.strategyRun.findUniqueOrThrow({
+        where: { id: runId },
+        select: { redirectContext: true },
+      });
+      const redirectContext =
+        redirectRow.redirectContext?.trim() || undefined;
+      const batch = leaves.slice(offset, offset + concurrency);
+      offset += batch.length;
 
-    for (const leaf of batch) {
-      states[leaf.id] = {
-        ...states[leaf.id],
-        id: leaf.id,
-        status: "running",
-      };
-    }
-    await prisma.strategyRun.update({
-      where: { id: runId },
-      data: { nodeStates: states as object },
-    });
-    for (const leaf of batch) {
-      send({ type: "node", state: states[leaf.id] });
-      await emit("analysis", `Analyzing: ${leaf.title}`);
-    }
+      for (const leaf of batch) {
+        states[leaf.id] = {
+          ...states[leaf.id],
+          id: leaf.id,
+          status: "running",
+        };
+      }
+      await prisma.strategyRun.update({
+        where: { id: runId },
+        data: { nodeStates: states as object },
+      });
+      for (const leaf of batch) {
+        send({ type: "node", state: states[leaf.id] });
+        await emit("analysis", `Analyzing: ${leaf.title}`);
+      }
 
-    const doneStates = await Promise.all(
-      batch.map((leaf) =>
-        analyzeLeafToDoneState({
-          userGoal: run.prompt,
-          discoveryText,
-          roots,
-          leaf,
-          redirectContext,
-        }),
-      ),
-    );
+      const doneStates = await Promise.all(
+        batch.map((leaf) =>
+          analyzeLeafToDoneState({
+            userGoal: run.prompt,
+            discoveryText,
+            roots,
+            leaf,
+            redirectContext,
+          }),
+        ),
+      );
 
-    for (const done of doneStates) {
-      states[done.id] = done;
-      send({ type: "node", state: done });
+      for (const done of doneStates) {
+        states[done.id] = done;
+        send({ type: "node", state: done });
+      }
+      await prisma.strategyRun.update({
+        where: { id: runId },
+        data: { nodeStates: states as object },
+      });
     }
-    await prisma.strategyRun.update({
-      where: { id: runId },
-      data: { nodeStates: states as object },
-    });
+  });
+
+  if (stoppedEarlyForPartial) {
+    return;
   }
 
-  await emit("analysis", "Rolling up branch conclusions from leaf results…");
-  await rollupBranchStatesFromLeaves(
-    runId,
-    roots,
-    states,
-    run.prompt,
-    discoveryText,
-    send,
-    emit,
-  );
+  await withTokenPhase("rollup", async () => {
+    await emit("analysis", "Rolling up branch conclusions from leaf results…");
+    await rollupBranchStatesFromLeaves(
+      runId,
+      roots,
+      states,
+      run.prompt,
+      discoveryText,
+      send,
+      emit,
+    );
 
-  const modeRow = await prisma.strategyRun.findUnique({
-    where: { id: runId },
-    select: { runMode: true },
+    const modeRow = await prisma.strategyRun.findUnique({
+      where: { id: runId },
+      select: { runMode: true },
+    });
+    const endToEnd = modeRow?.runMode === "end_to_end";
+    await emit(
+      "analysis",
+      endToEnd
+        ? "All branches rolled up — manager critique next"
+        : "All branches rolled up — awaiting your review",
+    );
+    await pauseForHumanReview(runId, send, "after_analysis");
   });
-  const endToEnd = modeRow?.runMode === "end_to_end";
-  await emit(
-    "analysis",
-    endToEnd
-      ? "All branches rolled up — manager critique next"
-      : "All branches rolled up — awaiting your review",
-  );
-  await pauseForHumanReview(runId, send, "after_analysis");
 }
 
 async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
@@ -1016,12 +1042,14 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   send({ type: "progress", entry });
 
   const analysesMd = analysesMarkdown(roots, states);
-  const managerNotes = await generateText(
-    managerPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      analysesMarkdown: analysesMd,
-    }),
+  const managerNotes = await withTokenPhase("manager_analyses", () =>
+    generateText(
+      managerPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        analysesMarkdown: analysesMd,
+      }),
+    ),
   );
   await prisma.strategyRun.update({
     where: { id: runId },
@@ -1032,13 +1060,15 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   const synEntry = await appendProgress(runId, "synthesis", "Writing final memo");
   send({ type: "progress", entry: synEntry });
 
-  const synthesis = await generateText(
-    synthesisPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      managerNotes,
-      analysesMarkdown: analysesMd,
-    }),
+  const synthesis = await withTokenPhase("synthesis", () =>
+    generateText(
+      synthesisPrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+        managerNotes,
+        analysesMarkdown: analysesMd,
+      }),
+    ),
   );
   await prisma.strategyRun.update({
     where: { id: runId },
@@ -1135,7 +1165,9 @@ export async function executeRun(runId: string, send: StreamSender) {
     send({ type: "progress", entry });
   };
 
-  try {
+  const acc = new RunTokenUsageAccumulator(getModelId());
+  await runTokenTrackingContext(acc, async () => {
+    try {
     if (initialStatus === "pending") {
       await runContextClarificationPhase(runId, send, emit);
       const afterDiscovery = await prisma.strategyRun.findUnique({
@@ -1205,13 +1237,28 @@ export async function executeRun(runId: string, send: StreamSender) {
     }
 
     send({ type: "error", message: "Unexpected run state — cannot resume." });
-  } catch (e) {
-    const message = e instanceof Error ? e.message : String(e);
-    await prisma.strategyRun.update({
-      where: { id: runId },
-      data: { status: "failed", error: message, reviewCheckpoint: null },
-    });
-    send({ type: "error", message });
-    await appendProgress(runId, "error", message);
-  }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      await prisma.strategyRun.update({
+        where: { id: runId },
+        data: { status: "failed", error: message, reviewCheckpoint: null },
+      });
+      send({ type: "error", message });
+      await appendProgress(runId, "error", message);
+    } finally {
+      try {
+        const row = await prisma.strategyRun.findUnique({
+          where: { id: runId },
+          select: { tokenUsage: true },
+        });
+        const merged = mergeTokenUsageIntoStored(row?.tokenUsage, acc.toJSON());
+        await prisma.strategyRun.update({
+          where: { id: runId },
+          data: { tokenUsage: merged as Prisma.InputJsonValue },
+        });
+      } catch {
+        /* ignore persistence errors */
+      }
+    }
+  });
 }

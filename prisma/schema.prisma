@@ -35,6 +35,8 @@ model StrategyRun {
   /// Appended steering notes from redirects; injected into remaining leaf analyses
   redirectContext String  @default("") @db.Text
   synthesisIsPartial Boolean @default(false)
+  /// Aggregated Gemini usage for this run (input/output tokens, by phase); updated when execution finishes or fails.
+  tokenUsage      Json?
 }
 
 model MemoryArtifact {
