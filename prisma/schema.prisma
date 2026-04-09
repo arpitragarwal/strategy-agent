@@ -19,8 +19,10 @@ model StrategyRun {
   prompt          String   @db.Text
   companyContext  String   @default("") @db.Text
   discoveryOutput String?  @db.Text
+  /// Optional answers to clarifying questions from the context step; merged into discoveryOutput before structure when user continues.
+  clarificationAnswers String? @db.Text
   outline         Json?
-  /// Manager critique of the MECE tree before leaf analysis; structure is then revised
+  /// Manager critique of the hypothesis tree before leaf analysis; structure is then revised
   treeReviewNotes String?  @db.Text
   nodeStates      Json?
   managerNotes    String?  @db.Text

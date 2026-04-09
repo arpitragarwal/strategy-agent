@@ -40,22 +40,50 @@ function retryDelayMs(attemptIndex: number): number {
   return Math.round(exp + jitter);
 }
 
+/** True when failure is likely transient (network / TLS / DNS) — safe to retry with backoff. */
+function messageLooksLikeTransientNetwork(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message.toLowerCase() : String(e).toLowerCase();
+  return (
+    msg.includes("fetch failed") ||
+    msg.includes("failed to fetch") ||
+    msg.includes("load failed") ||
+    msg.includes("networkerror") ||
+    msg.includes("network error") ||
+    msg.includes("econnreset") ||
+    msg.includes("etimedout") ||
+    msg.includes("econnrefused") ||
+    msg.includes("socket hang up") ||
+    msg.includes("enotfound") ||
+    msg.includes("eai_again") ||
+    msg.includes("ecert") ||
+    msg.includes("certificate") ||
+    (msg.includes("dns") && msg.includes("timeout")) ||
+    (msg.includes("generativelanguage.googleapis.com") && msg.includes("fetch"))
+  );
+}
+
 function isRetryableGenAiError(e: unknown): boolean {
   if (e instanceof GoogleGenerativeAIAbortError) return false;
   if (e instanceof GoogleGenerativeAIFetchError) {
     const s = e.status;
     if (s === 429 || s === 408) return true;
     if (typeof s === "number" && s >= 500 && s < 600) return true;
+    // No HTTP status (or non-retryable 4xx) but the transport failed — still retry.
+    if (messageLooksLikeTransientNetwork(e)) return true;
     return false;
   }
   if (e instanceof GoogleGenerativeAIResponseError) return false;
-  if (e instanceof GoogleGenerativeAIError) return false;
+  // Base SDK error often wraps `fetch failed` without a useful status — retry those only.
+  if (e instanceof GoogleGenerativeAIError) {
+    return messageLooksLikeTransientNetwork(e);
+  }
   if (e instanceof TypeError) {
     return /\b(failed to fetch|network|load failed|fetch)\b/i.test(e.message);
   }
   if (e instanceof Error) {
     const m = e.message.toLowerCase();
     return (
+      messageLooksLikeTransientNetwork(e) ||
       m.includes("econnreset") ||
       m.includes("etimedout") ||
       m.includes("econnrefused") ||

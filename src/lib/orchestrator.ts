@@ -2,8 +2,10 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "./db";
 import {
   analysisPrompt,
+  branchRollupPrompt,
+  contextClarificationPlanPrompt,
+  contextClarificationSynthesisPrompt,
   discoveryMemoryRoutePrompt,
-  discoveryPrompt,
   managerMeceReviewPrompt,
   managerPrompt,
   partialManagerPrompt,
@@ -13,6 +15,8 @@ import {
   structurePrompt,
   structureRevisionPrompt,
   synthesisPrompt,
+  type BranchRollupJson,
+  type ContextClarificationPlanJson,
   type DiscoveryMemoryRoute,
 } from "./agents/prompts";
 import { generateJson, generateText } from "./genai";
@@ -20,6 +24,7 @@ import {
   type OutlineDoc,
   flattenLeaves,
   initNodeStates,
+  listAllNodeIds,
   normalizeOutlineDoc,
   pathToNode,
 } from "./outline";
@@ -27,12 +32,48 @@ import { buildDataCatalogMarkdown, executeQuantPlan } from "./quant";
 import type { QuantPlan } from "./quant/types";
 import { searchStrategyMemory } from "./strategyMemory";
 import type {
+  HypothesisVerdict,
   OutlineNode,
   NodeState,
   ProgressEntry,
   ReviewCheckpoint,
   StreamEvent,
 } from "./types";
+
+function normalizeContextClarificationPlan(
+  plan: ContextClarificationPlanJson,
+): ContextClarificationPlanJson {
+  return {
+    specificity_notes:
+      typeof plan.specificity_notes === "string" ? plan.specificity_notes : "",
+    quant_plans: Array.isArray(plan.quant_plans) ? plan.quant_plans.slice(0, 4) : [],
+    clarifying_questions: Array.isArray(plan.clarifying_questions)
+      ? plan.clarifying_questions
+          .map((q) => String(q).trim())
+          .filter(Boolean)
+          .slice(0, 5)
+      : [],
+  };
+}
+
+async function mergeClarificationAnswersIntoDiscovery(
+  runId: string,
+  send?: StreamSender,
+) {
+  const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
+  const ans = run.clarificationAnswers?.trim();
+  if (!ans) return;
+  const prev = run.discoveryOutput ?? "";
+  const merged = `${prev}\n\n## Your clarifications\n\n${ans}`;
+  await prisma.strategyRun.update({
+    where: { id: runId },
+    data: {
+      discoveryOutput: merged,
+      clarificationAnswers: null,
+    },
+  });
+  send?.({ type: "discovery", text: merged });
+}
 
 const DATA_CATALOG_MARKDOWN = buildDataCatalogMarkdown();
 
@@ -62,7 +103,7 @@ async function analyzeLeafToDoneState(params: {
     }),
     {
       repairHint:
-        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array — data/context/stakeholder/quant gaps per prompt), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
+        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps, optional chart).',
     },
   );
   let quantResult = undefined;
@@ -75,13 +116,18 @@ async function analyzeLeafToDoneState(params: {
     quantResult = executeQuantPlan(parsed.quant as QuantPlan);
   }
 
+  const verdict = normalizeHypothesisVerdict(parsed.verdict);
+  const confidence = normalizeConfidence(parsed.confidence);
+  const evidenceList = Array.isArray(parsed.evidence_needed)
+    ? parsed.evidence_needed.map((s) => String(s).trim()).filter(Boolean)
+    : [];
+  const hypothesisStatement =
+    typeof parsed.hypothesis === "string" && parsed.hypothesis.trim() ?
+      parsed.hypothesis.trim()
+    : undefined;
+
   const block = [
     parsed.analysis,
-    parsed.hypothesis ? `\n\nHypothesis: ${parsed.hypothesis}` : "",
-    `\n\nConfidence: ${parsed.confidence}`,
-    parsed.evidence_needed?.length
-      ? `\nEvidence needed: ${parsed.evidence_needed.join("; ")}`
-      : "",
     quantResult?.narrative ? `\n\n**Quant:** ${quantResult.narrative}` : "",
     quantResult?.error ? `\n\n_Quant error: ${quantResult.error}_` : "",
   ].join("");
@@ -91,14 +137,232 @@ async function analyzeLeafToDoneState(params: {
     status: "done",
     summary: parsed.summary,
     analysis: block.trim(),
+    hypothesisStatement,
+    verdict,
+    confidence,
+    evidenceNeeded: evidenceList.length ? evidenceList : undefined,
     ...(quantResult ? { quant: quantResult } : {}),
   };
+}
+
+function normalizeHypothesisVerdict(raw: unknown): HypothesisVerdict {
+  const s = typeof raw === "string" ? raw.toLowerCase().trim() : "";
+  if (s === "confirmed" || s === "confirm") return "confirmed";
+  if (s === "refuted" || s === "refute" || s === "denied" || s === "deny") return "refuted";
+  if (s === "partially_supported" || s === "partial" || s === "partially supported")
+    return "partially_supported";
+  return "inconclusive";
+}
+
+function normalizeConfidence(raw: unknown): "low" | "medium" | "high" {
+  const s = typeof raw === "string" ? raw.toLowerCase().trim() : "";
+  if (s === "high") return "high";
+  if (s === "low") return "low";
+  return "medium";
+}
+
+function ensureNodeStatesForTree(
+  roots: OutlineNode[],
+  states: Record<string, NodeState>,
+): void {
+  for (const id of listAllNodeIds(roots)) {
+    if (!states[id]) {
+      states[id] = { id, status: "pending" };
+    }
+  }
+}
+
+function isNodeStateComplete(s: NodeState | undefined): boolean {
+  return s?.status === "done" || s?.status === "skipped";
+}
+
+function childSummariesMarkdownForRollup(
+  roots: OutlineNode[],
+  parent: OutlineNode,
+  states: Record<string, NodeState>,
+): string {
+  const kids = parent.children ?? [];
+  return kids
+    .map((c) => {
+      const path = pathToNode(roots, c.id).join(" > ");
+      const st = states[c.id];
+      const lines = [`### ${path}`, `**Title:** ${c.title}`];
+      if (c.question) lines.push(`**Hypothesis / question:** ${c.question}`);
+      if (!st) {
+        lines.push("_(no state)_");
+        return lines.join("\n");
+      }
+      lines.push(`**Run status:** ${st.status}`);
+      if (st.verdict) lines.push(`**Verdict:** ${st.verdict}`);
+      if (st.confidence) lines.push(`**Confidence:** ${st.confidence}`);
+      if (st.summary) lines.push(`**Summary:** ${st.summary}`);
+      if (st.evidenceNeeded?.length) {
+        lines.push(`**Gaps:** ${st.evidenceNeeded.join("; ")}`);
+      }
+      return lines.join("\n");
+    })
+    .join("\n\n---\n\n");
+}
+
+function deterministicFallbackBranchRollup(
+  parent: OutlineNode,
+  states: Record<string, NodeState>,
+): NodeState {
+  const kids = parent.children ?? [];
+  const rank: Record<"low" | "medium" | "high", number> = {
+    low: 0,
+    medium: 1,
+    high: 2,
+  };
+  let minConf: "low" | "medium" | "high" = "high";
+  const bullets: string[] = [];
+  for (const c of kids) {
+    const st = states[c.id];
+    const sm =
+      st?.summary?.trim() ||
+      (st?.status === "skipped" ? "(skipped)" : "—");
+    bullets.push(`- **${c.title}:** ${sm}`);
+    if (st?.confidence && rank[st.confidence] < rank[minConf]) {
+      minConf = st.confidence;
+    }
+  }
+  return {
+    id: parent.id,
+    status: "done",
+    summary: `Branch rollup from ${kids.length} child node(s) (automatic fallback).`,
+    analysis: bullets.join("\n"),
+    verdict: "inconclusive",
+    confidence: minConf,
+  };
+}
+
+async function rollupSingleInternalNode(
+  roots: OutlineNode[],
+  parent: OutlineNode,
+  states: Record<string, NodeState>,
+  userGoal: string,
+  discoveryText: string,
+): Promise<NodeState> {
+  const pathTitles = pathToNode(roots, parent.id).join(" > ");
+  const childMd = childSummariesMarkdownForRollup(roots, parent, states);
+  try {
+    const parsed = await generateJson<BranchRollupJson>(
+      branchRollupPrompt({
+        userGoal,
+        contextClarification: discoveryText,
+        parentPathTitles: pathTitles,
+        parentTitle: parent.title,
+        parentQuestion: parent.question,
+        childSummariesMarkdown: childMd,
+      }),
+      {
+        repairHint:
+          'Keys: "summary", "analysis", "verdict" (confirmed|refuted|inconclusive|partially_supported), "confidence" (low|medium|high), "evidence_needed" (string array).',
+      },
+    );
+    const evidenceList = Array.isArray(parsed.evidence_needed)
+      ? parsed.evidence_needed.map((s) => String(s).trim()).filter(Boolean)
+      : [];
+    return {
+      id: parent.id,
+      status: "done",
+      summary: typeof parsed.summary === "string" ? parsed.summary : "",
+      analysis: typeof parsed.analysis === "string" ? parsed.analysis : "",
+      verdict: normalizeHypothesisVerdict(parsed.verdict),
+      confidence: normalizeConfidence(parsed.confidence),
+      evidenceNeeded: evidenceList.length ? evidenceList : undefined,
+    };
+  } catch {
+    return deterministicFallbackBranchRollup(parent, states);
+  }
+}
+
+/** Bottom-up waves: parents roll up after all direct children are done or skipped. */
+async function rollupBranchStatesFromLeaves(
+  runId: string,
+  roots: OutlineNode[],
+  states: Record<string, NodeState>,
+  userGoal: string,
+  discoveryText: string,
+  send: StreamSender,
+  emit: (stage: string, message: string) => Promise<void>,
+) {
+  const allChildrenComplete = (node: OutlineNode): boolean => {
+    const kids = node.children ?? [];
+    return (
+      kids.length > 0 && kids.every((c) => isNodeStateComplete(states[c.id]))
+    );
+  };
+
+  let wave = true;
+  while (wave) {
+    const ready: OutlineNode[] = [];
+    const collect = (nodes: OutlineNode[]) => {
+      for (const n of nodes) {
+        if (n.children?.length) {
+          collect(n.children);
+          const st = states[n.id];
+          if (
+            st?.status === "pending" &&
+            allChildrenComplete(n)
+          ) {
+            ready.push(n);
+          }
+        }
+      }
+    };
+    collect(roots);
+    if (!ready.length) break;
+
+    for (const parent of ready) {
+      states[parent.id] = {
+        ...states[parent.id],
+        id: parent.id,
+        status: "running",
+      };
+    }
+    await prisma.strategyRun.update({
+      where: { id: runId },
+      data: { nodeStates: states as object },
+    });
+    for (const parent of ready) {
+      send({ type: "node", state: states[parent.id]! });
+    }
+
+    const rolled = await Promise.all(
+      ready.map((parent) =>
+        rollupSingleInternalNode(
+          roots,
+          parent,
+          states,
+          userGoal,
+          discoveryText,
+        ),
+      ),
+    );
+
+    for (let i = 0; i < ready.length; i++) {
+      const parent = ready[i]!;
+      const done = rolled[i]!;
+      states[parent.id] = done;
+      send({ type: "node", state: done });
+    }
+    await prisma.strategyRun.update({
+      where: { id: runId },
+      data: { nodeStates: states as object },
+    });
+    await emit(
+      "analysis",
+      `Rolled up ${ready.length} branch level(s) toward the root`,
+    );
+  }
 }
 
 type AnalysisJson = {
   summary: string;
   analysis: string;
   hypothesis: string | null;
+  verdict?: string;
   evidence_needed: string[];
   confidence: string;
   quant?: QuantPlan | null;
@@ -175,11 +439,26 @@ function memoryArtifactTitle(strategyQuestion: string, partial: boolean): string
   return partial ? `${s} (partial)` : s;
 }
 
+function verdictLabel(v: HypothesisVerdict): string {
+  switch (v) {
+    case "confirmed":
+      return "Confirmed";
+    case "refuted":
+      return "Refuted";
+    case "partially_supported":
+      return "Partially supported";
+    default:
+      return "Inconclusive";
+  }
+}
+
 function analysesMarkdown(
   roots: OutlineNode[],
   states: Record<string, NodeState>,
 ): string {
-  if (!roots.length) return "(No MECE outline yet — discovery only.)";
+  if (!roots.length) {
+    return "(No hypothesis tree yet — context & clarification only.)";
+  }
   const leaves = flattenLeaves(roots);
   return leaves
     .map((leaf) => {
@@ -193,7 +472,21 @@ function analysesMarkdown(
           q = `\n\n_Quant (${st.quant.datasetId ?? "dataset"}): ${st.quant.narrative}_`;
         }
       }
-      return `### ${path}\nQuestion: ${leaf.question ?? leaf.title}\n\n${st?.analysis ?? "(pending)"}${q}`;
+      const hyp = st?.hypothesisStatement ?? leaf.question ?? leaf.title;
+      const lines: string[] = [`### ${path}`, `**Hypothesis:** ${hyp}`];
+      if (st?.verdict) {
+        const conf = st.confidence ? `${st.confidence}` : "—";
+        lines.push(
+          `**Verdict:** ${verdictLabel(st.verdict)} · **Confidence:** ${conf}`,
+        );
+      }
+      if (st?.evidenceNeeded?.length) {
+        lines.push(
+          `**Additional data / evidence needed:** ${st.evidenceNeeded.join("; ")}`,
+        );
+      }
+      lines.push("", st?.analysis ?? "(pending)");
+      return lines.join("\n") + q;
     })
     .join("\n\n---\n\n");
 }
@@ -213,9 +506,9 @@ async function pauseForHumanReview(
 
   const title =
     checkpoint === "after_discovery"
-      ? "Discovery"
+      ? "context & clarification"
       : checkpoint === "after_structure"
-        ? "revised MECE structure"
+        ? "revised hypothesis tree"
         : "analyses";
   const entry = await appendProgress(
     runId,
@@ -369,13 +662,13 @@ async function replayCompleted(runId: string, send: StreamSender) {
   send({ type: "complete", runId });
 }
 
-async function runDiscoveryPhase(
+async function runContextClarificationPhase(
   runId: string,
   send: StreamSender,
   emit: (stage: string, message: string) => Promise<void>,
 ) {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
-  await emit("manager", "Starting pipeline — discovery phase");
+  await emit("context", "Starting pipeline — context & clarification");
   let route: DiscoveryMemoryRoute = { retrieve_memory: false, queries: [] };
   try {
     route = await generateJson<DiscoveryMemoryRoute>(
@@ -394,22 +687,80 @@ async function runDiscoveryPhase(
     Array.isArray(route.queries) &&
     route.queries.some((q) => String(q).trim())
   ) {
-    await emit("discovery", "Searching Memory repository…");
+    await emit("context", "Searching Memory repository…");
     retrievedMemory = await searchStrategyMemory(
       route.queries.map((q) => String(q).trim()).filter(Boolean),
     );
   }
-  const discoveryInput = discoveryPrompt({
-    prompt: run.prompt,
-    retrievedMemory,
-  });
-  const discoveryText = await generateText(discoveryInput);
+
+  await emit("context", "Planning data checks and specificity…");
+  let plan: ContextClarificationPlanJson = {
+    specificity_notes: "",
+    quant_plans: [],
+    clarifying_questions: [],
+  };
+  try {
+    plan = normalizeContextClarificationPlan(
+      await generateJson<ContextClarificationPlanJson>(
+        contextClarificationPlanPrompt({
+          userGoal: run.prompt,
+          retrievedMemory,
+          dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
+        }),
+        {
+          repairHint:
+            'Keys: "specificity_notes" (string), "quant_plans" (array, max 4 objects: hypothesis_under_test, datasetId, steps, optional chart), "clarifying_questions" (array, max 5 short strings).',
+        },
+      ),
+    );
+  } catch {
+    plan = { specificity_notes: "", quant_plans: [], clarifying_questions: [] };
+  }
+
+  const dataBlocks: string[] = [];
+  for (const rawPlan of plan.quant_plans) {
+    if (
+      !rawPlan ||
+      typeof rawPlan !== "object" ||
+      typeof rawPlan.datasetId !== "string" ||
+      !Array.isArray(rawPlan.steps)
+    ) {
+      continue;
+    }
+    const label =
+      typeof rawPlan.hypothesis_under_test === "string" ?
+        rawPlan.hypothesis_under_test
+      : "Data check";
+    await emit("context", `Running data check: ${label.slice(0, 72)}…`);
+    const result = executeQuantPlan(rawPlan as QuantPlan);
+    const narr = [
+      `**${label}**`,
+      result.narrative ?? "",
+      result.error ? `_Error: ${result.error}_` : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+    dataBlocks.push(narr);
+  }
+  const dataAnalysesMarkdown = dataBlocks.join("\n\n---\n\n");
+
+  await emit("context", "Writing context & clarification brief…");
+  const discoveryText = await generateText(
+    contextClarificationSynthesisPrompt({
+      userGoal: run.prompt,
+      retrievedMemory,
+      specificityNotes: plan.specificity_notes,
+      dataAnalysesMarkdown,
+      clarifyingQuestions: plan.clarifying_questions,
+    }),
+  );
+
   await prisma.strategyRun.update({
     where: { id: runId },
     data: { discoveryOutput: discoveryText },
   });
   send({ type: "discovery", text: discoveryText });
-  await emit("discovery", "Discovery draft saved");
+  await emit("context", "Context & clarification draft saved");
   await pauseForHumanReview(runId, send, "after_discovery");
 }
 
@@ -424,7 +775,7 @@ async function runStructureRevisionPhase(
     throw new Error("Discovery output missing — cannot build structure.");
   }
 
-  await emit("structure", "Building initial MECE outline");
+  await emit("structure", "Building initial hypothesis tree");
   const structureRepairHint =
     'One object with key "roots" (array). Each node: "id" (string), "title", "question", "children" (array; use [] on leaves). Internal nodes must have non-empty children.';
 
@@ -453,7 +804,7 @@ async function runStructureRevisionPhase(
 
   if (!outlineDoc?.roots?.length || leafCount(outlineDoc) === 0) {
     throw new Error(
-      "Structure agent returned no usable MECE tree (no roots or no leaf nodes). Try again or shorten the goal.",
+      "Structure agent returned no usable hypothesis tree (no roots or no leaf nodes). Try again or shorten the goal.",
     );
   }
 
@@ -473,7 +824,7 @@ async function runStructureRevisionPhase(
   send({ type: "outline", roots });
   await emit(
     "structure",
-    `Initial outline (${flattenLeaves(roots).length} leaves) — manager MECE review`,
+    `Initial hypothesis tree (${flattenLeaves(roots).length} leaves) — manager review`,
   );
 
   const treeReviewNotes = await generateText(
@@ -488,7 +839,7 @@ async function runStructureRevisionPhase(
     data: { treeReviewNotes },
   });
   send({ type: "tree_review", notes: treeReviewNotes });
-  await emit("structure", "Revising MECE tree from manager feedback");
+  await emit("structure", "Revising hypothesis tree from manager feedback");
 
   const revisionRaw = await generateJson<OutlineDoc>(
     structureRevisionPrompt({
@@ -519,7 +870,7 @@ async function runStructureRevisionPhase(
     const entry = await appendProgress(
       runId,
       "structure",
-      "Revision did not produce a valid tree — keeping initial outline for analysis.",
+      "Revision did not produce a valid tree — keeping initial hypothesis tree for analysis.",
     );
     send({ type: "progress", entry });
     structureOut = firstOutline;
@@ -545,8 +896,8 @@ async function runStructureRevisionPhase(
   await emit(
     "structure",
     endToEnd
-      ? `Revised outline ready (${flattenLeaves(roots).length} leaves) — continuing`
-      : `Revised outline ready (${flattenLeaves(roots).length} leaves) — awaiting your review`,
+      ? `Revised hypothesis tree ready (${flattenLeaves(roots).length} leaves) — continuing`
+      : `Revised hypothesis tree ready (${flattenLeaves(roots).length} leaves) — awaiting your review`,
   );
 
   await pauseForHumanReview(runId, send, "after_structure");
@@ -562,10 +913,11 @@ async function runLeafAnalysisPhase(
   const outline = run.outline as OutlineDoc | null;
   const roots = outline?.roots ?? [];
   if (!roots.length) {
-    throw new Error("MECE outline missing — cannot analyze leaves.");
+    throw new Error("Hypothesis tree missing — cannot analyze leaves.");
   }
 
   const states = { ...((run.nodeStates as Record<string, NodeState> | null) ?? {}) };
+  ensureNodeStatesForTree(roots, states);
   const leaves = flattenLeaves(roots);
   const concurrency = analysisConcurrency();
   let offset = 0;
@@ -627,6 +979,17 @@ async function runLeafAnalysisPhase(
     });
   }
 
+  await emit("analysis", "Rolling up branch conclusions from leaf results…");
+  await rollupBranchStatesFromLeaves(
+    runId,
+    roots,
+    states,
+    run.prompt,
+    discoveryText,
+    send,
+    emit,
+  );
+
   const modeRow = await prisma.strategyRun.findUnique({
     where: { id: runId },
     select: { runMode: true },
@@ -635,8 +998,8 @@ async function runLeafAnalysisPhase(
   await emit(
     "analysis",
     endToEnd
-      ? "All leaves analyzed — manager critique next"
-      : "All leaves analyzed — awaiting your review",
+      ? "All branches rolled up — manager critique next"
+      : "All branches rolled up — awaiting your review",
   );
   await pauseForHumanReview(runId, send, "after_analysis");
 }
@@ -774,7 +1137,7 @@ export async function executeRun(runId: string, send: StreamSender) {
 
   try {
     if (initialStatus === "pending") {
-      await runDiscoveryPhase(runId, send, emit);
+      await runContextClarificationPhase(runId, send, emit);
       const afterDiscovery = await prisma.strategyRun.findUnique({
         where: { id: runId },
         select: { status: true, runMode: true },
@@ -813,6 +1176,7 @@ export async function executeRun(runId: string, send: StreamSender) {
       if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
         await recordRedirect(runId, ctrl.note.trim(), send);
       }
+      await mergeClarificationAnswersIntoDiscovery(runId, send);
       await runStructureRevisionPhase(runId, send, emit);
       return;
     }

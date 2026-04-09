@@ -1,6 +1,6 @@
 import type { OutlineNode } from "./types";
 
-/** Stored JSON shape for the MECE tree. */
+/** Stored JSON shape for the hypothesis tree (nested pillars → leaf hypotheses). */
 export type OutlineDoc = { roots: OutlineNode[] };
 
 function isRecord(x: unknown): x is Record<string, unknown> {
@@ -96,14 +96,25 @@ export function pathToNode(roots: OutlineNode[], leafId: string): string[] {
   return path;
 }
 
+/** Every tree node gets a state key (leaves analyzed; branches get rollup after children). */
 export function initNodeStates(roots: OutlineNode[]): Record<string, NodeStateInit> {
   const states: Record<string, NodeStateInit> = {};
   function walk(n: OutlineNode) {
+    states[n.id] = { id: n.id, status: "pending" };
     if (n.children?.length) n.children.forEach(walk);
-    else states[n.id] = { id: n.id, status: "pending" };
   }
   roots.forEach(walk);
   return states;
+}
+
+export function listAllNodeIds(roots: OutlineNode[]): string[] {
+  const ids: string[] = [];
+  function walk(n: OutlineNode) {
+    ids.push(n.id);
+    if (n.children?.length) n.children.forEach(walk);
+  }
+  roots.forEach(walk);
+  return ids;
 }
 
 type NodeStateInit = { id: string; status: "pending" };

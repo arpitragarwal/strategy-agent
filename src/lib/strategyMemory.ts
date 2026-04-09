@@ -48,7 +48,7 @@ const MAX_ARTIFACTS_RETURNED = 5;
 
 /**
  * Keyword scan of recent Memory — like a repository search from agent-chosen queries.
- * Returns markdown for the discovery agent; empty if nothing scores.
+ * Returns markdown for the context & clarification step; empty if nothing scores.
  */
 export async function searchStrategyMemory(queries: string[]): Promise<string> {
   const normalized = queries

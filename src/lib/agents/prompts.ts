@@ -26,29 +26,99 @@ Rules:
 - Do not request Memory for generic questions with no plausible link to prior strategy artifacts.`;
 }
 
-export function discoveryPrompt(input: {
-  /** Goal, question, metrics, constraints, KB notes — everything in one block. */
-  prompt: string;
-  /** Result of an optional repository search; may be empty or a "no matches" note. */
+/** Plan step: what to quantify + what to ask the user (output JSON). */
+export type ContextClarificationPlanJson = {
+  /** Where the goal is vague (e.g. "largest segment" without naming it) — plain text. */
+  specificity_notes: string;
+  /** 0–4 plans using catalog datasets only; resolve "which X is biggest/fastest" when columns exist. */
+  quant_plans: Array<{
+    hypothesis_under_test: string;
+    datasetId: string;
+    steps: unknown[];
+    chart?: unknown | null;
+  }>;
+  /** 1–5 short questions only when data cannot resolve (definitions, preferences, horizons). Else []. */
+  clarifying_questions: string[];
+};
+
+export function contextClarificationPlanPrompt(input: {
+  userGoal: string;
   retrievedMemory: string;
+  dataCatalogMarkdown: string;
 }): string {
-  return `You are a strategy discovery agent. Your job is to scan the provided context (simulating recurring review of internal knowledge) and surface problems, opportunities, ambiguities, and early hypotheses.
+  return `You are the **planning** half of a "Context & clarification" step for strategy work. You do NOT write the final brief yet.
 
-User input (goal, question, and any context to honor):
-${input.prompt}
+Your jobs:
+1. **Specificity check** — Read the goal for underspecified phrases (e.g. "the largest customer segment", "fastest-growing region", "main vertical") where naming the entity would sharpen the rest of the pipeline. Call this out in specificity_notes.
+2. **Data-first disambiguation** — When prototype spreadsheet data (see catalog) can pin down those entities, emit quant_plans (up to **4**). Use filter → groupby → sort (desc) → limit patterns. Use exact datasetId values from the catalog.
+3. **Human clarification** — Only if something important still cannot be resolved from the data (e.g. strategic definition not in CSVs, required time horizon missing, user intent ambiguous), add concise clarifying_questions (max **5** strings). If data can fully ground the goal for this workspace, use [].
 
-Memory repository (optional — only present if a targeted search was run; excerpts are **outputs** from old runs, not their original prompts):
+User goal / question:
+${input.userGoal}
+
+Memory repository (optional excerpts from prior runs — **outputs** only):
 ${input.retrievedMemory.trim() || "(No memory lookup was run, or search returned nothing useful.)"}
 
-Rules: If Memory text appears, use it **only when clearly relevant** to the user input above. If it is absent, irrelevant, or noisy, **ignore it completely** — do not invent ties to past work.
+Rules for Memory: use **only** when clearly relevant; otherwise mentally ignore it.
 
-Output concise markdown with sections:
+${input.dataCatalogMarkdown}
+
+Output **one JSON object only** — first character "{", last "}".
+Shape:
+{
+  "specificity_notes": "string",
+  "quant_plans": [ ... 0 to 4 objects with hypothesis_under_test, datasetId, steps, optional chart — same quant shape as the analysis agent ... ],
+  "clarifying_questions": [ "string", ... ]
+}
+
+Quant plan steps (same ops as elsewhere): filter, groupby, sort, limit. chart optional {{ "type":"bar"|"line", "x","y", "title"? }}.
+
+If retrieve_memory had nothing useful and the goal is already concrete, specificity_notes can be brief, quant_plans can be [], clarifying_questions can be [].`;
+}
+
+export function contextClarificationSynthesisPrompt(input: {
+  userGoal: string;
+  retrievedMemory: string;
+  specificityNotes: string;
+  /** Markdown: executed quant narratives/errors (may be empty). */
+  dataAnalysesMarkdown: string;
+  clarifyingQuestions: string[];
+}): string {
+  const qBlock =
+    input.clarifyingQuestions.length > 0 ?
+      input.clarifyingQuestions.map((q, i) => `${i + 1}. ${q}`).join("\n")
+    : "(No clarifying questions — data and goal were sufficient.)";
+
+  return `You complete the **Context & clarification** brief (markdown for executives). Another pass already ran optional Memory lookup and executed spreadsheet analyses; your job is to **integrate** them with judgment.
+
+User goal:
+${input.userGoal}
+
+Memory (optional prior-run excerpts — use only if relevant):
+${input.retrievedMemory.trim() || "(None.)"}
+
+Specificity / ambiguity notes from the planner:
+${input.specificityNotes.trim() || "(None.)"}
+
+Executed data analyses (prototype CSVs — treat as illustrative snapshots, not live systems):
+${input.dataAnalysesMarkdown.trim() || "(No quant runs executed.)"}
+
+Planned clarifying questions for the user (if any — you MUST surface these in the output):
+${qBlock}
+
+Write **markdown** with exactly these sections (use ## headings):
 ## Themes
 ## Problems / risks
 ## Opportunities
+## Data-backed specificity
+(State what was pinned down from the analyses above — key numbers, rankings, segments/regions — or say none if no runs.)
 ## Open questions
-## Suggested focus for structured breakdown
-Keep it specific to the context; avoid generic consulting boilerplate.`;
+(Internal unknowns that are not necessarily for the user.)
+## Questions for you
+${input.clarifyingQuestions.length > 0 ? "Numbered list, same questions as above, phrased crisply." : "Write exactly: _None — continue when ready._"}
+## Suggested focus for the hypothesis tree
+
+Be specific; avoid generic consulting boilerplate. If Memory text is irrelevant, do not mention it.`;
 }
 
 export function structurePrompt(input: {
@@ -57,12 +127,12 @@ export function structurePrompt(input: {
 }): string {
   return `You output ONE JSON object only. No markdown, no bullets, no preamble, no explanation. First character must be "{". Last must be "}".
 
-Task: build a MECE-style issue tree for the goal below. If discovery notes are thin, still produce a concrete tree using the goal and general knowledge of the company or industry named in the goal—do not refuse or complain about missing context in prose.
+Task: build a **hypothesis tree** (mutually exclusive branches at each level, collectively covering the goal) for the goal below. If context & clarification notes are thin, still produce a concrete tree using the goal and general knowledge of the company or industry named in the goal—do not refuse or complain about missing context in prose.
 
 User goal:
 ${input.userGoal}
 
-Discovery notes:
+Context & clarification notes:
 ${input.discovery}
 
 Exact JSON shape:
@@ -80,19 +150,19 @@ Exact JSON shape:
 }
 
 Rules:
-- Every leaf must have "children": [] only.
-- Internal nodes must have non-empty children.
+- **Leaves only:** Every leaf must have "children": [] only. **Leaf "question" must be a clear, testable hypothesis** — a declarative claim the analysis step will try to **confirm or refute** with evidence (not a vague theme).
+- Internal nodes must have non-empty children (group hypotheses into pillars).
 - 3–6 top-level roots unless the problem is tiny.
 - **Order matters:** Within each \`children\` array, order siblings from **highest expected impact / most likely root causes / key decision levers** first, then supporting or downstream factors. Put dependencies before what they explain when the logic requires it. Do **not** use arbitrary or alphabetical ordering.
 - IDs: lowercase letters, numbers, underscores only.
-- Questions must be specific and answerable.`;
+- Non-leaf "question" can orient the pillar; leaf "question" = the hypothesis under test.`;
 }
 
 /** Appended on second attempt when normalizeOutlineDoc finds empty/malformed roots. */
 export const STRUCTURE_RETRY_SUFFIX = `
 
 CRITICAL FIX: The previous JSON was rejected — "roots" was missing, empty, or not a non-empty array, or there were no leaf nodes.
-Reply with ONLY one JSON object. "roots" MUST be a non-empty array. For a normal strategy question use at least 3 top-level pillars; each branch must end in leaves with "children": [].
+Reply with ONLY one JSON object. "roots" MUST be a non-empty array. For a normal strategy question use at least 3 top-level pillars; each branch must end in leaves with "children": [] and each leaf "question" must be a testable hypothesis.
 First character "{", last character "}".`;
 
 export function managerMeceReviewPrompt(input: {
@@ -100,22 +170,23 @@ export function managerMeceReviewPrompt(input: {
   discovery: string;
   outlineJson: string;
 }): string {
-  return `You are a senior manager reviewing the proposed MECE issue tree **before** any per-branch analysis runs.
+  return `You are a senior manager reviewing the proposed **hypothesis tree** **before** any per-leaf analysis runs.
 
 User goal and context (full prompt):
 ${input.userGoal}
 
-Discovery output:
+Context & clarification output:
 ${input.discovery}
 
-Proposed MECE tree (JSON):
+Proposed hypothesis tree (JSON):
 ${input.outlineJson}
 
 Output markdown with:
-## MECE / coverage check (mutually exclusive? collectively exhaustive for the goal?)
+## Hypothesis tree / coverage (mutually exclusive? collectively exhaustive for the goal?)
 ## Gaps, overlaps, or mis-groupings
+## Leaf hypotheses (are leaves testable claims someone could confirm or deny with data and reasoning?)
 ## Ordering (within each level, should higher-impact or more causal branches appear earlier? say what to reorder)
-## Concrete structural fixes (merge/split/rename pillars, add missing branches, clarify questions)
+## Concrete structural fixes (merge/split/rename pillars, add missing branches, sharpen leaf hypotheses)
 ## Must-fix issues before analysis proceeds
 
 Be direct and actionable. The next step will **rebuild the tree JSON** from your feedback.`;
@@ -129,12 +200,12 @@ export function structureRevisionPrompt(input: {
 }): string {
   return `You output ONE JSON object only. No markdown, no preamble. First character "{".
 
-An initial MECE tree was drafted, then reviewed by a manager. Produce a **revised full tree** that addresses the feedback. Use new stable ids (lowercase_snake_case).
+An initial hypothesis tree was drafted, then reviewed by a manager. Produce a **revised full tree** that addresses the feedback. Use new stable ids (lowercase_snake_case).
 
 User goal:
 ${input.userGoal}
 
-Discovery:
+Context & clarification:
 ${input.discovery}
 
 Prior tree JSON (reference — fix; do not preserve bad structure):
@@ -160,8 +231,7 @@ Rules:
 - Internal nodes: non-empty children
 - 3–6 top-level roots unless the scope is tiny
 - **Order matters:** In every \`children\` array, list branches from **strongest drivers / causes / decision-critical** first to more peripheral last—same intent as the initial structure pass, unless manager feedback explicitly requires a different order.
-- Questions must be answerable in analysis`;
-
+- **Every leaf "question"** must remain a **testable hypothesis** (confirm / deny with evidence).`;
 }
 
 export const STRUCTURE_REVISION_RETRY_SUFFIX = `
@@ -182,22 +252,22 @@ export function analysisPrompt(input: {
       `\nUser steering / redirect (prioritize this when answering this leaf):\n${input.redirectContext.trim()}\n`
     : "";
 
-  return `You are an analysis agent. Answer one leaf of a strategy tree with discipline. You may request a quantitative check using prototype CSVs (no live connectors).
+  return `You are an analysis agent working on one **leaf** of a **hypothesis tree**. The leaf question is the **hypothesis** to test. Your job is to weigh evidence (context, reasoning, and optional CSV analysis) and **confirm or refute** that hypothesis when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
 
 Overall goal:
 ${input.userGoal}
 
-Discovery context:
+Context & clarification:
 ${input.discovery}
 ${steer}
 Path in tree: ${input.pathTitles}
 
-Leaf question:
+**Hypothesis under test** (same as leaf question; restate crisply in "hypothesis" if you sharpen the wording):
 ${input.leafQuestion}
 
 ${input.dataCatalogMarkdown}
 
-Quantitative plans: when numeric evidence from these CSVs would strengthen the answer, include "quant" with a pipeline. If the leaf is purely qualitative or no dataset fits, set "quant" to null.
+Quantitative plans: when numeric evidence from these CSVs would strengthen confirmation or refutation, include "quant" with a pipeline. If the hypothesis is purely qualitative or no dataset fits, set "quant" to null.
 
 Allowed quant.steps operations (execute in order):
 - {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
@@ -208,7 +278,7 @@ Allowed quant.steps operations (execute in order):
 Optional "chart": {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} referencing columns present AFTER all steps.
 
 evidence_needed (required discipline): List concrete gaps that limit this answer — not generic caveats. Each item is one short string. Include when relevant:
-- Data / numbers: metrics, cuts, or time ranges not in discovery or CSVs; unreliable proxies you had to use.
+- Data / numbers: metrics, cuts, or time ranges not in context notes or CSVs; unreliable proxies you had to use.
 - Context: missing segment, geography, product, channel, competitor, or regulatory detail that would change the read.
 - Stakeholders / primary research: who you would need to interview or what internal doc/source would resolve ambiguity.
 - Quant: you set "quant" to null but a specific dataset or cut would have helped — say what you would run (name datasetId if obvious from the catalog).
@@ -219,9 +289,10 @@ Your entire reply must be ONE JSON object only — no markdown, no keys in prose
 
 Required JSON shape (types matter):
 {
-  "summary": "string, 2-4 sentences for executives; note material caveats in plain language if confidence is low",
-  "analysis": "string, detailed reasoning",
-  "hypothesis": null or "string",
+  "summary": "string, 2-4 sentences for executives; lead with whether the hypothesis is confirmed, refuted, or uncertain and why",
+  "analysis": "string, detailed reasoning that explicitly argues for confirm / deny / mixed; cite quant or context",
+  "hypothesis": null or "string — refined statement of the claim being tested",
+  "verdict": "confirmed" | "refuted" | "inconclusive" | "partially_supported",
   "evidence_needed": ["specific gap strings per rules above; [] only if truly nothing missing"],
   "confidence": "low" | "medium" | "high",
   "quant": null OR {
@@ -230,6 +301,57 @@ Required JSON shape (types matter):
     "steps": [ ...quant steps... ],
     "chart": null OR { "type": "bar" | "line", "x": "string", "y": "string", "title": "optional string" }
   }
+}`;
+}
+
+export type BranchRollupJson = {
+  summary: string;
+  analysis: string;
+  verdict: string;
+  confidence: string;
+  evidence_needed?: string[];
+};
+
+/** Roll child hypothesis results into a parent branch answer + confidence. */
+export function branchRollupPrompt(input: {
+  userGoal: string;
+  contextClarification: string;
+  parentPathTitles: string;
+  parentTitle: string;
+  parentQuestion?: string;
+  childSummariesMarkdown: string;
+}): string {
+  return `You **roll up** completed child analyses into a single **parent-branch** conclusion. Children may be leaf hypotheses or already-rolled sub-branches; each has a verdict, confidence, and summary.
+
+Overall goal:
+${input.userGoal}
+
+Context & clarification:
+${input.contextClarification}
+
+Parent path: ${input.parentPathTitles}
+Parent title: ${input.parentTitle}
+Parent pillar question (frames this branch collectively):
+${input.parentQuestion?.trim() || "(none)"}
+
+**Direct children:**
+${input.childSummariesMarkdown}
+
+Rules:
+- **summary:** 2–4 sentences for executives — does this branch as a whole support, weaken, or leave open the parent framing? Aggregate what children imply.
+- **analysis:** Plain text (no JSON inside). Explain how child verdicts combine; note conflicts or reinforcement.
+- **verdict:** For the **parent branch theme** given children: "confirmed" | "refuted" | "inconclusive" | "partially_supported".
+- **confidence:** Rolled-up "low" | "medium" | "high". Use **low** if children conflict materially or any child was low-confidence/skipped; **high** only if children align and are mostly high-confidence.
+- **evidence_needed:** Branch-level gaps not resolved by children; [] if none.
+
+Output ONE JSON object only. First "{", last "}".
+Shape:
+{
+  "summary": "string",
+  "analysis": "string",
+  "verdict": "confirmed" | "refuted" | "inconclusive" | "partially_supported",
+  "confidence": "low" | "medium" | "high",
+  "evidence_needed": ["optional strings"]
 }`;
 }
 
@@ -243,10 +365,10 @@ export function managerPrompt(input: {
 Goal:
 ${input.userGoal}
 
-Discovery:
+Context & clarification:
 ${input.discovery}
 
-Per-leaf analyses:
+Per-leaf analyses (deepest leaves — branch rollups appear in the UI but focus on leaf evidence here):
 ${input.analysesMarkdown}
 
 Output markdown with:
@@ -263,12 +385,12 @@ export function synthesisPrompt(input: {
   managerNotes: string;
   analysesMarkdown: string;
 }): string {
-  return `You are a synthesis agent. Produce an actionable strategy memo in markdown.
+  return `You are a synthesis agent. Output **short** markdown (not a long memo).
 
 Goal:
 ${input.userGoal}
 
-Discovery:
+Context & clarification:
 ${input.discovery}
 
 Manager critique:
@@ -277,15 +399,18 @@ ${input.managerNotes}
 Analyses:
 ${input.analysesMarkdown}
 
-Structure the memo as:
-# Executive summary
-# Recommended moves (numbered, each with owner-style role and timeframe)
-# Risks & mitigations
-# Metrics to track
-# Next 30 days plan
-# Open questions
+Use **exactly this structure** — keep the whole synthesis tight.
 
-Keep language crisp; tie recommendations to points in the analyses.`;
+## Recommendation
+Answer the goal above in **at most two lines** (plain sentences; no bullets in this section). State the clearest recommendation or direct answer.
+
+## Supporting points
+- 3–7 bullet lines only. Each bullet: one concrete support — cite **numbers, facts from analyses, or tight reasoning** (no filler).
+
+## Open questions
+- Bullet list only: what still **needs more data, analysis, or decisions** before acting with confidence. If none, use a single bullet: _None material — proceed with monitoring as above._
+
+Do not add other sections, tables, or long prose.`;
 }
 
 export function partialManagerPrompt(input: {
@@ -293,12 +418,12 @@ export function partialManagerPrompt(input: {
   discovery: string;
   analysesMarkdown: string;
 }): string {
-  return `You are a manager agent. The user paused the pipeline early — not every MECE leaf was analyzed.
+  return `You are a manager agent. The user paused the pipeline early — not every hypothesis leaf was analyzed.
 
 Goal:
 ${input.userGoal}
 
-Discovery:
+Context & clarification:
 ${input.discovery}
 
 Per-leaf analyses (some branches show "pending" or were skipped):
@@ -323,12 +448,12 @@ export function partialSynthesisPrompt(input: {
     `\nUser instruction when stopping early:\n${input.userInstruction.trim()}\n`
     : "";
 
-  return `You are a synthesis agent. The user requested an early / partial synthesis: not all planned branches were analyzed.
+  return `You are a synthesis agent. The user requested an **early / partial** synthesis: not all branches were analyzed. Output **short** markdown only.
 
 Goal:
 ${input.userGoal}
 ${extra}
-Discovery:
+Context & clarification:
 ${input.discovery}
 
 Manager critique:
@@ -337,14 +462,18 @@ ${input.managerNotes}
 Analyses (partial — note pending/skipped branches):
 ${input.analysesMarkdown}
 
-Start the memo with a short banner line: **Partial synthesis — analysis was stopped before all branches completed.**
+First line (standalone): **Partial synthesis** — not all hypotheses were tested.
 
-Then use the same sections as a full memo:
-# Executive summary (flag incompleteness)
-# Early recommendations (what we can say now)
-# What remains to analyze
-# Risks from partial coverage
-# Next steps
+Then use **exactly this structure** (same as full synthesis, but hedge where coverage is thin):
 
-Keep recommendations tentative where evidence is missing.`;
+## Recommendation
+**At most two lines.** Best-effort answer to the goal given partial evidence; say clearly if the conclusion is provisional.
+
+## Supporting points
+- 3–7 bullets: only what the **completed** analyses support; cite data or reasoning. Optional bullet flagging **what was not analyzed** if it would change the answer.
+
+## Open questions
+- Bullets: **gaps from incomplete branches**, missing data, and what to analyze next before a final call.
+
+No other sections or long prose.`;
 }

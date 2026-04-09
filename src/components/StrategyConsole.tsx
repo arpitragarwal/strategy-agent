@@ -4,8 +4,14 @@ import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
-import { flattenLeaves } from "@/lib/outline";
-import type { OutlineNode, NodeState, ProgressEntry, ReviewCheckpoint } from "@/lib/types";
+import { flattenLeaves, listAllNodeIds } from "@/lib/outline";
+import type {
+  HypothesisVerdict,
+  OutlineNode,
+  NodeState,
+  ProgressEntry,
+  ReviewCheckpoint,
+} from "@/lib/types";
 
 type RunMode = "end_to_end" | "step_by_step";
 
@@ -17,6 +23,7 @@ type RunRow = {
   prompt: string;
   companyContext?: string | null;
   discoveryOutput: string | null;
+  clarificationAnswers?: string | null;
   treeReviewNotes: string | null;
   outline: unknown;
   nodeStates: unknown;
@@ -66,17 +73,21 @@ function formatMemoryTimestamp(iso: string): string {
 }
 
 const REVIEW_LABELS: Record<ReviewCheckpoint, string> = {
-  after_discovery: "Discovery",
-  after_structure: "Revised MECE structure",
+  after_discovery: "Context & clarification",
+  after_structure: "Revised hypothesis tree",
   after_analysis: "Analyses",
 };
 
 const PIPELINE: readonly { id: string; title: string; subtitle: string }[] = [
-  { id: "discovery", title: "Discovery", subtitle: "Frame the question & context" },
+  {
+    id: "discovery",
+    title: "Context & clarification",
+    subtitle: "Specificity, data checks, optional questions",
+  },
   {
     id: "structure",
-    title: "MECE issue tree",
-    subtitle: "Draft structure, manager review, revision",
+    title: "Hypothesis tree",
+    subtitle: "Draft tree, manager review, revision",
   },
   { id: "analysis", title: "Analysis", subtitle: "Deep-dive each branch" },
   { id: "manager", title: "Manager critique", subtitle: "Pressure-test the analyses" },
@@ -179,7 +190,7 @@ function computePipelineSteps(args: {
     }
     const detail =
       i === 2 && leavesTotal > 0
-        ? `${leavesDone}/${leavesTotal} branches`
+        ? `${leavesDone}/${leavesTotal} hypotheses tested`
         : i === 0 && pausedAt === "after_discovery"
           ? "Paused for your review"
           : i === 1 && pausedAt === "after_structure"
@@ -442,7 +453,44 @@ function StatusDot({ status }: { status: NodeState["status"] }) {
 }
 
 /** Branches with children: deeper than this default to collapsed until the user expands or uses “Expand all”. */
-const DEFAULT_MECE_EXPAND_DEPTH = 2;
+const DEFAULT_TREE_EXPAND_DEPTH = 2;
+
+function verdictLabelUi(v: HypothesisVerdict): string {
+  switch (v) {
+    case "confirmed":
+      return "Confirmed";
+    case "refuted":
+      return "Refuted";
+    case "partially_supported":
+      return "Partially supported";
+    default:
+      return "Inconclusive";
+  }
+}
+
+function verdictPillClass(v: HypothesisVerdict): string {
+  switch (v) {
+    case "confirmed":
+      return "border-emerald-200 bg-emerald-50 text-emerald-900";
+    case "refuted":
+      return "border-rose-200 bg-rose-50 text-rose-900";
+    case "partially_supported":
+      return "border-amber-200 bg-amber-50 text-amber-950";
+    default:
+      return "border-zinc-200 bg-zinc-100 text-zinc-800";
+  }
+}
+
+function confidencePillClass(c: NonNullable<NodeState["confidence"]>): string {
+  switch (c) {
+    case "high":
+      return "border-emerald-200/80 bg-emerald-50/80 text-emerald-900";
+    case "low":
+      return "border-rose-200/70 bg-rose-50/70 text-rose-900";
+    default:
+      return "border-amber-200/80 bg-amber-50/80 text-amber-950";
+  }
+}
 
 function collectBranchIdsWithChildren(nodes: OutlineNode[]): string[] {
   const ids: string[] = [];
@@ -493,17 +541,20 @@ function OutlineBranch({
   return (
     <li className="list-none m-0 p-0">
       <div className="flex items-start gap-2">
-        <div className="flex w-7 shrink-0 flex-col items-center pt-2.5">
+        <div className="flex w-7 shrink-0 flex-col items-center gap-1 pt-2.5">
           {hasKids ? (
-            <button
-              type="button"
-              className="rounded p-0.5 text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
-              aria-expanded={expanded}
-              aria-label={expanded ? "Collapse branch" : "Expand branch"}
-              onClick={() => onToggleBranch(node.id, depth, hasKids)}
-            >
-              <ChevronToggleIcon expanded={expanded} />
-            </button>
+            <>
+              <button
+                type="button"
+                className="rounded p-0.5 text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
+                aria-expanded={expanded}
+                aria-label={expanded ? "Collapse branch" : "Expand branch"}
+                onClick={() => onToggleBranch(node.id, depth, hasKids)}
+              >
+                <ChevronToggleIcon expanded={expanded} />
+              </button>
+              {state ? <StatusDot status={state.status} /> : null}
+            </>
           ) : state ? (
             <StatusDot status={state.status} />
           ) : (
@@ -513,12 +564,82 @@ function OutlineBranch({
         <div className="min-w-0 flex-1 rounded-xl border border-zinc-200/95 bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-zinc-100/80">
           <div className="font-medium text-zinc-900 break-words">{node.title}</div>
           {node.question ? (
-            <div className="text-zinc-500 text-xs mt-1 break-words leading-snug">{node.question}</div>
+            <div className="mt-1 space-y-0.5">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500">
+                {hasKids ? "Pillar question" : "Hypothesis"}
+              </p>
+              <p className="text-zinc-700 text-xs break-words leading-snug">{node.question}</p>
+            </div>
+          ) : null}
+          {state?.verdict ? (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span
+                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${verdictPillClass(state.verdict)}`}
+              >
+                {verdictLabelUi(state.verdict)}
+              </span>
+              {state.confidence ? (
+                <span
+                  className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-semibold capitalize tracking-wide ${confidencePillClass(state.confidence)}`}
+                >
+                  {state.confidence} confidence
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+          {state?.confidence &&
+          state.status === "done" &&
+          !state.verdict ? (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span
+                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-semibold capitalize tracking-wide ${confidencePillClass(state.confidence)}`}
+              >
+                {state.confidence} confidence
+              </span>
+            </div>
+          ) : null}
+          {!hasKids &&
+          state?.hypothesisStatement &&
+          state.hypothesisStatement.trim() !== (node.question ?? "").trim() ? (
+            <p className="text-[10px] text-zinc-500 mt-1.5 italic break-words">
+              Refined hypothesis: {state.hypothesisStatement}
+            </p>
+          ) : null}
+          {state?.evidenceNeeded?.length ? (
+            <div className="mt-2 rounded-md border border-amber-100 bg-amber-50/60 px-2 py-1.5">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-amber-900/90">
+                Additional data needed
+              </p>
+              <ul className="mt-1 list-disc pl-4 text-xs text-amber-950/90 space-y-0.5">
+                {state.evidenceNeeded.map((item, i) => (
+                  <li key={i} className="break-words">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ) : null}
           {state?.summary ? (
-            <p className="text-zinc-600 text-xs mt-2 leading-relaxed break-words border-t border-zinc-100 pt-2">
-              {state.summary}
-            </p>
+            <div className="mt-2 border-t border-zinc-100 pt-2">
+              {hasKids && state.status === "done" ? (
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-violet-800/90 mb-1.5">
+                  Rolled up from child hypotheses
+                </p>
+              ) : null}
+              <p className="text-zinc-700 text-xs leading-relaxed break-words font-medium">
+                {state.summary}
+              </p>
+            </div>
+          ) : null}
+          {state?.analysis?.trim() && state.status === "done" ? (
+            <details className="mt-2 group/leaf border-t border-zinc-100 pt-2">
+              <summary className="cursor-pointer text-[11px] font-medium text-sky-800 hover:text-sky-950">
+                {hasKids ? "How child results combine" : "Full analysis (confirm / deny reasoning)"}
+              </summary>
+              <div className="mt-2 min-w-0 max-w-full text-xs text-zinc-700">
+                <MarkdownBody content={state.analysis} />
+              </div>
+            </details>
           ) : null}
           {state?.quant ? (
             <div className="mt-2 rounded-lg border border-indigo-100 bg-indigo-50/60 px-2 py-2 max-w-full min-w-0">
@@ -585,10 +706,11 @@ export function StrategyConsole() {
   const [memory, setMemory] = useState<MemoryRow[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
   const [pausedAt, setPausedAt] = useState<ReviewCheckpoint | null>(null);
+  const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
   const endedWithPauseRef = useRef(false);
 
-  const [meceExpandOverrides, setMeceExpandOverrides] = useState<Record<string, boolean>>({});
+  const [treeExpandOverrides, setTreeExpandOverrides] = useState<Record<string, boolean>>({});
 
   const loadMemory = useCallback(async () => {
     const res = await fetch("/api/memory");
@@ -602,35 +724,35 @@ export function StrategyConsole() {
   }, [loadMemory]);
 
   useEffect(() => {
-    setMeceExpandOverrides({});
+    setTreeExpandOverrides({});
   }, [runId]);
 
-  const isMeceBranchExpanded = useCallback(
+  const isTreeBranchExpanded = useCallback(
     (id: string, depth: number, hasChildren: boolean) => {
       if (!hasChildren) return true;
-      const v = meceExpandOverrides[id];
+      const v = treeExpandOverrides[id];
       if (v !== undefined) return v;
-      return depth < DEFAULT_MECE_EXPAND_DEPTH;
+      return depth < DEFAULT_TREE_EXPAND_DEPTH;
     },
-    [meceExpandOverrides],
+    [treeExpandOverrides],
   );
 
-  const toggleMeceBranch = useCallback((id: string, depth: number, hasChildren: boolean) => {
+  const toggleTreeBranch = useCallback((id: string, depth: number, hasChildren: boolean) => {
     if (!hasChildren) return;
-    setMeceExpandOverrides((prev) => {
-      const cur = prev[id] !== undefined ? prev[id]! : depth < DEFAULT_MECE_EXPAND_DEPTH;
+    setTreeExpandOverrides((prev) => {
+      const cur = prev[id] !== undefined ? prev[id]! : depth < DEFAULT_TREE_EXPAND_DEPTH;
       return { ...prev, [id]: !cur };
     });
   }, []);
 
-  const expandAllMeceBranches = useCallback(() => {
+  const expandAllTreeBranches = useCallback(() => {
     const ids = collectBranchIdsWithChildren(roots);
-    setMeceExpandOverrides(Object.fromEntries(ids.map((i) => [i, true] as const)));
+    setTreeExpandOverrides(Object.fromEntries(ids.map((i) => [i, true] as const)));
   }, [roots]);
 
-  const collapseAllMeceBranches = useCallback(() => {
+  const collapseAllTreeBranches = useCallback(() => {
     const ids = collectBranchIdsWithChildren(roots);
-    setMeceExpandOverrides(Object.fromEntries(ids.map((i) => [i, false] as const)));
+    setTreeExpandOverrides(Object.fromEntries(ids.map((i) => [i, false] as const)));
   }, [roots]);
 
   const resetOutput = () => {
@@ -640,13 +762,14 @@ export function StrategyConsole() {
     setTreeReviewNotes("");
     setRoots([]);
     setNodeStates({});
-    setMeceExpandOverrides({});
+    setTreeExpandOverrides({});
     setManagerNotes("");
     setSynthesis("");
     setSynthesisPartial(false);
     setControlMessage(null);
     setSelectedMemoryId(null);
     setPausedAt(null);
+    setClarificationDraft("");
   };
 
   function hydrateFromRun(run: RunRow) {
@@ -661,11 +784,14 @@ export function StrategyConsole() {
     setRoots(nextRoots);
     const stored = (run.nodeStates as Record<string, NodeState> | null) ?? {};
     if (nextRoots.length) {
-      const leaves = flattenLeaves(nextRoots);
+      const leafIds = new Set(flattenLeaves(nextRoots).map((l) => l.id));
+      const assumeIncomplete = run.status !== "complete";
       setNodeStates(() => {
         const next = { ...stored };
-        for (const leaf of leaves) {
-          if (!next[leaf.id]) next[leaf.id] = { id: leaf.id, status: "pending" };
+        for (const id of listAllNodeIds(nextRoots)) {
+          if (!next[id] && (leafIds.has(id) || assumeIncomplete)) {
+            next[id] = { id, status: "pending" };
+          }
         }
         return next;
       });
@@ -686,6 +812,7 @@ export function StrategyConsole() {
     } else {
       setPausedAt(null);
     }
+    setClarificationDraft(run.clarificationAnswers ?? "");
     if (run.runMode === "end_to_end" || run.runMode === "step_by_step") {
       setRunMode(run.runMode);
     }
@@ -706,11 +833,14 @@ export function StrategyConsole() {
     setRoots(nextRoots);
     const stored = p?.nodeStates ?? {};
     if (nextRoots.length) {
-      const leaves = flattenLeaves(nextRoots);
+      const leafIds = new Set(flattenLeaves(nextRoots).map((l) => l.id));
+      const assumeIncomplete = !p?.synthesis?.trim();
       setNodeStates(() => {
         const next = { ...stored };
-        for (const leaf of leaves) {
-          if (!next[leaf.id]) next[leaf.id] = { id: leaf.id, status: "pending" };
+        for (const id of listAllNodeIds(nextRoots)) {
+          if (!next[id] && (leafIds.has(id) || assumeIncomplete)) {
+            next[id] = { id, status: "pending" };
+          }
         }
         return next;
       });
@@ -726,6 +856,7 @@ export function StrategyConsole() {
     setControlMessage(null);
     setRedirectNote("");
     setPausedAt(null);
+    setClarificationDraft("");
   }
 
   const openMemoryEntry = async (m: MemoryRow) => {
@@ -790,21 +921,20 @@ export function StrategyConsole() {
             case "discovery":
               if (msg.text) setDiscovery(msg.text);
               break;
-            case "outline":
-              if (msg.roots) {
-                setRoots(msg.roots);
-                const leaves = flattenLeaves(msg.roots);
+            case "outline": {
+              const nextRoots = msg.roots;
+              if (nextRoots?.length) {
+                setRoots(nextRoots);
                 setNodeStates((prev) => {
                   const next = { ...prev };
-                  for (const leaf of leaves) {
-                    if (!next[leaf.id]) {
-                      next[leaf.id] = { id: leaf.id, status: "pending" };
-                    }
+                  for (const id of listAllNodeIds(nextRoots)) {
+                    if (!next[id]) next[id] = { id, status: "pending" };
                   }
                   return next;
                 });
               }
               break;
+            }
             case "node":
               if (msg.state) {
                 setNodeStates((s) => ({ ...s, [msg.state!.id]: msg.state! }));
@@ -891,8 +1021,20 @@ export function StrategyConsole() {
     }
   };
 
-  const continueRun = () => {
+  const continueRun = async () => {
     if (!runId || busy) return;
+    if (pausedAt === "after_discovery") {
+      const res = await fetch(`/api/runs/${runId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clarificationAnswers: clarificationDraft }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError((data as { error?: string }).error ?? res.statusText);
+        return;
+      }
+    }
     attachRunStream(runId);
   };
 
@@ -993,7 +1135,7 @@ export function StrategyConsole() {
               type="button"
               onClick={() => void startRun("step_by_step")}
               disabled={busy || Boolean(pausedAt) || !prompt.trim()}
-              title="Runs discovery, then MECE build & revision, then analysis — pausing after each major phase so you can review before continuing."
+              title="Runs context & clarification, then hypothesis tree build & revision, then analysis — pausing after each major phase so you can review before continuing."
               className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
               {busy && runMode === "step_by_step" ? "Running…" : "Run step-by-step"}
@@ -1002,15 +1144,15 @@ export function StrategyConsole() {
               type="button"
               onClick={() => void startRun("end_to_end")}
               disabled={busy || Boolean(pausedAt) || !prompt.trim()}
-              title="Runs the full pipeline in one go: discovery, MECE, analysis, manager critique, and synthesis — no mandatory review pauses (you can still steer during analysis)."
+              title="Runs the full pipeline in one go: context & clarification, hypothesis tree, analysis, manager critique, and synthesis — no mandatory review pauses (you can still steer during analysis)."
               className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
               {busy && runMode === "end_to_end" ? "Running…" : "Run full pipeline"}
             </button>
           </div>
           <p className="text-xs text-zinc-500">
-            <strong className="font-medium text-zinc-700">Run step-by-step</strong> pauses after discovery,
-            revised MECE, and analyses for your review.
+            <strong className="font-medium text-zinc-700">Run step-by-step</strong> pauses after context &
+            clarification, revised hypothesis tree, and analyses for your review.
             <span className="mx-1.5 text-zinc-300">·</span>
             <strong className="font-medium text-zinc-700">Run full pipeline</strong> continues through manager
             critique and synthesis without those pauses.
@@ -1028,6 +1170,17 @@ export function StrategyConsole() {
                 Review: <strong>{REVIEW_LABELS[pausedAt]}</strong>. When you are ready, continue the
                 pipeline or synthesize from work so far.
               </p>
+              {pausedAt === "after_discovery" ? (
+                <label className="block text-xs text-amber-950/85">
+                  Your answers (optional — merged into the brief before the hypothesis tree step)
+                  <textarea
+                    className="mt-1 w-full min-h-[72px] rounded-md border border-amber-200 bg-white px-2 py-1.5 text-sm text-zinc-900"
+                    placeholder="Reply to any “Questions for you” above, or add missing detail…"
+                    value={clarificationDraft}
+                    onChange={(e) => setClarificationDraft(e.target.value)}
+                  />
+                </label>
+              ) : null}
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
@@ -1165,7 +1318,7 @@ export function StrategyConsole() {
         </OutputPanel>
 
         {discovery ? (
-          <OutputPanel title="Discovery" cardClassName="border-zinc-200 bg-white">
+          <OutputPanel title="Context & clarification" cardClassName="border-zinc-200 bg-white">
             <div className="max-h-64 overflow-y-auto">
               <MarkdownBody content={discovery} />
             </div>
@@ -1174,11 +1327,11 @@ export function StrategyConsole() {
 
         {treeReviewNotes ? (
           <OutputPanel
-            title={<span className="text-blue-950">Manager MECE review</span>}
+            title={<span className="text-blue-950">Manager review (hypothesis tree)</span>}
             subtitle={
               <p className="text-xs text-blue-900/75">
-                Review of the draft issue tree before per-branch analysis. The MECE outline below reflects the
-                revised tree.
+                Review of the draft hypothesis tree before leaf analyses. The tree below reflects the revised
+                structure.
               </p>
             }
             cardClassName="border-blue-200 bg-blue-50/90"
@@ -1190,7 +1343,7 @@ export function StrategyConsole() {
         ) : null}
 
         {roots.length ? (
-          <OutputPanel title="MECE outline & analysis" cardClassName="border-zinc-200 bg-white">
+          <OutputPanel title="Hypothesis tree & analysis" cardClassName="border-zinc-200 bg-white">
             <div className="min-w-0 max-w-full space-y-4 overflow-x-auto overscroll-contain">
               {prompt.trim() ? (
                 <div className="rounded-xl border-2 border-emerald-200/90 bg-gradient-to-b from-emerald-50/90 to-white px-4 py-3 shadow-sm ring-1 ring-emerald-100/50">
@@ -1205,14 +1358,14 @@ export function StrategyConsole() {
               <div className="flex flex-wrap items-center justify-end gap-2">
                 <button
                   type="button"
-                  onClick={expandAllMeceBranches}
+                  onClick={expandAllTreeBranches}
                   className="rounded-md border border-emerald-200/80 bg-emerald-50/60 px-2 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-50 hover:text-emerald-950"
                 >
                   Expand all
                 </button>
                 <button
                   type="button"
-                  onClick={collapseAllMeceBranches}
+                  onClick={collapseAllTreeBranches}
                   className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
                 >
                   Collapse all
@@ -1225,8 +1378,8 @@ export function StrategyConsole() {
                     node={r}
                     states={nodeStates}
                     depth={0}
-                    isBranchExpanded={isMeceBranchExpanded}
-                    onToggleBranch={toggleMeceBranch}
+                    isBranchExpanded={isTreeBranchExpanded}
+                    onToggleBranch={toggleTreeBranch}
                   />
                 ))}
               </ul>

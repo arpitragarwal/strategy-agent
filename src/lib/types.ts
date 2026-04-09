@@ -11,12 +11,25 @@ export type OutlineNode = {
 
 export type NodeStatus = "pending" | "running" | "done" | "blocked" | "skipped";
 
+/** How leaf analysis relates to the hypothesis (leaf question). */
+export type HypothesisVerdict =
+  | "confirmed"
+  | "refuted"
+  | "inconclusive"
+  | "partially_supported";
+
 export type NodeState = {
   id: string;
   status: NodeStatus;
   summary?: string;
   analysis?: string;
   quant?: QuantResult;
+  /** Refined testable statement from the model (may echo or sharpen the leaf question). */
+  hypothesisStatement?: string;
+  verdict?: HypothesisVerdict;
+  confidence?: "low" | "medium" | "high";
+  /** Concrete gaps — data, context, stakeholders, or follow-up quant. */
+  evidenceNeeded?: string[];
 };
 
 export type ProgressEntry = {
