@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "./db";
 import {
   analysisPrompt,
+  discoveryMemoryRoutePrompt,
   discoveryPrompt,
   managerMeceReviewPrompt,
   managerPrompt,
@@ -12,6 +13,7 @@ import {
   structurePrompt,
   structureRevisionPrompt,
   synthesisPrompt,
+  type DiscoveryMemoryRoute,
 } from "./agents/prompts";
 import { generateJson, generateText } from "./genai";
 import {
@@ -23,6 +25,7 @@ import {
 } from "./outline";
 import { buildDataCatalogMarkdown, executeQuantPlan } from "./quant";
 import type { QuantPlan } from "./quant/types";
+import { searchStrategyMemory } from "./strategyMemory";
 import type {
   OutlineNode,
   NodeState,
@@ -97,87 +100,10 @@ async function recordRedirect(runId: string, note: string, send: StreamSender) {
   send({ type: "progress", entry });
 }
 
-function isPayloadRecord(x: unknown): x is Record<string, unknown> {
-  return typeof x === "object" && x !== null && !Array.isArray(x);
-}
-
-const MAX_PRIOR_BLOCK_CHARS = 14_000;
-
-/** Text for discovery only: synthesis, manager critique, leaf analyses — never old user prompts or titles. */
-function memoryArtifactToDiscoveryBlock(payload: unknown, summaryFallback: string): string {
-  const parts: string[] = [];
-  const p = isPayloadRecord(payload) ? payload : null;
-
-  const synthesis = typeof p?.synthesis === "string" ? p.synthesis.trim() : "";
-  if (synthesis) {
-    parts.push(
-      `**Strategy memo (excerpt)**\n${synthesis.slice(0, 3200)}${synthesis.length > 3200 ? "…" : ""}`,
-    );
-  } else if (summaryFallback.trim()) {
-    parts.push(`**Strategy memo (excerpt)**\n${summaryFallback.trim()}`);
-  }
-
-  const managerNotes = typeof p?.managerNotes === "string" ? p.managerNotes.trim() : "";
-  if (managerNotes) {
-    parts.push(
-      `**Manager critique (post-analysis)**\n${managerNotes.slice(0, 2200)}${managerNotes.length > 2200 ? "…" : ""}`,
-    );
-  }
-
-  const outlineDoc = normalizeOutlineDoc(p?.outline);
-  const statesRaw = p?.nodeStates;
-  if (outlineDoc?.roots && isPayloadRecord(statesRaw)) {
-    const leaves = flattenLeaves(outlineDoc.roots);
-    const leafBits: string[] = [];
-    for (const leaf of leaves) {
-      const raw = statesRaw[leaf.id];
-      if (!isPayloadRecord(raw)) continue;
-      const analysis = typeof raw.analysis === "string" ? raw.analysis.trim() : "";
-      if (!analysis) continue;
-      const path = pathToNode(outlineDoc.roots, leaf.id).join(" > ");
-      leafBits.push(
-        `*${path}*\n${analysis.slice(0, 1200)}${analysis.length > 1200 ? "…" : ""}`,
-      );
-    }
-    if (leafBits.length) {
-      parts.push(`**Branch analyses (write-ups only)**\n${leafBits.join("\n\n")}`);
-    }
-  }
-
-  return parts.join("\n\n");
-}
-
 function memoryArtifactLabel(runId: string, createdAt: Date, partial: boolean): string {
   const d = createdAt.toISOString().slice(0, 10);
   const tail = runId.length >= 6 ? runId.slice(-6) : runId;
   return partial ? `Saved analysis (partial) · ${d} · ${tail}` : `Saved analysis · ${d} · ${tail}`;
-}
-
-async function priorAnalysesBlock(): Promise<string> {
-  const artifacts = await prisma.memoryArtifact.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 6,
-    select: { summary: true, payload: true, runId: true, createdAt: true },
-  });
-  if (!artifacts.length) return "";
-
-  const blocks: string[] = [];
-  for (let i = 0; i < artifacts.length; i++) {
-    const a = artifacts[i]!;
-    const body = memoryArtifactToDiscoveryBlock(a.payload, a.summary);
-    if (!body.trim()) continue;
-    const partial =
-      isPayloadRecord(a.payload) && a.payload.synthesisIsPartial === true;
-    const label =
-      a.runId ?
-        memoryArtifactLabel(a.runId, a.createdAt, partial)
-      : `Saved output ${i + 1} · ${a.createdAt.toISOString().slice(0, 10)}`;
-    blocks.push(`---\n_${label}_\n\n${body}`);
-  }
-
-  const merged = blocks.join("\n\n");
-  if (merged.length <= MAX_PRIOR_BLOCK_CHARS) return merged;
-  return `${merged.slice(0, MAX_PRIOR_BLOCK_CHARS)}\n\n_(older memory truncated)_`;
 }
 
 function analysesMarkdown(
@@ -334,7 +260,6 @@ async function finalizePartialSynthesis(
         treeReviewNotes: run.treeReviewNotes,
         nodeStates: states,
         discovery: discoveryText,
-        managerNotes,
         synthesis,
         synthesisIsPartial: true,
         runStartedAt: run.createdAt.toISOString(),
@@ -382,10 +307,32 @@ async function runDiscoveryPhase(
 ) {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   await emit("manager", "Starting pipeline — discovery phase");
-  const prior = await priorAnalysesBlock();
+  let route: DiscoveryMemoryRoute = { retrieve_memory: false, queries: [] };
+  try {
+    route = await generateJson<DiscoveryMemoryRoute>(
+      discoveryMemoryRoutePrompt(run.prompt),
+      {
+        repairHint:
+          'Keys: "retrieve_memory" (boolean), "queries" (array of 0-3 strings). If retrieve_memory is false, queries must be [].',
+      },
+    );
+  } catch {
+    route = { retrieve_memory: false, queries: [] };
+  }
+  let retrievedMemory = "";
+  if (
+    route.retrieve_memory &&
+    Array.isArray(route.queries) &&
+    route.queries.some((q) => String(q).trim())
+  ) {
+    await emit("discovery", "Searching Memory repository…");
+    retrievedMemory = await searchStrategyMemory(
+      route.queries.map((q) => String(q).trim()).filter(Boolean),
+    );
+  }
   const discoveryInput = discoveryPrompt({
     prompt: run.prompt,
-    priorAnalyses: prior,
+    retrievedMemory,
   });
   const discoveryText = await generateText(discoveryInput);
   await prisma.strategyRun.update({
@@ -587,7 +534,7 @@ async function runLeafAnalysisPhase(
       }),
       {
         repairHint:
-          'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
+          'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "evidence_needed" (string array — data/context/stakeholder/quant gaps per prompt), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with "hypothesis_under_test", "datasetId" from catalog, "steps" array of filter/groupby/sort/limit ops, optional "chart" null or {type bar|line, x, y}).',
       },
     );
     let quantResult = undefined;
@@ -705,7 +652,6 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
         treeReviewNotes,
         nodeStates: states,
         discovery: discoveryText,
-        managerNotes,
         synthesis,
         synthesisIsPartial: false,
         runStartedAt: run.createdAt.toISOString(),

@@ -444,42 +444,93 @@ function StatusDot({ status }: { status: NodeState["status"] }) {
   return <span className={`inline-block h-2 w-2 rounded-full ${color}`} title={status} />;
 }
 
+/** Branches with children: deeper than this default to collapsed until the user expands or uses “Expand all”. */
+const DEFAULT_MECE_EXPAND_DEPTH = 2;
+
+function collectBranchIdsWithChildren(nodes: OutlineNode[]): string[] {
+  const ids: string[] = [];
+  function walk(n: OutlineNode) {
+    if (n.children?.length) {
+      ids.push(n.id);
+      for (const c of n.children) walk(c);
+    }
+  }
+  for (const n of nodes) walk(n);
+  return ids;
+}
+
+function ChevronToggleIcon({ expanded }: { expanded: boolean }) {
+  return (
+    <svg
+      className={`h-4 w-4 shrink-0 text-zinc-500 transition-transform duration-200 ${expanded ? "rotate-90" : ""}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden
+    >
+      <path
+        fillRule="evenodd"
+        d="M6.22 5.22a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L9.94 10 6.22 6.28a.75.75 0 010-1.06z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
 function OutlineBranch({
   node,
   states,
+  depth,
+  isBranchExpanded,
+  onToggleBranch,
 }: {
   node: OutlineNode;
   states: Record<string, NodeState>;
+  depth: number;
+  isBranchExpanded: (id: string, depth: number, hasChildren: boolean) => boolean;
+  onToggleBranch: (id: string, depth: number, hasChildren: boolean) => void;
 }) {
   const hasKids = Boolean(node.children?.length);
+  const expanded = isBranchExpanded(node.id, depth, hasKids);
   const state = states[node.id];
 
   return (
-    <li className="py-1">
-      <div className="flex items-start gap-2 text-sm">
-        {!hasKids && state ? <StatusDot status={state.status} /> : <span className="w-2" />}
-        <div className="min-w-0 flex-1">
+    <li className="list-none m-0 p-0">
+      <div className="flex items-start gap-2">
+        <div className="flex w-7 shrink-0 flex-col items-center pt-2.5">
+          {hasKids ? (
+            <button
+              type="button"
+              className="rounded p-0.5 text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
+              aria-expanded={expanded}
+              aria-label={expanded ? "Collapse branch" : "Expand branch"}
+              onClick={() => onToggleBranch(node.id, depth, hasKids)}
+            >
+              <ChevronToggleIcon expanded={expanded} />
+            </button>
+          ) : state ? (
+            <StatusDot status={state.status} />
+          ) : (
+            <span className="inline-block h-2 w-2 rounded-full bg-zinc-200" title="Pending" />
+          )}
+        </div>
+        <div className="min-w-0 flex-1 rounded-xl border border-zinc-200/95 bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-zinc-100/80">
           <div className="font-medium text-zinc-900 break-words">{node.title}</div>
           {node.question ? (
-            <div className="text-zinc-500 text-xs mt-0.5 break-words">{node.question}</div>
+            <div className="text-zinc-500 text-xs mt-1 break-words leading-snug">{node.question}</div>
           ) : null}
           {state?.summary ? (
-            <p className="text-zinc-600 text-xs mt-1 leading-relaxed break-words">
+            <p className="text-zinc-600 text-xs mt-2 leading-relaxed break-words border-t border-zinc-100 pt-2">
               {state.summary}
             </p>
           ) : null}
           {state?.quant ? (
             <div className="mt-2 rounded-lg border border-indigo-100 bg-indigo-50/60 px-2 py-2 max-w-full min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-indigo-900">
-                Quant check
-              </p>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-indigo-900">Quant check</p>
               {state.quant.error ? (
                 <p className="text-xs text-rose-700 mt-1">{state.quant.error}</p>
               ) : (
                 <>
-                  <p className="text-[10px] text-indigo-900/80 mt-0.5">
-                    {state.quant.hypothesis_under_test}
-                  </p>
+                  <p className="text-[10px] text-indigo-900/80 mt-0.5">{state.quant.hypothesis_under_test}</p>
                   {state.quant.narrative ? (
                     <p className="text-xs text-indigo-950 mt-1">{state.quant.narrative}</p>
                   ) : null}
@@ -498,12 +549,21 @@ function OutlineBranch({
           ) : null}
         </div>
       </div>
-      {hasKids && node.children ? (
-        <ul className="ml-4 mt-1 border-l border-zinc-200 pl-3">
-          {node.children.map((c) => (
-            <OutlineBranch key={c.id} node={c} states={states} />
-          ))}
-        </ul>
+      {hasKids && expanded && node.children ? (
+        <div className="relative mt-3 ml-[0.875rem] border-l-2 border-zinc-200 pl-5">
+          <ul className="m-0 list-none space-y-4 p-0">
+            {node.children.map((c) => (
+              <OutlineBranch
+                key={c.id}
+                node={c}
+                states={states}
+                depth={depth + 1}
+                isBranchExpanded={isBranchExpanded}
+                onToggleBranch={onToggleBranch}
+              />
+            ))}
+          </ul>
+        </div>
       ) : null}
     </li>
   );
@@ -531,6 +591,8 @@ export function StrategyConsole() {
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
   const endedWithPauseRef = useRef(false);
 
+  const [meceExpandOverrides, setMeceExpandOverrides] = useState<Record<string, boolean>>({});
+
   const loadMemory = useCallback(async () => {
     const res = await fetch("/api/memory");
     if (!res.ok) return;
@@ -542,6 +604,38 @@ export function StrategyConsole() {
     void loadMemory();
   }, [loadMemory]);
 
+  useEffect(() => {
+    setMeceExpandOverrides({});
+  }, [runId]);
+
+  const isMeceBranchExpanded = useCallback(
+    (id: string, depth: number, hasChildren: boolean) => {
+      if (!hasChildren) return true;
+      const v = meceExpandOverrides[id];
+      if (v !== undefined) return v;
+      return depth < DEFAULT_MECE_EXPAND_DEPTH;
+    },
+    [meceExpandOverrides],
+  );
+
+  const toggleMeceBranch = useCallback((id: string, depth: number, hasChildren: boolean) => {
+    if (!hasChildren) return;
+    setMeceExpandOverrides((prev) => {
+      const cur = prev[id] !== undefined ? prev[id]! : depth < DEFAULT_MECE_EXPAND_DEPTH;
+      return { ...prev, [id]: !cur };
+    });
+  }, []);
+
+  const expandAllMeceBranches = useCallback(() => {
+    const ids = collectBranchIdsWithChildren(roots);
+    setMeceExpandOverrides(Object.fromEntries(ids.map((i) => [i, true] as const)));
+  }, [roots]);
+
+  const collapseAllMeceBranches = useCallback(() => {
+    const ids = collectBranchIdsWithChildren(roots);
+    setMeceExpandOverrides(Object.fromEntries(ids.map((i) => [i, false] as const)));
+  }, [roots]);
+
   const resetOutput = () => {
     setError(null);
     setProgress([]);
@@ -549,6 +643,7 @@ export function StrategyConsole() {
     setTreeReviewNotes("");
     setRoots([]);
     setNodeStates({});
+    setMeceExpandOverrides({});
     setManagerNotes("");
     setSynthesis("");
     setSynthesisPartial(false);
@@ -1099,10 +1194,43 @@ export function StrategyConsole() {
 
         {roots.length ? (
           <OutputPanel title="MECE outline & analysis" cardClassName="border-zinc-200 bg-white">
-            <div className="min-w-0 max-w-full overflow-x-auto overscroll-contain">
-              <ul className="space-y-1 min-w-0">
+            <div className="min-w-0 max-w-full space-y-4 overflow-x-auto overscroll-contain">
+              {prompt.trim() ? (
+                <div className="rounded-xl border-2 border-emerald-200/90 bg-gradient-to-b from-emerald-50/90 to-white px-4 py-3 shadow-sm ring-1 ring-emerald-100/50">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-emerald-900/75">
+                    Strategy question
+                  </p>
+                  <p className="text-sm text-zinc-900 mt-1.5 whitespace-pre-wrap break-words leading-snug">
+                    {prompt}
+                  </p>
+                </div>
+              ) : null}
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={expandAllMeceBranches}
+                  className="rounded-md border border-emerald-200/80 bg-emerald-50/60 px-2 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-50 hover:text-emerald-950"
+                >
+                  Expand all
+                </button>
+                <button
+                  type="button"
+                  onClick={collapseAllMeceBranches}
+                  className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                >
+                  Collapse all
+                </button>
+              </div>
+              <ul className="m-0 min-w-0 list-none space-y-4 p-0">
                 {roots.map((r) => (
-                  <OutlineBranch key={r.id} node={r} states={nodeStates} />
+                  <OutlineBranch
+                    key={r.id}
+                    node={r}
+                    states={nodeStates}
+                    depth={0}
+                    isBranchExpanded={isMeceBranchExpanded}
+                    onToggleBranch={toggleMeceBranch}
+                  />
                 ))}
               </ul>
             </div>

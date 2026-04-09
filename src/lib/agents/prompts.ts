@@ -1,17 +1,46 @@
+export type DiscoveryMemoryRoute = {
+  retrieve_memory: boolean;
+  queries: string[];
+};
+
+/** Model decides whether to run a Memory repository search (like optional web search). */
+export function discoveryMemoryRoutePrompt(userGoal: string): string {
+  return `You control an optional lookup in this app's **Memory repository**: saved outputs from prior strategy runs (final memos, manager critiques, branch analysis write-ups). Nothing is included automatically.
+
+User goal / question:
+${userGoal}
+
+Decide if this goal would benefit from scanning Memory for **related** prior work (same company, market, product, or problem class). If yes, propose 1–3 short **search phrases** (keywords; not essays). If the ask is unrelated or Memory is unlikely to help, skip.
+
+Output ONE JSON object only. First character "{", last "}".
+Shape:
+{
+  "retrieve_memory": boolean,
+  "queries": string[]
+}
+Example when skipping: {"retrieve_memory":false,"queries":[]}
+
+Rules:
+- If retrieve_memory is false, queries MUST be [].
+- If true, queries has 1–3 non-empty strings.
+- Do not request Memory for generic questions with no plausible link to prior strategy artifacts.`;
+}
+
 export function discoveryPrompt(input: {
   /** Goal, question, metrics, constraints, KB notes — everything in one block. */
   prompt: string;
-  priorAnalyses: string;
+  /** Result of an optional repository search; may be empty or a "no matches" note. */
+  retrievedMemory: string;
 }): string {
   return `You are a strategy discovery agent. Your job is to scan the provided context (simulating recurring review of internal knowledge) and surface problems, opportunities, ambiguities, and early hypotheses.
 
 User input (goal, question, and any context to honor):
 ${input.prompt}
 
-Prior outputs only from earlier completed runs in this app (strategy memos, manager critiques, branch write-ups). **Does not** include those runs’ original questions, goals, or prompts — treat the user input above as the sole brief.
-${input.priorAnalyses || "(none)"}
+Memory repository (optional — only present if a targeted search was run; excerpts are **outputs** from old runs, not their original prompts):
+${input.retrievedMemory.trim() || "(No memory lookup was run, or search returned nothing useful.)"}
 
-Rules: Use prior outputs **only when clearly relevant** to the user input above (same company, product, problem class, or reusable fact). If nothing clearly applies, **ignore this block entirely** — do not echo unrelated companies, metrics, or themes from past work.
+Rules: If Memory text appears, use it **only when clearly relevant** to the user input above. If it is absent, irrelevant, or noisy, **ignore it completely** — do not invent ties to past work.
 
 Output concise markdown with sections:
 ## Themes
@@ -54,6 +83,7 @@ Rules:
 - Every leaf must have "children": [] only.
 - Internal nodes must have non-empty children.
 - 3–6 top-level roots unless the problem is tiny.
+- **Order matters:** Within each \`children\` array, order siblings from **highest expected impact / most likely root causes / key decision levers** first, then supporting or downstream factors. Put dependencies before what they explain when the logic requires it. Do **not** use arbitrary or alphabetical ordering.
 - IDs: lowercase letters, numbers, underscores only.
 - Questions must be specific and answerable.`;
 }
@@ -84,6 +114,7 @@ ${input.outlineJson}
 Output markdown with:
 ## MECE / coverage check (mutually exclusive? collectively exhaustive for the goal?)
 ## Gaps, overlaps, or mis-groupings
+## Ordering (within each level, should higher-impact or more causal branches appear earlier? say what to reorder)
 ## Concrete structural fixes (merge/split/rename pillars, add missing branches, clarify questions)
 ## Must-fix issues before analysis proceeds
 
@@ -128,6 +159,7 @@ Rules:
 - Every leaf: "children": []
 - Internal nodes: non-empty children
 - 3–6 top-level roots unless the scope is tiny
+- **Order matters:** In every \`children\` array, list branches from **strongest drivers / causes / decision-critical** first to more peripheral last—same intent as the initial structure pass, unless manager feedback explicitly requires a different order.
 - Questions must be answerable in analysis`;
 
 }
@@ -175,14 +207,22 @@ Allowed quant.steps operations (execute in order):
 
 Optional "chart": {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} referencing columns present AFTER all steps.
 
+evidence_needed (required discipline): List concrete gaps that limit this answer — not generic caveats. Each item is one short string. Include when relevant:
+- Data / numbers: metrics, cuts, or time ranges not in discovery or CSVs; unreliable proxies you had to use.
+- Context: missing segment, geography, product, channel, competitor, or regulatory detail that would change the read.
+- Stakeholders / primary research: who you would need to interview or what internal doc/source would resolve ambiguity.
+- Quant: you set "quant" to null but a specific dataset or cut would have helped — say what you would run (name datasetId if obvious from the catalog).
+
+Also mention limitations of the prototype CSVs (snapshot only, no live systems) when you leaned on them heavily. Use an empty array only when nothing substantive is missing for *this* leaf.
+
 Your entire reply must be ONE JSON object only — no markdown, no keys in prose form, no text before { or after }.
 
 Required JSON shape (types matter):
 {
-  "summary": "string, 2-4 sentences for executives",
+  "summary": "string, 2-4 sentences for executives; note material caveats in plain language if confidence is low",
   "analysis": "string, detailed reasoning",
   "hypothesis": null or "string",
-  "evidence_needed": ["array", "of", "strings"],
+  "evidence_needed": ["specific gap strings per rules above; [] only if truly nothing missing"],
   "confidence": "low" | "medium" | "high",
   "quant": null OR {
     "hypothesis_under_test": "string, what the numbers will test",

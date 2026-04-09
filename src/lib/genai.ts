@@ -1,5 +1,6 @@
 import {
   GoogleGenerativeAI,
+  GoogleGenerativeAIAbortError,
   GoogleGenerativeAIError,
   GoogleGenerativeAIFetchError,
   GoogleGenerativeAIResponseError,
@@ -15,6 +16,66 @@ export function getModelId(): string {
     // Smaller Gemma 4 variant — confirm in AI Studio; fallback: gemma-4-31b-it
     "gemma-4-26b-a4b-it"
   );
+}
+
+/** Max attempts per `generateContent` call (first try + retries). Override with GOOGLE_AI_MAX_RETRIES. */
+function getMaxGenAiAttempts(): number {
+  const raw = process.env.GOOGLE_AI_MAX_RETRIES?.trim();
+  if (!raw) return 5;
+  const n = parseInt(raw, 10);
+  if (!Number.isFinite(n)) return 5;
+  return Math.min(12, Math.max(1, n));
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Exponential backoff with jitter (ms). */
+function retryDelayMs(attemptIndex: number): number {
+  const base = 900;
+  const cap = 45_000;
+  const exp = Math.min(cap, base * 2 ** (attemptIndex - 1));
+  const jitter = Math.random() * 500;
+  return Math.round(exp + jitter);
+}
+
+function isRetryableGenAiError(e: unknown): boolean {
+  if (e instanceof GoogleGenerativeAIAbortError) return false;
+  if (e instanceof GoogleGenerativeAIFetchError) {
+    const s = e.status;
+    if (s === 429 || s === 408) return true;
+    if (typeof s === "number" && s >= 500 && s < 600) return true;
+    return false;
+  }
+  if (e instanceof GoogleGenerativeAIResponseError) return false;
+  if (e instanceof GoogleGenerativeAIError) return false;
+  if (e instanceof TypeError) {
+    return /\b(failed to fetch|network|load failed|fetch)\b/i.test(e.message);
+  }
+  if (e instanceof Error) {
+    const m = e.message.toLowerCase();
+    return (
+      m.includes("econnreset") ||
+      m.includes("etimedout") ||
+      m.includes("econnrefused") ||
+      m.includes("socket hang up") ||
+      (m.includes("dns") && m.includes("timeout"))
+    );
+  }
+  return false;
+}
+
+function wrapGenAiFailure(e: unknown, modelId: string): never {
+  if (e instanceof GoogleGenerativeAIFetchError || e instanceof GoogleGenerativeAIResponseError) {
+    throw new Error(
+      `${formatGenAiError(e, modelId)} — Confirm GOOGLE_AI_API_KEY and GOOGLE_AI_MODEL in .env (Google AI Studio).`,
+    );
+  }
+  if (e instanceof GoogleGenerativeAIError) {
+    throw new Error(`${formatGenAiError(e, modelId)} — Model "${modelId}".`);
+  }
+  throw e;
 }
 
 function formatGenAiError(err: unknown, modelId: string): string {
@@ -67,45 +128,60 @@ export function getJsonModel(): GenerativeModel {
   });
 }
 
+async function generateContentOnce(model: GenerativeModel, prompt: string): Promise<string> {
+  const modelId = getModelId();
+  const result = await model.generateContent(prompt);
+  const { response } = result;
+
+  const pf = response.promptFeedback;
+  if (pf?.blockReason && pf.blockReason !== "BLOCKED_REASON_UNSPECIFIED") {
+    throw new Error(
+      `Prompt blocked by the API (${pf.blockReason}). Try rephrasing or shortening the goal.`,
+    );
+  }
+
+  if (!response.candidates?.length) {
+    throw new Error(
+      "The model returned no output (no candidates). Often caused by filtering, or JSON mode not supported for this model.",
+    );
+  }
+
+  let text: string;
+  try {
+    text = response.text();
+  } catch (inner) {
+    throw new Error(`${formatGenAiError(inner, modelId)} (model: ${modelId}).`);
+  }
+
+  if (!text?.trim()) throw new Error("Empty model response.");
+  return text;
+}
+
 async function generateContentText(model: GenerativeModel, prompt: string): Promise<string> {
   const modelId = getModelId();
-  try {
-    const result = await model.generateContent(prompt);
-    const { response } = result;
+  const maxAttempts = getMaxGenAiAttempts();
 
-    const pf = response.promptFeedback;
-    if (pf?.blockReason && pf.blockReason !== "BLOCKED_REASON_UNSPECIFIED") {
-      throw new Error(
-        `Prompt blocked by the API (${pf.blockReason}). Try rephrasing or shortening the goal.`,
-      );
-    }
-
-    if (!response.candidates?.length) {
-      throw new Error(
-        "The model returned no output (no candidates). Often caused by filtering, or JSON mode not supported for this model.",
-      );
-    }
-
-    let text: string;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      text = response.text();
-    } catch (inner) {
-      throw new Error(`${formatGenAiError(inner, modelId)} (model: ${modelId}).`);
+      return await generateContentOnce(model, prompt);
+    } catch (e) {
+      const canRetry = attempt < maxAttempts && isRetryableGenAiError(e);
+      if (canRetry) {
+        const delay = retryDelayMs(attempt);
+        if (process.env.NODE_ENV !== "production") {
+          const reason = e instanceof GoogleGenerativeAIFetchError ? `HTTP ${e.status}` : (e as Error).message;
+          console.warn(
+            `[genai] Attempt ${attempt}/${maxAttempts} failed (${reason.slice(0, 120)}), retrying in ${delay}ms…`,
+          );
+        }
+        await sleep(delay);
+        continue;
+      }
+      wrapGenAiFailure(e, modelId);
     }
-
-    if (!text?.trim()) throw new Error("Empty model response.");
-    return text;
-  } catch (e) {
-    if (e instanceof GoogleGenerativeAIFetchError || e instanceof GoogleGenerativeAIResponseError) {
-      throw new Error(
-        `${formatGenAiError(e, modelId)} — Confirm GOOGLE_AI_API_KEY and GOOGLE_AI_MODEL in .env (Google AI Studio).`,
-      );
-    }
-    if (e instanceof GoogleGenerativeAIError) {
-      throw new Error(`${formatGenAiError(e, modelId)} — Model "${modelId}".`);
-    }
-    throw e;
   }
+
+  throw new Error("Model request exceeded retry limit (internal error).");
 }
 
 export async function generateText(prompt: string): Promise<string> {
