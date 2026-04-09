@@ -126,12 +126,20 @@ async function pauseForHumanReview(
   send: StreamSender,
   checkpoint: ReviewCheckpoint,
 ) {
+  const run = await prisma.strategyRun.findUnique({
+    where: { id: runId },
+    select: { runMode: true },
+  });
+  if (run?.runMode === "end_to_end") {
+    return;
+  }
+
   const title =
     checkpoint === "after_discovery"
       ? "Discovery"
       : checkpoint === "after_structure"
         ? "revised MECE structure"
-        : "leaf analyses";
+        : "analyses";
   const entry = await appendProgress(
     runId,
     "pause",
@@ -428,9 +436,16 @@ async function runStructureRevisionPhase(
     },
   });
   send({ type: "outline", roots });
+  const modeRow = await prisma.strategyRun.findUnique({
+    where: { id: runId },
+    select: { runMode: true },
+  });
+  const endToEnd = modeRow?.runMode === "end_to_end";
   await emit(
     "structure",
-    `Revised outline ready (${flattenLeaves(roots).length} leaves) — awaiting your review`,
+    endToEnd
+      ? `Revised outline ready (${flattenLeaves(roots).length} leaves) — continuing`
+      : `Revised outline ready (${flattenLeaves(roots).length} leaves) — awaiting your review`,
   );
 
   await pauseForHumanReview(runId, send, "after_structure");
@@ -511,7 +526,17 @@ async function runLeafAnalysisPhase(
     send({ type: "node", state: states[leaf.id] });
   }
 
-  await emit("analysis", "All leaves analyzed — awaiting your review");
+  const modeRow = await prisma.strategyRun.findUnique({
+    where: { id: runId },
+    select: { runMode: true },
+  });
+  const endToEnd = modeRow?.runMode === "end_to_end";
+  await emit(
+    "analysis",
+    endToEnd
+      ? "All leaves analyzed — manager critique next"
+      : "All leaves analyzed — awaiting your review",
+  );
   await pauseForHumanReview(runId, send, "after_analysis");
 }
 
@@ -647,6 +672,32 @@ export async function executeRun(runId: string, send: StreamSender) {
   try {
     if (initialStatus === "pending") {
       await runDiscoveryPhase(runId, send, emit);
+      const afterDiscovery = await prisma.strategyRun.findUnique({
+        where: { id: runId },
+        select: { status: true, runMode: true },
+      });
+      if (afterDiscovery?.status !== "running") {
+        return;
+      }
+      if (afterDiscovery.runMode === "end_to_end") {
+        await runStructureRevisionPhase(runId, send, emit);
+        const afterStructure = await prisma.strategyRun.findUnique({
+          where: { id: runId },
+          select: { status: true },
+        });
+        if (afterStructure?.status !== "running") {
+          return;
+        }
+        await runLeafAnalysisPhase(runId, send, emit);
+        const afterAnalysis = await prisma.strategyRun.findUnique({
+          where: { id: runId },
+          select: { status: true },
+        });
+        if (afterAnalysis?.status !== "running") {
+          return;
+        }
+        await runManagerAndSynthesisPhase(runId, send);
+      }
       return;
     }
 

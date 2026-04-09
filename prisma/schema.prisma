@@ -12,6 +12,8 @@ model StrategyRun {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   status          String   @default("pending")
+  /// step_by_step = pause for human review between major phases; end_to_end = run without those pauses
+  runMode         String   @default("step_by_step")
   /// When status is awaiting_review: after_discovery | after_structure | after_analysis
   reviewCheckpoint String?
   prompt          String   @db.Text
