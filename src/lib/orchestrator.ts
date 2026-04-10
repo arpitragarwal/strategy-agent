@@ -228,7 +228,7 @@ async function analyzeLeafToDoneState(params: {
     { repairHint: LEAF_ANALYSIS_JSON_REPAIR_HINT },
   );
   let quantResult = runQuantIfValid(parsedInitial);
-  let draft = buildNodeStateFromAnalysis(params.leaf.id, parsedInitial, quantResult);
+  const draft = buildNodeStateFromAnalysis(params.leaf.id, parsedInitial, quantResult);
 
   if (!leafManagerReviewEnabled()) {
     return draft;
@@ -456,8 +456,7 @@ async function rollupBranchStatesFromLeaves(
     );
   };
 
-  let wave = true;
-  while (wave) {
+  while (true) {
     const ready: OutlineNode[] = [];
     const collect = (nodes: OutlineNode[]) => {
       for (const n of nodes) {
