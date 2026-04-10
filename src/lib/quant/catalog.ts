@@ -106,6 +106,27 @@ export function getDatasetMeta(datasetId: string): DatasetMeta | undefined {
   return byId.get(datasetId);
 }
 
+/** Valid `datasetId` strings for prompts and validation (exact catalog keys). */
+export function listQuantDatasetIds(): string[] {
+  return QUANT_DATASETS.map((d) => d.id);
+}
+
+/** True if primary and every `join` step references a known catalog dataset. */
+export function quantPlanReferencesValidDatasets(plan: {
+  datasetId: string;
+  steps: unknown[];
+}): boolean {
+  if (!getDatasetMeta(plan.datasetId)) return false;
+  for (const step of plan.steps ?? []) {
+    if (!step || typeof step !== "object") continue;
+    const s = step as { op?: string; rightDatasetId?: string };
+    if (s.op === "join" && typeof s.rightDatasetId === "string") {
+      if (!getDatasetMeta(s.rightDatasetId)) return false;
+    }
+  }
+  return true;
+}
+
 /** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
 export const QUANT_JOIN_RELATIONSHIPS = [
   "**account_id** — crm/opportunities, crm/contacts, support/tickets → join to **crm/accounts** on [[\"account_id\",\"account_id\"]] for tier, arr_usd, industry, region, primary_sku, etc.",

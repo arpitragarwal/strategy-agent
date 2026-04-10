@@ -30,6 +30,8 @@ export type NodeState = {
   confidence?: "low" | "medium" | "high";
   /** Concrete gaps — data, context, stakeholders, or follow-up quant. */
   evidenceNeeded?: string[];
+  /** Per-leaf manager pressure-test notes (markdown); only on leaves after review pass. */
+  leafManagerReview?: string;
 };
 
 export type ProgressEntry = {

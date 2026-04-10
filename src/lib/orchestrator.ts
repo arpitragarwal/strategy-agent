@@ -6,6 +6,8 @@ import {
   contextClarificationPlanPrompt,
   contextClarificationSynthesisPrompt,
   discoveryMemoryRoutePrompt,
+  leafAnalysisRefinementPrompt,
+  leafManagerReviewPrompt,
   managerMeceReviewPrompt,
   managerPrompt,
   partialManagerPrompt,
@@ -18,6 +20,7 @@ import {
   type BranchRollupJson,
   type ContextClarificationPlanJson,
   type DiscoveryMemoryRoute,
+  type LeafManagerReviewJson,
 } from "./agents/prompts";
 import { generateJson, generateText, getModelId } from "./genai";
 import {
@@ -34,7 +37,12 @@ import {
   normalizeOutlineDoc,
   pathToNode,
 } from "./outline";
-import { buildDataCatalogMarkdown, executeQuantPlan } from "./quant";
+import {
+  buildDataCatalogMarkdown,
+  executeQuantPlan,
+  listQuantDatasetIds,
+  quantPlanReferencesValidDatasets,
+} from "./quant";
 import type { QuantPlan } from "./quant/types";
 import { searchStrategyMemory } from "./strategyMemory";
 import type {
@@ -42,6 +50,7 @@ import type {
   OutlineNode,
   NodeState,
   ProgressEntry,
+  QuantResult,
   ReviewCheckpoint,
   StreamEvent,
 } from "./types";
@@ -90,38 +99,84 @@ function analysisConcurrency(): number {
   return Math.min(16, n);
 }
 
-async function analyzeLeafToDoneState(params: {
-  userGoal: string;
-  discoveryText: string;
-  roots: OutlineNode[];
-  leaf: OutlineNode;
-  redirectContext: string | undefined;
-}): Promise<NodeState> {
-  const pathTitles = pathToNode(params.roots, params.leaf.id).join(" > ");
-  const parsed = await generateJson<AnalysisJson>(
-    analysisPrompt({
-      userGoal: params.userGoal,
-      discovery: params.discoveryText,
-      pathTitles,
-      leafQuestion: params.leaf.question ?? params.leaf.title,
-      redirectContext: params.redirectContext,
-      dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
-    }),
-    {
-      repairHint:
-        'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps: filter/join/project/groupby/sort/limit, optional chart).',
-    },
-  );
-  let quantResult = undefined;
+const LEAF_ANALYSIS_JSON_REPAIR_HINT =
+  'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps: filter/join/project/groupby/sort/limit, optional chart).';
+
+function leafManagerReviewEnabled(): boolean {
+  const v = process.env.LEAF_MANAGER_REVIEW?.trim().toLowerCase();
+  if (v === "0" || v === "false" || v === "off" || v === "no") return false;
+  return true;
+}
+
+function formatQuantBlockForManager(q: QuantResult | undefined): string {
+  if (!q) return "(No quant was run.)";
+  const lines = [
+    `hypothesis_under_test: ${q.hypothesis_under_test ?? "—"}`,
+    `datasetId: ${q.datasetId ?? "—"}`,
+    q.error ? `error: ${q.error}` : "",
+    q.narrative ? `narrative: ${q.narrative}` : "",
+  ].filter(Boolean);
+  return lines.join("\n");
+}
+
+function markdownLeafManagerReview(m: LeafManagerReviewJson): string {
+  const lines = [
+    "### Leaf manager review",
+    "",
+    m.pressure_test_summary,
+    "",
+    `**Alignment:** ${m.analysis_alignment}`,
+    "",
+  ];
+  if (m.missed_catalog_opportunities?.length) {
+    lines.push("**Possible catalog checks**", ...m.missed_catalog_opportunities.map((s) => `- ${s}`), "");
+  }
+  if (m.refinement_directives?.length) {
+    lines.push("**Directives for revision**", ...m.refinement_directives.map((s) => `- ${s}`), "");
+  }
+  if (m.suggested_followup_quant) {
+    lines.push(
+      "_Follow-up quant suggested (validated against allow-list before refinement)._",
+      "",
+    );
+  }
+  return lines.join("\n").trim();
+}
+
+function shouldSkipLeafRefinement(m: LeafManagerReviewJson): boolean {
+  if (!m.adequately_addresses_hypothesis) return false;
+  if (m.missed_catalog_opportunities?.length) return false;
+  if (m.suggested_followup_quant != null) return false;
+  if (m.refinement_directives?.length) return false;
+  return true;
+}
+
+function sanitizeManagerSuggestedQuant(raw: unknown): QuantPlan | null {
+  if (!raw || typeof raw !== "object") return null;
+  const p = raw as QuantPlan;
+  if (typeof p.datasetId !== "string" || !Array.isArray(p.steps)) return null;
+  if (!quantPlanReferencesValidDatasets(p)) return null;
+  return p;
+}
+
+function runQuantIfValid(parsed: AnalysisJson): QuantResult | undefined {
   if (
     parsed.quant &&
     typeof parsed.quant === "object" &&
     typeof (parsed.quant as QuantPlan).datasetId === "string" &&
-    Array.isArray((parsed.quant as QuantPlan).steps)
+    Array.isArray((parsed.quant as QuantPlan).steps) &&
+    quantPlanReferencesValidDatasets(parsed.quant as QuantPlan)
   ) {
-    quantResult = executeQuantPlan(parsed.quant as QuantPlan);
+    return executeQuantPlan(parsed.quant as QuantPlan);
   }
+  return undefined;
+}
 
+function buildNodeStateFromAnalysis(
+  leafId: string,
+  parsed: AnalysisJson,
+  quantResult: QuantResult | undefined,
+): NodeState {
   const verdict = normalizeHypothesisVerdict(parsed.verdict);
   const confidence = normalizeConfidence(parsed.confidence);
   const evidenceList = Array.isArray(parsed.evidence_needed)
@@ -139,7 +194,7 @@ async function analyzeLeafToDoneState(params: {
   ].join("");
 
   return {
-    id: params.leaf.id,
+    id: leafId,
     status: "done",
     summary: parsed.summary,
     analysis: block.trim(),
@@ -149,6 +204,107 @@ async function analyzeLeafToDoneState(params: {
     evidenceNeeded: evidenceList.length ? evidenceList : undefined,
     ...(quantResult ? { quant: quantResult } : {}),
   };
+}
+
+async function analyzeLeafToDoneState(params: {
+  userGoal: string;
+  discoveryText: string;
+  roots: OutlineNode[];
+  leaf: OutlineNode;
+  redirectContext: string | undefined;
+}): Promise<NodeState> {
+  const pathTitles = pathToNode(params.roots, params.leaf.id).join(" > ");
+  const leafQuestion = params.leaf.question ?? params.leaf.title;
+
+  const parsedInitial = await generateJson<AnalysisJson>(
+    analysisPrompt({
+      userGoal: params.userGoal,
+      discovery: params.discoveryText,
+      pathTitles,
+      leafQuestion,
+      redirectContext: params.redirectContext,
+      dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
+    }),
+    { repairHint: LEAF_ANALYSIS_JSON_REPAIR_HINT },
+  );
+  let quantResult = runQuantIfValid(parsedInitial);
+  let draft = buildNodeStateFromAnalysis(params.leaf.id, parsedInitial, quantResult);
+
+  if (!leafManagerReviewEnabled()) {
+    return draft;
+  }
+
+  let managerJson: LeafManagerReviewJson | null = null;
+  try {
+    managerJson = await withTokenPhase("leaf_manager", () =>
+      generateJson<LeafManagerReviewJson>(
+        leafManagerReviewPrompt({
+          userGoal: params.userGoal,
+          discovery: params.discoveryText,
+          pathTitles,
+          leafQuestion,
+          initialSummary: draft.summary ?? "",
+          initialAnalysis: parsedInitial.analysis ?? "",
+          initialVerdict: draft.verdict ?? "inconclusive",
+          initialConfidence: draft.confidence ?? "medium",
+          evidenceNeededLines: draft.evidenceNeeded ?? [],
+          quantBlockForReview: formatQuantBlockForManager(draft.quant),
+          dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
+          allowedDatasetIdsBlock: listQuantDatasetIds().join("\n"),
+        }),
+        {
+          repairHint:
+            'Keys: "adequately_addresses_hypothesis" (boolean), "pressure_test_summary" (string), "analysis_alignment" ("strong"|"moderate"|"weak"), "missed_catalog_opportunities" (string array), "suggested_followup_quant" (null or object with hypothesis_under_test, datasetId, steps, optional chart), "refinement_directives" (string array).',
+        },
+      ),
+    );
+  } catch {
+    managerJson = null;
+  }
+
+  if (!managerJson) {
+    return draft;
+  }
+
+  const reviewMd = markdownLeafManagerReview(managerJson);
+
+  if (shouldSkipLeafRefinement(managerJson)) {
+    return { ...draft, leafManagerReview: reviewMd };
+  }
+
+  const suggestedValid = sanitizeManagerSuggestedQuant(managerJson.suggested_followup_quant);
+  const managerSuggestedQuantHint =
+    suggestedValid ? JSON.stringify(suggestedValid) : "(none)";
+
+  let parsedRefined: AnalysisJson;
+  try {
+    parsedRefined = await withTokenPhase("leaf_refine", () =>
+      generateJson<AnalysisJson>(
+        leafAnalysisRefinementPrompt({
+          userGoal: params.userGoal,
+          discovery: params.discoveryText,
+          pathTitles,
+          leafQuestion,
+          redirectContext: params.redirectContext,
+          dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
+          priorAnalysisJson: JSON.stringify(parsedInitial),
+          managerReviewJson: JSON.stringify(managerJson),
+          managerSuggestedQuantHint,
+        }),
+        { repairHint: LEAF_ANALYSIS_JSON_REPAIR_HINT },
+      ),
+    );
+  } catch {
+    return { ...draft, leafManagerReview: reviewMd };
+  }
+
+  quantResult = runQuantIfValid(parsedRefined);
+  const refined = buildNodeStateFromAnalysis(
+    params.leaf.id,
+    parsedRefined,
+    quantResult,
+  );
+  return { ...refined, leafManagerReview: reviewMd };
 }
 
 function normalizeHypothesisVerdict(raw: unknown): HypothesisVerdict {
@@ -790,7 +946,7 @@ async function runStructureRevisionPhase(
 
   await emit("structure", "Building initial hypothesis tree");
   const structureRepairHint =
-    'One object with key "roots" (array). Each node: "id" (string), "title", "question", "children" (array; use [] on leaves). Internal nodes must have non-empty children.';
+    'One object with key "roots" (array). Each node: "id" (string), "title", "question" (testable declarative hypothesis at every depth), "children" (array; use [] on leaves). Internal nodes must have non-empty children.';
 
   const raw1 = await generateJson<OutlineDoc>(
     structurePrompt({

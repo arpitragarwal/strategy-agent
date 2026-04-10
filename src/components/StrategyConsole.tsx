@@ -44,15 +44,32 @@ type RunRow = {
   tokenUsage?: unknown;
 };
 
-function formatTokenUsageSummary(u: TokenUsageSnapshot | null): string | null {
+/** Nearest thousand with K suffix (e.g. 83833 → 84K). Below 1K, show the integer. */
+function formatTokensRoundK(n: number): string {
+  if (!Number.isFinite(n) || n < 0) return "0";
+  if (n < 1000) return String(Math.round(n));
+  return `${Math.round(n / 1000)}K`;
+}
+
+function formatCountK(n: number): string {
+  if (!Number.isFinite(n) || n < 0) return "0";
+  if (n < 1000) return String(Math.round(n));
+  return `${Math.round(n / 1000)}K`;
+}
+
+/** One line for the pipeline panel (above activity log). */
+function formatTokenUsagePipelineLine(u: TokenUsageSnapshot | null): string | null {
   if (!u) return null;
   const input = typeof u.input === "number" ? u.input : 0;
   const output = typeof u.output === "number" ? u.output : 0;
-  if (!input && !output && !(typeof u.calls === "number" && u.calls > 0)) {
-    return null;
-  }
-  const calls = typeof u.calls === "number" ? `${u.calls} calls` : null;
-  return ["Tokens:", `${input} in / ${output} out`, calls].filter(Boolean).join(" ");
+  const calls = typeof u.calls === "number" ? u.calls : 0;
+  if (!input && !output && !calls) return null;
+  const parts = [
+    `Tokens ${formatTokensRoundK(input)} in`,
+    `${formatTokensRoundK(output)} out`,
+    `${formatCountK(calls)} calls`,
+  ];
+  return parts.join(" · ");
 }
 
 type ArtifactPayload = {
@@ -92,6 +109,15 @@ function formatMemoryTimestamp(iso: string): string {
   } catch {
     return iso;
   }
+}
+
+/** Older runs used ## Recommendation / ## Supporting points; strip those headings for display. */
+function normalizeSynthesisDisplayMarkdown(md: string): string {
+  return md
+    .replace(/^##\s*Recommendation\s*$/gim, "")
+    .replace(/^##\s*Supporting points\s*$/gim, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 const REVIEW_LABELS: Record<ReviewCheckpoint, string> = {
@@ -653,6 +679,16 @@ function OutlineBranch({
               </p>
             </div>
           ) : null}
+          {!hasKids && state?.leafManagerReview?.trim() && state.status === "done" ? (
+            <details className="mt-2 group/mgr border-t border-zinc-100 pt-2">
+              <summary className="cursor-pointer text-[11px] font-medium text-amber-900 hover:text-amber-950">
+                Manager review (this leaf)
+              </summary>
+              <div className="mt-2 min-w-0 max-w-full text-xs text-zinc-700 rounded-md border border-amber-100 bg-amber-50/50 px-2 py-1.5">
+                <MarkdownBody content={state.leafManagerReview} />
+              </div>
+            </details>
+          ) : null}
           {state?.analysis?.trim() && state.status === "done" ? (
             <details className="mt-2 group/leaf border-t border-zinc-100 pt-2">
               <summary className="cursor-pointer text-[11px] font-medium text-sky-800 hover:text-sky-950">
@@ -1077,8 +1113,8 @@ export function StrategyConsole() {
     attachRunStream(runId);
   };
 
-  const tokenUsageSummary = useMemo(
-    () => (runId ? formatTokenUsageSummary(tokenUsage) : null),
+  const tokenUsagePipelineLine = useMemo(
+    () => (runId ? formatTokenUsagePipelineLine(tokenUsage) : null),
     [runId, tokenUsage],
   );
 
@@ -1168,7 +1204,7 @@ export function StrategyConsole() {
             Goal, question & context
           </label>
           <textarea
-            className="w-full min-h-[160px] rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
+            className="w-full min-h-[80px] rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
             placeholder="Put everything here: the strategic question, constraints, metrics, and any internal notes the agents should use."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -1203,9 +1239,6 @@ export function StrategyConsole() {
           </p>
           {runId ? (
             <p className="text-xs text-zinc-500 font-mono break-all">run {runId}</p>
-          ) : null}
-          {tokenUsageSummary ? (
-            <p className="text-xs text-zinc-500">{tokenUsageSummary}</p>
           ) : null}
 
           {pausedAt && runId && !busy ? (
@@ -1346,6 +1379,11 @@ export function StrategyConsole() {
           <div className="rounded-lg border border-zinc-200/80 bg-white/90 px-3 py-3">
             <PipelineTimeline steps={pipelineSteps} />
           </div>
+          {tokenUsagePipelineLine ? (
+            <p className="mt-2 text-[10px] font-mono text-zinc-600 tabular-nums">
+              {tokenUsagePipelineLine}
+            </p>
+          ) : null}
           <details className="mt-3 group/log">
             <summary className="cursor-pointer list-none flex items-start gap-3 text-left text-[10px] font-mono text-zinc-600 hover:text-zinc-800 [&::-webkit-details-marker]:hidden">
               <DisclosureChevron nested />
@@ -1455,7 +1493,7 @@ export function StrategyConsole() {
             }
             cardClassName="border-emerald-200 bg-emerald-50/80"
           >
-            <MarkdownBody content={synthesis} />
+            <MarkdownBody content={normalizeSynthesisDisplayMarkdown(synthesis)} />
           </OutputPanel>
         ) : null}
       </div>

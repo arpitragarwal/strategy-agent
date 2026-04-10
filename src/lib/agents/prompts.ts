@@ -3,6 +3,22 @@ export type DiscoveryMemoryRoute = {
   queries: string[];
 };
 
+/**
+ * Single source of truth for quant pipeline JSON (context planner + leaf analysis).
+ * Matches ops handled by `executeQuantPlan` in `src/lib/quant/executor.ts`.
+ */
+export const QUANT_PIPELINE_OPS_FOR_PROMPTS = `Allowed quant.steps operations (execute in order):
+- {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
+- {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId (or each plan's datasetId) as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
+- {"op":"project","columns":["col1","col2",...]} — optional; drop columns before groupby/chart (use actual names after joins, e.g. acc_arr_usd).
+- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
+- {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
+- {"op":"limit","n": number}
+
+For cross-table questions, use **join** as documented in the catalog instead of reasoning from one file only.
+
+Optional chart per plan: {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} — x/y must exist on rows **after** all steps.`;
+
 /** Model decides whether to run a Memory repository search (like optional web search). */
 export function discoveryMemoryRoutePrompt(userGoal: string): string {
   return `You control an optional lookup in this app's **Memory repository**: saved outputs from prior strategy runs (final memos, manager critiques, branch analysis write-ups). Nothing is included automatically.
@@ -51,7 +67,9 @@ export function contextClarificationPlanPrompt(input: {
 Your jobs:
 1. **Specificity check** — Read the goal for underspecified phrases (e.g. "the largest customer segment", "fastest-growing region", "main vertical") where naming the entity would sharpen the rest of the pipeline. Call this out in specificity_notes.
 2. **Data-first disambiguation** — When prototype spreadsheet data (see catalog) can pin down those entities, emit quant_plans (up to **4**). Prefer **filter → join (if multiple tables) → project (optional, to select columns) → groupby → sort (desc) → limit**. Use exact datasetId values from the catalog and documented join keys.
-3. **Human clarification** — Only if something important still cannot be resolved from the data (e.g. strategic definition not in CSVs, required time horizon missing, user intent ambiguous), add concise clarifying_questions (max **5** strings). If data can fully ground the goal for this workspace, use [].
+3. **Human clarification** — When the catalog **cannot** resolve an important gap (definitions, horizons, intent), add concise clarifying_questions (max **5** strings).
+
+**Mandatory closure:** If specificity_notes is **non-empty** (you flagged underspecified phrases), you **must not** leave both quant_plans and clarifying_questions empty. Either emit at least one **valid** quant_plan that targets a flagged gap using catalog columns, **or** at least one clarifying_question the user must answer, **or both**. If the goal is already concrete, keep specificity_notes brief and use [] for both arrays.
 
 User goal / question:
 ${input.userGoal}
@@ -71,9 +89,9 @@ Shape:
   "clarifying_questions": [ "string", ... ]
 }
 
-Quant plan steps: **filter**, **join** (multi-table), **project**, **groupby**, **sort**, **limit**. chart optional {{ "type":"bar"|"line", "x","y", "title"? }}.
-- **join:** \`{ "op":"join", "rightDatasetId":"crm/accounts", "on":[["account_id","account_id"]], "how":"left", "rightPrefix":"acc_" }\` — \`on\` is an array of [leftCol, rightCol] pairs, all must match. **rightPrefix** prefixes every column from the right file (default \`r_\`). Use distinct prefixes for chained joins.
-- **project:** \`{ "op":"project", "columns":["segment","amount","acc_arr_usd"] }\` — keep only listed columns (use names present *after* prior steps).
+Each quant_plan object: hypothesis_under_test, datasetId, steps[], optional chart — same shape as the leaf analysis "quant" object.
+
+${QUANT_PIPELINE_OPS_FOR_PROMPTS}
 
 If retrieve_memory had nothing useful and the goal is already concrete, specificity_notes can be brief, quant_plans can be [], clarifying_questions can be [].`;
 }
@@ -145,7 +163,7 @@ Exact JSON shape:
     {
       "id": "unique_snake_id",
       "title": "short pillar name",
-      "question": "decision-oriented question for this node",
+      "question": "declarative, testable hypothesis for this node (every depth)",
       "children": [
         { "id": "child_id", "title": "…", "question": "…", "children": [] }
       ]
@@ -154,19 +172,19 @@ Exact JSON shape:
 }
 
 Rules:
-- **Leaves only:** Every leaf must have "children": [] only. **Leaf "question" must be a clear, testable hypothesis** — a declarative claim the analysis step will try to **confirm or refute** with evidence (not a vague theme).
-- Internal nodes must have non-empty children (group hypotheses into pillars).
+- **Every node (root, internal, leaf):** \`question\` must be a **clear, testable hypothesis** — a declarative claim someone could **confirm or refute** with data and reasoning (not a vague theme, not only a topic label). **Leaves** are analyzed directly against this claim; **internal** nodes are judged later by **rolling up** child results as evidence for the same parent hypothesis.
+- **Leaves:** \`children\` must be \`[]\` only.
+- **Internal nodes:** non-empty \`children\`; sibling hypotheses under one parent should be **MECE** at that level (mutually exclusive angles, together covering the parent's scope).
 - 3–6 top-level roots unless the problem is tiny.
 - **Order matters:** Within each \`children\` array, order siblings from **highest expected impact / most likely root causes / key decision levers** first, then supporting or downstream factors. Put dependencies before what they explain when the logic requires it. Do **not** use arbitrary or alphabetical ordering.
-- IDs: lowercase letters, numbers, underscores only.
-- Non-leaf "question" can orient the pillar; leaf "question" = the hypothesis under test.`;
+- IDs: lowercase letters, numbers, underscores only.`;
 }
 
 /** Appended on second attempt when normalizeOutlineDoc finds empty/malformed roots. */
 export const STRUCTURE_RETRY_SUFFIX = `
 
 CRITICAL FIX: The previous JSON was rejected — "roots" was missing, empty, or not a non-empty array, or there were no leaf nodes.
-Reply with ONLY one JSON object. "roots" MUST be a non-empty array. For a normal strategy question use at least 3 top-level pillars; each branch must end in leaves with "children": [] and each leaf "question" must be a testable hypothesis.
+Reply with ONLY one JSON object. "roots" MUST be a non-empty array. For a normal strategy question use at least 3 top-level pillars; each branch must end in leaves with "children": [] and **every node's "question"** (root, internal, leaf) must be a testable declarative hypothesis.
 First character "{", last character "}".`;
 
 export function managerMeceReviewPrompt(input: {
@@ -188,9 +206,10 @@ ${input.outlineJson}
 Output markdown with:
 ## Hypothesis tree / coverage (mutually exclusive? collectively exhaustive for the goal?)
 ## Gaps, overlaps, or mis-groupings
-## Leaf hypotheses (are leaves testable claims someone could confirm or deny with data and reasoning?)
+## Node hypotheses (every depth)
+Are **all** nodes' \`question\` fields testable claims (confirm/deny with evidence)—not just leaves? Flag any internal node that only "frames a pillar" without a falsifiable statement.
 ## Ordering (within each level, should higher-impact or more causal branches appear earlier? say what to reorder)
-## Concrete structural fixes (merge/split/rename pillars, add missing branches, sharpen leaf hypotheses)
+## Concrete structural fixes (merge/split/rename pillars, add missing branches, sharpen hypotheses at every level)
 ## Must-fix issues before analysis proceeds
 
 Be direct and actionable. The next step will **rebuild the tree JSON** from your feedback.`;
@@ -224,7 +243,7 @@ Exact shape:
     {
       "id": "unique_snake_id",
       "title": "short pillar name",
-      "question": "decision-oriented question",
+      "question": "declarative testable hypothesis (root, internal, or leaf)",
       "children": [ ... leaves must have "children": [] ]
     }
   ]
@@ -235,13 +254,13 @@ Rules:
 - Internal nodes: non-empty children
 - 3–6 top-level roots unless the scope is tiny
 - **Order matters:** In every \`children\` array, list branches from **strongest drivers / causes / decision-critical** first to more peripheral last—same intent as the initial structure pass, unless manager feedback explicitly requires a different order.
-- **Every leaf "question"** must remain a **testable hypothesis** (confirm / deny with evidence).`;
+- **Every node "question"** (root, internal, leaf) must be a **testable hypothesis** (confirm / deny with evidence); internal nodes are validated via rollup from children, not prose labels only.`;
 }
 
 export const STRUCTURE_REVISION_RETRY_SUFFIX = `
 
 CRITICAL: Previous revision JSON was invalid or had no usable leaves.
-Return ONLY one JSON object with non-empty "roots" and valid leaf nodes. First "{", last "}".`;
+Return ONLY one JSON object with non-empty "roots" and valid leaf nodes; **every node's "question"** must be a testable hypothesis. First "{", last "}".`;
 
 export function analysisPrompt(input: {
   userGoal: string;
@@ -256,7 +275,7 @@ export function analysisPrompt(input: {
       `\nUser steering / redirect (prioritize this when answering this leaf):\n${input.redirectContext.trim()}\n`
     : "";
 
-  return `You are an analysis agent working on one **leaf** of a **hypothesis tree**. The leaf question is the **hypothesis** to test. Your job is to weigh evidence (context, reasoning, and optional CSV analysis) and **confirm or refute** that hypothesis when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
+  return `You are an analysis agent working on one **leaf node** of a **hypothesis tree** (every node in the tree is framed as a hypothesis; leaves are tested here directly). This node's \`question\` is the **hypothesis** to test. Weigh evidence (context, reasoning, and optional CSV analysis) and **confirm or refute** it when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
 
 Overall goal:
 ${input.userGoal}
@@ -273,17 +292,7 @@ ${input.dataCatalogMarkdown}
 
 Quantitative plans: when numeric evidence from these CSVs would strengthen confirmation or refutation, include "quant" with a pipeline. If the hypothesis is purely qualitative or no dataset fits, set "quant" to null.
 
-Allowed quant.steps operations (execute in order):
-- {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
-- {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
-- {"op":"project","columns":["col1","col2",...]} — optional; drop columns before groupby/chart (use actual names after joins, e.g. r_arr_usd or acc_arr_usd).
-- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
-- {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
-- {"op":"limit","n": number}
-
-For **cross-table** hypotheses (e.g. pipeline amount by account ARR band), use **join** to **crm/accounts** (or as documented in the catalog) rather than reasoning from a single file.
-
-Optional "chart": {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} referencing columns present AFTER all steps.
+${QUANT_PIPELINE_OPS_FOR_PROMPTS}
 
 evidence_needed (required discipline): List concrete gaps that limit this answer — not generic caveats. Each item is one short string. Include when relevant:
 - Data / numbers: metrics, cuts, or time ranges not in context notes or CSVs; unreliable proxies you had to use.
@@ -312,6 +321,154 @@ Required JSON shape (types matter):
 }`;
 }
 
+/** Manager pressure-test after an initial leaf analysis (JSON). */
+export type LeafManagerReviewJson = {
+  adequately_addresses_hypothesis: boolean;
+  pressure_test_summary: string;
+  analysis_alignment: "strong" | "moderate" | "weak";
+  /** Name a real catalog datasetId when suggesting CSV checks; never invent ids. */
+  missed_catalog_opportunities: string[];
+  suggested_followup_quant: null | {
+    hypothesis_under_test: string;
+    datasetId: string;
+    steps: unknown[];
+    chart?: unknown | null;
+  };
+  refinement_directives: string[];
+};
+
+export function leafManagerReviewPrompt(input: {
+  userGoal: string;
+  discovery: string;
+  pathTitles: string;
+  leafQuestion: string;
+  initialSummary: string;
+  initialAnalysis: string;
+  initialVerdict: string;
+  initialConfidence: string;
+  evidenceNeededLines: string[];
+  quantBlockForReview: string;
+  dataCatalogMarkdown: string;
+  /** Exact allowed datasetId values (one per line). */
+  allowedDatasetIdsBlock: string;
+}): string {
+  const ev =
+    input.evidenceNeededLines.length > 0 ?
+      input.evidenceNeededLines.map((s) => `- ${s}`).join("\n")
+    : "(none listed)";
+
+  return `You are a **senior manager** pressure-testing a **single leaf analysis** before it is finalized. The tree is MECE; this leaf's job is to test one hypothesis.
+
+**Anti-hallucination / grounding rules (mandatory):**
+- You do **not** have raw CSV rows. Judge only from the **text** below: initial analysis, quant output (if any), context & clarification, and the **data catalog** (dataset ids and descriptions).
+- **Never invent** dataset ids, column names, or numbers. The only valid \`datasetId\` values for any suggested quant are **exactly** those listed under ALLOWED DATASET IDS — character-for-character.
+- If you suggest \`suggested_followup_quant\`, it must use \`datasetId\` from that list and \`steps\` that only reference columns **named or clearly implied** in the catalog description for that dataset. If unsure of a column, do **not** put it in \`steps\`; instead add a string to \`refinement_directives\` like "Verify column X exists in crm/accounts before quant".
+- Do **not** claim specific cell values or aggregates exist unless they appear in the **quant block** or **context** text. You may say "a quant on crm/opportunities could test …" without fabricating outcomes.
+- \`missed_catalog_opportunities\`: short strings; when pointing at data, include a valid dataset id from the allow list (e.g. "crm/accounts: ARR by tier could test pricing power").
+- If the analysis is sound and grounded, set \`adequately_addresses_hypothesis\` true and keep arrays empty and \`suggested_followup_quant\` null.
+
+Overall goal:
+${input.userGoal}
+
+Context & clarification (excerpt may be long):
+${input.discovery}
+
+Path: ${input.pathTitles}
+
+**Hypothesis (leaf question):**
+${input.leafQuestion}
+
+**Initial executive summary:**
+${input.initialSummary}
+
+**Initial full analysis (reasoning):**
+${input.initialAnalysis}
+
+**Stated verdict / confidence:** ${input.initialVerdict} / ${input.initialConfidence}
+
+**Evidence gaps the analyst listed:**
+${ev}
+
+**Quant that ran (or error / none):**
+${input.quantBlockForReview}
+
+ALLOWED DATASET IDS (only these strings are valid \`datasetId\` / join \`rightDatasetId\`):
+${input.allowedDatasetIdsBlock}
+
+${input.dataCatalogMarkdown}
+
+Output **one JSON object only** — first "{", last "}".
+
+Shape:
+{
+  "adequately_addresses_hypothesis": boolean,
+  "pressure_test_summary": "string, 2-5 sentences: does the analysis directly answer the hypothesis? logical gaps?",
+  "analysis_alignment": "strong" | "moderate" | "weak",
+  "missed_catalog_opportunities": ["short strings, optional dataset id from allow list"],
+  "suggested_followup_quant": null OR { "hypothesis_under_test", "datasetId" (must be in allow list), "steps", optional "chart" },
+  "refinement_directives": ["imperatives for the analyst's second pass, e.g. tighten verdict, add quant, address contradiction"]
+}`;
+}
+
+export function leafAnalysisRefinementPrompt(input: {
+  userGoal: string;
+  discovery: string;
+  pathTitles: string;
+  leafQuestion: string;
+  redirectContext?: string;
+  dataCatalogMarkdown: string;
+  priorAnalysisJson: string;
+  managerReviewJson: string;
+  /** Pre-validated quant hint from manager, or "(none)". */
+  managerSuggestedQuantHint: string;
+}): string {
+  const steer =
+    input.redirectContext?.trim() ?
+      `\nUser steering / redirect (still applies):\n${input.redirectContext.trim()}\n`
+    : "";
+
+  return `You are revising a **leaf hypothesis analysis** after a **manager review**. Output a **full replacement** analysis in the **same JSON shape** as the first pass (not a diff). Integrate the manager's feedback; strengthen grounding; fix logic gaps.
+
+${steer}
+Overall goal:
+${input.userGoal}
+
+Context & clarification:
+${input.discovery}
+
+Path: ${input.pathTitles}
+Hypothesis: ${input.leafQuestion}
+
+**Prior analysis (JSON — your baseline; improve, do not ignore unless manager says it was wrong):**
+${input.priorAnalysisJson}
+
+**Manager review (JSON):**
+${input.managerReviewJson}
+
+**Manager-suggested quant (already validated against catalog; null if none):**
+${input.managerSuggestedQuantHint}
+
+Rules:
+- Address \`refinement_directives\` and \`pressure_test_summary\` from the manager JSON. If \`suggested_followup_quant\` was provided above, you **should** usually set your output \`quant\` to that exact object (or a minor fix) and **not** invent a different dataset.
+- **Anti-hallucination:** \`quant.datasetId\` and any join \`rightDatasetId\` must appear in the catalog markdown. Only use column names you can justify from catalog descriptions. If you cannot run a valid quant, set \`quant\` to null and explain in \`evidence_needed\`.
+- \`verdict\` and \`confidence\` must reflect the **refined** reasoning.
+
+${input.dataCatalogMarkdown}
+
+${QUANT_PIPELINE_OPS_FOR_PROMPTS}
+
+Output ONE JSON object only — same keys as the initial leaf analysis:
+{
+  "summary": "string",
+  "analysis": "string",
+  "hypothesis": null or "string",
+  "verdict": "confirmed" | "refuted" | "inconclusive" | "partially_supported",
+  "evidence_needed": ["string"],
+  "confidence": "low" | "medium" | "high",
+  "quant": null OR { "hypothesis_under_test", "datasetId", "steps", optional "chart" }
+}`;
+}
+
 export type BranchRollupJson = {
   summary: string;
   analysis: string;
@@ -320,7 +477,7 @@ export type BranchRollupJson = {
   evidence_needed?: string[];
 };
 
-/** Roll child hypothesis results into a parent branch answer + confidence. */
+/** Roll child hypothesis results into a parent-node hypothesis verdict + confidence. */
 export function branchRollupPrompt(input: {
   userGoal: string;
   contextClarification: string;
@@ -329,7 +486,7 @@ export function branchRollupPrompt(input: {
   parentQuestion?: string;
   childSummariesMarkdown: string;
 }): string {
-  return `You **roll up** completed child analyses into a single **parent-branch** conclusion. Children may be leaf hypotheses or already-rolled sub-branches; each has a verdict, confidence, and summary.
+  return `You **roll up** completed child analyses to judge the **parent node's own hypothesis**. Children may be leaf hypotheses or already-rolled sub-branches; each has a verdict, confidence, and summary. Treat their conclusions as **evidence** about whether the **parent's declarative claim** holds.
 
 Overall goal:
 ${input.userGoal}
@@ -339,18 +496,18 @@ ${input.contextClarification}
 
 Parent path: ${input.parentPathTitles}
 Parent title: ${input.parentTitle}
-Parent pillar question (frames this branch collectively):
+**Parent hypothesis under test** (this internal node's \`question\` — confirm, refute, or qualify it using children):
 ${input.parentQuestion?.trim() || "(none)"}
 
 **Direct children:**
 ${input.childSummariesMarkdown}
 
 Rules:
-- **summary:** 2–4 sentences for executives — does this branch as a whole support, weaken, or leave open the parent framing? Aggregate what children imply.
-- **analysis:** Plain text (no JSON inside). Explain how child verdicts combine; note conflicts or reinforcement.
-- **verdict:** For the **parent branch theme** given children: "confirmed" | "refuted" | "inconclusive" | "partially_supported".
+- **summary:** 2–4 sentences for executives — given child results, does the **parent hypothesis** stand, fail, or remain open?
+- **analysis:** Plain text (no JSON inside). Explain how child verdicts bear on the **parent claim**; note conflicts or reinforcement.
+- **verdict:** For the **parent hypothesis** (not a loose theme): "confirmed" | "refuted" | "inconclusive" | "partially_supported".
 - **confidence:** Rolled-up "low" | "medium" | "high". Use **low** if children conflict materially or any child was low-confidence/skipped; **high** only if children align and are mostly high-confidence.
-- **evidence_needed:** Branch-level gaps not resolved by children; [] if none.
+- **evidence_needed:** Gaps for judging the **parent hypothesis** that children did not resolve; [] if none.
 
 Output ONE JSON object only. First "{", last "}".
 Shape:
@@ -409,11 +566,9 @@ ${input.analysesMarkdown}
 
 Use **exactly this structure** — keep the whole synthesis tight.
 
-## Recommendation
-Answer the goal above in **at most two lines** (plain sentences; no bullets in this section). State the clearest recommendation or direct answer.
+Start with one or two sentences answering the goal, wrapped entirely in **bold** (e.g. **Your clearest recommendation here.**). No label like "Key point:" and no \`##\` heading before it.
 
-## Supporting points
-- 3–7 bullet lines only. Each bullet: one concrete support — cite **numbers, facts from analyses, or tight reasoning** (no filler).
+Then 3–7 bullet lines only (no "Supporting points" heading or any H2 before them). Each bullet: one concrete support — cite **numbers, facts from analyses, or tight reasoning** (no filler).
 
 ## Open questions
 - Bullet list only: what still **needs more data, analysis, or decisions** before acting with confidence. If none, use a single bullet: _None material — proceed with monitoring as above._
@@ -472,13 +627,11 @@ ${input.analysesMarkdown}
 
 First line (standalone): **Partial synthesis** — not all hypotheses were tested.
 
-Then use **exactly this structure** (same as full synthesis, but hedge where coverage is thin):
+Then match full synthesis shape (hedge where coverage is thin):
 
-## Recommendation
-**At most two lines.** Best-effort answer to the goal given partial evidence; say clearly if the conclusion is provisional.
+Then one or two sentences in **bold** with the best-effort answer to the goal; say inside the bold text if the conclusion is provisional. No label line and no \`##\` heading before it.
 
-## Supporting points
-- 3–7 bullets: only what the **completed** analyses support; cite data or reasoning. Optional bullet flagging **what was not analyzed** if it would change the answer.
+Then 3–7 bullets (no "Supporting points" heading): only what the **completed** analyses support; cite data or reasoning. Optional bullet flagging **what was not analyzed** if it would change the answer.
 
 ## Open questions
 - Bullets: **gaps from incomplete branches**, missing data, and what to analyze next before a final call.
