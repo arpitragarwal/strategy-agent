@@ -30,6 +30,7 @@ type TokenUsageSnapshot = {
 type RunRow = {
   id: string;
   status?: string;
+  error?: string | null;
   reviewCheckpoint?: string | null;
   runMode?: string | null;
   prompt: string;
@@ -788,7 +789,8 @@ export function StrategyConsole() {
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
-  const endedWithPauseRef = useRef(false);
+  /** True after a terminal stream event so EventSource `onerror` from close() is ignored. */
+  const suppressStreamErrorRef = useRef(false);
 
   const [treeExpandOverrides, setTreeExpandOverrides] = useState<Record<string, boolean>>({});
 
@@ -863,7 +865,7 @@ export function StrategyConsole() {
     setTokenUsage(null);
   };
 
-  function hydrateFromRun(run: RunRow) {
+  const hydrateFromRun = useCallback((run: RunRow) => {
     const legacy = run.companyContext?.trim();
     setPrompt(
       legacy ? `${run.prompt}${run.prompt.trim() ? "\n\n" : ""}${legacy}` : run.prompt,
@@ -909,7 +911,7 @@ export function StrategyConsole() {
     }
     const tu = run.tokenUsage;
     setTokenUsage(tu && typeof tu === "object" ? (tu as TokenUsageSnapshot) : null);
-  }
+  }, []);
 
   function hydrateFromArtifact(art: {
     id: string;
@@ -981,7 +983,7 @@ export function StrategyConsole() {
 
   const attachRunStream = useCallback(
     (id: string) => {
-      endedWithPauseRef.current = false;
+      suppressStreamErrorRef.current = false;
       setBusy(true);
       setPausedAt(null);
       setError(null);
@@ -1048,16 +1050,17 @@ export function StrategyConsole() {
               }
               break;
             case "awaiting_review":
-              endedWithPauseRef.current = true;
               if (msg.checkpoint) {
                 setPausedAt(msg.checkpoint);
               }
               setBusy(false);
               setControlMessage(null);
+              suppressStreamErrorRef.current = true;
               src.close();
               void refreshRunMeta(id);
               break;
             case "complete":
+              suppressStreamErrorRef.current = true;
               src.close();
               setBusy(false);
               setPausedAt(null);
@@ -1066,6 +1069,7 @@ export function StrategyConsole() {
               void refreshRunMeta(id);
               break;
             case "error":
+              suppressStreamErrorRef.current = true;
               src.close();
               setError(msg.message ?? "Unknown error");
               setBusy(false);
@@ -1079,16 +1083,35 @@ export function StrategyConsole() {
         }
       };
       src.onerror = () => {
+        const ignore = suppressStreamErrorRef.current;
+        suppressStreamErrorRef.current = false;
         src.close();
         setBusy(false);
-        if (endedWithPauseRef.current) {
-          endedWithPauseRef.current = false;
-          return;
-        }
-        setError((prev) => prev ?? "Stream connection lost");
+        if (ignore) return;
+        void (async () => {
+          try {
+            const res = await fetch(`/api/runs/${id}`);
+            if (res.ok) {
+              const run = (await res.json()) as RunRow;
+              if (run.status === "complete" || run.status === "awaiting_review") {
+                hydrateFromRun(run);
+                if (run.status === "complete") void loadMemory();
+                return;
+              }
+              if (run.status === "failed") {
+                hydrateFromRun(run);
+                if (run.error) setError(run.error);
+                return;
+              }
+            }
+          } catch {
+            /* ignore — show generic message below */
+          }
+          setError((prev) => prev ?? "Stream connection lost");
+        })();
       };
     },
-    [loadMemory, refreshRunMeta],
+    [loadMemory, refreshRunMeta, hydrateFromRun],
   );
 
   const startRun = async (mode: RunMode) => {

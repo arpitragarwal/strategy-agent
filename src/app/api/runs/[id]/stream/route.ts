@@ -19,12 +19,22 @@ export async function GET(
         );
       };
 
+      // SSE comment pings keep the connection warm through long LLM gaps (proxies/CDN idle timeouts).
+      let pingTimer: ReturnType<typeof setInterval> | undefined;
       try {
+        pingTimer = setInterval(() => {
+          try {
+            controller.enqueue(encoder.encode(`: ping\n\n`));
+          } catch {
+            if (pingTimer) clearInterval(pingTimer);
+          }
+        }, 15000);
         await executeRun(id, send);
       } catch (e) {
         const message = e instanceof Error ? e.message : String(e);
         send({ type: "error", message });
       } finally {
+        if (pingTimer) clearInterval(pingTimer);
         controller.close();
       }
     },
