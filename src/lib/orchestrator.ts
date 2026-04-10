@@ -1321,6 +1321,7 @@ export async function executeRun(runId: string, send: StreamSender) {
   };
 
   const acc = new RunTokenUsageAccumulator(getModelId());
+  const executeStartedAt = performance.now();
   await runTokenTrackingContext(acc, async () => {
     try {
     if (initialStatus === "pending") {
@@ -1406,7 +1407,11 @@ export async function executeRun(runId: string, send: StreamSender) {
           where: { id: runId },
           select: { tokenUsage: true },
         });
-        const merged = mergeTokenUsageIntoStored(row?.tokenUsage, acc.toJSON());
+        const executionMs = Math.round(performance.now() - executeStartedAt);
+        const merged = mergeTokenUsageIntoStored(row?.tokenUsage, {
+          ...acc.toJSON(),
+          executionMs,
+        });
         await prisma.strategyRun.update({
           where: { id: runId },
           data: { tokenUsage: merged as Prisma.InputJsonValue },

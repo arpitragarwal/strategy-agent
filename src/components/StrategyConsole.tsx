@@ -20,6 +20,8 @@ type TokenUsageSnapshot = {
   output?: number;
   total?: number;
   calls?: number;
+  /** Sum of executeRun wall time across slices (step-by-step). */
+  executionMs?: number;
   byPhase?: Record<string, { input: number; output: number }>;
   modelId?: string;
   recordedAt?: string;
@@ -57,18 +59,37 @@ function formatCountK(n: number): string {
   return `${Math.round(n / 1000)}K`;
 }
 
+function formatRunDuration(ms: number): string {
+  if (!Number.isFinite(ms) || ms <= 0) return "";
+  if (ms < 1000) return `${Math.round(ms)}ms`;
+  const sTotal = Math.round(ms / 1000);
+  if (sTotal < 60) return `${sTotal}s`;
+  const m = Math.floor(sTotal / 60);
+  const s = sTotal % 60;
+  return s ? `${m}m ${s}s` : `${m}m`;
+}
+
 /** One line for the pipeline panel (above activity log). */
 function formatTokenUsagePipelineLine(u: TokenUsageSnapshot | null): string | null {
   if (!u) return null;
   const input = typeof u.input === "number" ? u.input : 0;
   const output = typeof u.output === "number" ? u.output : 0;
   const calls = typeof u.calls === "number" ? u.calls : 0;
-  if (!input && !output && !calls) return null;
-  const parts = [
-    `Tokens ${formatTokensRoundK(input)} in`,
-    `${formatTokensRoundK(output)} out`,
-    `${formatCountK(calls)} calls`,
-  ];
+  const executionMs =
+    typeof u.executionMs === "number" && Number.isFinite(u.executionMs) ? u.executionMs : 0;
+  const parts: string[] = [];
+  if (input || output || calls) {
+    parts.push(
+      `Tokens ${formatTokensRoundK(input)} in`,
+      `${formatTokensRoundK(output)} out`,
+      `${formatCountK(calls)} calls`,
+    );
+  }
+  if (executionMs > 0) {
+    const dur = formatRunDuration(executionMs);
+    if (dur) parts.push(`Run time ${dur}`);
+  }
+  if (!parts.length) return null;
   return parts.join(" · ");
 }
 

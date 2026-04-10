@@ -11,6 +11,8 @@ export type RunTokenUsageSnapshot = {
   output: number;
   total: number;
   calls: number;
+  /** Wall time spent in executeRun for this slice; merged runs sum slices (step-by-step). */
+  executionMs?: number;
   byPhase: Record<string, PhaseTokenTotals>;
   modelId?: string;
   recordedAt: string;
@@ -135,11 +137,14 @@ export function mergeTokenUsageIntoStored(
   }
   const input = numField(e.input) + delta.input;
   const output = numField(e.output) + delta.output;
+  const executionMs =
+    numField(e.executionMs) + numField(delta.executionMs);
   return {
     input,
     output,
     total: input + output,
     calls: numField(e.calls) + delta.calls,
+    ...(executionMs > 0 ? { executionMs } : {}),
     byPhase,
     ...(delta.modelId ? { modelId: delta.modelId }
     : typeof e.modelId === "string" && e.modelId ? { modelId: e.modelId }
