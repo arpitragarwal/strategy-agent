@@ -791,6 +791,9 @@ export function StrategyConsole() {
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
   /** True after a terminal stream event so EventSource `onerror` from close() is ignored. */
   const suppressStreamErrorRef = useRef(false);
+  /** Reconnect attempts when the host drops SSE but the run is still `running` in the DB. */
+  const streamRetryRef = useRef(0);
+  const attachRunStreamRef = useRef<(id: string, opts?: { retry?: boolean }) => void>(() => {});
 
   const [treeExpandOverrides, setTreeExpandOverrides] = useState<Record<string, boolean>>({});
 
@@ -982,7 +985,8 @@ export function StrategyConsole() {
   };
 
   const attachRunStream = useCallback(
-    (id: string) => {
+    (id: string, opts?: { retry?: boolean }) => {
+      if (!opts?.retry) streamRetryRef.current = 0;
       suppressStreamErrorRef.current = false;
       setBusy(true);
       setPausedAt(null);
@@ -1005,6 +1009,8 @@ export function StrategyConsole() {
             checkpoint?: ReviewCheckpoint;
           };
           switch (msg.type) {
+            case "keepalive":
+              break;
             case "tree_review":
               if (msg.notes) setTreeReviewNotes(msg.notes);
               break;
@@ -1050,6 +1056,7 @@ export function StrategyConsole() {
               }
               break;
             case "awaiting_review":
+              streamRetryRef.current = 0;
               if (msg.checkpoint) {
                 setPausedAt(msg.checkpoint);
               }
@@ -1060,6 +1067,7 @@ export function StrategyConsole() {
               void refreshRunMeta(id);
               break;
             case "complete":
+              streamRetryRef.current = 0;
               suppressStreamErrorRef.current = true;
               src.close();
               setBusy(false);
@@ -1069,6 +1077,7 @@ export function StrategyConsole() {
               void refreshRunMeta(id);
               break;
             case "error":
+              streamRetryRef.current = 0;
               suppressStreamErrorRef.current = true;
               src.close();
               setError(msg.message ?? "Unknown error");
@@ -1099,8 +1108,27 @@ export function StrategyConsole() {
                 return;
               }
               if (run.status === "failed") {
+                streamRetryRef.current = 0;
                 hydrateFromRun(run);
                 if (run.error) setError(run.error);
+                return;
+              }
+              if (run.status === "running") {
+                streamRetryRef.current += 1;
+                const n = streamRetryRef.current;
+                if (n <= 15) {
+                  setError(
+                    `Stream disconnected — reconnecting (attempt ${n}/15 in ~10s)…`,
+                  );
+                  window.setTimeout(() => {
+                    setError(null);
+                    attachRunStreamRef.current(id, { retry: true });
+                  }, 10_000);
+                  return;
+                }
+                setError(
+                  "Stream disconnected while the run was still active. Wait a bit, refresh the page, or start a new run.",
+                );
                 return;
               }
             }
@@ -1113,6 +1141,8 @@ export function StrategyConsole() {
     },
     [loadMemory, refreshRunMeta, hydrateFromRun],
   );
+
+  attachRunStreamRef.current = attachRunStream;
 
   const startRun = async (mode: RunMode) => {
     if (!prompt.trim() || busy || pausedAt) return;

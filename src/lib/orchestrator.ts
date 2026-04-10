@@ -93,10 +93,55 @@ async function mergeClarificationAnswersIntoDiscovery(
 const DATA_CATALOG_MARKDOWN = buildDataCatalogMarkdown();
 
 function analysisConcurrency(): number {
-  const raw = process.env.ANALYSIS_CONCURRENCY;
-  const n = raw?.trim() ? parseInt(raw, 10) : 4;
-  if (!Number.isFinite(n) || n < 1) return 1;
-  return Math.min(16, n);
+  const raw = process.env.ANALYSIS_CONCURRENCY?.trim();
+  if (raw) {
+    const n = parseInt(raw, 10);
+    if (!Number.isFinite(n) || n < 1) return 1;
+    return Math.min(16, n);
+  }
+  // Fewer parallel LLM+quant calls on Vercel reduces OOM risk and outbound burst.
+  if (process.env.VERCEL === "1") return 2;
+  return 4;
+}
+
+/** Keeps `updatedAt` fresh during long awaits so stale-lock recovery does not fire mid-run. */
+async function touchRunUpdatedAt(runId: string): Promise<void> {
+  try {
+    await prisma.$executeRaw`
+      UPDATE "StrategyRun" SET "updatedAt" = ${new Date()} WHERE "id" = ${runId}
+    `;
+  } catch {
+    /* ignore */
+  }
+}
+
+async function withRunHeartbeat<T>(runId: string, fn: () => Promise<T>): Promise<T> {
+  const t = setInterval(() => {
+    void touchRunUpdatedAt(runId);
+  }, 20000);
+  try {
+    return await fn();
+  } finally {
+    clearInterval(t);
+  }
+}
+
+function inferStaleResumeCheckpoint(run: {
+  outline: unknown;
+  nodeStates: unknown;
+}): ReviewCheckpoint {
+  const outline = run.outline as OutlineDoc | null;
+  const roots = outline?.roots ?? [];
+  if (!roots.length) return "after_discovery";
+  const leaves = flattenLeaves(roots);
+  const states = (run.nodeStates as Record<string, NodeState> | null) ?? {};
+  const leafSettled = (id: string) => {
+    const s = states[id];
+    return s?.status === "done" || s?.status === "skipped";
+  };
+  const allLeavesDone = leaves.every((l) => leafSettled(l.id));
+  if (!allLeavesDone) return "after_structure";
+  return "after_analysis";
 }
 
 const LEAF_ANALYSIS_JSON_REPAIR_HINT =
@@ -490,14 +535,16 @@ async function rollupBranchStatesFromLeaves(
       send({ type: "node", state: states[parent.id]! });
     }
 
-    const rolled = await Promise.all(
-      ready.map((parent) =>
-        rollupSingleInternalNode(
-          roots,
-          parent,
-          states,
-          userGoal,
-          discoveryText,
+    const rolled = await withRunHeartbeat(runId, () =>
+      Promise.all(
+        ready.map((parent) =>
+          rollupSingleInternalNode(
+            roots,
+            parent,
+            states,
+            userGoal,
+            discoveryText,
+          ),
         ),
       ),
     );
@@ -1090,12 +1137,22 @@ async function runLeafAnalysisPhase(
   const states = { ...((run.nodeStates as Record<string, NodeState> | null) ?? {}) };
   ensureNodeStatesForTree(roots, states);
   const leaves = flattenLeaves(roots);
+  for (const l of leaves) {
+    const s = states[l.id];
+    if (s?.status === "running") {
+      states[l.id] = { ...s, status: "pending" };
+    }
+  }
+  const pendingLeaves = leaves.filter((l) => {
+    const s = states[l.id];
+    return s?.status !== "done" && s?.status !== "skipped";
+  });
   const concurrency = analysisConcurrency();
   let offset = 0;
   let stoppedEarlyForPartial = false;
 
   await withTokenPhase("analysis", async () => {
-    while (offset < leaves.length) {
+    while (offset < pendingLeaves.length) {
       const ctrl = await consumeControl(runId);
       if (ctrl?.action === "synthesize_now") {
         await finalizePartialSynthesis(runId, send, ctrl.note);
@@ -1112,7 +1169,7 @@ async function runLeafAnalysisPhase(
       });
       const redirectContext =
         redirectRow.redirectContext?.trim() || undefined;
-      const batch = leaves.slice(offset, offset + concurrency);
+      const batch = pendingLeaves.slice(offset, offset + concurrency);
       offset += batch.length;
 
       for (const leaf of batch) {
@@ -1131,15 +1188,17 @@ async function runLeafAnalysisPhase(
         await emit("analysis", `Analyzing: ${leaf.title}`);
       }
 
-      const doneStates = await Promise.all(
-        batch.map((leaf) =>
-          analyzeLeafToDoneState({
-            userGoal: run.prompt,
-            discoveryText,
-            roots,
-            leaf,
-            redirectContext,
-          }),
+      const doneStates = await withRunHeartbeat(runId, () =>
+        Promise.all(
+          batch.map((leaf) =>
+            analyzeLeafToDoneState({
+              userGoal: run.prompt,
+              discoveryText,
+              roots,
+              leaf,
+              redirectContext,
+            }),
+          ),
         ),
       );
 
@@ -1197,13 +1256,15 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   send({ type: "progress", entry });
 
   const analysesMd = analysesMarkdown(roots, states);
-  const managerNotes = await withTokenPhase("manager_analyses", () =>
-    generateText(
-      managerPrompt({
-        userGoal: run.prompt,
-        discovery: discoveryText,
-        analysesMarkdown: analysesMd,
-      }),
+  const managerNotes = await withRunHeartbeat(run.id, () =>
+    withTokenPhase("manager_analyses", () =>
+      generateText(
+        managerPrompt({
+          userGoal: run.prompt,
+          discovery: discoveryText,
+          analysesMarkdown: analysesMd,
+        }),
+      ),
     ),
   );
   await prisma.strategyRun.update({
@@ -1215,14 +1276,16 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   const synEntry = await appendProgress(runId, "synthesis", "Writing final memo");
   send({ type: "progress", entry: synEntry });
 
-  const synthesis = await withTokenPhase("synthesis", () =>
-    generateText(
-      synthesisPrompt({
-        userGoal: run.prompt,
-        discovery: discoveryText,
-        managerNotes,
-        analysesMarkdown: analysesMd,
-      }),
+  const synthesis = await withRunHeartbeat(run.id, () =>
+    withTokenPhase("synthesis", () =>
+      generateText(
+        synthesisPrompt({
+          userGoal: run.prompt,
+          discovery: discoveryText,
+          managerNotes,
+          analysesMarkdown: analysesMd,
+        }),
+      ),
     ),
   );
   await prisma.strategyRun.update({
@@ -1267,7 +1330,7 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
 }
 
 export async function executeRun(runId: string, send: StreamSender) {
-  const run = await prisma.strategyRun.findUnique({ where: { id: runId } });
+  let run = await prisma.strategyRun.findUnique({ where: { id: runId } });
   if (!run) {
     send({ type: "error", message: "Run not found" });
     return;
@@ -1279,12 +1342,34 @@ export async function executeRun(runId: string, send: StreamSender) {
   }
 
   if (run.status === "running") {
-    send({
-      type: "error",
-      message:
-        "This run is already executing (another connection may be active). Open a new run or wait.",
+    const staleMs = Math.max(
+      30_000,
+      Number.parseInt(process.env.STALE_RUNNING_MS ?? "90000", 10) || 90_000,
+    );
+    const age = Date.now() - run.updatedAt.getTime();
+    if (age < staleMs) {
+      send({
+        type: "error",
+        message:
+          "This run is already executing (another connection may be active). Open a new run or wait.",
+      });
+      return;
+    }
+    const checkpoint = inferStaleResumeCheckpoint(run);
+    await prisma.strategyRun.update({
+      where: { id: runId },
+      data: {
+        status: "awaiting_review",
+        reviewCheckpoint: checkpoint,
+        error:
+          "Previous session ended unexpectedly (e.g. network or hosting limit). Continue the pipeline to resume.",
+      },
     });
-    return;
+    run = await prisma.strategyRun.findUnique({ where: { id: runId } });
+    if (!run) {
+      send({ type: "error", message: "Run not found" });
+      return;
+    }
   }
 
   if (run.status !== "pending" && run.status !== "awaiting_review") {

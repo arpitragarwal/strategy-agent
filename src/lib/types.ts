@@ -46,6 +46,7 @@ export type ReviewCheckpoint =
   | "after_analysis";
 
 export type StreamEvent =
+  | { type: "keepalive" }
   | { type: "progress"; entry: ProgressEntry }
   | { type: "discovery"; text: string }
   | { type: "outline"; roots: OutlineNode[] }

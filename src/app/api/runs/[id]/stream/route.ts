@@ -19,16 +19,17 @@ export async function GET(
         );
       };
 
-      // SSE comment pings keep the connection warm through long LLM gaps (proxies/CDN idle timeouts).
+      // Data + comment pings: some CDNs buffer SSE until a `data:` line; comments alone are not enough.
       let pingTimer: ReturnType<typeof setInterval> | undefined;
       try {
         pingTimer = setInterval(() => {
           try {
+            send({ type: "keepalive" });
             controller.enqueue(encoder.encode(`: ping\n\n`));
           } catch {
             if (pingTimer) clearInterval(pingTimer);
           }
-        }, 15000);
+        }, 10000);
         await executeRun(id, send);
       } catch (e) {
         const message = e instanceof Error ? e.message : String(e);
