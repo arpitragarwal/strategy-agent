@@ -15,6 +15,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
     "@prisma/client": "6.19.3",
+    "@vercel/analytics": "^2.0.1",
     "arquero": "^8.0.3",
     "next": "^15.5.0",
     "papaparse": "^5.5.3",
