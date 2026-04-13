@@ -635,12 +635,10 @@ function OutlineBranch({
         <div className="min-w-0 flex-1 rounded-xl border border-zinc-200/95 bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-zinc-100/80">
           <div className="font-medium text-zinc-900 break-words">{node.title}</div>
           {node.question ? (
-            <div className="mt-1 space-y-0.5">
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500">
-                {hasKids ? "Pillar question" : "Hypothesis"}
-              </p>
-              <p className="text-zinc-700 text-xs break-words leading-snug">{node.question}</p>
-            </div>
+            <p className="mt-1 text-zinc-700 text-xs break-words leading-snug">
+              <span className="font-semibold text-zinc-900">Hypothesis:</span>{" "}
+              {node.question}
+            </p>
           ) : null}
           {state?.verdict ? (
             <div className="mt-2 flex flex-wrap gap-1.5">
