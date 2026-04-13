@@ -314,7 +314,7 @@ Required JSON shape (types matter):
   "confidence": "low" | "medium" | "high",
   "quant": null OR {
     "hypothesis_under_test": "string, what the numbers will test",
-    "datasetId": "string, exact id from catalog e.g. crm/opportunities",
+    "datasetId": "string, exact id from catalog e.g. crm/renewals",
     "steps": [ ...quant steps... ],
     "chart": null OR { "type": "bar" | "line", "x": "string", "y": "string", "title": "optional string" }
   }
@@ -362,9 +362,9 @@ export function leafManagerReviewPrompt(input: {
 **Anti-hallucination / grounding rules (mandatory):**
 - You do **not** have raw CSV rows. Judge only from the **text** below: initial analysis, quant output (if any), context & clarification, and the **data catalog** (dataset ids and descriptions).
 - **Never invent** dataset ids, column names, or numbers. The only valid \`datasetId\` values for any suggested quant are **exactly** those listed under ALLOWED DATASET IDS — character-for-character.
-- If you suggest \`suggested_followup_quant\`, it must use \`datasetId\` from that list and \`steps\` that only reference columns **named or clearly implied** in the catalog description for that dataset. If unsure of a column, do **not** put it in \`steps\`; instead add a string to \`refinement_directives\` like "Verify column X exists in crm/accounts before quant".
-- Do **not** claim specific cell values or aggregates exist unless they appear in the **quant block** or **context** text. You may say "a quant on crm/opportunities could test …" without fabricating outcomes.
-- \`missed_catalog_opportunities\`: short strings; when pointing at data, include a valid dataset id from the allow list (e.g. "crm/accounts: ARR by tier could test pricing power").
+- If you suggest \`suggested_followup_quant\`, it must use \`datasetId\` from that list and \`steps\` that only reference columns **named or clearly implied** in the catalog description for that dataset. If unsure of a column, do **not** put it in \`steps\`; instead add a string to \`refinement_directives\` like "Verify column X exists in crm/renewals before quant".
+- Do **not** claim specific cell values or aggregates exist unless they appear in the **quant block** or **context** text. You may say "a quant on crm/renewals could test …" without fabricating outcomes.
+- \`missed_catalog_opportunities\`: short strings; when pointing at data, include a valid dataset id from the allow list (e.g. "crm/renewals: booked ARR by renewal_quarter could test cohort mix").
 - If the analysis is sound and grounded, set \`adequately_addresses_hypothesis\` true and keep arrays empty and \`suggested_followup_quant\` null.
 
 Overall goal:

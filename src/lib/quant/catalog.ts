@@ -11,84 +11,18 @@ export type DatasetMeta = {
 /** Registry of prototype datasets (CSV under /data/dummy). */
 export const QUANT_DATASETS: DatasetMeta[] = [
   {
-    id: "crm/contacts",
-    relativePath: "crm/contacts.csv",
-    domain: "crm",
-    description: "Contacts with account, role, region (AMER/EMEA/APAC)",
-  },
-  {
-    id: "crm/opportunities",
-    relativePath: "crm/opportunities.csv",
-    domain: "crm",
-    description:
-      "Pipeline: deal_type land | expand | renewal (chronology + anniversaries); Closed Won/Lost; close_quarter, loss_reason",
-  },
-  {
     id: "crm/accounts",
     relativePath: "crm/accounts.csv",
     domain: "crm",
     description:
-      "Accounts: tier, region, primary_sku, arr_usd, contract_term_years, customer_since_quarter, price index",
+      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); last_deal_year = renewal fiscal year − term; arr_usd_current after renewal (0 if churned)",
   },
   {
-    id: "cx/survey_nps",
-    relativePath: "cx/survey_nps.csv",
-    domain: "cx",
+    id: "crm/renewals",
+    relativePath: "crm/renewals.csv",
+    domain: "crm",
     description:
-      "NPS by segment (aligns with account tier→segment), quarter, region; respondents scale with logo count",
-  },
-  {
-    id: "cx/journey_events",
-    relativePath: "cx/journey_events.csv",
-    domain: "cx",
-    description:
-      "Funnel by week (same Mon weeks as support tickets) and region; volumes scale with regional logo share",
-  },
-  {
-    id: "cx/csats",
-    relativePath: "cx/csats.csv",
-    domain: "cx",
-    description: "CSAT by channel and region; sample_size scales with accounts in region",
-  },
-  {
-    id: "finance/pnl_monthly",
-    relativePath: "finance/pnl_monthly.csv",
-    domain: "finance",
-    description:
-      "Monthly revenue, COGS, OpEx by region — revenue path ties to crm/accounts regional ARR (end MRR = ARR÷12, MoM growth)",
-  },
-  {
-    id: "finance/arr_by_segment",
-    relativePath: "finance/arr_by_segment.csv",
-    domain: "finance",
-    description: "ARR and logos by segment and region; nrr_pct / grr_pct company KPIs",
-  },
-  {
-    id: "finance/cash_flow",
-    relativePath: "finance/cash_flow.csv",
-    domain: "finance",
-    description:
-      "Quarterly operating cash flow (MUSD) derived from pnl_monthly: sum(revenue−cogs−opex) per quarter",
-  },
-  {
-    id: "support/tickets",
-    relativePath: "support/tickets.csv",
-    domain: "support",
-    description:
-      "Tickets: account_id, tier, priority, product (SKU), region, resolution_hours, week_start (UTC Mon)",
-  },
-  {
-    id: "support/sla_metrics",
-    relativePath: "support/sla_metrics.csv",
-    domain: "support",
-    description:
-      "SLA breach % by team (L1/L2/L3↔P1/P2/P3), week, region — aggregated from tickets vs hour targets",
-  },
-  {
-    id: "support/knowledge_base_hits",
-    relativePath: "support/knowledge_base_hits.csv",
-    domain: "support",
-    description: "KB views/deflection scale with primary_sku adoption (accounts.primary_sku counts)",
+      "Renewal opportunities (row count rises by quarter: ~100 in 2025-Q1 … ~150 in 2026-Q1): last_deal_year, contract_term_years, arr_up_for_renewal_usd, outcome, loss_reason (churned only; ~half pricing-related when last_deal_year is 2023), booked_arr_usd (renewed: 1–3× expiring ARR, mean mult ~1.6×), renewal_motion; 2023 cohort ~85% revenue GRR vs ~95% newer; NRR emergent",
   },
 ];
 
@@ -129,10 +63,7 @@ export function quantPlanReferencesValidDatasets(plan: {
 
 /** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
 export const QUANT_JOIN_RELATIONSHIPS = [
-  "**account_id** — crm/opportunities, crm/contacts, support/tickets → join to **crm/accounts** on [[\"account_id\",\"account_id\"]] for tier, arr_usd, industry, region, primary_sku, etc.",
-  "**Segment + region** — crm/opportunities has segment and owner_region; **cx/survey_nps** has segment and region — use [[\"segment\",\"segment\"],[\"owner_region\",\"region\"]] (column names differ on the left).",
-  "**Tickets + accounts** — support/tickets → crm/accounts on account_id for ARR / tier / SKU context.",
-  "**Chained joins** — start from one datasetId, then multiple join steps. Use distinct **rightPrefix** values (e.g. acc_, sup_) if you join more than one table so column names do not overwrite each other.",
+  "**crm/renewals** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, contract_term_years, and arr_usd_current.",
 ] as const;
 
 export function buildDataCatalogMarkdown(): string {

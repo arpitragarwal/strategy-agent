@@ -44,7 +44,7 @@ export type QuantChartConfig = {
 
 export type QuantPlan = {
   hypothesis_under_test: string;
-  /** Primary (left) table from the catalog, e.g. "crm/opportunities". Use join steps to add others. */
+  /** Primary (left) table from the catalog, e.g. "crm/renewals". Use join steps to add others. */
   datasetId: string;
   steps: QuantOp[];
   /** If omitted or null, only tables are returned */
