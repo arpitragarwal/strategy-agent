@@ -871,7 +871,7 @@ async function replayCompleted(runId: string, send: StreamSender) {
       partial: run.synthesisIsPartial,
     });
   }
-  send({ type: "complete", runId });
+  send({ type: "complete", runId, replay: true });
 }
 
 async function runContextClarificationPhase(

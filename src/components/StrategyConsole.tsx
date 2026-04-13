@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
+import { playAttentionSound, primeAttentionAudio } from "@/lib/attentionChime";
 import { flattenLeaves, listAllNodeIds } from "@/lib/outline";
 import type {
   HypothesisVerdict,
@@ -1007,6 +1008,7 @@ export function StrategyConsole() {
             message?: string;
             partial?: boolean;
             checkpoint?: ReviewCheckpoint;
+            replay?: boolean;
           };
           switch (msg.type) {
             case "keepalive":
@@ -1064,6 +1066,7 @@ export function StrategyConsole() {
               setControlMessage(null);
               suppressStreamErrorRef.current = true;
               src.close();
+              void playAttentionSound("step_complete");
               void refreshRunMeta(id);
               break;
             case "complete":
@@ -1073,6 +1076,7 @@ export function StrategyConsole() {
               setBusy(false);
               setPausedAt(null);
               setControlMessage(null);
+              if (!msg.replay) void playAttentionSound("run_complete");
               void loadMemory();
               void refreshRunMeta(id);
               break;
@@ -1146,6 +1150,7 @@ export function StrategyConsole() {
 
   const startRun = async (mode: RunMode) => {
     if (!prompt.trim() || busy || pausedAt) return;
+    void primeAttentionAudio();
     setRunMode(mode);
     resetOutput();
     try {
@@ -1172,6 +1177,7 @@ export function StrategyConsole() {
 
   const continueRun = async () => {
     if (!runId || busy) return;
+    void primeAttentionAudio();
     if (pausedAt === "after_discovery") {
       const res = await fetch(`/api/runs/${runId}`, {
         method: "PATCH",
@@ -1263,9 +1269,7 @@ export function StrategyConsole() {
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
             Strategy Team AI Agents: Prototype
           </h1>
-          <p className="text-zinc-600 text-sm mt-1">
-            An AI powered strategy consulting team
-          </p>
+          <p className="text-zinc-600 text-sm mt-1">An AI powered strategy consulting team</p>
           {selectedMemoryId && !busy ? (
             <p className="text-emerald-800 text-xs mt-2 font-medium">
               Viewing a saved run from Memory — edit the goal and run again to start a new pipeline.
