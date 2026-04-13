@@ -272,7 +272,7 @@ export function analysisPrompt(input: {
 }): string {
   const steer =
     input.redirectContext?.trim() ?
-      `\nUser steering / redirect (prioritize this when answering this leaf):\n${input.redirectContext.trim()}\n`
+      `\nUser steering notes (prioritize when answering this leaf):\n${input.redirectContext.trim()}\n`
     : "";
 
   return `You are an analysis agent working on one **leaf node** of a **hypothesis tree** (every node in the tree is framed as a hypothesis; leaves are tested here directly). This node's \`question\` is the **hypothesis** to test. Weigh evidence (context, reasoning, and optional CSV analysis) and **confirm or refute** it when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
@@ -424,7 +424,7 @@ export function leafAnalysisRefinementPrompt(input: {
 }): string {
   const steer =
     input.redirectContext?.trim() ?
-      `\nUser steering / redirect (still applies):\n${input.redirectContext.trim()}\n`
+      `\nUser steering notes (still apply):\n${input.redirectContext.trim()}\n`
     : "";
 
   return `You are revising a **leaf hypothesis analysis** after a **manager review**. Output a **full replacement** analysis in the **same JSON shape** as the first pass (not a diff). Integrate the manager's feedback; strengthen grounding; fix logic gaps.

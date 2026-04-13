@@ -14,6 +14,8 @@ model StrategyRun {
   status          String   @default("pending")
   /// step_by_step = pause for human review between major phases; end_to_end = run without those pauses
   runMode         String   @default("step_by_step")
+  /// When false, context step skips Memory repository search entirely (set at run creation).
+  usePriorRunMemory Boolean @default(true)
   /// When status is awaiting_review: after_discovery | after_structure | after_analysis
   reviewCheckpoint String?
   prompt          String   @db.Text
@@ -29,10 +31,10 @@ model StrategyRun {
   synthesis       String?  @db.Text
   progressLog     Json     @default("[]")
   error           String?  @db.Text
-  /// User interrupt: synthesize_now | redirect (consumed by orchestrator when checked)
+  /// User interrupt: synthesize_now (consumed by orchestrator when checked)
   controlAction   String?
   controlNote     String?  @db.Text
-  /// Appended steering notes from redirects; injected into remaining leaf analyses
+  /// Legacy steering text; no longer appended (kept for older runs)
   redirectContext String  @default("") @db.Text
   synthesisIsPartial Boolean @default(false)
   /// Aggregated Gemini usage for this run (input/output tokens, by phase); updated when execution finishes or fails.

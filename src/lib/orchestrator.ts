@@ -597,7 +597,7 @@ async function appendProgress(runId: string, stage: string, message: string) {
   return entry;
 }
 
-/** Read and clear a pending user control (pause / redirect request). */
+/** Read and clear a pending user control (e.g. synthesize_now). */
 async function consumeControl(
   runId: string,
 ): Promise<{ action: string; note: string | null } | null> {
@@ -611,24 +611,6 @@ async function consumeControl(
     });
     return payload;
   });
-}
-
-async function recordRedirect(runId: string, note: string, send: StreamSender) {
-  const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
-  const stamp = new Date().toISOString();
-  const block = `\n### User redirect (${stamp})\n${note}`;
-  const merged = ((run.redirectContext || "") + block).slice(-20000);
-  await prisma.strategyRun.update({
-    where: { id: runId },
-    data: { redirectContext: merged },
-  });
-  send({ type: "redirect_ack", note });
-  const entry = await appendProgress(
-    runId,
-    "redirect",
-    `Steering: ${note.slice(0, 100)}${note.length > 100 ? "…" : ""}`,
-  );
-  send({ type: "progress", entry });
 }
 
 const MEMORY_ARTIFACT_TITLE_MAX = 88;
@@ -882,20 +864,28 @@ async function runContextClarificationPhase(
   await withTokenPhase("context", async () => {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   await emit("context", "Starting pipeline — context & clarification");
+  const usePriorRunMemory = run.usePriorRunMemory !== false;
+
   let route: DiscoveryMemoryRoute = { retrieve_memory: false, queries: [] };
-  try {
-    route = await generateJson<DiscoveryMemoryRoute>(
-      discoveryMemoryRoutePrompt(run.prompt),
-      {
-        repairHint:
-          'Keys: "retrieve_memory" (boolean), "queries" (array of 0-3 strings). If retrieve_memory is false, queries must be [].',
-      },
-    );
-  } catch {
-    route = { retrieve_memory: false, queries: [] };
+  if (usePriorRunMemory) {
+    try {
+      route = await generateJson<DiscoveryMemoryRoute>(
+        discoveryMemoryRoutePrompt(run.prompt),
+        {
+          repairHint:
+            'Keys: "retrieve_memory" (boolean), "queries" (array of 0-3 strings). If retrieve_memory is false, queries must be [].',
+        },
+      );
+    } catch {
+      route = { retrieve_memory: false, queries: [] };
+    }
+  } else {
+    await emit("context", "Prior run memory is off — skipping Memory search.");
   }
+
   let retrievedMemory = "";
   if (
+    usePriorRunMemory &&
     route.retrieve_memory &&
     Array.isArray(route.queries) &&
     route.queries.some((q) => String(q).trim())
@@ -1158,9 +1148,6 @@ async function runLeafAnalysisPhase(
         await finalizePartialSynthesis(runId, send, ctrl.note);
         stoppedEarlyForPartial = true;
         return;
-      }
-      if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
-        await recordRedirect(runId, ctrl.note.trim(), send);
       }
 
       const redirectRow = await prisma.strategyRun.findUniqueOrThrow({
@@ -1446,9 +1433,6 @@ export async function executeRun(runId: string, send: StreamSender) {
         await finalizePartialSynthesis(runId, send, ctrl.note);
         return;
       }
-      if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
-        await recordRedirect(runId, ctrl.note.trim(), send);
-      }
       await mergeClarificationAnswersIntoDiscovery(runId, send);
       await runStructureRevisionPhase(runId, send, emit);
       return;
@@ -1459,9 +1443,6 @@ export async function executeRun(runId: string, send: StreamSender) {
       if (ctrl?.action === "synthesize_now") {
         await finalizePartialSynthesis(runId, send, ctrl.note);
         return;
-      }
-      if (ctrl?.action === "redirect" && ctrl.note?.trim()) {
-        await recordRedirect(runId, ctrl.note.trim(), send);
       }
       await runLeafAnalysisPhase(runId, send, emit);
       return;

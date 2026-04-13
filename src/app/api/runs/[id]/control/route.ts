@@ -18,16 +18,9 @@ export async function PATCH(
   const action = body.action?.trim();
   const note = typeof body.note === "string" ? body.note.trim() : "";
 
-  if (action !== "synthesize_now" && action !== "redirect") {
+  if (action !== "synthesize_now") {
     return NextResponse.json(
-      { error: 'action must be "synthesize_now" or "redirect"' },
-      { status: 400 },
-    );
-  }
-
-  if (action === "redirect" && !note) {
-    return NextResponse.json(
-      { error: "redirect requires a non-empty note" },
+      { error: 'action must be "synthesize_now"' },
       { status: 400 },
     );
   }
@@ -51,7 +44,7 @@ export async function PATCH(
     where: { id },
     data: {
       controlAction: action,
-      controlNote: action === "redirect" ? note : note || null,
+      controlNote: note || null,
     },
   });
 

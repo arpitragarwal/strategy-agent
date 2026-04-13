@@ -10,11 +10,11 @@ All steps are orchestrated in **`src/lib/orchestrator.ts`**. Each “agent” is
 
 | Stage | Role | Output |
 |--------|------|--------|
-| **Context & clarification** | Optional **Memory** routing (small JSON: search or skip) + keyword scan of recent artifacts when useful. Then a **plan JSON** drives **0–4 in-process quant runs** on catalog CSVs to pin down vague goal phrases (e.g. “largest segment”). A final brief is **markdown**: themes, risks, opportunities, **data-backed specificity**, open questions, **Questions for you**, and suggested focus for the tree. Step‑by‑step runs pause here; you can **`PATCH /api/runs/[id]`** with **`clarificationAnswers`** before continuing so answers merge into the brief. | Markdown (`discoveryOutput`) |
+| **Context & clarification** | If **`usePriorRunMemory`** is true on the run (default): optional **Memory** routing (small JSON: search or skip) + keyword scan of recent artifacts when useful. If false, that search is skipped. Then a **plan JSON** drives **0–4 in-process quant runs** on catalog CSVs to pin down vague goal phrases (e.g. “largest segment”). A final brief is **markdown**: themes, risks, opportunities, **data-backed specificity**, open questions, **Questions for you**, and suggested focus for the tree. Step‑by‑step runs pause here; you can **`PATCH /api/runs/[id]`** with **`clarificationAnswers`** before continuing so answers merge into the brief. | Markdown (`discoveryOutput`) |
 | **Structure (v1)** | Builds an initial **hypothesis tree** as JSON: **`roots`** → nested **`children`**; **every node** gets a `nodeStates` entry; **each node's `question`** is a **testable declarative hypothesis** (not only leaves); leaves have **`children: []`**. Parses alternate shapes via `normalizeOutlineDoc`; retries if empty. | JSON → outline |
 | **Manager review (tree)** | Reviews MECE coverage and whether **every node's question** is a testable claim (confirm/refute), not the full prose brief. | Markdown → `treeReviewNotes` |
 | **Structure (revised)** | Rebuilds full tree JSON from manager feedback; falls back to v1 if revision JSON is invalid. | JSON → final outline |
-| **Analysis** (leaves, **bounded concurrency**) | Batched **`Promise.all`** over leaves (cap **`ANALYSIS_CONCURRENCY`**, default 4). Each leaf: initial analysis JSON → **manager review** (grounded to the data catalog; invalid suggested quants dropped) → optional **refinement** pass if gaps remain; then **`verdict`**, **`confidence`**, **`evidence_needed`**, optional **`quant`**, optional **`leafManagerReview`** markdown. Disable with **`LEAF_MANAGER_REVIEW=off`**. User **redirect** notes accumulate in **`redirectContext`** for later batches. | JSON per leaf + SSE |
+| **Analysis** (leaves, **bounded concurrency**) | Batched **`Promise.all`** over leaves (cap **`ANALYSIS_CONCURRENCY`**, default 4). Each leaf: initial analysis JSON → **manager review** (grounded to the data catalog; invalid suggested quants dropped) → optional **refinement** pass if gaps remain; then **`verdict`**, **`confidence`**, **`evidence_needed`**, optional **`quant`**, optional **`leafManagerReview`** markdown. Disable with **`LEAF_MANAGER_REVIEW=off`**. The DB field **`redirectContext`** is legacy only (older runs); it is not written by the app anymore. | JSON per leaf + SSE |
 | **Branch rollup** | After all leaves finish (or skip), **bottom‑up waves** judge each **internal node's hypothesis** (`question`) using **direct children** as evidence (LLM JSON + deterministic fallback): **summary**, **analysis**, **verdict**, **confidence**, optional **evidence** gaps. | Updates `nodeStates` for internal nodes |
 | **Manager (analyses)** | Pressure-tests **leaf** analyses (manager prompt stays leaf-focused). | Markdown |
 | **Synthesis** | **Short** markdown: **bold key point** (≤2 sentences), then supporting **bullets** (no section header), then **Open questions**. Partial runs prefix a partial banner. | Markdown |
@@ -24,32 +24,33 @@ JSON-heavy steps use **`generateJson`** with repair hints (`src/lib/json.ts`). S
 ### User controls (while `status === running` or paused for review)
 
 - **Step‑by‑step** pauses after **context & clarification**, **revised hypothesis tree**, and **after branch rollup / leaf phase** (before manager critique).
-- **End‑to‑end** skips those pauses (you can still queue **synthesize** / **redirect** between analysis batches).
+- **End‑to‑end** skips those pauses (you can still queue **synthesize so far** between analysis batches).
 
 Checked **between leaf batches** (not mid–API‑call): control consumption applies before each concurrent batch.
 
 - **Synthesize so far** — Stops early: marks remaining leaves `skipped`, runs **partial manager** + **partial synthesis**, saves run and a **memory** row tagged partial (no branch rollup if leaves incomplete).
-- **Apply redirect** — Appends steering to **`redirectContext`**; **later leaf batches** see it in the prompt.
 
-Controls: `PATCH /api/runs/[id]/control` with `{ "action": "synthesize_now" }` or `{ "action": "redirect", "note": "..." }`.
+Controls: `PATCH /api/runs/[id]/control` with `{ "action": "synthesize_now" }` (optional `"note"` is accepted but unused today).
+
+Run creation: **`POST /api/runs`** with **`prompt`** (required), optional **`mode`** (`step_by_step` \| `end_to_end`, default `step_by_step`), optional **`usePriorRunMemory`** (boolean, default **`true`**).
 
 While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clarificationAnswers": "..." }` (optional); merged into the brief when you continue.
 
 ### Memory
 
 - **Writes:** On completion (full or partial), a **`MemoryArtifact`** row is saved (title derived from the **user goal**, synthesis excerpt, topics, outline + **all** node states, context brief — **not** manager critique in payload).
-- **Reads:** Context step does **not** preload memory. A routing step may request a **targeted search** over recent artifacts (`src/lib/strategyMemory.ts`); hits feed the context prompts when relevant.
+- **Reads:** Context step does **not** preload memory. When **`usePriorRunMemory`** is true (default), a routing step may request a **targeted search** over recent artifacts (`src/lib/strategyMemory.ts`); hits feed the context prompts when relevant. When false, that search path is skipped for the whole run (set via **`POST /api/runs`** body and stored on **`StrategyRun`**).
 
 ### Prototype data & quant
 
-- CSVs live in **`data/dummy/`** (CRM, finance, CX, support). The app’s catalog is **`src/lib/quant/catalog.ts`**; agents reference dataset IDs such as **`crm/accounts`** or **`finance/pnl_monthly`**.
-- Regenerate the **~$200M ARR / ~2K logo** synthetic SaaS universe (aligned rollups across CRM, finance, support, and CX):  
+- CSVs live in **`data/dummy/`**. The app’s catalog is **`src/lib/quant/catalog.ts`**; agents must use exact dataset IDs, e.g. **`crm/accounts`**, **`crm/renewals`**, **`crm/product_usage`**, **`cx/customer_satisfaction`**.
+- Regenerate the **renewal-cohort** synthetic enterprise SaaS slice (accounts, renewals, quarterly product usage tiers, customer satisfaction scores) plus a local-only **`renewals-dashboard.html`**:  
   **`npm run data:generate`**  
   (`scripts/generate-enterprise-saas-dummy.mjs`).
 
 ### Data model (Prisma)
 
-- **`StrategyRun`** — prompt, **`discoveryOutput`** (context & clarification brief), outline JSON, **`treeReviewNotes`**, **`clarificationAnswers`** (optional; merged on continue), per-node state (leaves + rolled-up branches), manager/synthesis text, progress log, control fields, **`redirectContext`**, **`synthesisIsPartial`**, etc.
+- **`StrategyRun`** — prompt, **`usePriorRunMemory`** (whether to search prior-run Memory in context; default true), **`discoveryOutput`** (context & clarification brief), outline JSON, **`treeReviewNotes`**, **`clarificationAnswers`** (optional; merged on continue), per-node state (leaves + rolled-up branches), manager/synthesis text, progress log, control fields (**`synthesize_now`** only), legacy **`redirectContext`**, **`synthesisIsPartial`**, token usage JSON, etc.
 - **`MemoryArtifact`** — title, summary, topics, full `payload` snapshot (no manager-notes field in payload for new rows), optional `runId`.
 
 ### Code map

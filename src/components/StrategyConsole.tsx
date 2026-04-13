@@ -34,6 +34,7 @@ type RunRow = {
   error?: string | null;
   reviewCheckpoint?: string | null;
   runMode?: string | null;
+  usePriorRunMemory?: boolean | null;
   prompt: string;
   companyContext?: string | null;
   discoveryOutput: string | null;
@@ -780,13 +781,13 @@ export function StrategyConsole() {
   const [managerNotes, setManagerNotes] = useState("");
   const [synthesis, setSynthesis] = useState("");
   const [synthesisPartial, setSynthesisPartial] = useState(false);
-  const [redirectNote, setRedirectNote] = useState("");
   const [controlMessage, setControlMessage] = useState<string | null>(null);
   const [memory, setMemory] = useState<MemoryRow[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
   const [pausedAt, setPausedAt] = useState<ReviewCheckpoint | null>(null);
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
+  const [usePriorRunMemory, setUsePriorRunMemory] = useState(true);
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
   /** True after a terminal stream event so EventSource `onerror` from close() is ignored. */
   const suppressStreamErrorRef = useRef(false);
@@ -901,7 +902,6 @@ export function StrategyConsole() {
     setRunId(run.id);
     setError(null);
     setControlMessage(null);
-    setRedirectNote("");
     if (run.status === "awaiting_review" && run.reviewCheckpoint) {
       setPausedAt(run.reviewCheckpoint as ReviewCheckpoint);
     } else {
@@ -911,6 +911,9 @@ export function StrategyConsole() {
     if (run.runMode === "end_to_end" || run.runMode === "step_by_step") {
       setRunMode(run.runMode);
     }
+    setUsePriorRunMemory(
+      typeof run.usePriorRunMemory === "boolean" ? run.usePriorRunMemory : true,
+    );
     const tu = run.tokenUsage;
     setTokenUsage(tu && typeof tu === "object" ? (tu as TokenUsageSnapshot) : null);
   }, []);
@@ -951,7 +954,6 @@ export function StrategyConsole() {
     setRunId(art.runId);
     setError(null);
     setControlMessage(null);
-    setRedirectNote("");
     setPausedAt(null);
     setClarificationDraft("");
   }
@@ -1048,11 +1050,6 @@ export function StrategyConsole() {
               if (msg.text) {
                 setSynthesis(msg.text);
                 setSynthesisPartial(Boolean(msg.partial));
-              }
-              break;
-            case "redirect_ack":
-              if (msg.note) {
-                setControlMessage(`Redirect recorded — next leaves will follow your note.`);
               }
               break;
             case "awaiting_review":
@@ -1158,6 +1155,7 @@ export function StrategyConsole() {
         body: JSON.stringify({
           prompt: prompt.trim(),
           mode,
+          usePriorRunMemory,
         }),
       });
       if (!res.ok) {
@@ -1235,13 +1233,13 @@ export function StrategyConsole() {
     synthesisPartial,
   ]);
 
-  const sendControl = async (action: "synthesize_now" | "redirect", note?: string) => {
+  const sendControl = async (action: "synthesize_now") => {
     if (!runId || (!busy && !pausedAt)) return;
     setControlMessage(null);
     const res = await fetch(`/api/runs/${runId}/control`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, note: note ?? "" }),
+      body: JSON.stringify({ action, note: "" }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -1254,9 +1252,6 @@ export function StrategyConsole() {
           ? "Queued. Click Continue pipeline to stream partial synthesis."
           : "Stopping after current step — partial synthesis will stream next.",
       );
-    }
-    if (action === "redirect") {
-      setRedirectNote("");
     }
   };
 
@@ -1286,6 +1281,22 @@ export function StrategyConsole() {
             onChange={(e) => setPrompt(e.target.value)}
             disabled={busy}
           />
+          <label className="flex items-start gap-2.5 cursor-pointer select-none pt-0.5">
+            <input
+              type="checkbox"
+              className="mt-0.5 h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/40"
+              checked={usePriorRunMemory}
+              onChange={(e) => setUsePriorRunMemory(e.target.checked)}
+              disabled={busy}
+            />
+            <span className="text-sm text-zinc-700 leading-snug">
+              <span className="font-medium text-zinc-900">Use prior run memory</span>
+              <span className="text-zinc-500">
+                {" "}
+                — search saved analysis from earlier runs.
+              </span>
+            </span>
+          </label>
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-3 pt-1">
             <button
               type="button"
@@ -1300,7 +1311,7 @@ export function StrategyConsole() {
               type="button"
               onClick={() => void startRun("end_to_end")}
               disabled={busy || Boolean(pausedAt) || !prompt.trim()}
-              title="Runs the full pipeline in one go: context & clarification, hypothesis tree, analysis, manager critique, and synthesis — no mandatory review pauses (you can still steer during analysis)."
+              title="Runs the full pipeline in one go: context & clarification, hypothesis tree, analysis, manager critique, and synthesis — no mandatory review pauses."
               className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
               {busy && runMode === "end_to_end" ? "Running…" : "Run full pipeline"}
@@ -1353,31 +1364,6 @@ export function StrategyConsole() {
                   Synthesize so far
                 </button>
               </div>
-              {pausedAt === "after_structure" ? (
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-end pt-1 border-t border-amber-200/80">
-                  <label className="flex-1 block text-xs text-amber-950/85">
-                    Redirect / steering (applied when analysis runs)
-                    <textarea
-                      className="mt-1 w-full min-h-[64px] rounded-md border border-amber-200 bg-white px-2 py-1.5 text-sm text-zinc-900"
-                      placeholder="e.g. Focus on enterprise segment…"
-                      value={redirectNote}
-                      onChange={(e) => setRedirectNote(e.target.value)}
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const n = redirectNote.trim();
-                      if (!n) return;
-                      void sendControl("redirect", n);
-                    }}
-                    disabled={!redirectNote.trim()}
-                    className="rounded-md bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white text-xs font-medium px-3 py-1.5 sm:mb-0.5"
-                  >
-                    Save redirect
-                  </button>
-                </div>
-              ) : null}
               {controlMessage ? (
                 <p className="text-xs text-amber-900">{controlMessage}</p>
               ) : null}
@@ -1387,12 +1373,11 @@ export function StrategyConsole() {
           {busy && runId ? (
             <div className="rounded-lg border border-sky-200 bg-sky-50/80 p-3 space-y-2">
               <p className="text-xs font-medium text-sky-900 uppercase tracking-wide">
-                Steer while running
+                While running
               </p>
               <p className="text-xs text-sky-800/90">
-                Between major steps the run pauses for your review. While a step is running, the
-                in-flight model call finishes first; synthesize / redirect are applied at the next
-                checkpoint (between leaves during analysis).
+                The in-flight model call finishes first. Partial synthesis is applied at the next
+                checkpoint between leaf batches during analysis.
               </p>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -1401,29 +1386,6 @@ export function StrategyConsole() {
                   className="rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium px-3 py-1.5"
                 >
                   Synthesize so far
-                </button>
-              </div>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-                <label className="flex-1 block text-xs text-sky-900/80">
-                  Redirect / steering note (applied to remaining leaves)
-                  <textarea
-                    className="mt-1 w-full min-h-[64px] rounded-md border border-sky-200 bg-white px-2 py-1.5 text-sm text-zinc-900"
-                    placeholder="e.g. Ignore consumer; focus on enterprise ACVs and churn…"
-                    value={redirectNote}
-                    onChange={(e) => setRedirectNote(e.target.value)}
-                  />
-                </label>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const n = redirectNote.trim();
-                    if (!n) return;
-                    void sendControl("redirect", n);
-                  }}
-                  disabled={!redirectNote.trim()}
-                  className="rounded-md bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white text-xs font-medium px-3 py-1.5 sm:mb-0.5"
-                >
-                  Apply redirect
                 </button>
               </div>
               {controlMessage ? (

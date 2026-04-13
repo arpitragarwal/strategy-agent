@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  let body: { prompt?: string; mode?: string };
+  let body: { prompt?: string; mode?: string; usePriorRunMemory?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -16,6 +16,8 @@ export async function POST(req: Request) {
   }
   const mode =
     body.mode === "end_to_end" || body.mode === "step_by_step" ? body.mode : "step_by_step";
+  const usePriorRunMemory =
+    typeof body.usePriorRunMemory === "boolean" ? body.usePriorRunMemory : true;
 
   const run = await prisma.strategyRun.create({
     data: {
@@ -23,6 +25,7 @@ export async function POST(req: Request) {
       companyContext: "",
       status: "pending",
       runMode: mode,
+      usePriorRunMemory,
       progressLog: [],
     },
   });

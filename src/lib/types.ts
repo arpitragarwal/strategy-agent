@@ -54,7 +54,6 @@ export type StreamEvent =
   | { type: "node"; state: NodeState }
   | { type: "manager"; notes: string }
   | { type: "synthesis"; text: string; partial?: boolean }
-  | { type: "redirect_ack"; note: string }
   | { type: "awaiting_review"; checkpoint: ReviewCheckpoint }
   | { type: "complete"; runId: string; replay?: boolean }
   | { type: "error"; message: string };
