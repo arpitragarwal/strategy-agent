@@ -4,6 +4,7 @@
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
+ * Also writes crm/product_usage.csv (usage_tier by active quarter) and cx/customer_satisfaction.csv (CSAT + NPS).
  *
  * Run: node scripts/generate-enterprise-saas-dummy.mjs
  * Or: npm run data:generate
@@ -288,6 +289,64 @@ function simulateRenewalCohort(cohort, rnd) {
   return renewals;
 }
 
+const USAGE_TIERS = ["no_usage", "minimal_usage", "high_usage", "power_usage"];
+
+/** Cumulative weights for USAGE_TIERS (no, minimal, high, power). */
+function sampleUsageTier(rnd, opts = {}) {
+  const { churned, quartersUntilRenewal } = opts;
+  let wNo = 0.1;
+  let wMin = 0.34;
+  let wHigh = 0.42;
+  let wPow = 0.14;
+  if (churned && quartersUntilRenewal != null && quartersUntilRenewal <= 1) {
+    wNo = 0.28;
+    wMin = 0.45;
+    wHigh = 0.22;
+    wPow = 0.05;
+  } else if (churned && quartersUntilRenewal === 2) {
+    wNo = 0.18;
+    wMin = 0.4;
+    wHigh = 0.32;
+    wPow = 0.1;
+  }
+  const u = rnd() * (wNo + wMin + wHigh + wPow);
+  if (u < wNo) return USAGE_TIERS[0];
+  if (u < wNo + wMin) return USAGE_TIERS[1];
+  if (u < wNo + wMin + wHigh) return USAGE_TIERS[2];
+  return USAGE_TIERS[3];
+}
+
+/** Map usage tier to base CSAT 1–5 mean (ordinal). */
+function tierCsatMean(tier) {
+  if (tier === "no_usage") return 2.4;
+  if (tier === "minimal_usage") return 3.2;
+  if (tier === "high_usage") return 3.9;
+  return 4.35;
+}
+
+/** Integer CSAT 1–5 with noise; clamped. */
+function sampleCsat(rnd, tier) {
+  const m = tierCsatMean(tier);
+  const x = m + (rnd() - 0.5) * 1.35 + (rnd() - 0.5) * 0.6;
+  return Math.max(1, Math.min(5, Math.round(x)));
+}
+
+/** NPS-style −100..100 from CSAT and noise. */
+function sampleNps(rnd, csat) {
+  const base = (csat - 3) * 35 + (rnd() - 0.5) * 45;
+  return Math.max(-100, Math.min(100, Math.round(base)));
+}
+
+/** Subscription still open in `quarter` given renewal quarter and outcome. */
+function isActiveInQuarter(renewalQuarter, quarter, renewed) {
+  const iq = RENEWAL_QUARTERS.indexOf(quarter);
+  const ir = RENEWAL_QUARTERS.indexOf(renewalQuarter);
+  if (iq === -1 || ir === -1) return false;
+  if (iq < ir) return true;
+  if (iq === ir) return true;
+  return renewed;
+}
+
 function quarterSummary(rows) {
   const totalUp = rows.reduce((s, r) => s + r.arr_up_for_renewal_usd, 0);
   const churnedUp = rows
@@ -560,6 +619,7 @@ function main() {
     rmSync(OUT, { recursive: true });
   }
   mkdirSync(join(OUT, "crm"), { recursive: true });
+  mkdirSync(join(OUT, "cx"), { recursive: true });
 
   const idPad = Math.max(4, String(CUSTOMER_COUNT).length);
   const accounts = [];
@@ -664,11 +724,58 @@ function main() {
     ]),
   );
 
+  const byAccountRenewal = new Map(allRenewals.map((r) => [r.account_id, r]));
+  const productUsageRows = [];
+  const satisfactionRows = [];
+  for (const a of accounts) {
+    const r = byAccountRenewal.get(a.account_id);
+    const renewed = r.outcome === "renewed";
+    const churned = r.outcome === "churned";
+    const ir = RENEWAL_QUARTERS.indexOf(a.renewal_quarter);
+    for (let qi = 0; qi < RENEWAL_QUARTERS.length; qi++) {
+      const q = RENEWAL_QUARTERS[qi];
+      if (!isActiveInQuarter(a.renewal_quarter, q, renewed)) continue;
+      const quartersUntilRenewal =
+        churned && ir >= 0 ? Math.max(0, ir - qi) : null;
+      const tier = sampleUsageTier(rnd, {
+        churned,
+        quartersUntilRenewal,
+      });
+      const csat = sampleCsat(rnd, tier);
+      const nps = sampleNps(rnd, csat);
+      productUsageRows.push({
+        account_id: a.account_id,
+        fiscal_quarter: q,
+        usage_tier: tier,
+      });
+      satisfactionRows.push({
+        account_id: a.account_id,
+        fiscal_quarter: q,
+        csat_score: csat,
+        nps_score: nps,
+      });
+    }
+  }
+
+  writeFileSync(
+    join(OUT, "crm", "product_usage.csv"),
+    toCsv(productUsageRows, ["account_id", "fiscal_quarter", "usage_tier"]),
+  );
+
+  writeFileSync(
+    join(OUT, "cx", "customer_satisfaction.csv"),
+    toCsv(satisfactionRows, ["account_id", "fiscal_quarter", "csat_score", "nps_score"]),
+  );
+
   const dashboardPath = join(OUT, "renewals-dashboard.html");
   writeRenewalsDashboardHtml(allRenewals, dashboardPath);
 
   console.log(`Wrote ${join(OUT, "crm", "accounts.csv")}`);
   console.log(`Wrote ${join(OUT, "crm", "renewals.csv")}`);
+  console.log(`Wrote ${join(OUT, "crm", "product_usage.csv")} (${productUsageRows.length} rows)`);
+  console.log(
+    `Wrote ${join(OUT, "cx", "customer_satisfaction.csv")} (${satisfactionRows.length} rows)`,
+  );
   console.log(`Wrote ${dashboardPath} (open in browser — local preview only)`);
   console.log(
     `Cohorts: ${RENEWAL_QUARTERS.map((q, i) => `${q}=${LOGOS_UP_BY_QUARTER[i]}`).join(", ")} — ${CUSTOMER_COUNT} accounts, ${allRenewals.length} renewal rows`,
