@@ -101,3 +101,4 @@ Open [http://localhost:3000](http://localhost:3000).
 2. Add environment variables: `GOOGLE_AI_API_KEY`, `GOOGLE_AI_MODEL`, `DATABASE_URL` (Neon pooled URL recommended).
 3. Build command: `prisma generate && next build` (already in `npm run build`).
 4. Long runs: this app sets `maxDuration = 300` on the stream route; on Hobby, Vercel may cap execution time lower — upgrade or move orchestration to a background worker if runs time out.
+5. If you see **“This run is already executing…”** after a refresh: the DB still had `running` from a **dead** serverless invocation (timeout, deploy, closed tab). Wait for the stale window or set **`STALE_RUNNING_MS`** (on Vercel the default recovery window is shorter than local). **Continue pipeline** after reconnect resumes from the inferred checkpoint.

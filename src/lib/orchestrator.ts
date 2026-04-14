@@ -1365,9 +1365,14 @@ export async function executeRun(runId: string, send: StreamSender) {
   }
 
   if (run.status === "running") {
+    /** On Vercel, the stream lambda often dies (timeout/deploy/tab close) while the row stays `running`; a shorter window lets reconnect resume instead of "already executing" for 90s. Override with STALE_RUNNING_MS. */
+    const onVercel = process.env.VERCEL === "1";
+    const defaultStaleMs = onVercel ? 25_000 : 90_000;
+    const floorMs = onVercel ? 10_000 : 30_000;
+    const parsed = Number.parseInt(process.env.STALE_RUNNING_MS?.trim() ?? "", 10);
     const staleMs = Math.max(
-      30_000,
-      Number.parseInt(process.env.STALE_RUNNING_MS ?? "90000", 10) || 90_000,
+      floorMs,
+      Number.isFinite(parsed) && parsed > 0 ? parsed : defaultStaleMs,
     );
     const age = Date.now() - run.updatedAt.getTime();
     if (age < staleMs) {
