@@ -223,6 +223,8 @@ export function structureRevisionPrompt(input: {
 }): string {
   return `You output ONE JSON object only. No markdown, no preamble. First character "{".
 
+FORBIDDEN (will break the pipeline): repeating the user goal or manager review as markdown sections (e.g. "* User Goal:", "## Manager Feedback"), bullet lists of feedback, or any prose that does not start with "{". Your entire reply must be parseable as one JSON value — the tree object only.
+
 An initial hypothesis tree was drafted, then reviewed by a manager. Produce a **revised full tree** that addresses the feedback. Use new stable ids (lowercase_snake_case).
 
 User goal:
@@ -260,7 +262,31 @@ Rules:
 export const STRUCTURE_REVISION_RETRY_SUFFIX = `
 
 CRITICAL: Previous revision JSON was invalid or had no usable leaves.
-Return ONLY one JSON object with non-empty "roots" and valid leaf nodes; **every node's "question"** must be a testable hypothesis. First "{", last "}".`;
+Return ONLY one JSON object with non-empty "roots" and valid leaf nodes; **every node's "question"** must be a testable hypothesis. First "{", last "}".
+Do NOT output markdown feedback or labeled sections — only the JSON tree.`;
+
+/** Short prompt when the full revision prompt confuses the model into prose. */
+export function structureRevisionMinimalPrompt(input: {
+  userGoal: string;
+  priorOutlineJson: string;
+  managerTreeFeedback: string;
+}): string {
+  const goal = input.userGoal.replace(/\s+/g, " ").trim().slice(0, 2500);
+  const prior = input.priorOutlineJson.slice(0, 14000);
+  const mgr = input.managerTreeFeedback.slice(0, 8000);
+  return `Return exactly one JSON object. First character "{". Last "}". No markdown, no bullet lists, no "* User Goal" lines, no code fences.
+
+Required shape: {"roots":[...]} — each node has "id" (string), "title", "question" (testable hypothesis), "children" (use [] on leaves; non-empty arrays on internal nodes). 3–6 top-level roots unless the scope is tiny.
+
+User goal (for meaning only — do not restate as headings):
+${goal}
+
+Prior tree JSON (revise; you may assign new ids):
+${prior}
+
+Manager feedback (incorporate into the tree structure and hypotheses):
+${mgr}`;
+}
 
 export function analysisPrompt(input: {
   userGoal: string;

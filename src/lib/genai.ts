@@ -249,6 +249,7 @@ export async function generateJson<T>(
       label,
       "The following text is NOT valid JSON (or has extra prose).",
       "If it looks like comma-separated themes, bullet topics, or short phrases, you MUST turn them into a full nested object per the hint (add ids, titles, questions, children arrays).",
+      "If it looks like markdown (lines starting with *, #, or sections such as \"User Goal\" / \"Manager Feedback\"), that is WRONG — discard it and output ONLY the JSON object per the hint.",
       "Output ONLY a single JSON object that satisfies:",
       options.repairHint,
       "Rules: no markdown, no code fences, no commentary before or after. First character must be \"{\".",
@@ -283,7 +284,8 @@ export async function generateJson<T>(
     getJsonModel(),
     [
       "Repair pass 3 (strict JSON output mode).",
-      "The following text is NOT valid JSON. It may be a comma-separated list of themes, short phrases, or partial outline — you MUST convert it into ONE valid JSON object.",
+      "The following text is NOT valid JSON. It may be a comma-separated list of themes, short phrases, partial outline, or markdown notes — you MUST convert it into ONE valid JSON object.",
+      "Do NOT echo headings like User Goal or Manager Feedback; emit only the JSON tree.",
       "Output ONLY that object. Satisfy:",
       options.repairHint,
       "Rules: first character \"{\", last \"}\". No markdown fences, no commentary.",

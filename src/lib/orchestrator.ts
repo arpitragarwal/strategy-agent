@@ -15,6 +15,7 @@ import {
   STRUCTURE_RETRY_SUFFIX,
   STRUCTURE_REVISION_RETRY_SUFFIX,
   structurePrompt,
+  structureRevisionMinimalPrompt,
   structureRevisionPrompt,
   synthesisPrompt,
   type BranchRollupJson,
@@ -1048,28 +1049,63 @@ async function runStructureRevisionPhase(
   send({ type: "tree_review", notes: treeReviewNotes });
   await emit("structure", "Revising hypothesis tree from manager feedback");
 
-  const revisionRaw = await generateJson<OutlineDoc>(
-    structureRevisionPrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-      priorOutlineJson: JSON.stringify(firstOutline, null, 2),
-      managerTreeFeedback: treeReviewNotes,
-    }),
-    { repairHint: structureRepairHint },
-  );
-  let revisedOutline = normalizeOutlineDoc(revisionRaw);
-  if (!revisedOutline?.roots?.length || leafCount(revisedOutline) === 0) {
-    await emit("structure", "Retrying tree revision JSON…");
-    const revisionRaw2 = await generateJson<OutlineDoc>(
+  const priorJson = JSON.stringify(firstOutline, null, 2);
+  let revisedOutline: OutlineDoc | null = null;
+
+  const tryNormalizeRevision = (raw: unknown): OutlineDoc | null => {
+    const n = normalizeOutlineDoc(raw);
+    if (n?.roots?.length && leafCount(n) > 0) return n;
+    return null;
+  };
+
+  try {
+    const revisionRaw = await generateJson<OutlineDoc>(
       structureRevisionPrompt({
         userGoal: run.prompt,
         discovery: discoveryText,
-        priorOutlineJson: JSON.stringify(firstOutline, null, 2),
+        priorOutlineJson: priorJson,
         managerTreeFeedback: treeReviewNotes,
-      }) + STRUCTURE_REVISION_RETRY_SUFFIX,
+      }),
       { repairHint: structureRepairHint },
     );
-    revisedOutline = normalizeOutlineDoc(revisionRaw2);
+    revisedOutline = tryNormalizeRevision(revisionRaw);
+  } catch {
+    revisedOutline = null;
+  }
+
+  if (!revisedOutline) {
+    await emit("structure", "Retrying tree revision JSON…");
+    try {
+      const revisionRaw2 = await generateJson<OutlineDoc>(
+        structureRevisionPrompt({
+          userGoal: run.prompt,
+          discovery: discoveryText,
+          priorOutlineJson: priorJson,
+          managerTreeFeedback: treeReviewNotes,
+        }) + STRUCTURE_REVISION_RETRY_SUFFIX,
+        { repairHint: structureRepairHint },
+      );
+      revisedOutline = tryNormalizeRevision(revisionRaw2);
+    } catch {
+      revisedOutline = null;
+    }
+  }
+
+  if (!revisedOutline) {
+    await emit("structure", "Trying compact revision prompt (JSON-only)…");
+    try {
+      const revisionRaw3 = await generateJson<OutlineDoc>(
+        structureRevisionMinimalPrompt({
+          userGoal: run.prompt,
+          priorOutlineJson: priorJson,
+          managerTreeFeedback: treeReviewNotes,
+        }),
+        { repairHint: structureRepairHint },
+      );
+      revisedOutline = tryNormalizeRevision(revisionRaw3);
+    } catch {
+      revisedOutline = null;
+    }
   }
 
   let structureOut: OutlineDoc;
