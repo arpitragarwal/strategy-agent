@@ -178,6 +178,7 @@ function computePipelineSteps(args: {
   managerNotes: string;
   synthesis: string;
   synthesisPartial: boolean;
+  error: string | null;
 }): { status: PipelineStepStatus; detail?: string }[] {
   const {
     busy,
@@ -255,7 +256,7 @@ function computePipelineSteps(args: {
   });
 
   let seenActive = false;
-  return raw.map((s, i) => {
+  const result = raw.map((s, i) => {
     let status = s;
     if (status === "active") {
       if (seenActive) status = "complete";
@@ -273,6 +274,17 @@ function computePipelineSteps(args: {
               : undefined;
     return { status, detail };
   });
+
+  if (args.error?.trim()) {
+    return result.map((r) => {
+      if (r.status !== "active") return r;
+      const stalledDetail = r.detail
+        ? `${r.detail} · Stopped (see error above)`
+        : "Stopped (see error above)";
+      return { status: "upcoming" as PipelineStepStatus, detail: stalledDetail };
+    });
+  }
+  return result;
 }
 
 function DisclosureChevron({ nested }: { nested?: boolean }) {
@@ -1225,6 +1237,7 @@ export function StrategyConsole() {
       managerNotes,
       synthesis,
       synthesisPartial,
+      error,
     });
     return PIPELINE.map((meta, i) => ({
       meta,
@@ -1241,6 +1254,7 @@ export function StrategyConsole() {
     managerNotes,
     synthesis,
     synthesisPartial,
+    error,
   ]);
 
   const sendControl = async (action: "synthesize_now") => {

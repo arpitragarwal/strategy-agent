@@ -2,7 +2,8 @@ import { executeRun } from "@/lib/orchestrator";
 import type { StreamEvent } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 300;
+/** Pro (and above): raise in dashboard if needed; Hobby caps lower. */
+export const maxDuration = 800;
 
 export async function GET(
   _req: Request,
