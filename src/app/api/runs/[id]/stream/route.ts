@@ -1,4 +1,5 @@
-import { executeRun } from "@/lib/orchestrator";
+import { logServerError } from "@/lib/errors";
+import { appendRunErrorToProgress, executeRun } from "@/lib/orchestrator";
 import type { StreamEvent } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -33,8 +34,15 @@ export async function GET(
         }, 10000);
         await executeRun(id, send);
       } catch (e) {
-        const message = e instanceof Error ? e.message : String(e);
-        send({ type: "error", message });
+        const parts = logServerError(`stream:${id}`, e, { runId: id });
+        const entry = await appendRunErrorToProgress(id, e);
+        if (entry) send({ type: "progress", entry });
+        send({
+          type: "error",
+          message: parts.message,
+          stack: parts.stack,
+          errorName: parts.errorName,
+        });
       } finally {
         if (pingTimer) clearInterval(pingTimer);
         controller.close();

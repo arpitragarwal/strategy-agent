@@ -46,6 +46,11 @@ import {
 } from "./quant";
 import type { QuantPlan } from "./quant/types";
 import { searchStrategyMemory } from "./strategyMemory";
+import {
+  errorToLogParts,
+  formatRunErrorField,
+  logServerError,
+} from "./errors";
 import type {
   HypothesisVerdict,
   OutlineNode,
@@ -579,7 +584,12 @@ type AnalysisJson = {
 
 export type StreamSender = (event: StreamEvent) => void;
 
-async function appendProgress(runId: string, stage: string, message: string) {
+async function appendProgress(
+  runId: string,
+  stage: string,
+  message: string,
+  errorDetails?: { stack?: string; errorName?: string },
+) {
   const run = await prisma.strategyRun.findUniqueOrThrow({ where: { id: runId } });
   const raw = run.progressLog;
   const log: ProgressEntry[] = Array.isArray(raw)
@@ -589,6 +599,8 @@ async function appendProgress(runId: string, stage: string, message: string) {
     at: new Date().toISOString(),
     stage,
     message,
+    ...(errorDetails?.stack ? { stack: errorDetails.stack } : {}),
+    ...(errorDetails?.errorName ? { errorName: errorDetails.errorName } : {}),
   };
   log.push(entry);
   await prisma.strategyRun.update({
@@ -596,6 +608,22 @@ async function appendProgress(runId: string, stage: string, message: string) {
     data: { progressLog: log },
   });
   return entry;
+}
+
+/** Persist an exception to progressLog (e.g. stream handler outside executeRun). */
+export async function appendRunErrorToProgress(
+  runId: string,
+  e: unknown,
+): Promise<ProgressEntry | null> {
+  try {
+    const parts = errorToLogParts(e);
+    return await appendProgress(runId, "error", parts.message, {
+      stack: parts.stack,
+      errorName: parts.errorName,
+    });
+  } catch {
+    return null;
+  }
 }
 
 /** Read and clear a pending user control (e.g. synthesize_now). */
@@ -1376,11 +1404,11 @@ export async function executeRun(runId: string, send: StreamSender) {
     );
     const age = Date.now() - run.updatedAt.getTime();
     if (age < staleMs) {
-      send({
-        type: "error",
-        message:
-          "This run is already executing (another connection may be active). Open a new run or wait.",
-      });
+      const msg =
+        "This run is already executing (another connection may be active). Open a new run or wait.";
+      console.warn(`[executeRun:${runId}] ${msg}`, { ageMs: age, staleMs });
+      await appendProgress(runId, "error", msg);
+      send({ type: "error", message: msg });
       return;
     }
     const checkpoint = inferStaleResumeCheckpoint(run);
@@ -1401,10 +1429,9 @@ export async function executeRun(runId: string, send: StreamSender) {
   }
 
   if (run.status !== "pending" && run.status !== "awaiting_review") {
-    send({
-      type: "error",
-      message: `Run cannot be executed (status: ${run.status}).`,
-    });
+    const msg = `Run cannot be executed (status: ${run.status}).`;
+    await appendProgress(runId, "error", msg);
+    send({ type: "error", message: msg });
     return;
   }
 
@@ -1424,7 +1451,9 @@ export async function executeRun(runId: string, send: StreamSender) {
   });
 
   if (lock.count === 0) {
-    send({ type: "error", message: "Run could not be started." });
+    const msg = "Run could not be started.";
+    await appendProgress(runId, "error", msg);
+    send({ type: "error", message: msg });
     return;
   }
 
@@ -1499,15 +1528,26 @@ export async function executeRun(runId: string, send: StreamSender) {
       return;
     }
 
-    send({ type: "error", message: "Unexpected run state — cannot resume." });
+    const badStateMsg = "Unexpected run state — cannot resume.";
+    await appendProgress(runId, "error", badStateMsg);
+    send({ type: "error", message: badStateMsg });
     } catch (e) {
-      const message = e instanceof Error ? e.message : String(e);
+      const parts = logServerError(`executeRun:${runId}`, e, { runId });
+      const stored = formatRunErrorField(parts);
       await prisma.strategyRun.update({
         where: { id: runId },
-        data: { status: "failed", error: message, reviewCheckpoint: null },
+        data: { status: "failed", error: stored, reviewCheckpoint: null },
       });
-      send({ type: "error", message });
-      await appendProgress(runId, "error", message);
+      send({
+        type: "error",
+        message: parts.message,
+        stack: parts.stack,
+        errorName: parts.errorName,
+      });
+      await appendProgress(runId, "error", parts.message, {
+        stack: parts.stack,
+        errorName: parts.errorName,
+      });
     } finally {
       try {
         const row = await prisma.strategyRun.findUnique({

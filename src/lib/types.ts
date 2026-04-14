@@ -38,6 +38,9 @@ export type ProgressEntry = {
   at: string;
   stage: string;
   message: string;
+  /** Present for stage "error" when the source was an Error. */
+  stack?: string;
+  errorName?: string;
 };
 
 export type ReviewCheckpoint =
@@ -56,4 +59,4 @@ export type StreamEvent =
   | { type: "synthesis"; text: string; partial?: boolean }
   | { type: "awaiting_review"; checkpoint: ReviewCheckpoint }
   | { type: "complete"; runId: string; replay?: boolean }
-  | { type: "error"; message: string };
+  | { type: "error"; message: string; stack?: string; errorName?: string };

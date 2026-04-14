@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
 import { playAttentionSound, primeAttentionAudio } from "@/lib/attentionChime";
+import { parseStoredRunError } from "@/lib/errors";
 import { flattenLeaves, listAllNodeIds } from "@/lib/outline";
 import type {
   HypothesisVerdict,
@@ -168,6 +169,15 @@ const PIPELINE: readonly { id: string; title: string; subtitle: string }[] = [
 
 type PipelineStepStatus = "complete" | "active" | "upcoming";
 
+/** Banner + optional stack (from SSE or stored run.error). */
+type AppErrorState = { message: string; stack?: string } | null;
+
+function toAppError(message: string, stack?: string): AppErrorState {
+  const m = message.trim() || "Unknown error";
+  const s = stack?.trim();
+  return s ? { message: m, stack: s } : { message: m };
+}
+
 function computePipelineSteps(args: {
   busy: boolean;
   pausedAt: ReviewCheckpoint | null;
@@ -178,7 +188,7 @@ function computePipelineSteps(args: {
   managerNotes: string;
   synthesis: string;
   synthesisPartial: boolean;
-  error: string | null;
+  errorMessage: string | null;
 }): { status: PipelineStepStatus; detail?: string }[] {
   const {
     busy,
@@ -275,7 +285,7 @@ function computePipelineSteps(args: {
     return { status, detail };
   });
 
-  if (args.error?.trim()) {
+  if (args.errorMessage?.trim()) {
     return result.map((r) => {
       if (r.status !== "active") return r;
       const stalledDetail = r.detail
@@ -784,7 +794,7 @@ export function StrategyConsole() {
   const [prompt, setPrompt] = useState("");
   const [runId, setRunId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<AppErrorState>(null);
 
   const [progress, setProgress] = useState<ProgressEntry[]>([]);
   const [discovery, setDiscovery] = useState("");
@@ -914,7 +924,12 @@ export function StrategyConsole() {
     setProgress(Array.isArray(log) ? (log as ProgressEntry[]) : []);
     setRunId(run.id);
     if (!opts?.preserveError) {
-      setError(null);
+      if (run.status === "failed" && run.error) {
+        const parts = parseStoredRunError(run.error);
+        setError(toAppError(parts.message, parts.stack));
+      } else {
+        setError(null);
+      }
     }
     setControlMessage(null);
     if (run.status === "awaiting_review" && run.reviewCheckpoint) {
@@ -997,7 +1012,7 @@ export function StrategyConsole() {
       setSelectedMemoryId(m.id);
       return;
     }
-    setError("Could not load this saved analysis.");
+    setError(toAppError("Could not load this saved analysis."));
   };
 
   const attachRunStream = useCallback(
@@ -1021,6 +1036,8 @@ export function StrategyConsole() {
             note?: string;
             runId?: string;
             message?: string;
+            stack?: string;
+            errorName?: string;
             partial?: boolean;
             checkpoint?: ReviewCheckpoint;
             replay?: boolean;
@@ -1094,7 +1111,9 @@ export function StrategyConsole() {
               streamRetryRef.current = 0;
               suppressStreamErrorRef.current = true;
               src.close();
-              setError(msg.message ?? "Unknown error");
+              setError(
+                toAppError(msg.message ?? "Unknown error", msg.stack),
+              );
               setBusy(false);
               void (async () => {
                 const res = await fetch(`/api/runs/${id}`);
@@ -1109,7 +1128,7 @@ export function StrategyConsole() {
               break;
           }
         } catch {
-          setError("Failed to parse stream event");
+          setError(toAppError("Failed to parse stream event"));
         }
       };
       src.onerror = () => {
@@ -1131,7 +1150,10 @@ export function StrategyConsole() {
               if (run.status === "failed") {
                 streamRetryRef.current = 0;
                 hydrateFromRun(run);
-                if (run.error) setError(run.error);
+                if (run.error) {
+                  const parts = parseStoredRunError(run.error);
+                  setError(toAppError(parts.message, parts.stack));
+                }
                 return;
               }
               if (run.status === "running") {
@@ -1139,7 +1161,9 @@ export function StrategyConsole() {
                 const n = streamRetryRef.current;
                 if (n <= 15) {
                   setError(
-                    `Stream disconnected — reconnecting (attempt ${n}/15 in ~10s)…`,
+                    toAppError(
+                      `Stream disconnected — reconnecting (attempt ${n}/15 in ~10s)…`,
+                    ),
                   );
                   window.setTimeout(() => {
                     setError(null);
@@ -1148,7 +1172,9 @@ export function StrategyConsole() {
                   return;
                 }
                 setError(
-                  "Stream disconnected while the run was still active. Wait a bit, refresh the page, or start a new run.",
+                  toAppError(
+                    "Stream disconnected while the run was still active. Wait a bit, refresh the page, or start a new run.",
+                  ),
                 );
                 return;
               }
@@ -1156,7 +1182,7 @@ export function StrategyConsole() {
           } catch {
             /* ignore — show generic message below */
           }
-          setError((prev) => prev ?? "Stream connection lost");
+          setError((prev) => prev ?? toAppError("Stream connection lost"));
         })();
       };
     },
@@ -1189,7 +1215,12 @@ export function StrategyConsole() {
       attachRunStream(id);
     } catch (e) {
       setBusy(false);
-      setError(e instanceof Error ? e.message : String(e));
+      setError(
+        toAppError(
+          e instanceof Error ? e.message : String(e),
+          e instanceof Error ? e.stack : undefined,
+        ),
+      );
     }
   };
 
@@ -1204,7 +1235,9 @@ export function StrategyConsole() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError((data as { error?: string }).error ?? res.statusText);
+        setError(
+          toAppError((data as { error?: string }).error ?? res.statusText),
+        );
         return;
       }
     }
@@ -1237,7 +1270,7 @@ export function StrategyConsole() {
       managerNotes,
       synthesis,
       synthesisPartial,
-      error,
+      errorMessage: error?.message ?? null,
     });
     return PIPELINE.map((meta, i) => ({
       meta,
@@ -1420,9 +1453,19 @@ export function StrategyConsole() {
           ) : null}
 
           {error ? (
-            <p className="text-sm text-rose-800 border border-rose-200 rounded-lg px-3 py-2 bg-rose-50">
-              {error}
-            </p>
+            <div className="text-sm text-rose-800 border border-rose-200 rounded-lg px-3 py-2 bg-rose-50 space-y-2">
+              <p className="whitespace-pre-wrap break-words">{error.message}</p>
+              {error.stack ? (
+                <details className="text-xs font-mono text-rose-900/90">
+                  <summary className="cursor-pointer text-rose-800 hover:text-rose-950 select-none">
+                    Stack trace
+                  </summary>
+                  <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words rounded border border-rose-200/80 bg-rose-50/80 p-2 text-[11px] leading-snug">
+                    {error.stack}
+                  </pre>
+                </details>
+              ) : null}
+            </div>
           ) : null}
         </section>
 
@@ -1457,17 +1500,33 @@ export function StrategyConsole() {
             </summary>
             <ul className="mt-2 max-h-36 overflow-y-auto space-y-1.5 text-[10px] text-zinc-600 font-mono border-t border-zinc-200/80 pt-2">
               {progress.map((p, i) => (
-                <li key={`${p.at}-${i}`} className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
-                  <time
-                    dateTime={p.at}
-                    className="shrink-0 text-zinc-400 tabular-nums"
-                    title={p.at}
-                  >
-                    {formatMemoryTimestamp(p.at)}
-                  </time>
-                  <span className="min-w-0">
-                    <span className="text-zinc-500">{p.stage}</span> — {p.message}
-                  </span>
+                <li key={`${p.at}-${i}`} className="flex flex-col gap-1 min-w-0">
+                  <div className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
+                    <time
+                      dateTime={p.at}
+                      className="shrink-0 text-zinc-400 tabular-nums"
+                      title={p.at}
+                    >
+                      {formatMemoryTimestamp(p.at)}
+                    </time>
+                    <span className="min-w-0">
+                      <span className="text-zinc-500">{p.stage}</span> —{" "}
+                      <span className="whitespace-pre-wrap break-words">{p.message}</span>
+                      {p.errorName ? (
+                        <span className="text-zinc-400"> ({p.errorName})</span>
+                      ) : null}
+                    </span>
+                  </div>
+                  {p.stack ? (
+                    <details className="ml-0 pl-0 text-[10px] text-rose-900/85 font-mono">
+                      <summary className="cursor-pointer select-none text-rose-800/90 hover:text-rose-950">
+                        Trace
+                      </summary>
+                      <pre className="mt-1 max-h-32 overflow-auto whitespace-pre-wrap break-words rounded border border-rose-200/70 bg-rose-50/60 p-1.5">
+                        {p.stack}
+                      </pre>
+                    </details>
+                  ) : null}
                 </li>
               ))}
               {!progress.length ? (
