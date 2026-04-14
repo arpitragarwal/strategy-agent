@@ -106,7 +106,7 @@ function analysisConcurrency(): number {
     return Math.min(16, n);
   }
   // Fewer parallel LLM+quant calls on Vercel reduces OOM risk and outbound burst.
-  if (process.env.VERCEL === "1") return 2;
+  if (process.env.VERCEL === "1") return 3;
   return 4;
 }
 
