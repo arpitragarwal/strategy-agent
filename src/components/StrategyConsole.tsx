@@ -1438,10 +1438,19 @@ export function StrategyConsole() {
               <DisclosureChevron nested />
               <span className="pt-1.5">Activity log ({progress.length})</span>
             </summary>
-            <ul className="mt-2 max-h-36 overflow-y-auto space-y-1 text-[10px] text-zinc-600 font-mono border-t border-zinc-200/80 pt-2">
+            <ul className="mt-2 max-h-36 overflow-y-auto space-y-1.5 text-[10px] text-zinc-600 font-mono border-t border-zinc-200/80 pt-2">
               {progress.map((p, i) => (
-                <li key={`${p.at}-${i}`}>
-                  <span className="text-zinc-400">{p.stage}</span> — {p.message}
+                <li key={`${p.at}-${i}`} className="flex flex-wrap gap-x-2 gap-y-0.5 items-baseline">
+                  <time
+                    dateTime={p.at}
+                    className="shrink-0 text-zinc-400 tabular-nums"
+                    title={p.at}
+                  >
+                    {formatMemoryTimestamp(p.at)}
+                  </time>
+                  <span className="min-w-0">
+                    <span className="text-zinc-500">{p.stage}</span> — {p.message}
+                  </span>
                 </li>
               ))}
               {!progress.length ? (
