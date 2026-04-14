@@ -67,8 +67,11 @@ export function quantPlanReferencesValidDatasets(plan: {
   if (!getDatasetMeta(plan.datasetId)) return false;
   for (const step of plan.steps ?? []) {
     if (!step || typeof step !== "object") continue;
-    const s = step as { op?: string; rightDatasetId?: string };
-    if (s.op === "join" && typeof s.rightDatasetId === "string") {
+    const s = step as { op?: string; rightDatasetId?: unknown };
+    if (s.op === "join") {
+      if (typeof s.rightDatasetId !== "string" || !s.rightDatasetId.trim()) {
+        return false;
+      }
       if (!getDatasetMeta(s.rightDatasetId)) return false;
     }
   }

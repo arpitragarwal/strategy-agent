@@ -240,7 +240,9 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
       } else if (step.op === "limit") {
         rows = rows.slice(0, Math.max(0, Math.min(step.n, 10_000)));
       } else if (step.op === "join") {
-        datasetIdsUsed.add(step.rightDatasetId);
+        if (typeof step.rightDatasetId === "string" && step.rightDatasetId.trim()) {
+          datasetIdsUsed.add(step.rightDatasetId);
+        }
         rows = applyJoin(rows, step, stepIdx);
       } else if (step.op === "project") {
         rows = applyProject(rows, step, stepIdx);
