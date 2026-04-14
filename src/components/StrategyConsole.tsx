@@ -238,7 +238,8 @@ function computePipelineSteps(args: {
       if (!structureDone) return "upcoming";
       if (!analysisDone) {
         if (pausedAt === "after_structure") return "active";
-        if (busy || anyLeafStarted || (hasOutline && leavesTotal > 0)) return "active";
+        // Do not use "hasOutline && leaves" alone — that kept Analysis on "NOW" after stream errors while idle.
+        if (busy || anyLeafStarted) return "active";
         return "upcoming";
       }
       return "complete";
@@ -868,7 +869,7 @@ export function StrategyConsole() {
     setTokenUsage(null);
   };
 
-  const hydrateFromRun = useCallback((run: RunRow) => {
+  const hydrateFromRun = useCallback((run: RunRow, opts?: { preserveError?: boolean }) => {
     const legacy = run.companyContext?.trim();
     setPrompt(
       legacy ? `${run.prompt}${run.prompt.trim() ? "\n\n" : ""}${legacy}` : run.prompt,
@@ -900,7 +901,9 @@ export function StrategyConsole() {
     const log = run.progressLog;
     setProgress(Array.isArray(log) ? (log as ProgressEntry[]) : []);
     setRunId(run.id);
-    setError(null);
+    if (!opts?.preserveError) {
+      setError(null);
+    }
     setControlMessage(null);
     if (run.status === "awaiting_review" && run.reviewCheckpoint) {
       setPausedAt(run.reviewCheckpoint as ReviewCheckpoint);
@@ -1081,7 +1084,14 @@ export function StrategyConsole() {
               src.close();
               setError(msg.message ?? "Unknown error");
               setBusy(false);
-              void refreshRunMeta(id);
+              void (async () => {
+                const res = await fetch(`/api/runs/${id}`);
+                if (res.ok) {
+                  hydrateFromRun((await res.json()) as RunRow, { preserveError: true });
+                } else {
+                  void refreshRunMeta(id);
+                }
+              })();
               break;
             default:
               break;
