@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
@@ -180,6 +180,17 @@ function toAppError(message: string, stack?: string): AppErrorState {
   const m = message.trim() || "Unknown error";
   const s = stack?.trim();
   return s ? { message: m, stack: s } : { message: m };
+}
+
+/** In-app activity only (not persisted to Neon until next server progress write). */
+function appendStreamClientLog(
+  setProgress: Dispatch<SetStateAction<ProgressEntry[]>>,
+  message: string,
+) {
+  setProgress((prev) => [
+    ...prev,
+    { at: new Date().toISOString(), stage: "stream", message },
+  ]);
 }
 
 function computePipelineSteps(args: {
@@ -1236,11 +1247,9 @@ export function StrategyConsole() {
                     RUNNING_STREAM_RECONNECT_BASE_MS +
                     Math.floor(Math.random() * RUNNING_STREAM_RECONNECT_JITTER_MS);
                   const delaySec = Math.round(delayMs / 1000);
-                  setError(
-                    toAppError(
-                      `Stream disconnected — reconnecting in ~${delaySec}s (attempt ${n}/15) so the server can accept the stream again…`,
-                    ),
-                  );
+                  const reconnectMsg = `Stream disconnected — reconnecting in ~${delaySec}s (attempt ${n}/15) so the server can accept the stream again…`;
+                  appendStreamClientLog(setProgress, reconnectMsg);
+                  setError(toAppError(reconnectMsg));
                   streamReconnectTimerRef.current = window.setTimeout(() => {
                     streamReconnectTimerRef.current = null;
                     setError(null);
@@ -1248,22 +1257,23 @@ export function StrategyConsole() {
                   }, delayMs);
                   return;
                 }
-                setError(
-                  toAppError(
-                    "Stream disconnected while the run was still active. Wait a bit, refresh the page, or start a new run.",
-                  ),
-                );
+                const exhaustedMsg =
+                  "Stream disconnected while the run was still active. Wait a bit, refresh the page, or start a new run.";
+                appendStreamClientLog(setProgress, exhaustedMsg);
+                setError(toAppError(exhaustedMsg));
                 return;
               }
             }
           } catch {
             /* ignore — show generic message below */
           }
-          setError((prev) => prev ?? toAppError("Stream connection lost"));
+          const lostMsg = "Stream connection lost";
+          appendStreamClientLog(setProgress, lostMsg);
+          setError((prev) => prev ?? toAppError(lostMsg));
         })();
       };
     },
-    [loadMemory, refreshRunMeta, hydrateFromRun, getOrCreateStreamSid],
+    [loadMemory, refreshRunMeta, hydrateFromRun, getOrCreateStreamSid, setProgress],
   );
 
   attachRunStreamRef.current = attachRunStream;
