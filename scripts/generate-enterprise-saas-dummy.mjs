@@ -4,7 +4,7 @@
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
- * Also writes crm/product_usage.csv (usage_tier by active quarter) and cx/customer_satisfaction.csv (CSAT + NPS).
+ * Also writes cx/product_usage.csv (usage_tier by active quarter) and cx/customer_satisfaction.csv (CSAT + NPS).
  *
  * Run: node scripts/generate-enterprise-saas-dummy.mjs
  * Or: npm run data:generate
@@ -758,7 +758,7 @@ function main() {
   }
 
   writeFileSync(
-    join(OUT, "crm", "product_usage.csv"),
+    join(OUT, "cx", "product_usage.csv"),
     toCsv(productUsageRows, ["account_id", "fiscal_quarter", "usage_tier"]),
   );
 
@@ -772,7 +772,7 @@ function main() {
 
   console.log(`Wrote ${join(OUT, "crm", "accounts.csv")}`);
   console.log(`Wrote ${join(OUT, "crm", "renewals.csv")}`);
-  console.log(`Wrote ${join(OUT, "crm", "product_usage.csv")} (${productUsageRows.length} rows)`);
+  console.log(`Wrote ${join(OUT, "cx", "product_usage.csv")} (${productUsageRows.length} rows)`);
   console.log(
     `Wrote ${join(OUT, "cx", "customer_satisfaction.csv")} (${satisfactionRows.length} rows)`,
   );

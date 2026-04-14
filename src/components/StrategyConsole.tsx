@@ -1256,20 +1256,31 @@ export function StrategyConsole() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-      <div className="space-y-6 min-w-0">
-        <header>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-            Strategy Team AI Agents: Prototype
-          </h1>
-          <p className="text-zinc-600 text-sm mt-1">An AI powered strategy consulting team</p>
-          {selectedMemoryId && !busy ? (
-            <p className="text-emerald-800 text-xs mt-2 font-medium">
-              Viewing a saved run from Memory — edit the goal and run again to start a new pipeline.
-            </p>
-          ) : null}
-        </header>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <header className="sticky top-0 z-30 -mx-4 px-4 bg-white pb-4 border-b border-zinc-100 mb-8">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+          Strategy Team AI Agents: Prototype
+        </h1>
+        <p className="text-zinc-600 text-sm mt-1">
+          An AI powered strategy consulting team · Built by{" "}
+          <a
+            href="https://www.linkedin.com/in/arpit-agarwal/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-800/90 hover:text-emerald-700 underline-offset-2 hover:underline"
+          >
+            Arpit Agarwal
+          </a>
+        </p>
+        {selectedMemoryId && !busy ? (
+          <p className="text-emerald-800 text-xs mt-2 font-medium">
+            Viewing a saved run from Memory — edit the goal and run again to start a new pipeline.
+          </p>
+        ) : null}
+      </header>
 
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
+        <div className="space-y-6 min-w-0">
         <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-4 space-y-3">
           <label className="block text-xs font-medium uppercase tracking-wide text-zinc-500">
             Goal, question & context
@@ -1534,38 +1545,39 @@ export function StrategyConsole() {
             <MarkdownBody content={normalizeSynthesisDisplayMarkdown(synthesis)} />
           </OutputPanel>
         ) : null}
-      </div>
+        </div>
 
-      <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start min-w-0">
-        <QuantDatasetsTreeBox />
-        <OutputPanel title="Memory" cardClassName="border-zinc-200 bg-zinc-50/80">
-          <ul className="space-y-1 max-h-[min(40vh,18rem)] overflow-y-auto">
-            {memory.map((m) => (
-              <li key={m.id}>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => void openMemoryEntry(m)}
-                  className={`w-full text-left text-[11px] leading-snug border rounded-md px-2 py-1 transition-colors ${
-                    selectedMemoryId === m.id
-                      ? "border-emerald-500 bg-emerald-50/90 ring-1 ring-emerald-200"
-                      : "border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300"
-                  } ${busy ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                >
-                  <div className="font-medium text-zinc-900 line-clamp-1">{m.title}</div>
-                  <p className="text-[9px] text-zinc-400 mt-0.5 font-mono tabular-nums truncate">
-                    {formatMemoryTimestamp(m.createdAt)}
-                  </p>
-                  <span className="sr-only">Open saved run</span>
-                </button>
-              </li>
-            ))}
-            {!memory.length ? (
-              <li className="text-zinc-500 text-[10px]">None yet.</li>
-            ) : null}
-          </ul>
-        </OutputPanel>
-      </aside>
+        <aside className="space-y-4 min-w-0 lg:sticky lg:top-32 lg:self-start">
+          <QuantDatasetsTreeBox />
+          <OutputPanel title="Memory" cardClassName="border-zinc-200 bg-zinc-50/80">
+            <ul className="space-y-1 max-h-[min(40vh,18rem)] overflow-y-auto">
+              {memory.map((m) => (
+                <li key={m.id}>
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => void openMemoryEntry(m)}
+                    className={`w-full text-left text-[11px] leading-snug border rounded-md px-2 py-1 transition-colors ${
+                      selectedMemoryId === m.id
+                        ? "border-emerald-500 bg-emerald-50/90 ring-1 ring-emerald-200"
+                        : "border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300"
+                    } ${busy ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                  >
+                    <div className="font-medium text-zinc-900 line-clamp-1">{m.title}</div>
+                    <p className="text-[9px] text-zinc-400 mt-0.5 font-mono tabular-nums truncate">
+                      {formatMemoryTimestamp(m.createdAt)}
+                    </p>
+                    <span className="sr-only">Open saved run</span>
+                  </button>
+                </li>
+              ))}
+              {!memory.length ? (
+                <li className="text-zinc-500 text-[10px]">None yet.</li>
+              ) : null}
+            </ul>
+          </OutputPanel>
+        </aside>
+      </div>
     </div>
   );
 }
