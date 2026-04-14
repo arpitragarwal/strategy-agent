@@ -1380,7 +1380,16 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   send({ type: "complete", runId });
 }
 
-export async function executeRun(runId: string, send: StreamSender) {
+export type ExecuteRunOptions = {
+  /** Browser tab stream id (`sid` query); stored on lock for reconnect diagnostics. */
+  streamSessionId?: string | null;
+};
+
+export async function executeRun(
+  runId: string,
+  send: StreamSender,
+  opts?: ExecuteRunOptions,
+) {
   let run = await prisma.strategyRun.findUnique({ where: { id: runId } });
   if (!run) {
     send({ type: "error", message: "Run not found" });
@@ -1404,9 +1413,21 @@ export async function executeRun(runId: string, send: StreamSender) {
     );
     const age = Date.now() - run.updatedAt.getTime();
     if (age < staleMs) {
-      const msg =
-        "This run is already executing (another connection may be active). Open a new run or wait.";
-      console.warn(`[executeRun:${runId}] ${msg}`, { ageMs: age, staleMs });
+      const clientSid = opts?.streamSessionId?.trim() || null;
+      const storedSid = run.streamSessionId?.trim() || null;
+      const sameSession =
+        Boolean(clientSid) && Boolean(storedSid) && clientSid === storedSid;
+      const waitSec = Math.max(1, Math.ceil((staleMs - age) / 1000));
+      const msg = sameSession
+        ? `This run is still marked active on the server (often a reconnect while the previous stream was still open). Wait about ${waitSec}s, then use Continue again. If it keeps happening, refresh once after waiting.`
+        : "This run is already executing (another connection may be active). Open a new run or wait.";
+      console.warn(`[executeRun:${runId}] blocked: running+fresh`, {
+        ageMs: age,
+        staleMs,
+        clientSid,
+        storedSid,
+        sameSession,
+      });
       await appendProgress(runId, "error", msg);
       send({ type: "error", message: msg });
       return;
@@ -1417,6 +1438,7 @@ export async function executeRun(runId: string, send: StreamSender) {
       data: {
         status: "awaiting_review",
         reviewCheckpoint: checkpoint,
+        streamSessionId: null,
         error:
           "Previous session ended unexpectedly (e.g. network or hosting limit). Continue the pipeline to resume.",
       },
@@ -1456,6 +1478,11 @@ export async function executeRun(runId: string, send: StreamSender) {
     send({ type: "error", message: msg });
     return;
   }
+
+  await prisma.strategyRun.update({
+    where: { id: runId },
+    data: { streamSessionId: opts?.streamSessionId?.trim() || null },
+  });
 
   const emit = async (stage: string, message: string) => {
     const entry = await appendProgress(runId, stage, message);
@@ -1536,7 +1563,12 @@ export async function executeRun(runId: string, send: StreamSender) {
       const stored = formatRunErrorField(parts);
       await prisma.strategyRun.update({
         where: { id: runId },
-        data: { status: "failed", error: stored, reviewCheckpoint: null },
+        data: {
+          status: "failed",
+          error: stored,
+          reviewCheckpoint: null,
+          streamSessionId: null,
+        },
       });
       send({
         type: "error",

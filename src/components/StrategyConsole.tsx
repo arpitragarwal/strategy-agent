@@ -7,6 +7,10 @@ import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
 import { playAttentionSound, primeAttentionAudio } from "@/lib/attentionChime";
 import { parseStoredRunError } from "@/lib/errors";
 import { flattenLeaves, listAllNodeIds } from "@/lib/outline";
+import {
+  RUNNING_STREAM_RECONNECT_BASE_MS,
+  RUNNING_STREAM_RECONNECT_JITTER_MS,
+} from "@/lib/runStream";
 import type {
   HypothesisVerdict,
   OutlineNode,
@@ -817,8 +821,30 @@ export function StrategyConsole() {
   /** Reconnect attempts when the host drops SSE but the run is still `running` in the DB. */
   const streamRetryRef = useRef(0);
   const attachRunStreamRef = useRef<(id: string, opts?: { retry?: boolean }) => void>(() => {});
+  /** At most one EventSource per tab; closed before opening another. */
+  const eventSourceRef = useRef<EventSource | null>(null);
+  const streamReconnectTimerRef = useRef<number | null>(null);
+  /** Stable `sid` per run id for this tab (survives reconnect). */
+  const streamSidByRunIdRef = useRef<Map<string, string>>(new Map());
 
   const [treeExpandOverrides, setTreeExpandOverrides] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    return () => {
+      if (streamReconnectTimerRef.current !== null) {
+        clearTimeout(streamReconnectTimerRef.current);
+        streamReconnectTimerRef.current = null;
+      }
+      if (eventSourceRef.current) {
+        try {
+          eventSourceRef.current.close();
+        } catch {
+          /* ignore */
+        }
+        eventSourceRef.current = null;
+      }
+    };
+  }, []);
 
   const loadMemory = useCallback(async () => {
     const res = await fetch("/api/memory");
@@ -874,6 +900,19 @@ export function StrategyConsole() {
   }, [roots]);
 
   const resetOutput = () => {
+    if (streamReconnectTimerRef.current !== null) {
+      clearTimeout(streamReconnectTimerRef.current);
+      streamReconnectTimerRef.current = null;
+    }
+    if (eventSourceRef.current) {
+      try {
+        eventSourceRef.current.close();
+      } catch {
+        /* ignore */
+      }
+      eventSourceRef.current = null;
+    }
+    streamSidByRunIdRef.current.clear();
     setError(null);
     setProgress([]);
     setDiscovery("");
@@ -1015,6 +1054,19 @@ export function StrategyConsole() {
     setError(toAppError("Could not load this saved analysis."));
   };
 
+  const getOrCreateStreamSid = useCallback((runIdForSid: string) => {
+    const m = streamSidByRunIdRef.current;
+    let sid = m.get(runIdForSid);
+    if (!sid) {
+      sid =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+      m.set(runIdForSid, sid);
+    }
+    return sid;
+  }, []);
+
   const attachRunStream = useCallback(
     (id: string, opts?: { retry?: boolean }) => {
       if (!opts?.retry) streamRetryRef.current = 0;
@@ -1023,7 +1075,23 @@ export function StrategyConsole() {
       setPausedAt(null);
       setError(null);
 
-      const src = new EventSource(`/api/runs/${id}/stream`);
+      if (streamReconnectTimerRef.current !== null) {
+        clearTimeout(streamReconnectTimerRef.current);
+        streamReconnectTimerRef.current = null;
+      }
+      const prev = eventSourceRef.current;
+      if (prev) {
+        try {
+          prev.close();
+        } catch {
+          /* ignore */
+        }
+        eventSourceRef.current = null;
+      }
+
+      const sid = encodeURIComponent(getOrCreateStreamSid(id));
+      const src = new EventSource(`/api/runs/${id}/stream?sid=${sid}`);
+      eventSourceRef.current = src;
       src.onmessage = (ev) => {
         try {
           const msg = JSON.parse(ev.data) as {
@@ -1093,6 +1161,7 @@ export function StrategyConsole() {
               setControlMessage(null);
               suppressStreamErrorRef.current = true;
               src.close();
+              if (eventSourceRef.current === src) eventSourceRef.current = null;
               void playAttentionSound("step_complete");
               void refreshRunMeta(id);
               break;
@@ -1100,6 +1169,7 @@ export function StrategyConsole() {
               streamRetryRef.current = 0;
               suppressStreamErrorRef.current = true;
               src.close();
+              if (eventSourceRef.current === src) eventSourceRef.current = null;
               setBusy(false);
               setPausedAt(null);
               setControlMessage(null);
@@ -1111,6 +1181,7 @@ export function StrategyConsole() {
               streamRetryRef.current = 0;
               suppressStreamErrorRef.current = true;
               src.close();
+              if (eventSourceRef.current === src) eventSourceRef.current = null;
               setError(
                 toAppError(msg.message ?? "Unknown error", msg.stack),
               );
@@ -1135,6 +1206,7 @@ export function StrategyConsole() {
         const ignore = suppressStreamErrorRef.current;
         suppressStreamErrorRef.current = false;
         src.close();
+        if (eventSourceRef.current === src) eventSourceRef.current = null;
         setBusy(false);
         if (ignore) return;
         void (async () => {
@@ -1160,15 +1232,20 @@ export function StrategyConsole() {
                 streamRetryRef.current += 1;
                 const n = streamRetryRef.current;
                 if (n <= 15) {
+                  const delayMs =
+                    RUNNING_STREAM_RECONNECT_BASE_MS +
+                    Math.floor(Math.random() * RUNNING_STREAM_RECONNECT_JITTER_MS);
+                  const delaySec = Math.round(delayMs / 1000);
                   setError(
                     toAppError(
-                      `Stream disconnected — reconnecting (attempt ${n}/15 in ~10s)…`,
+                      `Stream disconnected — reconnecting in ~${delaySec}s (attempt ${n}/15) so the server can accept the stream again…`,
                     ),
                   );
-                  window.setTimeout(() => {
+                  streamReconnectTimerRef.current = window.setTimeout(() => {
+                    streamReconnectTimerRef.current = null;
                     setError(null);
                     attachRunStreamRef.current(id, { retry: true });
-                  }, 10_000);
+                  }, delayMs);
                   return;
                 }
                 setError(
@@ -1186,7 +1263,7 @@ export function StrategyConsole() {
         })();
       };
     },
-    [loadMemory, refreshRunMeta, hydrateFromRun],
+    [loadMemory, refreshRunMeta, hydrateFromRun, getOrCreateStreamSid],
   );
 
   attachRunStreamRef.current = attachRunStream;

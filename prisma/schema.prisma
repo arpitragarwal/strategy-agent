@@ -30,6 +30,8 @@ model StrategyRun {
   managerNotes    String?  @db.Text
   synthesis       String?  @db.Text
   progressLog     Json     @default("[]")
+  /// Client stream session (query `sid`); set when taking the run lock, cleared on stale recovery.
+  streamSessionId String?
   error           String?  @db.Text
   /// User interrupt: synthesize_now (consumed by orchestrator when checked)
   controlAction   String?

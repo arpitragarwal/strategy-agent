@@ -7,10 +7,11 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 800;
 
 export async function GET(
-  _req: Request,
+  req: Request,
   ctx: { params: Promise<{ id: string }> },
 ) {
   const { id } = await ctx.params;
+  const sid = new URL(req.url).searchParams.get("sid")?.trim() || null;
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
@@ -32,7 +33,7 @@ export async function GET(
             if (pingTimer) clearInterval(pingTimer);
           }
         }, 10000);
-        await executeRun(id, send);
+        await executeRun(id, send, { streamSessionId: sid });
       } catch (e) {
         const parts = logServerError(`stream:${id}`, e, { runId: id });
         const entry = await appendRunErrorToProgress(id, e);
