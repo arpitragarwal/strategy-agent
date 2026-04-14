@@ -1323,7 +1323,7 @@ export function StrategyConsole() {
               type="button"
               onClick={() => void startRun("step_by_step")}
               disabled={busy || Boolean(pausedAt) || !prompt.trim()}
-              title="Runs context & clarification, then hypothesis tree build & revision, then analysis — pausing after each major phase so you can review before continuing."
+              title="Run step-by-step pauses after context & clarification, revised hypothesis tree, and analyses for your review."
               className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
               {busy && runMode === "step_by_step" ? "Running…" : "Run step-by-step"}
@@ -1332,22 +1332,12 @@ export function StrategyConsole() {
               type="button"
               onClick={() => void startRun("end_to_end")}
               disabled={busy || Boolean(pausedAt) || !prompt.trim()}
-              title="Runs the full pipeline in one go: context & clarification, hypothesis tree, analysis, manager critique, and synthesis — no mandatory review pauses."
+              title="Run full pipeline continues through manager critique and synthesis without those pauses."
               className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-sm font-medium px-4 py-2.5 transition-colors"
             >
               {busy && runMode === "end_to_end" ? "Running…" : "Run full pipeline"}
             </button>
           </div>
-          <p className="text-xs text-zinc-500">
-            <strong className="font-medium text-zinc-700">Run step-by-step</strong> pauses after context &
-            clarification, revised hypothesis tree, and analyses for your review.
-            <span className="mx-1.5 text-zinc-300">·</span>
-            <strong className="font-medium text-zinc-700">Run full pipeline</strong> continues through manager
-            critique and synthesis without those pauses.
-          </p>
-          {runId ? (
-            <p className="text-xs text-zinc-500 font-mono break-all">run {runId}</p>
-          ) : null}
 
           {pausedAt && runId && !busy ? (
             <div className="rounded-lg border border-amber-200 bg-amber-50/90 p-3 space-y-3">
@@ -1446,7 +1436,10 @@ export function StrategyConsole() {
           <details className="mt-3 group/log">
             <summary className="cursor-pointer list-none flex items-start gap-3 text-left text-[10px] font-mono text-zinc-600 hover:text-zinc-800 [&::-webkit-details-marker]:hidden">
               <DisclosureChevron nested />
-              <span className="pt-1.5">Activity log ({progress.length})</span>
+              <span className="pt-1.5">
+                Activity log ({progress.length})
+                {runId ? <span className="text-zinc-400"> · run {runId}</span> : null}
+              </span>
             </summary>
             <ul className="mt-2 max-h-36 overflow-y-auto space-y-1.5 text-[10px] text-zinc-600 font-mono border-t border-zinc-200/80 pt-2">
               {progress.map((p, i) => (
