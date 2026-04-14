@@ -224,6 +224,12 @@ function computePipelineSteps(args: {
   const anyLeafStarted =
     leavesDone > 0 || leaves.some((l) => nodeStates[l.id]?.status === "running");
   const allLeavesDone = leavesTotal > 0 && leavesDone === leavesTotal;
+  const allNodeIds = hasOutline ? listAllNodeIds(roots) : Object.keys(nodeStates);
+  const nodesTotal = allNodeIds.length;
+  const nodesDone = allNodeIds.filter((id) => {
+    const status = nodeStates[id]?.status;
+    return status === "done" || status === "skipped";
+  }).length;
   const hasManager = Boolean(managerNotes.trim());
   const hasSynthesis = Boolean(synthesis.trim());
 
@@ -288,8 +294,8 @@ function computePipelineSteps(args: {
       else seenActive = true;
     }
     const detail =
-      i === 2 && leavesTotal > 0
-        ? `${leavesDone}/${leavesTotal} hypotheses tested`
+      i === 2 && nodesTotal > 0
+        ? `nodes ${nodesDone}/${nodesTotal}`
         : i === 0 && pausedAt === "after_discovery"
           ? "Paused for your review"
           : i === 1 && pausedAt === "after_structure"
@@ -1336,15 +1342,20 @@ export function StrategyConsole() {
     [runId, tokenUsage],
   );
 
-  const leavesTotal = useMemo(() => {
-    if (roots.length) return flattenLeaves(roots).length;
+  const nodesTotal = useMemo(() => {
+    if (roots.length) return listAllNodeIds(roots).length;
     return Object.keys(nodeStates).length;
   }, [roots, nodeStates]);
 
-  const leavesDone = useMemo(
-    () => Object.values(nodeStates).filter((v) => v.status === "done").length,
-    [nodeStates],
-  );
+  const nodesDone = useMemo(() => {
+    if (roots.length) {
+      return listAllNodeIds(roots).filter((id) => {
+        const status = nodeStates[id]?.status;
+        return status === "done" || status === "skipped";
+      }).length;
+    }
+    return Object.values(nodeStates).filter((v) => v.status === "done" || v.status === "skipped").length;
+  }, [roots, nodeStates]);
 
   const pipelineSteps = useMemo(() => {
     const computed = computePipelineSteps({
@@ -1562,9 +1573,9 @@ export function StrategyConsole() {
           title="Pipeline"
           cardClassName="border-zinc-200 bg-zinc-50/80"
           summaryEnd={
-            leavesTotal > 0 ? (
+            nodesTotal > 0 ? (
               <span className="text-xs font-mono text-zinc-500">
-                leaves {leavesDone}/{leavesTotal}
+                nodes {nodesDone}/{nodesTotal}
               </span>
             ) : null
           }
