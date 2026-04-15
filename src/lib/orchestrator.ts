@@ -98,6 +98,104 @@ async function mergeClarificationAnswersIntoDiscovery(
 
 const DATA_CATALOG_MARKDOWN = buildDataCatalogMarkdown();
 
+function buildFallbackOutlineDoc(userGoal: string): OutlineDoc {
+  const stem =
+    userGoal.trim().replace(/\s+/g, " ").slice(0, 120) ||
+    "Improve renewal performance with focus on retention drivers.";
+  return {
+    roots: [
+      {
+        id: "root-value",
+        title: "Product Value",
+        question:
+          `${stem} is primarily constrained by product value gaps that reduce renewal willingness.`,
+        children: [
+          {
+            id: "leaf-value-adoption",
+            title: "Adoption-to-renewal link",
+            question:
+              "Lower product adoption is associated with lower renewal win rates and lower GRR.",
+            children: [],
+          },
+          {
+            id: "leaf-value-fit",
+            title: "Feature and roadmap fit",
+            question:
+              "Accounts with unresolved capability gaps are more likely to churn or downsize at renewal.",
+            children: [],
+          },
+        ],
+      },
+      {
+        id: "root-commercial",
+        title: "Commercial Terms",
+        question:
+          "Pricing and packaging friction is a leading cause of renewal losses in the target period.",
+        children: [
+          {
+            id: "leaf-commercial-price",
+            title: "Price sensitivity",
+            question:
+              "Renewal losses concentrate in cohorts with higher effective price uplift and budget pressure.",
+            children: [],
+          },
+          {
+            id: "leaf-commercial-contract",
+            title: "Contract structure",
+            question:
+              "Longer terms or inflexible commercial constructs reduce renewal conversion for at-risk cohorts.",
+            children: [],
+          },
+        ],
+      },
+      {
+        id: "root-customer-health",
+        title: "Customer Health",
+        question:
+          "Customer sentiment and service quality are material predictors of renewal outcomes and GRR.",
+        children: [
+          {
+            id: "leaf-health-csat",
+            title: "CSAT and NPS signal",
+            question:
+              "Lower CSAT/NPS in the two quarters before renewal correlates with lower renewal win rates.",
+            children: [],
+          },
+          {
+            id: "leaf-health-support",
+            title: "Support burden",
+            question:
+              "Higher ticket load and slower resolution times are associated with higher renewal loss rates.",
+            children: [],
+          },
+        ],
+      },
+      {
+        id: "root-segmentation",
+        title: "Segment Mix",
+        question:
+          "The renewal underperformance is concentrated in specific regions, verticals, and deal types.",
+        children: [
+          {
+            id: "leaf-seg-region",
+            title: "Regional concentration",
+            question:
+              "EMEA and select verticals contribute a disproportionate share of lost renewal ACV.",
+            children: [],
+          },
+          {
+            id: "leaf-seg-motion",
+            title: "Motion-level performance",
+            question:
+              "Land, expand, and renew motions exhibit materially different win-rate and GRR patterns.",
+            children: [],
+          },
+        ],
+      },
+    ],
+  };
+}
+
 function analysisConcurrency(): number {
   const raw = process.env.ANALYSIS_CONCURRENCY?.trim();
   if (raw) {
@@ -1013,14 +1111,26 @@ async function runStructureRevisionPhase(
   const structureRepairHint =
     'One object with key "roots" (array). Each node: "id" (string), "title", "question" (testable declarative hypothesis at every depth), "children" (array; use [] on leaves). Internal nodes must have non-empty children.';
 
-  const raw1 = await generateJson<OutlineDoc>(
-    structurePrompt({
-      userGoal: run.prompt,
-      discovery: discoveryText,
-    }),
-    { repairHint: structureRepairHint },
-  );
-  let outlineDoc = normalizeOutlineDoc(raw1);
+  let outlineDoc: OutlineDoc | null = null;
+  try {
+    const raw1 = await generateJson<OutlineDoc>(
+      structurePrompt({
+        userGoal: run.prompt,
+        discovery: discoveryText,
+      }),
+      { repairHint: structureRepairHint },
+    );
+    outlineDoc = normalizeOutlineDoc(raw1);
+  } catch (e) {
+    const entry = await appendProgress(
+      runId,
+      "structure",
+      "Structure JSON parse failed — using fallback hypothesis tree template.",
+    );
+    send({ type: "progress", entry });
+    logServerError("structure", "Primary structure JSON generation failed", e);
+    outlineDoc = buildFallbackOutlineDoc(run.prompt);
+  }
   const leafCount = (doc: OutlineDoc | null) =>
     doc ? flattenLeaves(doc.roots).length : 0;
 
