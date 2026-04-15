@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Strategy Team AI Agents: Prototype",
-  description: "An AI powered strategy consulting team",
+  description: "An AI powered corporate strategy team",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },

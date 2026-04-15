@@ -1417,7 +1417,7 @@ export function StrategyConsole() {
           Strategy Team AI Agents: Prototype
         </h1>
         <p className="text-zinc-600 text-sm mt-1">
-          An AI powered strategy consulting team · Built by{" "}
+          An AI powered corporate strategy team · Built by{" "}
           <a
             href="https://www.linkedin.com/in/arpit-agarwal/"
             target="_blank"
