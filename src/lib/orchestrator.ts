@@ -1128,7 +1128,9 @@ async function runStructureRevisionPhase(
       "Structure JSON parse failed — using fallback hypothesis tree template.",
     );
     send({ type: "progress", entry });
-    logServerError("structure", "Primary structure JSON generation failed", e);
+    logServerError("structure", e, {
+      context: "Primary structure JSON generation failed",
+    });
     outlineDoc = buildFallbackOutlineDoc(run.prompt);
   }
   const leafCount = (doc: OutlineDoc | null) =>
