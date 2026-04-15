@@ -831,7 +831,7 @@ export function StrategyConsole() {
   const [pausedAt, setPausedAt] = useState<ReviewCheckpoint | null>(null);
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
-  const [usePriorRunMemory, setUsePriorRunMemory] = useState(true);
+  const [usePriorRunMemory, setUsePriorRunMemory] = useState(false);
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
   /** True after a terminal stream event so EventSource `onerror` from close() is ignored. */
   const suppressStreamErrorRef = useRef(false);
@@ -998,7 +998,7 @@ export function StrategyConsole() {
       setRunMode(run.runMode);
     }
     setUsePriorRunMemory(
-      typeof run.usePriorRunMemory === "boolean" ? run.usePriorRunMemory : true,
+      typeof run.usePriorRunMemory === "boolean" ? run.usePriorRunMemory : false,
     );
     const tu = run.tokenUsage;
     setTokenUsage(tu && typeof tu === "object" ? (tu as TokenUsageSnapshot) : null);
