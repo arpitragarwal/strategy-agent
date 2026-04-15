@@ -2,13 +2,13 @@ import { join } from "path";
 
 export type DatasetMeta = {
   id: string;
-  /** Path under data/dummy */
+  /** Path under data/dummy_data */
   relativePath: string;
   domain: "crm" | "cx" | "finance" | "support";
   description: string;
 };
 
-/** Registry of prototype datasets (CSV under /data/dummy). */
+/** Registry of prototype datasets (CSV under /data/dummy_data). */
 export const QUANT_DATASETS: DatasetMeta[] = [
   {
     id: "crm/accounts",
@@ -18,11 +18,11 @@ export const QUANT_DATASETS: DatasetMeta[] = [
       "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); last_deal_year = renewal fiscal year − term; arr_usd_current after renewal (0 if churned)",
   },
   {
-    id: "crm/renewals",
-    relativePath: "crm/renewals.csv",
+    id: "crm/deal_data",
+    relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Renewal opportunities (row count rises by quarter: ~100 in 2025-Q1 … ~150 in 2026-Q1): last_deal_year, contract_term_years, arr_up_for_renewal_usd, outcome, loss_reason (churned only; ~half pricing-related when last_deal_year is 2023), booked_arr_usd (renewed: 1–3× expiring ARR, mean mult ~1.6×), renewal_motion; 2023 cohort ~85% revenue GRR vs ~95% newer; NRR emergent",
+      "Unified deal fact table for the window (renew + land + expand): close_date, product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
   },
   {
     id: "cx/product_usage",
@@ -38,6 +38,13 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     description:
       "Quarterly satisfaction aligned to cx/product_usage rows: account_id, fiscal_quarter, csat_score (1–5 Likert), nps_score (−100…100). CSAT/NPS correlate weakly with usage_tier in the generator.",
   },
+  {
+    id: "finance/finance_summary",
+    relativePath: "finance/finance_summary.csv",
+    domain: "finance",
+    description:
+      "Quarterly finance rollup derived from deal_data + accounts: won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts.",
+  },
 ];
 
 const byId = new Map(QUANT_DATASETS.map((d) => [d.id, d]));
@@ -47,7 +54,7 @@ export function resolveDatasetPath(datasetId: string): string {
   if (!meta) {
     throw new Error(`Unknown datasetId "${datasetId}". Use an id from the data catalog.`);
   }
-  return join(process.cwd(), "data", "dummy", meta.relativePath);
+  return join(process.cwd(), "data", "dummy_data", meta.relativePath);
 }
 
 export function getDatasetMeta(datasetId: string): DatasetMeta | undefined {
@@ -80,8 +87,9 @@ export function quantPlanReferencesValidDatasets(plan: {
 
 /** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
 export const QUANT_JOIN_RELATIONSHIPS = [
-  "**crm/renewals** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, contract_term_years, and arr_usd_current.",
-  "**cx/product_usage** → **crm/renewals** on [[\"account_id\",\"account_id\"]] (add renewal outcome, ARR); filter or group on fiscal_quarter vs renewal_quarter as needed.",
+  "**crm/deal_data** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, region consistency checks, and account attributes.",
+  "**finance/finance_summary** is already aggregated by quarter; join to CRM/CX only on quarter-level summaries if needed.",
+  "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"]] (attribute usage by account to deal_type/outcome).",
   "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] for usage_tier with csat_score / nps_score.",
 ] as const;
 

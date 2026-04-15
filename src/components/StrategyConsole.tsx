@@ -447,7 +447,7 @@ function QuantDatasetsTreeBox() {
           <p className="text-[10px] text-zinc-500">No datasets.</p>
         ) : (
           <div className="font-mono text-[10px] leading-snug text-zinc-800 select-none">
-            <div className="text-zinc-700">data/dummy/</div>
+            <div className="text-zinc-700">data/dummy_data/</div>
             {domainBlocks.map((block, di) => {
               const domainLast = di === domainBlocks.length - 1;
               const domainBranch = domainLast ? "└─ " : "├─ ";

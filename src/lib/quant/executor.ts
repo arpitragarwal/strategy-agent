@@ -219,7 +219,7 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
   try {
     let rows = loadCsvAsObjects(plan.datasetId);
     if (!rows.length) {
-      safe.narrative = "Dataset is empty — add rows to the CSV under data/dummy or pick another datasetId.";
+      safe.narrative = "Dataset is empty — add rows to the CSV under data/dummy_data or pick another datasetId.";
       safe.tables.push({ name: "result", columns: [], rows: [] });
       return safe;
     }

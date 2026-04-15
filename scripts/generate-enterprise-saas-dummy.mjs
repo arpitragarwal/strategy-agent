@@ -4,25 +4,36 @@
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
- * Also writes cx/product_usage.csv (usage_tier by active quarter) and cx/customer_satisfaction.csv (CSAT + NPS).
+ * Also writes cx/product_usage.csv (usage_tier by active quarter), cx/customer_satisfaction.csv (CSAT + NPS),
+ * merged crm/deal_data.csv (renewals + new ACV), finance/finance_summary.csv, plus deal-data-dashboard.html.
  *
  * Run: node scripts/generate-enterprise-saas-dummy.mjs
  * Or: npm run data:generate
  */
 
-import { writeFileSync, mkdirSync, rmSync, existsSync } from "fs";
+import { writeFileSync, mkdirSync, rmSync, existsSync, readdirSync, statSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const OUT = join(ROOT, "data", "dummy");
+const DATA_ROOT = join(ROOT, "data");
+const OUT = join(DATA_ROOT, "dummy_data");
+const LEGACY_OUT = join(DATA_ROOT, "dummy");
 
 /** All renewal periods included in the export. */
 const RENEWAL_QUARTERS = ["2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"];
 /** Logos up for renewal in first Q (2025-Q1) and last Q (2026-Q1); middle Qs linearly interpolated. */
 const LOGOS_UP_FIRST_Q = 100;
 const LOGOS_UP_LAST_Q = 150;
+const NEW_DEALS_WON_FIRST_Q = 400;
+const NEW_DEALS_WON_LAST_Q = 500;
+const NEW_ACV_LOGO_SCALE = 0.25;
+const NEW_ACV_EXPAND_LOGO_SCALE = 1.0;
+const DEAL_SIZE_SCALE = 0.5;
+const NEW_ACV_LAND_SHARE = 0.6;
+const NEW_ACV_LAND_SHARE_NOISE = 0.08;
+const NEW_ACV_DEAL_COUNT_NOISE = 18;
 
 function logosUpByQuarter() {
   const n = RENEWAL_QUARTERS.length;
@@ -35,6 +46,23 @@ function logosUpByQuarter() {
 }
 
 const LOGOS_UP_BY_QUARTER = logosUpByQuarter();
+const NEW_DEALS_WON_BY_QUARTER = (() => {
+  const n = RENEWAL_QUARTERS.length;
+  if (n < 2) return [NEW_DEALS_WON_FIRST_Q];
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    out.push(
+      Math.round(
+        NEW_DEALS_WON_FIRST_Q +
+          ((NEW_DEALS_WON_LAST_Q - NEW_DEALS_WON_FIRST_Q) * i) / (n - 1),
+      ),
+    );
+  }
+  return out;
+})();
+const NEW_ACV_TARGETS_BY_QUARTER = NEW_DEALS_WON_BY_QUARTER.map((n) =>
+  Math.max(1, Math.round(n * NEW_ACV_LOGO_SCALE)),
+);
 const CUSTOMER_COUNT = LOGOS_UP_BY_QUARTER.reduce((s, c) => s + c, 0);
 /** Revenue GRR when last deal year is not 2023. */
 const TARGET_GRR = 0.95;
@@ -51,6 +79,7 @@ const RENEWAL_MULT_POWER =
 const TERM_THREE_YEAR_SHARE = 0.8;
 
 const REGIONS = ["AMER", "EMEA", "APAC"];
+const PRODUCT_LINES = ["Platform", "Security", "Analytics"];
 const INDUSTRIES = [
   "Financial Services",
   "Healthcare",
@@ -153,11 +182,29 @@ function toCsv(rows, headers) {
 /** Skewed enterprise deal sizes (USD). */
 function sampleArrUsd(rnd) {
   const u = Math.pow(rnd(), 1.65);
-  return Math.round((22_000 + u * 520_000) / 1000) * 1000;
+  return Math.max(1000, Math.round(((22_000 + u * 520_000) * DEAL_SIZE_SCALE) / 1000) * 1000);
+}
+
+/** New ACV sizes (USD), enterprise-skewed with average close to ~$200k. */
+function sampleNewAcvUsd(rnd) {
+  const u = Math.pow(rnd(), 2.3);
+  return Math.max(1000, Math.round(((25_000 + u * 575_000) * DEAL_SIZE_SCALE) / 1000) * 1000);
+}
+
+/** Total contract value from ACV, rounded to nearest $1k (minimum $1k). */
+function acvToTcvUsd(acvUsd, contractTermYears) {
+  const y = Math.max(1, contractTermYears);
+  return Math.max(1000, Math.round((acvUsd * y) / 1000) * 1000);
 }
 
 function pick(arr, rnd) {
   return arr[Math.floor(rnd() * arr.length)];
+}
+
+function sampleContractTermYears(rnd) {
+  return rnd() < TERM_THREE_YEAR_SHARE
+    ? 3
+    : TERM_NON_THREE[Math.floor(rnd() * TERM_NON_THREE.length)];
 }
 
 /**
@@ -168,6 +215,472 @@ function priorDealYear(renewalQuarter, contractTermYears) {
   const m = String(renewalQuarter).match(/^(\d{4})-Q[1-4]$/);
   if (!m) return 2022;
   return parseInt(m[1], 10) - contractTermYears;
+}
+
+function shiftQuarterByYears(quarter, yearsBack) {
+  const m = String(quarter).match(/^(\d{4})-(Q[1-4])$/);
+  if (!m) return null;
+  return `${parseInt(m[1], 10) - yearsBack}-${m[2]}`;
+}
+
+function sampleCloseDateInQuarter(quarter, rnd) {
+  const m = String(quarter).match(/^(\d{4})-Q([1-4])$/);
+  if (!m) return "2025-01-15";
+  const year = parseInt(m[1], 10);
+  const qn = parseInt(m[2], 10);
+  const monthStart = (qn - 1) * 3;
+  const monthOffset = Math.floor(rnd() * 3);
+  const month = monthStart + monthOffset + 1;
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const day = 1 + Math.floor(rnd() * daysInMonth);
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+function maxAccountIndex(rows) {
+  let max = 0;
+  for (const r of rows) {
+    const m = String(r.account_id || "").match(/^A(\d+)$/);
+    if (!m) continue;
+    const n = parseInt(m[1], 10);
+    if (n > max) max = n;
+  }
+  return max;
+}
+
+function weightedPick(items, rnd, weightFn) {
+  if (!items.length) return null;
+  const weights = items.map((x) => Math.max(0, weightFn(x)));
+  const total = weights.reduce((s, w) => s + w, 0);
+  if (total <= 0) return items[Math.floor(rnd() * items.length)];
+  let u = rnd() * total;
+  for (let i = 0; i < items.length; i++) {
+    u -= weights[i];
+    if (u <= 0) return items[i];
+  }
+  return items[items.length - 1];
+}
+
+/** Same pattern as CRM accounts: `A` + zero-padded index (new logos continue after existing customers). */
+function accountIdAtIndex(oneBasedIndex, idPad) {
+  return `A${String(oneBasedIndex).padStart(idPad, "0")}`;
+}
+
+function noisyDealTarget(baseTarget, rnd) {
+  let target = baseTarget + Math.round((rnd() * 2 - 1) * NEW_ACV_DEAL_COUNT_NOISE);
+  if (target % 25 === 0) {
+    target += rnd() < 0.5 ? -1 : 1;
+  } else if (target % 10 === 0) {
+    target += rnd() < 0.5 ? -1 : 1;
+  }
+  return Math.max(1, target);
+}
+
+function noisyLandShare(rnd) {
+  return Math.max(
+    0.45,
+    Math.min(0.75, NEW_ACV_LAND_SHARE + (rnd() * 2 - 1) * NEW_ACV_LAND_SHARE_NOISE),
+  );
+}
+
+function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
+  const wonNewDeals = [];
+  let seq = 1;
+  let inferredExpandCount = 0;
+
+  const byAccount = new Map();
+  for (const r of allRenewals) {
+    if (!byAccount.has(r.account_id)) {
+      byAccount.set(r.account_id, {
+        account_id: r.account_id,
+        account_name: r.account_name,
+        region: r.region,
+        contract_term_years: r.contract_term_years,
+      });
+    }
+  }
+  const existingProfiles = Array.from(byAccount.values());
+  const inferredExpandByQuarter = new Map(
+    RENEWAL_QUARTERS.map((q) => [q, []]),
+  );
+
+  for (const r of allRenewals) {
+    if (r.outcome !== "renewed") continue;
+    const startQuarter = shiftQuarterByYears(
+      r.renewal_quarter,
+      r.contract_term_years,
+    );
+    if (!startQuarter || !RENEWAL_QUARTERS.includes(startQuarter)) continue;
+    const acv = sampleNewAcvUsd(rnd);
+    inferredExpandByQuarter.get(startQuarter).push({
+      account_id: r.account_id,
+      account_name: r.account_name,
+      quarter: startQuarter,
+      region: r.region,
+      contract_term_years: r.contract_term_years,
+      acv_usd: acv,
+      tcv_usd: acvToTcvUsd(acv, r.contract_term_years),
+      new_acv_motion: "expand",
+    });
+  }
+
+  let landCount = 0;
+  let expandCount = 0;
+  for (let qi = 0; qi < RENEWAL_QUARTERS.length; qi++) {
+    const q = RENEWAL_QUARTERS[qi];
+    const target = noisyDealTarget(NEW_ACV_TARGETS_BY_QUARTER[qi], rnd);
+    const landShare = noisyLandShare(rnd);
+    let landTarget = Math.round(target * landShare);
+    if (target > 1 && landTarget * 5 === target * 3) {
+      landTarget += rnd() < 0.5 ? -1 : 1;
+    }
+    landTarget = Math.max(0, Math.min(target, landTarget));
+    const expandTarget = Math.max(
+      0,
+      Math.round((target - landTarget) * NEW_ACV_EXPAND_LOGO_SCALE),
+    );
+
+    const inferred = inferredExpandByQuarter.get(q) || [];
+    const useInferred = inferred.slice(0, expandTarget);
+    inferredExpandCount += useInferred.length;
+    wonNewDeals.push(...useInferred);
+    expandCount += useInferred.length;
+
+    const remainingExpand = expandTarget - useInferred.length;
+    for (let j = 0; j < remainingExpand; j++) {
+      const profile = pick(existingProfiles, rnd);
+      const term = profile.contract_term_years;
+      const acv = sampleNewAcvUsd(rnd);
+      wonNewDeals.push({
+        account_id: profile.account_id,
+        account_name: profile.account_name,
+        quarter: q,
+        region: profile.region,
+        contract_term_years: term,
+        acv_usd: acv,
+        tcv_usd: acvToTcvUsd(acv, term),
+        new_acv_motion: "expand",
+      });
+      expandCount += 1;
+    }
+
+    for (let j = 0; j < landTarget; j++) {
+      const id = accountIdAtIndex(customerCount + seq, idPad);
+      seq += 1;
+      const term = sampleContractTermYears(rnd);
+      const acv = sampleNewAcvUsd(rnd);
+      wonNewDeals.push({
+        account_id: id,
+        account_name: `${pick(ADJ, rnd)} ${pick(NOUN, rnd)}${rnd() < 0.45 ? " Inc" : ""}`,
+        quarter: q,
+        region: pick(REGIONS, rnd),
+        contract_term_years: term,
+        acv_usd: acv,
+        tcv_usd: acvToTcvUsd(acv, term),
+        new_acv_motion: "land",
+      });
+      landCount += 1;
+    }
+  }
+
+  const avgAcvUsd =
+    wonNewDeals.length > 0
+      ? Math.round(
+          wonNewDeals.reduce((s, d) => s + d.acv_usd, 0) / wonNewDeals.length,
+        )
+      : 0;
+
+  wonNewDeals.sort(
+    (a, b) =>
+      RENEWAL_QUARTERS.indexOf(a.quarter) - RENEWAL_QUARTERS.indexOf(b.quarter),
+  );
+
+  return {
+    wonNewDeals,
+    avgAcvUsd,
+    inferredExpandCount,
+    landCount,
+    expandCount,
+  };
+}
+
+function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, idPad) {
+  const renewalRowsFull = allRenewals.map((r) => ({
+    account_id: r.account_id,
+    account_name: r.account_name,
+    quarter: r.renewal_quarter,
+    close_date: sampleCloseDateInQuarter(r.renewal_quarter, rnd),
+    region: r.region,
+    product_line: pick(PRODUCT_LINES, rnd),
+    deal_type: "renew",
+    outcome: r.outcome === "renewed" ? "won" : "lost",
+    contract_term_years: r.contract_term_years,
+    acv_usd:
+      r.outcome === "renewed" ? r.booked_arr_usd || 0 : r.arr_up_for_renewal_usd || 0,
+    tcv_usd:
+      (r.outcome === "renewed" ? r.booked_arr_usd || 0 : r.arr_up_for_renewal_usd || 0) *
+      Math.max(1, r.contract_term_years),
+  }));
+
+  const renewalRows = [];
+  for (const q of RENEWAL_QUARTERS) {
+    const inQuarter = renewalRowsFull.filter((r) => r.quarter === q);
+    const pickCount = Math.max(1, Math.floor(inQuarter.length * 0.5));
+    for (let i = inQuarter.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [inQuarter[i], inQuarter[j]] = [inQuarter[j], inQuarter[i]];
+    }
+    renewalRows.push(...inQuarter.slice(0, pickCount));
+  }
+
+  const newAcvRows = wonNewDeals.map((d) => ({
+    account_id: d.account_id,
+    account_name: d.account_name,
+    quarter: d.quarter,
+    close_date: sampleCloseDateInQuarter(d.quarter, rnd),
+    region: d.region,
+    product_line: pick(PRODUCT_LINES, rnd),
+    deal_type: d.new_acv_motion === "land" ? "land" : "expand",
+    outcome: "won",
+    contract_term_years: d.contract_term_years,
+    acv_usd: d.acv_usd || 0,
+    tcv_usd: d.tcv_usd || acvToTcvUsd(d.acv_usd || 0, d.contract_term_years),
+  }));
+
+  const accountsById = new Map(accountsRows.map((a) => [a.account_id, a]));
+  let nextAccountIdx = maxAccountIndex(accountsRows) + 1;
+  const heavyIndustries = new Set(["Professional Services", "Retail", "Manufacturing"]);
+  const heavyQuarters = new Set(["2025-Q4", "2026-Q1"]);
+
+  const winRateFor = (dealType, quarter) => {
+    const heavyQ = heavyQuarters.has(quarter);
+    if (dealType === "land") return heavyQ ? 0.2 : 0.3;
+    if (dealType === "expand") return heavyQ ? 0.4 : 0.6;
+    return 0.9;
+  };
+
+  const buildLostLandAccount = (quarter) => {
+    const heavyQ = heavyQuarters.has(quarter);
+    const region =
+      heavyQ
+        ? weightedPick(REGIONS, rnd, (r) => (r === "EMEA" ? 5 : 1))
+        : pick(REGIONS, rnd);
+    const nonHeavyIndustries = INDUSTRIES.filter((x) => !heavyIndustries.has(x));
+    const industry =
+      heavyQ
+        ? rnd() < 0.75
+          ? pick(Array.from(heavyIndustries), rnd)
+          : pick(nonHeavyIndustries, rnd)
+        : pick(INDUSTRIES, rnd);
+    const account_id = accountIdAtIndex(nextAccountIdx, idPad);
+    nextAccountIdx += 1;
+    const account_name = `${pick(ADJ, rnd)} ${pick(NOUN, rnd)}${rnd() < 0.45 ? " Inc" : ""}`;
+    const contract_term_years = sampleContractTermYears(rnd);
+    const row = {
+      account_id,
+      account_name,
+      region,
+      industry,
+      contract_term_years,
+      last_deal_year: priorDealYear(quarter, contract_term_years),
+      renewal_quarter: "",
+      arr_usd_current: 0,
+    };
+    accountsRows.push(row);
+    accountsById.set(account_id, row);
+    return row;
+  };
+
+  const buildLostExpandAccount = (quarter) => {
+    const heavyQ = heavyQuarters.has(quarter);
+    const candidates = accountsRows;
+    return weightedPick(candidates, rnd, (a) => {
+      if (!heavyQ) return 1;
+      let w = 1;
+      if (a.region === "EMEA") w += 2;
+      if (heavyIndustries.has(a.industry)) w += 2;
+      return w;
+    });
+  };
+
+  const lostNewAcvRows = [];
+  for (const q of RENEWAL_QUARTERS) {
+    for (const dealType of ["land", "expand"]) {
+      const wonRows = newAcvRows.filter(
+        (d) => d.quarter === q && d.deal_type === dealType && d.outcome === "won",
+      );
+      const wonCount = wonRows.length;
+      const winRate = winRateFor(dealType, q);
+      const totalTarget = Math.max(wonCount, Math.round(wonCount / winRate));
+      const lostNeeded = Math.max(0, totalTarget - wonCount);
+      for (let i = 0; i < lostNeeded; i++) {
+        const base = wonRows.length ? wonRows[Math.floor(rnd() * wonRows.length)] : null;
+        const term = base?.contract_term_years || sampleContractTermYears(rnd);
+        const acv = base?.acv_usd || sampleNewAcvUsd(rnd);
+        if (dealType === "land") {
+          const a = buildLostLandAccount(q);
+          lostNewAcvRows.push({
+            account_id: a.account_id,
+            account_name: a.account_name,
+            quarter: q,
+            close_date: sampleCloseDateInQuarter(q, rnd),
+            region: a.region,
+            product_line: pick(PRODUCT_LINES, rnd),
+            deal_type: "land",
+            outcome: "lost",
+            contract_term_years: term,
+            acv_usd: acv,
+            tcv_usd: acvToTcvUsd(acv, term),
+          });
+        } else {
+          const a = buildLostExpandAccount(q) || buildLostLandAccount(q);
+          lostNewAcvRows.push({
+            account_id: a.account_id,
+            account_name: a.account_name,
+            quarter: q,
+            close_date: sampleCloseDateInQuarter(q, rnd),
+            region: a.region,
+            product_line: pick(PRODUCT_LINES, rnd),
+            deal_type: "expand",
+            outcome: "lost",
+            contract_term_years: a.contract_term_years || term,
+            acv_usd: acv,
+            tcv_usd: acvToTcvUsd(acv, a.contract_term_years || term),
+          });
+        }
+      }
+    }
+  }
+
+  return [...renewalRows, ...newAcvRows, ...lostNewAcvRows].sort(
+    (a, b) =>
+      RENEWAL_QUARTERS.indexOf(a.quarter) - RENEWAL_QUARTERS.indexOf(b.quarter),
+  );
+}
+
+function buildFinanceSummaryRows(dealRows, accountsRows) {
+  const cogsRateByProduct = {
+    Platform: 0.22,
+    Security: 0.28,
+    Analytics: 0.25,
+  };
+  const byQ = Object.fromEntries(
+    RENEWAL_QUARTERS.map((q) => [
+      q,
+      {
+        quarter: q,
+        won_deals: 0,
+        lost_deals: 0,
+        won_deal_acv_usd: 0,
+        lost_deal_acv_usd: 0,
+        billings_tcv_usd: 0,
+        recognized_revenue_usd: 0,
+        cogs_usd: 0,
+        gross_profit_usd: 0,
+        sales_marketing_opex_usd: 0,
+        rnd_opex_usd: 0,
+        gna_opex_usd: 0,
+        ebitda_usd: 0,
+        active_accounts: 0,
+        account_base_count: accountsRows.length,
+      },
+    ]),
+  );
+
+  for (const d of dealRows) {
+    const q = byQ[d.quarter];
+    if (!q) continue;
+    const acv = d.acv_usd || 0;
+    const tcv = d.tcv_usd || acv * Math.max(1, d.contract_term_years || 1);
+    if (d.outcome === "won") {
+      q.won_deals += 1;
+      q.won_deal_acv_usd += acv;
+      q.billings_tcv_usd += tcv;
+    } else if (d.outcome === "lost") {
+      q.lost_deals += 1;
+      q.lost_deal_acv_usd += acv;
+    }
+  }
+
+  for (const d of dealRows) {
+    if (d.outcome !== "won") continue;
+    const start = RENEWAL_QUARTERS.indexOf(d.quarter);
+    if (start < 0) continue;
+    const durationQ = Math.max(1, (d.contract_term_years || 1) * 4);
+    const revPerQuarter = (d.acv_usd || 0) / 4;
+    const cogsRate = cogsRateByProduct[d.product_line] || 0.25;
+    for (let qi = start; qi < Math.min(RENEWAL_QUARTERS.length, start + durationQ); qi++) {
+      const b = byQ[RENEWAL_QUARTERS[qi]];
+      b.recognized_revenue_usd += revPerQuarter;
+      b.cogs_usd += revPerQuarter * cogsRate;
+    }
+  }
+
+  const activeWonAccounts = new Set();
+  const wonByQuarter = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, []]));
+  for (const d of dealRows) {
+    if (d.outcome === "won" && wonByQuarter[d.quarter]) wonByQuarter[d.quarter].push(d);
+  }
+  for (const q of RENEWAL_QUARTERS) {
+    for (const d of wonByQuarter[q]) {
+      activeWonAccounts.add(d.account_id);
+    }
+    byQ[q].active_accounts = activeWonAccounts.size;
+  }
+
+  for (const q of RENEWAL_QUARTERS) {
+    const b = byQ[q];
+    b.gross_profit_usd = b.recognized_revenue_usd - b.cogs_usd;
+    b.sales_marketing_opex_usd = 2_200_000 + b.won_deals * 9_000 + b.lost_deals * 4_500;
+    b.rnd_opex_usd = 1_400_000 + b.active_accounts * 350;
+    b.gna_opex_usd = 700_000 + b.account_base_count * 120;
+    b.ebitda_usd =
+      b.gross_profit_usd -
+      b.sales_marketing_opex_usd -
+      b.rnd_opex_usd -
+      b.gna_opex_usd;
+  }
+
+  return RENEWAL_QUARTERS.map((q) => {
+    const b = byQ[q];
+    const intFields = [
+      "won_deals",
+      "lost_deals",
+      "won_deal_acv_usd",
+      "lost_deal_acv_usd",
+      "billings_tcv_usd",
+      "recognized_revenue_usd",
+      "cogs_usd",
+      "gross_profit_usd",
+      "sales_marketing_opex_usd",
+      "rnd_opex_usd",
+      "gna_opex_usd",
+      "ebitda_usd",
+      "active_accounts",
+      "account_base_count",
+    ];
+    const row = { ...b };
+    for (const f of intFields) row[f] = Math.round(row[f]);
+    return row;
+  });
+}
+
+function listFilesRecursive(dir, baseDir) {
+  if (!existsSync(dir)) return [];
+  const out = [];
+  for (const name of readdirSync(dir)) {
+    if (name.startsWith(".")) continue;
+    const full = join(dir, name);
+    const st = statSync(full);
+    if (st.isDirectory()) {
+      out.push(...listFilesRecursive(full, baseDir));
+      continue;
+    }
+    out.push({
+      path: full.slice(baseDir.length + 1).replace(/\\/g, "/"),
+      bytes: st.size,
+    });
+  }
+  return out;
 }
 
 function escapeHtml(s) {
@@ -612,19 +1125,358 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
   writeFileSync(outPath, html, "utf8");
 }
 
+/** Local-only preview for unified deal data (renewals + new ACV). */
+function writeDealDataDashboardHtml(dealRows, outPath) {
+  const dealsJson = JSON.stringify(dealRows);
+  const quartersJson = JSON.stringify(RENEWAL_QUARTERS);
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deal data dashboard — local preview</title>
+  <style>
+    :root { --muted: #71717a; --border: #e4e4e7; --surface: #f8fafc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; background: var(--surface); color: #18181b; }
+    .wrap { max-width: 72rem; margin: 0 auto; padding: 2rem 1rem; }
+    h1 { font-size: 1.5rem; font-weight: 600; margin: 0; }
+    .sub { font-size: 0.875rem; color: var(--muted); margin: 0.35rem 0 0; }
+    .note { font-size: 0.75rem; color: var(--muted); margin: 1.25rem 0 0; padding: 0.75rem 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.5rem; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: flex-end; margin-top: 1.5rem; padding: 1rem; background: #fff; border: 1px solid var(--border); border-radius: 0.75rem; }
+    .field { display: flex; flex-direction: column; gap: 0.25rem; min-width: 8rem; }
+    .field label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    select, input[type="search"] { font-size: 0.875rem; padding: 0.35rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; background: #fff; }
+    button { font-size: 0.8125rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: 1px solid var(--border); background: #fff; cursor: pointer; }
+    button:hover { background: #f4f4f5; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.75rem; margin-top: 1.25rem; }
+    .kpi { border: 1px solid var(--border); border-radius: 0.65rem; padding: 0.75rem 1rem; background: #fff; }
+    .kpi .lbl { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .kpi .val { font-size: 1.125rem; font-weight: 600; margin-top: 0.2rem; font-variant-numeric: tabular-nums; }
+    .card { margin-top: 1.25rem; border: 1px solid var(--border); border-radius: 0.75rem; background: #fff; overflow: hidden; }
+    .card h2 { margin: 0; padding: 0.75rem 1rem; font-size: 0.9375rem; font-weight: 600; background: #fafafa; border-bottom: 1px solid #f4f4f5; }
+    .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 0.9rem; margin-top: 1.25rem; }
+    .chart-grid .card { margin-top: 0; }
+    .bars { padding: 0.8rem 1rem 0.95rem; }
+    .bar-row { display: grid; grid-template-columns: 4.75rem 1fr auto; gap: 0.6rem; align-items: center; margin: 0.45rem 0; }
+    .bar-lbl { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .bar-track { height: 0.72rem; background: #f4f4f5; border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; display: flex; overflow: hidden; }
+    .bar-fill .seg { height: 100%; }
+    .bar-fill .seg.type-land { background: #22c55e; }
+    .bar-fill .seg.type-expand { background: #8b5cf6; }
+    .bar-fill .seg.type-renew { background: #0ea5e9; }
+    .bar-val { font-size: 0.78rem; color: #27272a; min-width: 4.5rem; text-align: right; font-variant-numeric: tabular-nums; }
+    .chart-legend { margin: 0.55rem 1rem 0.2rem; font-size: 0.74rem; color: var(--muted); display: flex; gap: 1rem; }
+    .chip { display: inline-block; width: 0.65rem; height: 0.65rem; border-radius: 999px; margin-right: 0.3rem; vertical-align: -0.05rem; }
+    .chip.type-land { background: #22c55e; }
+    .chip.type-expand { background: #8b5cf6; }
+    .chip.type-renew { background: #0ea5e9; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+    th { text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; padding: 0.5rem 0.75rem; border-bottom: 1px solid #f4f4f5; }
+    td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #fafafa; vertical-align: top; }
+    th.num, td.num { text-align: right; }
+    tbody tr:hover td { background: #fafafa; }
+    .mono { font-family: ui-monospace, monospace; font-size: 0.75rem; color: #52525b; }
+    .acct { font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Deal data (renewals + new ACV)</h1>
+    <p class="sub">Unified view of renewal outcomes and new ACV deals by quarter. Regenerated by <code>npm run data:generate</code>.</p>
+    <p class="note">Open this file directly in your browser. It is not served by the Next.js app. Data source is merged <code>crm/deal_data.csv</code>.</p>
+
+    <div class="filters">
+      <div class="field">
+        <label for="fQuarter">Quarter</label>
+        <select id="fQuarter"></select>
+      </div>
+      <div class="field">
+        <label for="fRegion">Region</label>
+        <select id="fRegion"></select>
+      </div>
+      <div class="field">
+        <label for="fTerm">Term (years)</label>
+        <select id="fTerm"></select>
+      </div>
+      <div class="field">
+        <label for="fOutcome">Outcome</label>
+        <select id="fOutcome"></select>
+      </div>
+      <div class="field" style="flex:1;min-width:12rem">
+        <label for="fSearch">Search</label>
+        <input id="fSearch" type="search" placeholder="Account id or name…" autocomplete="off" />
+      </div>
+      <button type="button" id="btnReset">Reset filters</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Deals (filtered)</div><div class="val" id="kpiAccounts">—</div></div>
+      <div class="kpi"><div class="lbl">ACV (filtered)</div><div class="val" id="kpiBooked">—</div></div>
+      <div class="kpi"><div class="lbl">Avg ACV / deal</div><div class="val" id="kpiAvg">—</div></div>
+      <div class="kpi"><div class="lbl">Land deals</div><div class="val" id="kpiLand">—</div></div>
+      <div class="kpi"><div class="lbl">Expand + renew deals</div><div class="val" id="kpiExpandRenew">—</div></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="card">
+        <h2># Deals by quarter</h2>
+        <p class="chart-legend" id="legendCount"></p>
+        <div id="chartCount" class="bars"></div>
+      </div>
+      <div class="card">
+        <h2>$ ACV by quarter</h2>
+        <p class="chart-legend" id="legendAmount"></p>
+        <div id="chartAmount" class="bars"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Unified detail (filtered)</h2>
+      <div style="overflow-x:auto; max-height: min(60vh, 28rem); overflow-y: auto;">
+        <table>
+          <thead><tr>
+            <th>Account</th><th>Quarter</th><th>Close date</th><th>Outcome</th><th>Deal type</th><th>Product</th><th>Region</th><th class="num">Term</th><th class="num">ACV</th><th class="num">TCV</th>
+          </tr></thead>
+          <tbody id="tblDeals"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEALS = ${dealsJson};
+    const QUARTERS = ${quartersJson};
+    const REGIONS = ["AMER", "EMEA", "APAC"];
+    const TERMS = [1, 2, 3, 4, 5];
+    const DEAL_TYPES = ["land", "expand", "renew"];
+    const DEAL_TYPE_LABEL = { land: "Land", expand: "Expand", renew: "Renew" };
+    const OUTCOMES = Array.from(new Set(DEALS.map((d) => d.outcome).filter(Boolean))).sort();
+
+    const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+    function fillSelect(sel, labelAll, values) {
+      sel.innerHTML = "";
+      const o0 = document.createElement("option");
+      o0.value = "";
+      o0.textContent = labelAll;
+      sel.appendChild(o0);
+      for (const v of values) {
+        const o = document.createElement("option");
+        o.value = String(v);
+        o.textContent = String(v);
+        sel.appendChild(o);
+      }
+    }
+
+    function visibleDeals() {
+      const fq = document.getElementById("fQuarter").value;
+      const fr = document.getElementById("fRegion").value;
+      const ft = document.getElementById("fTerm").value;
+      const fo = document.getElementById("fOutcome").value;
+      const q = document.getElementById("fSearch").value.trim().toLowerCase();
+      return DEALS.filter((d) => {
+        if (fq && d.quarter !== fq) return false;
+        if (fr && d.region !== fr) return false;
+        if (ft && String(d.contract_term_years) !== ft) return false;
+        if (fo && d.outcome !== fo) return false;
+        if (q) {
+          const hay = (d.account_id + " " + d.account_name).toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function render() {
+      const rows = visibleDeals();
+      const bookingRows = rows.filter(
+        (d) =>
+          (d.acv_usd || 0) > 0 &&
+          d.deal_type &&
+          DEAL_TYPES.includes(d.deal_type),
+      );
+      const n = bookingRows.length;
+      const sum = bookingRows.reduce((s, d) => s + (d.acv_usd || 0), 0);
+      const avg = n ? Math.round(sum / n) : 0;
+      const landN = bookingRows.reduce((c, d) => c + (d.deal_type === "land" ? 1 : 0), 0);
+      const expandN = bookingRows.reduce((c, d) => c + (d.deal_type === "expand" ? 1 : 0), 0);
+      const renewN = bookingRows.reduce((c, d) => c + (d.deal_type === "renew" ? 1 : 0), 0);
+      const landPct = n ? Math.round((landN * 1000) / n) / 10 : 0;
+      const expandRenewPct = n ? Math.round(((expandN + renewN) * 1000) / n) / 10 : 0;
+
+      document.getElementById("kpiAccounts").textContent = String(n);
+      document.getElementById("kpiBooked").textContent = money.format(sum);
+      document.getElementById("kpiAvg").textContent = n ? money.format(avg) : "—";
+      document.getElementById("kpiLand").textContent =
+        n ? String(landN) + " (" + landPct.toFixed(1) + "%)" : "—";
+      document.getElementById("kpiExpandRenew").textContent =
+        n ? String(expandN + renewN) + " (" + expandRenewPct.toFixed(1) + "%)" : "—";
+
+      const byQ = Object.fromEntries(
+        QUARTERS.map((q) => [
+          q,
+          {
+            n: 0,
+            sum: 0,
+            byTypeN: Object.fromEntries(DEAL_TYPES.map((t) => [t, 0])),
+            byTypeSum: Object.fromEntries(DEAL_TYPES.map((t) => [t, 0])),
+          },
+        ]),
+      );
+      for (const d of bookingRows) {
+        const b = byQ[d.quarter];
+        if (!b) continue;
+        b.n += 1;
+        const amount = d.acv_usd || 0;
+        const bt = d.deal_type;
+        if (bt && bt in b.byTypeN) {
+          b.byTypeN[bt] += 1;
+          b.byTypeSum[bt] += amount;
+        }
+        b.sum += amount;
+      }
+      const countMax = Math.max(0, ...QUARTERS.map((q) => byQ[q].n));
+      const amountMax = Math.max(0, ...QUARTERS.map((q) => byQ[q].sum));
+      const chartCount = document.getElementById("chartCount");
+      const chartAmount = document.getElementById("chartAmount");
+      chartCount.innerHTML = "";
+      chartAmount.innerHTML = "";
+      for (const q of QUARTERS) {
+        const b = byQ[q];
+        const countWidth = countMax ? (b.n * 100) / countMax : 0;
+        const amountWidth = amountMax ? (b.sum * 100) / amountMax : 0;
+        const countSegs = DEAL_TYPES.map((t) => {
+          const pct = b.n ? (b.byTypeN[t] * 100) / b.n : 0;
+          return '<div class="seg type-' + t + '" style="width:' + pct.toFixed(1) + '%"></div>';
+        }).join("");
+        const amountSegs = DEAL_TYPES.map((t) => {
+          const pct = b.sum ? (b.byTypeSum[t] * 100) / b.sum : 0;
+          return '<div class="seg type-' + t + '" style="width:' + pct.toFixed(1) + '%"></div>';
+        }).join("");
+
+        const rc = document.createElement("div");
+        rc.className = "bar-row";
+        rc.innerHTML =
+          '<div class="bar-lbl">' + q + "</div>" +
+          '<div class="bar-track"><div class="bar-fill count" style="width:' + countWidth.toFixed(1) + '%">' + countSegs + "</div></div>" +
+          '<div class="bar-val">' + b.n + "</div>";
+        chartCount.appendChild(rc);
+
+        const ra = document.createElement("div");
+        ra.className = "bar-row";
+        ra.innerHTML =
+          '<div class="bar-lbl">' + q + "</div>" +
+          '<div class="bar-track"><div class="bar-fill amount" style="width:' + amountWidth.toFixed(1) + '%">' + amountSegs + "</div></div>" +
+          '<div class="bar-val">' + money.format(b.sum) + "</div>";
+        chartAmount.appendChild(ra);
+      }
+
+      const tbD = document.getElementById("tblDeals");
+      tbD.innerHTML = "";
+      const sorted = [...rows].sort((a, b) => {
+        const i = QUARTERS.indexOf(a.quarter) - QUARTERS.indexOf(b.quarter);
+        if (i !== 0) return i;
+        return (b.acv_usd || 0) - (a.acv_usd || 0);
+      });
+      for (const d of sorted) {
+        const tr = document.createElement("tr");
+        const esc = (s) =>
+          String(s)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        tr.innerHTML =
+          '<td><span class="acct">' +
+          esc(d.account_name) +
+          '</span><span class="mono">' +
+          esc(d.account_id) +
+          "</span></td>" +
+          "<td>" +
+          esc(d.quarter) +
+          "</td>" +
+          "<td>" +
+          esc(d.close_date || "") +
+          "</td>" +
+          "<td>" +
+          esc(d.outcome || "") +
+          "</td>" +
+          "<td>" +
+          esc(DEAL_TYPE_LABEL[d.deal_type] || d.deal_type || "") +
+          "</td>" +
+          "<td>" +
+          esc(d.product_line || "") +
+          "</td>" +
+          "<td>" +
+          esc(d.region) +
+          "</td>" +
+          '<td class="num">' +
+          d.contract_term_years +
+          "</td>" +
+          '<td class="num">' +
+          money.format(d.acv_usd || 0) +
+          "</td>" +
+          '<td class="num">' +
+          money.format(d.tcv_usd || 0) +
+          "</td>";
+        tbD.appendChild(tr);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fillSelect(document.getElementById("fQuarter"), "All quarters", QUARTERS);
+      fillSelect(document.getElementById("fRegion"), "All regions", REGIONS);
+      fillSelect(document.getElementById("fTerm"), "All terms", TERMS);
+      fillSelect(document.getElementById("fOutcome"), "All outcomes", OUTCOMES);
+
+      const legendHtml = DEAL_TYPES.map((t) => '<span><span class="chip type-' + t + '"></span>' + (DEAL_TYPE_LABEL[t] || t) + "</span>").join("");
+      document.getElementById("legendCount").innerHTML = legendHtml;
+      document.getElementById("legendAmount").innerHTML = legendHtml;
+
+      ["fQuarter", "fRegion", "fTerm", "fOutcome"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", render);
+      });
+      let t;
+      document.getElementById("fSearch").addEventListener("input", () => {
+        clearTimeout(t);
+        t = setTimeout(render, 120);
+      });
+      document.getElementById("btnReset").addEventListener("click", () => {
+        document.getElementById("fQuarter").value = "";
+        document.getElementById("fRegion").value = "";
+        document.getElementById("fTerm").value = "";
+        document.getElementById("fOutcome").value = "";
+        document.getElementById("fSearch").value = "";
+        render();
+      });
+      render();
+    });
+  </script>
+</body>
+</html>`;
+
+  writeFileSync(outPath, html, "utf8");
+}
+
 function main() {
   const rnd = mulberry32(RNG_SEED);
 
   if (existsSync(OUT)) {
     rmSync(OUT, { recursive: true });
   }
+  if (existsSync(LEGACY_OUT)) {
+    rmSync(LEGACY_OUT, { recursive: true });
+  }
   mkdirSync(join(OUT, "crm"), { recursive: true });
   mkdirSync(join(OUT, "cx"), { recursive: true });
+  mkdirSync(join(OUT, "finance"), { recursive: true });
 
   const idPad = Math.max(4, String(CUSTOMER_COUNT).length);
   const accounts = [];
   for (let i = 0; i < CUSTOMER_COUNT; i++) {
-    const account_id = `A${String(i + 1).padStart(idPad, "0")}`;
+    const account_id = accountIdAtIndex(i + 1, idPad);
     const name = `${pick(ADJ, rnd)} ${pick(NOUN, rnd)}${rnd() < 0.4 ? " Inc" : ""}`;
     accounts.push({
       account_id,
@@ -693,37 +1545,6 @@ function main() {
     };
   });
 
-  writeFileSync(
-    join(OUT, "crm", "accounts.csv"),
-    toCsv(accountRows, [
-      "account_id",
-      "account_name",
-      "region",
-      "industry",
-      "contract_term_years",
-      "last_deal_year",
-      "renewal_quarter",
-      "arr_usd_current",
-    ]),
-  );
-
-  writeFileSync(
-    join(OUT, "crm", "renewals.csv"),
-    toCsv(allRenewals, [
-      "account_id",
-      "account_name",
-      "renewal_quarter",
-      "region",
-      "contract_term_years",
-      "last_deal_year",
-      "arr_up_for_renewal_usd",
-      "outcome",
-      "loss_reason",
-      "booked_arr_usd",
-      "renewal_motion",
-    ]),
-  );
-
   const byAccountRenewal = new Map(allRenewals.map((r) => [r.account_id, r]));
   const productUsageRows = [];
   const satisfactionRows = [];
@@ -767,16 +1588,132 @@ function main() {
     toCsv(satisfactionRows, ["account_id", "fiscal_quarter", "csat_score", "nps_score"]),
   );
 
-  const dashboardPath = join(OUT, "renewals-dashboard.html");
-  writeRenewalsDashboardHtml(allRenewals, dashboardPath);
+  const { wonNewDeals } = buildWonNewDeals(allRenewals, rnd, CUSTOMER_COUNT, idPad);
+
+  const accountsExtended = [...accountRows];
+  const accountIds = new Set(accountsExtended.map((a) => a.account_id));
+  for (const d of wonNewDeals) {
+    if (accountIds.has(d.account_id)) continue;
+    accountIds.add(d.account_id);
+    accountsExtended.push({
+      account_id: d.account_id,
+      account_name: d.account_name,
+      region: d.region,
+      industry: pick(INDUSTRIES, rnd),
+      contract_term_years: d.contract_term_years,
+      last_deal_year: priorDealYear(d.quarter, d.contract_term_years),
+      renewal_quarter: "",
+      arr_usd_current: d.acv_usd || 0,
+    });
+  }
+  accountsExtended.sort((a, b) => a.account_id.localeCompare(b.account_id));
+
+  writeFileSync(
+    join(OUT, "crm", "accounts.csv"),
+    toCsv(accountsExtended, [
+      "account_id",
+      "account_name",
+      "region",
+      "industry",
+      "contract_term_years",
+      "last_deal_year",
+      "renewal_quarter",
+      "arr_usd_current",
+    ]),
+  );
+
+  const unifiedDealRows = buildUnifiedBookingsRows(
+    allRenewals,
+    wonNewDeals,
+    accountsExtended,
+    rnd,
+    idPad,
+  );
+  accountsExtended.sort((a, b) => a.account_id.localeCompare(b.account_id));
+  writeFileSync(
+    join(OUT, "crm", "accounts.csv"),
+    toCsv(accountsExtended, [
+      "account_id",
+      "account_name",
+      "region",
+      "industry",
+      "contract_term_years",
+      "last_deal_year",
+      "renewal_quarter",
+      "arr_usd_current",
+    ]),
+  );
+  writeFileSync(
+    join(OUT, "crm", "deal_data.csv"),
+    toCsv(unifiedDealRows, [
+      "account_id",
+      "account_name",
+      "quarter",
+      "close_date",
+      "region",
+      "product_line",
+      "deal_type",
+      "outcome",
+      "contract_term_years",
+      "acv_usd",
+      "tcv_usd",
+    ]),
+  );
+
+  const financeSummaryRows = buildFinanceSummaryRows(unifiedDealRows, accountsExtended);
+  writeFileSync(
+    join(OUT, "finance", "finance_summary.csv"),
+    toCsv(financeSummaryRows, [
+      "quarter",
+      "won_deals",
+      "lost_deals",
+      "won_deal_acv_usd",
+      "lost_deal_acv_usd",
+      "billings_tcv_usd",
+      "recognized_revenue_usd",
+      "cogs_usd",
+      "gross_profit_usd",
+      "sales_marketing_opex_usd",
+      "rnd_opex_usd",
+      "gna_opex_usd",
+      "ebitda_usd",
+      "active_accounts",
+      "account_base_count",
+    ]),
+  );
+
+  const dealDataDashPath = join(OUT, "deal-data-dashboard.html");
+  writeDealDataDashboardHtml(unifiedDealRows, dealDataDashPath);
+
+  const catalogPath = join(DATA_ROOT, "catalog.json");
+  const catalogFiles = listFilesRecursive(DATA_ROOT, DATA_ROOT).filter(
+    (f) => f.path !== "catalog.json",
+  );
+  writeFileSync(
+    catalogPath,
+    JSON.stringify(
+      {
+        generated_at: new Date().toISOString(),
+        data_root: "data",
+        files: catalogFiles.sort((a, b) => a.path.localeCompare(b.path)),
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
 
   console.log(`Wrote ${join(OUT, "crm", "accounts.csv")}`);
-  console.log(`Wrote ${join(OUT, "crm", "renewals.csv")}`);
+  console.log(
+    `Wrote ${join(OUT, "crm", "deal_data.csv")} (${unifiedDealRows.length} unified rows: renewals + new ACV, with ${wonNewDeals.length} new ACV rows)`,
+  );
+  console.log(`Wrote ${join(OUT, "finance", "finance_summary.csv")} (${financeSummaryRows.length} rows)`);
   console.log(`Wrote ${join(OUT, "cx", "product_usage.csv")} (${productUsageRows.length} rows)`);
   console.log(
     `Wrote ${join(OUT, "cx", "customer_satisfaction.csv")} (${satisfactionRows.length} rows)`,
   );
-  console.log(`Wrote ${dashboardPath} (open in browser — local preview only)`);
+  console.log(`Wrote ${dealDataDashPath} (open in browser — local preview only)`);
+  console.log(`Wrote ${catalogPath} (data file catalog)`);
   console.log(
     `Cohorts: ${RENEWAL_QUARTERS.map((q, i) => `${q}=${LOGOS_UP_BY_QUARTER[i]}`).join(", ")} — ${CUSTOMER_COUNT} accounts, ${allRenewals.length} renewal rows`,
   );

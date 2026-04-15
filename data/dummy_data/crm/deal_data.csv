@@ -1,0 +1,2142 @@
+account_id,account_name,quarter,close_date,region,product_line,deal_type,outcome,contract_term_years,acv_usd,tcv_usd
+A0169,Vertex Works,2025-Q1,2025-01-15,AMER,Platform,renew,won,3,334000,1002000
+A0225,Parallel Bridge,2025-Q1,2025-03-06,AMER,Platform,renew,won,3,42000,126000
+A0490,Vertex Bridge Inc,2025-Q1,2025-02-12,AMER,Analytics,renew,won,3,77000,231000
+A0008,BluePeak Dynamics,2025-Q1,2025-01-06,APAC,Security,renew,won,3,73000,219000
+A0140,Northwind Grid,2025-Q1,2025-03-29,EMEA,Analytics,renew,won,3,326000,978000
+A0419,Northwind Cloud,2025-Q1,2025-01-11,APAC,Analytics,renew,won,3,50000,150000
+A0192,BluePeak Dynamics,2025-Q1,2025-03-31,EMEA,Security,renew,won,4,365000,1460000
+A0405,BluePeak Systems,2025-Q1,2025-02-18,EMEA,Security,renew,won,3,14000,42000
+A0294,Meridian Bridge Inc,2025-Q1,2025-01-05,APAC,Platform,renew,won,3,575000,1725000
+A0148,Northwind Grid,2025-Q1,2025-02-17,EMEA,Security,renew,won,3,65000,195000
+A0569,Pinnacle Systems,2025-Q1,2025-03-13,EMEA,Platform,renew,won,3,38000,114000
+A0119,Pinnacle Cloud,2025-Q1,2025-02-04,APAC,Analytics,renew,lost,3,16000,48000
+A0574,BluePeak Works Inc,2025-Q1,2025-01-02,EMEA,Platform,renew,won,5,36000,180000
+A0618,Cobalt Systems,2025-Q1,2025-03-22,EMEA,Analytics,renew,won,2,270000,540000
+A0626,Meridian Labs,2025-Q1,2025-01-05,APAC,Security,renew,won,3,62000,186000
+A0575,BluePeak Labs Inc,2025-Q1,2025-02-20,APAC,Platform,renew,won,3,226000,678000
+A0386,Pinnacle Grid Inc,2025-Q1,2025-01-17,EMEA,Security,renew,won,3,308000,924000
+A0191,Parallel Grid Inc,2025-Q1,2025-02-07,EMEA,Security,renew,won,3,95000,285000
+A0480,Parallel Works Inc,2025-Q1,2025-02-09,APAC,Analytics,renew,won,3,36000,108000
+A0175,Silverline Dynamics,2025-Q1,2025-03-12,APAC,Analytics,renew,won,3,500000,1500000
+A0327,Northwind Systems,2025-Q1,2025-03-07,AMER,Analytics,renew,won,3,210000,630000
+A0369,Aurora Dynamics,2025-Q1,2025-03-13,APAC,Platform,renew,won,3,131000,393000
+A0584,Meridian Logic,2025-Q1,2025-02-11,EMEA,Platform,renew,won,3,155000,465000
+A0206,Aurora Systems Inc,2025-Q1,2025-02-17,AMER,Platform,renew,won,5,469000,2345000
+A0051,Granite Logic,2025-Q1,2025-01-26,EMEA,Security,renew,won,3,411000,1233000
+A0352,Parallel Grid,2025-Q1,2025-02-11,APAC,Platform,renew,won,3,200000,600000
+A0454,Parallel Systems Inc,2025-Q1,2025-03-02,AMER,Analytics,renew,won,5,265000,1325000
+A0268,Silverline Cloud,2025-Q1,2025-02-26,AMER,Platform,renew,won,3,63000,189000
+A0218,Granite Cloud Inc,2025-Q1,2025-01-18,AMER,Analytics,renew,won,4,486000,1944000
+A0053,Cobalt Grid Inc,2025-Q1,2025-01-05,APAC,Platform,renew,won,1,83000,83000
+A0343,Meridian Grid Inc,2025-Q1,2025-01-21,EMEA,Security,renew,lost,3,240000,720000
+A0030,Meridian Works Inc,2025-Q1,2025-03-10,APAC,Platform,renew,won,3,491000,1473000
+A0441,Cobalt Dynamics,2025-Q1,2025-01-09,EMEA,Platform,renew,won,3,276000,828000
+A0320,Meridian Works Inc,2025-Q1,2025-03-05,APAC,Analytics,renew,won,3,218000,654000
+A0550,Cobalt Bridge,2025-Q1,2025-03-24,EMEA,Analytics,renew,won,3,269000,807000
+A0198,BluePeak Grid Inc,2025-Q1,2025-01-06,APAC,Security,renew,won,3,179000,537000
+A0345,Silverline Bridge,2025-Q1,2025-02-21,AMER,Security,renew,won,5,159000,795000
+A0136,Cobalt Labs Inc,2025-Q1,2025-03-05,APAC,Analytics,renew,won,3,112000,336000
+A0251,Vertex Systems,2025-Q1,2025-02-02,EMEA,Analytics,renew,won,3,35000,105000
+A0323,Cobalt Bridge Inc,2025-Q1,2025-01-12,APAC,Platform,renew,won,3,253000,759000
+A0092,BluePeak Logic,2025-Q1,2025-02-07,EMEA,Analytics,renew,won,3,220000,660000
+A0442,Granite Dynamics,2025-Q1,2025-01-10,EMEA,Platform,renew,won,3,150000,450000
+A0594,Granite Labs Inc,2025-Q1,2025-02-03,EMEA,Analytics,renew,won,3,299000,897000
+A0240,Parallel Labs Inc,2025-Q1,2025-01-11,AMER,Platform,renew,won,3,29000,87000
+A0130,Vertex Works Inc,2025-Q1,2025-02-23,APAC,Analytics,renew,won,3,91000,273000
+A0048,Northwind Works Inc,2025-Q1,2025-03-18,AMER,Analytics,renew,won,3,251000,753000
+A0163,Silverline Bridge Inc,2025-Q1,2025-02-25,EMEA,Security,renew,won,4,82000,328000
+A0078,Aurora Labs,2025-Q1,2025-02-21,APAC,Security,renew,won,3,201000,603000
+A0074,BluePeak Works,2025-Q1,2025-03-17,EMEA,Analytics,renew,won,3,176000,528000
+A0521,Cobalt Grid,2025-Q1,2025-02-22,AMER,Platform,renew,won,3,207000,621000
+A0009,BluePeak Dynamics Inc,2025-Q1,2025-01-29,EMEA,Analytics,expand,won,1,120000,120000
+A0050,Parallel Cloud,2025-Q1,2025-03-13,APAC,Analytics,expand,won,1,69000,69000
+A0059,Northwind Labs Inc,2025-Q1,2025-01-08,APAC,Analytics,expand,won,1,230000,230000
+A0097,Granite Labs Inc,2025-Q1,2025-01-07,AMER,Security,expand,won,1,228000,228000
+A0112,Northwind Systems,2025-Q1,2025-03-15,AMER,Security,expand,won,1,277000,277000
+A0152,Meridian Cloud,2025-Q1,2025-03-10,EMEA,Analytics,expand,won,1,18000,18000
+A0203,Silverline Systems,2025-Q1,2025-03-23,AMER,Analytics,expand,won,1,29000,29000
+A0274,Granite Works,2025-Q1,2025-01-28,EMEA,Analytics,expand,won,1,74000,74000
+A0282,Vertex Works Inc,2025-Q1,2025-02-21,APAC,Analytics,expand,won,1,161000,161000
+A0504,Aurora Bridge Inc,2025-Q1,2025-02-12,EMEA,Analytics,expand,won,1,156000,156000
+A0524,Cobalt Dynamics Inc,2025-Q1,2025-03-04,EMEA,Platform,expand,won,1,178000,178000
+A0601,Aurora Bridge,2025-Q1,2025-02-01,AMER,Analytics,expand,won,1,48000,48000
+A0543,Cobalt Bridge,2025-Q1,2025-02-15,AMER,Platform,expand,won,3,225000,675000
+A0166,BluePeak Grid,2025-Q1,2025-01-08,AMER,Platform,expand,won,5,240000,1200000
+A0356,Northwind Dynamics,2025-Q1,2025-01-25,EMEA,Security,expand,won,3,32000,96000
+A0539,Granite Dynamics Inc,2025-Q1,2025-03-06,EMEA,Security,expand,won,2,21000,42000
+A0301,BluePeak Logic,2025-Q1,2025-01-27,AMER,Platform,expand,won,3,13000,39000
+A0517,Pinnacle Cloud,2025-Q1,2025-03-01,AMER,Security,expand,won,2,180000,360000
+A0536,Meridian Grid Inc,2025-Q1,2025-01-16,APAC,Security,expand,won,3,292000,876000
+A0005,BluePeak Labs Inc,2025-Q1,2025-01-23,APAC,Security,expand,won,3,77000,231000
+A0199,Aurora Dynamics,2025-Q1,2025-02-16,EMEA,Security,expand,won,3,13000,39000
+A0304,Aurora Cloud,2025-Q1,2025-03-12,APAC,Platform,expand,won,3,58000,174000
+A0500,Vertex Bridge,2025-Q1,2025-03-06,AMER,Security,expand,won,3,24000,72000
+A0254,Parallel Cloud Inc,2025-Q1,2025-03-16,APAC,Analytics,expand,won,5,16000,80000
+A0005,BluePeak Labs Inc,2025-Q1,2025-02-04,APAC,Security,expand,won,3,148000,444000
+A0028,Silverline Cloud Inc,2025-Q1,2025-03-26,AMER,Security,expand,won,5,27000,135000
+A0408,Aurora Bridge Inc,2025-Q1,2025-03-30,APAC,Analytics,expand,won,3,257000,771000
+A0004,Northwind Works,2025-Q1,2025-03-28,AMER,Analytics,expand,won,3,160000,480000
+A0157,Silverline Systems Inc,2025-Q1,2025-03-29,EMEA,Analytics,expand,won,3,253000,759000
+A0331,Aurora Works Inc,2025-Q1,2025-03-12,AMER,Analytics,expand,won,3,177000,531000
+A0077,Meridian Dynamics,2025-Q1,2025-02-15,AMER,Security,expand,won,3,35000,105000
+A0002,BluePeak Logic,2025-Q1,2025-01-09,EMEA,Analytics,expand,won,3,83000,249000
+A0074,BluePeak Works,2025-Q1,2025-02-21,EMEA,Platform,expand,won,3,16000,48000
+A0087,Silverline Labs,2025-Q1,2025-01-27,AMER,Platform,expand,won,3,34000,102000
+A0534,Granite Labs Inc,2025-Q1,2025-01-19,APAC,Platform,expand,won,3,39000,117000
+A0186,BluePeak Dynamics,2025-Q1,2025-03-23,AMER,Platform,expand,won,3,236000,708000
+A0479,Pinnacle Dynamics Inc,2025-Q1,2025-03-28,AMER,Analytics,expand,won,2,14000,28000
+A0627,Silverline Bridge,2025-Q1,2025-02-10,APAC,Security,land,won,3,110000,330000
+A0628,Silverline Grid,2025-Q1,2025-02-06,EMEA,Analytics,land,won,3,241000,723000
+A0629,BluePeak Labs,2025-Q1,2025-02-03,APAC,Platform,land,won,3,43000,129000
+A0630,Northwind Bridge,2025-Q1,2025-03-26,AMER,Analytics,land,won,3,16000,48000
+A0631,Cobalt Labs,2025-Q1,2025-02-21,AMER,Analytics,land,won,3,73000,219000
+A0632,Silverline Systems,2025-Q1,2025-02-09,EMEA,Analytics,land,won,3,186000,558000
+A0633,Meridian Grid Inc,2025-Q1,2025-02-18,APAC,Security,land,won,5,24000,120000
+A0634,Granite Systems Inc,2025-Q1,2025-01-20,EMEA,Platform,land,won,3,45000,135000
+A0635,Granite Systems Inc,2025-Q1,2025-01-30,AMER,Security,land,won,3,272000,816000
+A0636,Granite Logic,2025-Q1,2025-02-24,EMEA,Security,land,won,3,281000,843000
+A0637,Pinnacle Labs Inc,2025-Q1,2025-01-15,APAC,Security,land,won,3,79000,237000
+A0638,Aurora Dynamics,2025-Q1,2025-03-31,EMEA,Analytics,land,won,3,151000,453000
+A0639,Aurora Logic Inc,2025-Q1,2025-03-06,EMEA,Security,land,won,3,217000,651000
+A0640,Northwind Cloud Inc,2025-Q1,2025-03-24,AMER,Platform,land,won,3,26000,78000
+A0641,BluePeak Dynamics,2025-Q1,2025-02-09,EMEA,Analytics,land,won,3,30000,90000
+A0642,Granite Bridge Inc,2025-Q1,2025-01-11,EMEA,Analytics,land,won,3,278000,834000
+A0643,Cobalt Works,2025-Q1,2025-03-16,EMEA,Analytics,land,won,3,156000,468000
+A0644,Silverline Bridge Inc,2025-Q1,2025-03-28,AMER,Security,land,won,3,278000,834000
+A0645,Silverline Cloud Inc,2025-Q1,2025-03-14,AMER,Platform,land,won,3,16000,48000
+A0646,Northwind Grid Inc,2025-Q1,2025-03-17,APAC,Security,land,won,3,37000,111000
+A0647,Meridian Systems,2025-Q1,2025-01-09,APAC,Analytics,land,won,3,136000,408000
+A0648,Meridian Bridge Inc,2025-Q1,2025-01-30,APAC,Security,land,won,3,125000,375000
+A0649,Meridian Grid,2025-Q1,2025-01-07,AMER,Analytics,land,won,3,70000,210000
+A0650,Aurora Cloud,2025-Q1,2025-01-26,APAC,Platform,land,won,3,54000,162000
+A0651,Cobalt Works,2025-Q1,2025-01-14,EMEA,Analytics,land,won,3,13000,39000
+A0652,Granite Grid,2025-Q1,2025-01-24,AMER,Analytics,land,won,3,13000,39000
+A0653,BluePeak Logic,2025-Q1,2025-01-21,AMER,Platform,land,won,3,216000,648000
+A0654,Vertex Systems,2025-Q1,2025-02-05,EMEA,Platform,land,won,3,219000,657000
+A0655,Pinnacle Logic Inc,2025-Q1,2025-03-26,EMEA,Analytics,land,won,3,40000,120000
+A0656,BluePeak Labs,2025-Q1,2025-02-25,AMER,Analytics,land,won,1,49000,49000
+A0657,Vertex Cloud,2025-Q1,2025-03-03,APAC,Security,land,won,3,16000,48000
+A0658,Silverline Grid Inc,2025-Q1,2025-01-21,EMEA,Security,land,won,3,36000,108000
+A0659,BluePeak Dynamics,2025-Q1,2025-01-14,EMEA,Platform,land,won,3,30000,90000
+A0660,Cobalt Logic Inc,2025-Q1,2025-02-28,EMEA,Platform,land,won,3,16000,48000
+A0661,Vertex Cloud Inc,2025-Q1,2025-01-31,EMEA,Platform,land,won,3,115000,345000
+A0662,Pinnacle Bridge,2025-Q1,2025-01-08,AMER,Analytics,land,won,3,60000,180000
+A0663,Meridian Systems Inc,2025-Q1,2025-02-03,AMER,Security,land,won,5,16000,80000
+A0664,Silverline Dynamics,2025-Q1,2025-02-01,AMER,Security,land,won,1,250000,250000
+A0665,Silverline Logic,2025-Q1,2025-03-31,AMER,Analytics,land,won,3,169000,507000
+A0666,Pinnacle Logic,2025-Q1,2025-03-02,EMEA,Analytics,land,won,3,297000,891000
+A0667,BluePeak Cloud,2025-Q1,2025-03-23,EMEA,Platform,land,won,1,235000,235000
+A0668,Parallel Works Inc,2025-Q1,2025-01-23,APAC,Security,land,won,3,36000,108000
+A0669,Pinnacle Systems,2025-Q1,2025-02-16,APAC,Security,land,won,3,83000,249000
+A0670,Northwind Grid,2025-Q1,2025-01-02,AMER,Platform,land,won,3,40000,120000
+A0671,Pinnacle Dynamics,2025-Q1,2025-01-02,EMEA,Platform,land,won,3,223000,669000
+A0672,Northwind Cloud,2025-Q1,2025-03-02,AMER,Security,land,won,3,95000,285000
+A0673,Pinnacle Works,2025-Q1,2025-01-09,AMER,Platform,land,won,4,237000,948000
+A0674,Northwind Works,2025-Q1,2025-02-01,EMEA,Analytics,land,won,3,75000,225000
+A0675,Silverline Grid,2025-Q1,2025-02-22,APAC,Platform,land,won,3,171000,513000
+A0676,Aurora Logic Inc,2025-Q1,2025-02-11,EMEA,Analytics,land,won,3,210000,630000
+A0677,Cobalt Grid,2025-Q1,2025-01-18,APAC,Platform,land,won,3,106000,318000
+A0678,Silverline Works Inc,2025-Q1,2025-03-07,APAC,Analytics,land,won,3,220000,660000
+A0679,Meridian Dynamics Inc,2025-Q1,2025-03-25,APAC,Platform,land,won,3,122000,366000
+A0680,Vertex Dynamics Inc,2025-Q1,2025-01-03,EMEA,Platform,land,won,3,13000,39000
+A0681,Meridian Logic,2025-Q1,2025-01-01,APAC,Platform,land,won,3,213000,639000
+A0682,Cobalt Labs Inc,2025-Q1,2025-03-06,APAC,Analytics,land,won,3,103000,309000
+A0683,Silverline Bridge Inc,2025-Q1,2025-02-01,APAC,Analytics,land,won,3,140000,420000
+A0684,Granite Labs,2025-Q1,2025-03-10,APAC,Security,land,won,3,162000,486000
+A0685,Aurora Cloud Inc,2025-Q1,2025-01-01,EMEA,Security,land,won,3,139000,417000
+A0686,Cobalt Labs,2025-Q1,2025-03-18,APAC,Platform,land,won,2,168000,336000
+A0687,Parallel Systems Inc,2025-Q1,2025-02-17,AMER,Platform,land,won,3,86000,258000
+A0688,BluePeak Grid Inc,2025-Q1,2025-02-04,AMER,Analytics,land,won,3,132000,396000
+A0689,Meridian Grid,2025-Q1,2025-01-18,AMER,Security,land,won,3,123000,369000
+A0690,Silverline Bridge Inc,2025-Q1,2025-03-17,APAC,Analytics,land,won,3,13000,39000
+A0691,Silverline Systems,2025-Q1,2025-02-05,EMEA,Analytics,land,won,3,58000,174000
+A0692,Granite Works Inc,2025-Q1,2025-01-03,AMER,Platform,land,won,3,125000,375000
+A0693,Northwind Labs Inc,2025-Q1,2025-03-24,AMER,Security,land,won,3,216000,648000
+A0694,BluePeak Systems,2025-Q1,2025-01-03,APAC,Security,land,won,3,58000,174000
+A0695,Granite Grid Inc,2025-Q1,2025-01-19,APAC,Security,land,won,3,157000,471000
+A0696,Vertex Labs,2025-Q1,2025-03-31,APAC,Analytics,land,won,1,85000,85000
+A0697,Meridian Systems Inc,2025-Q1,2025-03-03,APAC,Platform,land,won,3,153000,459000
+A0698,BluePeak Cloud,2025-Q1,2025-01-17,AMER,Analytics,land,won,3,122000,366000
+A0973,BluePeak Grid Inc,2025-Q1,2025-03-15,APAC,Analytics,land,lost,3,83000,249000
+A0974,Granite Grid Inc,2025-Q1,2025-02-09,EMEA,Security,land,lost,1,49000,49000
+A0975,Granite Bridge,2025-Q1,2025-02-05,AMER,Platform,land,lost,3,37000,111000
+A0976,Vertex Grid,2025-Q1,2025-02-23,APAC,Platform,land,lost,3,75000,225000
+A0977,Vertex Logic,2025-Q1,2025-03-19,EMEA,Analytics,land,lost,3,36000,108000
+A0978,Parallel Systems Inc,2025-Q1,2025-02-05,EMEA,Platform,land,lost,3,36000,108000
+A0979,Pinnacle Works Inc,2025-Q1,2025-01-20,EMEA,Security,land,lost,3,115000,345000
+A0980,Meridian Bridge,2025-Q1,2025-01-05,EMEA,Security,land,lost,3,13000,39000
+A0981,Parallel Dynamics,2025-Q1,2025-03-12,APAC,Platform,land,lost,3,281000,843000
+A0982,Parallel Works,2025-Q1,2025-02-14,APAC,Platform,land,lost,1,85000,85000
+A0983,Granite Logic Inc,2025-Q1,2025-03-18,APAC,Analytics,land,lost,4,237000,948000
+A0984,Vertex Labs Inc,2025-Q1,2025-01-04,APAC,Security,land,lost,3,186000,558000
+A0985,Pinnacle Systems Inc,2025-Q1,2025-03-31,EMEA,Platform,land,lost,3,156000,468000
+A0986,BluePeak Dynamics Inc,2025-Q1,2025-03-26,APAC,Platform,land,lost,3,210000,630000
+A0987,BluePeak Cloud Inc,2025-Q1,2025-03-02,EMEA,Platform,land,lost,3,16000,48000
+A0988,Granite Grid Inc,2025-Q1,2025-03-29,APAC,Security,land,lost,5,16000,80000
+A0989,Northwind Bridge,2025-Q1,2025-01-27,APAC,Platform,land,lost,3,115000,345000
+A0990,Silverline Labs,2025-Q1,2025-03-06,APAC,Analytics,land,lost,1,235000,235000
+A0991,Aurora Logic Inc,2025-Q1,2025-03-04,APAC,Security,land,lost,3,58000,174000
+A0992,Pinnacle Dynamics,2025-Q1,2025-02-11,AMER,Security,land,lost,3,13000,39000
+A0993,Granite Labs,2025-Q1,2025-01-14,EMEA,Security,land,lost,3,122000,366000
+A0994,Northwind Grid Inc,2025-Q1,2025-02-04,APAC,Platform,land,lost,3,216000,648000
+A0995,Northwind Bridge Inc,2025-Q1,2025-02-04,APAC,Analytics,land,lost,3,115000,345000
+A0996,Meridian Dynamics,2025-Q1,2025-01-30,EMEA,Platform,land,lost,3,106000,318000
+A0997,Aurora Logic Inc,2025-Q1,2025-01-19,AMER,Security,land,lost,3,122000,366000
+A0998,BluePeak Dynamics,2025-Q1,2025-02-18,EMEA,Platform,land,lost,3,86000,258000
+A0999,Granite Cloud,2025-Q1,2025-01-31,AMER,Analytics,land,lost,5,16000,80000
+A1000,Northwind Grid,2025-Q1,2025-02-01,EMEA,Security,land,lost,3,132000,396000
+A1001,Granite Bridge Inc,2025-Q1,2025-03-02,EMEA,Platform,land,lost,3,125000,375000
+A1002,Meridian Bridge Inc,2025-Q1,2025-01-28,AMER,Platform,land,lost,3,40000,120000
+A1003,Northwind Logic,2025-Q1,2025-03-18,APAC,Analytics,land,lost,3,30000,90000
+A1004,Meridian Works Inc,2025-Q1,2025-03-11,EMEA,Analytics,land,lost,3,70000,210000
+A1005,Cobalt Cloud Inc,2025-Q1,2025-03-03,AMER,Platform,land,lost,1,235000,235000
+A1006,Silverline Logic Inc,2025-Q1,2025-02-03,APAC,Platform,land,lost,3,79000,237000
+A1007,Parallel Labs Inc,2025-Q1,2025-03-20,EMEA,Platform,land,lost,3,83000,249000
+A1008,BluePeak Labs,2025-Q1,2025-03-30,APAC,Analytics,land,lost,3,278000,834000
+A1009,Vertex Grid,2025-Q1,2025-01-31,APAC,Analytics,land,lost,3,122000,366000
+A1010,Aurora Logic Inc,2025-Q1,2025-01-01,EMEA,Platform,land,lost,3,13000,39000
+A1011,BluePeak Bridge,2025-Q1,2025-01-14,AMER,Platform,land,lost,3,220000,660000
+A1012,Vertex Bridge Inc,2025-Q1,2025-03-18,AMER,Platform,land,lost,3,30000,90000
+A1013,Cobalt Bridge,2025-Q1,2025-02-12,APAC,Security,land,lost,3,30000,90000
+A1014,Silverline Logic,2025-Q1,2025-02-22,AMER,Analytics,land,lost,3,278000,834000
+A1015,Aurora Cloud,2025-Q1,2025-03-20,AMER,Security,land,lost,5,16000,80000
+A1016,BluePeak Systems Inc,2025-Q1,2025-01-16,AMER,Security,land,lost,3,13000,39000
+A1017,Vertex Labs,2025-Q1,2025-02-23,EMEA,Analytics,land,lost,3,16000,48000
+A1018,Northwind Bridge Inc,2025-Q1,2025-02-24,APAC,Analytics,land,lost,3,58000,174000
+A1019,Silverline Grid,2025-Q1,2025-03-29,AMER,Analytics,land,lost,3,60000,180000
+A1020,Vertex Logic Inc,2025-Q1,2025-01-18,AMER,Platform,land,lost,3,16000,48000
+A1021,Northwind Dynamics,2025-Q1,2025-01-03,AMER,Platform,land,lost,3,213000,639000
+A1022,Granite Works,2025-Q1,2025-01-27,EMEA,Platform,land,lost,3,139000,417000
+A1023,Parallel Cloud,2025-Q1,2025-01-14,AMER,Platform,land,lost,3,139000,417000
+A1024,Vertex Systems Inc,2025-Q1,2025-03-15,APAC,Analytics,land,lost,2,168000,336000
+A1025,Aurora Dynamics,2025-Q1,2025-03-12,APAC,Analytics,land,lost,3,216000,648000
+A1026,Meridian Bridge,2025-Q1,2025-02-05,APAC,Platform,land,lost,3,278000,834000
+A1027,Northwind Works,2025-Q1,2025-02-18,APAC,Platform,land,lost,3,186000,558000
+A1028,Meridian Labs,2025-Q1,2025-03-17,APAC,Analytics,land,lost,5,24000,120000
+A1029,BluePeak Logic Inc,2025-Q1,2025-03-11,AMER,Analytics,land,lost,3,297000,891000
+A1030,Silverline Cloud,2025-Q1,2025-01-04,APAC,Security,land,lost,3,216000,648000
+A1031,Granite Labs,2025-Q1,2025-01-15,APAC,Analytics,land,lost,1,85000,85000
+A1032,Granite Cloud,2025-Q1,2025-03-04,EMEA,Security,land,lost,3,213000,639000
+A1033,Meridian Works Inc,2025-Q1,2025-01-12,APAC,Security,land,lost,3,36000,108000
+A1034,BluePeak Labs Inc,2025-Q1,2025-01-15,EMEA,Analytics,land,lost,3,13000,39000
+A1035,Parallel Grid,2025-Q1,2025-02-03,APAC,Security,land,lost,3,40000,120000
+A1036,Granite Cloud Inc,2025-Q1,2025-03-06,AMER,Analytics,land,lost,3,40000,120000
+A1037,Northwind Labs Inc,2025-Q1,2025-03-23,APAC,Security,land,lost,4,237000,948000
+A1038,BluePeak Grid,2025-Q1,2025-02-12,APAC,Analytics,land,lost,3,297000,891000
+A1039,Parallel Cloud Inc,2025-Q1,2025-02-28,APAC,Security,land,lost,3,123000,369000
+A1040,Parallel Labs,2025-Q1,2025-03-30,EMEA,Analytics,land,lost,3,16000,48000
+A1041,Pinnacle Dynamics,2025-Q1,2025-03-20,APAC,Platform,land,lost,3,186000,558000
+A1042,Aurora Works,2025-Q1,2025-03-08,APAC,Platform,land,lost,3,45000,135000
+A1043,Pinnacle Grid,2025-Q1,2025-01-24,EMEA,Analytics,land,lost,3,110000,330000
+A1044,Granite Labs Inc,2025-Q1,2025-02-20,AMER,Security,land,lost,3,26000,78000
+A1045,Aurora Cloud,2025-Q1,2025-03-04,AMER,Platform,land,lost,3,139000,417000
+A1046,BluePeak Systems,2025-Q1,2025-03-28,APAC,Security,land,lost,3,125000,375000
+A1047,Cobalt Cloud Inc,2025-Q1,2025-01-10,AMER,Analytics,land,lost,3,272000,816000
+A1048,Granite Cloud,2025-Q1,2025-01-25,APAC,Analytics,land,lost,3,16000,48000
+A1049,Meridian Bridge Inc,2025-Q1,2025-01-20,APAC,Platform,land,lost,3,139000,417000
+A1050,BluePeak Dynamics Inc,2025-Q1,2025-01-31,AMER,Analytics,land,lost,3,13000,39000
+A1051,Vertex Labs Inc,2025-Q1,2025-02-15,APAC,Analytics,land,lost,3,125000,375000
+A1052,BluePeak Dynamics Inc,2025-Q1,2025-03-02,EMEA,Platform,land,lost,1,49000,49000
+A1053,Vertex Works,2025-Q1,2025-03-22,EMEA,Platform,land,lost,3,217000,651000
+A1054,Silverline Labs,2025-Q1,2025-02-26,AMER,Security,land,lost,3,103000,309000
+A1055,Silverline Dynamics Inc,2025-Q1,2025-02-19,AMER,Security,land,lost,3,30000,90000
+A1056,Meridian Dynamics,2025-Q1,2025-02-28,AMER,Security,land,lost,3,13000,39000
+A1057,Parallel Logic,2025-Q1,2025-03-13,APAC,Platform,land,lost,1,235000,235000
+A1058,Meridian Dynamics,2025-Q1,2025-01-17,APAC,Platform,land,lost,3,272000,816000
+A1059,Silverline Bridge,2025-Q1,2025-01-07,AMER,Platform,land,lost,3,110000,330000
+A1060,Vertex Grid Inc,2025-Q1,2025-01-01,APAC,Platform,land,lost,1,250000,250000
+A1061,Vertex Labs Inc,2025-Q1,2025-01-11,EMEA,Platform,land,lost,3,73000,219000
+A1062,Northwind Works,2025-Q1,2025-02-05,APAC,Security,land,lost,3,156000,468000
+A1063,Pinnacle Dynamics,2025-Q1,2025-01-07,EMEA,Analytics,land,lost,3,122000,366000
+A1064,Pinnacle Logic,2025-Q1,2025-01-21,AMER,Security,land,lost,5,16000,80000
+A1065,Aurora Systems,2025-Q1,2025-03-22,AMER,Security,land,lost,3,26000,78000
+A1066,Cobalt Logic,2025-Q1,2025-02-28,AMER,Platform,land,lost,3,241000,723000
+A1067,Cobalt Bridge,2025-Q1,2025-01-13,EMEA,Analytics,land,lost,3,213000,639000
+A1068,Cobalt Labs,2025-Q1,2025-02-12,AMER,Analytics,land,lost,3,151000,453000
+A1069,Vertex Labs Inc,2025-Q1,2025-02-20,AMER,Platform,land,lost,3,213000,639000
+A1070,Pinnacle Dynamics Inc,2025-Q1,2025-01-28,EMEA,Analytics,land,lost,3,58000,174000
+A1071,Northwind Labs,2025-Q1,2025-03-18,EMEA,Analytics,land,lost,3,169000,507000
+A1072,Silverline Logic,2025-Q1,2025-01-12,EMEA,Platform,land,lost,3,156000,468000
+A1073,Northwind Dynamics,2025-Q1,2025-01-27,APAC,Security,land,lost,3,157000,471000
+A1074,Granite Grid,2025-Q1,2025-03-24,EMEA,Security,land,lost,3,83000,249000
+A1075,Cobalt Cloud,2025-Q1,2025-01-07,EMEA,Platform,land,lost,3,86000,258000
+A1076,Aurora Dynamics Inc,2025-Q1,2025-01-22,AMER,Security,land,lost,3,136000,408000
+A1077,BluePeak Dynamics,2025-Q1,2025-01-16,EMEA,Security,land,lost,3,272000,816000
+A1078,Granite Cloud,2025-Q1,2025-01-08,AMER,Platform,land,lost,3,106000,318000
+A1079,Cobalt Works Inc,2025-Q1,2025-01-04,AMER,Security,land,lost,3,16000,48000
+A1080,Pinnacle Grid,2025-Q1,2025-02-28,EMEA,Analytics,land,lost,3,30000,90000
+A1081,Pinnacle Systems,2025-Q1,2025-03-28,EMEA,Platform,land,lost,3,86000,258000
+A1082,Vertex Cloud,2025-Q1,2025-03-15,APAC,Security,land,lost,3,58000,174000
+A1083,Parallel Cloud,2025-Q1,2025-01-08,AMER,Security,land,lost,5,24000,120000
+A1084,Vertex Logic,2025-Q1,2025-02-28,APAC,Security,land,lost,3,70000,210000
+A1085,Meridian Cloud,2025-Q1,2025-03-04,EMEA,Analytics,land,lost,3,16000,48000
+A1086,Meridian Grid Inc,2025-Q1,2025-03-21,EMEA,Analytics,land,lost,3,122000,366000
+A1087,Vertex Logic,2025-Q1,2025-03-07,AMER,Analytics,land,lost,3,43000,129000
+A1088,Northwind Grid,2025-Q1,2025-02-23,EMEA,Analytics,land,lost,3,162000,486000
+A1089,Meridian Grid,2025-Q1,2025-03-10,APAC,Platform,land,lost,3,103000,309000
+A1090,BluePeak Works,2025-Q1,2025-02-16,EMEA,Analytics,land,lost,3,186000,558000
+A1091,Silverline Systems,2025-Q1,2025-03-19,AMER,Platform,land,lost,4,237000,948000
+A1092,Cobalt Cloud,2025-Q1,2025-03-11,AMER,Analytics,land,lost,3,213000,639000
+A1093,BluePeak Logic Inc,2025-Q1,2025-03-09,EMEA,Platform,land,lost,3,115000,345000
+A1094,Meridian Grid Inc,2025-Q1,2025-03-05,APAC,Security,land,lost,3,171000,513000
+A1095,Aurora Cloud,2025-Q1,2025-01-26,EMEA,Analytics,land,lost,3,58000,174000
+A1096,BluePeak Cloud Inc,2025-Q1,2025-01-20,AMER,Security,land,lost,3,115000,345000
+A1097,BluePeak Grid Inc,2025-Q1,2025-01-13,EMEA,Analytics,land,lost,3,241000,723000
+A1098,Vertex Bridge,2025-Q1,2025-01-19,AMER,Analytics,land,lost,3,162000,486000
+A1099,Granite Works Inc,2025-Q1,2025-02-20,AMER,Security,land,lost,3,16000,48000
+A1100,Northwind Labs,2025-Q1,2025-01-25,AMER,Security,land,lost,3,70000,210000
+A1101,Pinnacle Systems Inc,2025-Q1,2025-01-11,EMEA,Security,land,lost,3,43000,129000
+A1102,Northwind Works,2025-Q1,2025-02-25,AMER,Security,land,lost,3,13000,39000
+A1103,Granite Systems,2025-Q1,2025-02-15,AMER,Security,land,lost,3,125000,375000
+A1104,Northwind Dynamics Inc,2025-Q1,2025-01-09,AMER,Analytics,land,lost,3,186000,558000
+A1105,Silverline Dynamics Inc,2025-Q1,2025-01-13,AMER,Platform,land,lost,3,223000,669000
+A1106,Silverline Bridge,2025-Q1,2025-03-22,AMER,Platform,land,lost,3,40000,120000
+A1107,Meridian Logic,2025-Q1,2025-01-20,AMER,Analytics,land,lost,3,132000,396000
+A1108,Silverline Grid,2025-Q1,2025-01-23,AMER,Platform,land,lost,3,86000,258000
+A1109,Silverline Logic Inc,2025-Q1,2025-01-13,EMEA,Security,land,lost,3,70000,210000
+A1110,BluePeak Grid,2025-Q1,2025-01-17,AMER,Analytics,land,lost,3,103000,309000
+A1111,Pinnacle Logic Inc,2025-Q1,2025-03-26,APAC,Security,land,lost,3,125000,375000
+A1112,Northwind Logic,2025-Q1,2025-01-27,EMEA,Platform,land,lost,3,86000,258000
+A1113,BluePeak Grid Inc,2025-Q1,2025-03-25,APAC,Platform,land,lost,3,272000,816000
+A1114,Granite Grid,2025-Q1,2025-02-01,EMEA,Analytics,land,lost,4,237000,948000
+A1115,Granite Dynamics,2025-Q1,2025-02-08,EMEA,Platform,land,lost,3,36000,108000
+A1116,BluePeak Cloud,2025-Q1,2025-03-14,APAC,Platform,land,lost,3,36000,108000
+A1117,Vertex Bridge Inc,2025-Q1,2025-02-09,AMER,Platform,land,lost,3,58000,174000
+A1118,Silverline Logic Inc,2025-Q1,2025-03-25,EMEA,Platform,land,lost,3,70000,210000
+A1119,Granite Dynamics,2025-Q1,2025-02-19,AMER,Security,land,lost,5,24000,120000
+A1120,Meridian Labs,2025-Q1,2025-01-15,EMEA,Analytics,land,lost,3,125000,375000
+A1121,BluePeak Systems Inc,2025-Q1,2025-01-07,EMEA,Platform,land,lost,3,58000,174000
+A1122,Aurora Systems Inc,2025-Q1,2025-03-24,EMEA,Security,land,lost,3,30000,90000
+A1123,Cobalt Cloud,2025-Q1,2025-01-30,APAC,Analytics,land,lost,3,13000,39000
+A1124,Vertex Dynamics,2025-Q1,2025-01-11,EMEA,Security,land,lost,3,16000,48000
+A1125,Northwind Grid Inc,2025-Q1,2025-02-08,AMER,Platform,land,lost,1,235000,235000
+A1126,BluePeak Cloud Inc,2025-Q1,2025-03-18,APAC,Analytics,land,lost,3,115000,345000
+A1127,Granite Works Inc,2025-Q1,2025-02-24,APAC,Security,land,lost,3,217000,651000
+A1128,Meridian Dynamics Inc,2025-Q1,2025-01-29,AMER,Security,land,lost,3,122000,366000
+A1129,Pinnacle Bridge,2025-Q1,2025-02-16,EMEA,Analytics,land,lost,3,162000,486000
+A1130,Granite Logic,2025-Q1,2025-03-07,EMEA,Security,land,lost,3,37000,111000
+A1131,Meridian Logic Inc,2025-Q1,2025-01-20,AMER,Analytics,land,lost,3,217000,651000
+A1132,Northwind Labs,2025-Q1,2025-02-09,APAC,Security,land,lost,3,122000,366000
+A1133,BluePeak Cloud Inc,2025-Q1,2025-03-11,EMEA,Platform,land,lost,3,43000,129000
+A1134,Meridian Dynamics,2025-Q1,2025-01-02,APAC,Security,land,lost,3,210000,630000
+A1135,Aurora Logic,2025-Q1,2025-03-01,AMER,Analytics,land,lost,3,36000,108000
+A1136,Meridian Logic,2025-Q1,2025-02-24,EMEA,Security,land,lost,3,30000,90000
+A1137,Aurora Systems Inc,2025-Q1,2025-03-07,APAC,Analytics,land,lost,3,16000,48000
+A1138,Northwind Cloud Inc,2025-Q1,2025-01-06,APAC,Security,land,lost,3,122000,366000
+A1139,Northwind Bridge Inc,2025-Q1,2025-01-29,AMER,Analytics,land,lost,3,297000,891000
+A1140,BluePeak Labs,2025-Q1,2025-03-18,EMEA,Analytics,land,lost,3,156000,468000
+A0675,Silverline Grid,2025-Q1,2025-03-06,APAC,Platform,expand,lost,3,178000,534000
+A0493,Meridian Works,2025-Q1,2025-02-28,AMER,Security,expand,lost,3,16000,48000
+A1025,Aurora Dynamics,2025-Q1,2025-01-09,APAC,Security,expand,lost,3,148000,444000
+A0278,Pinnacle Systems,2025-Q1,2025-02-07,AMER,Security,expand,lost,3,178000,534000
+A0457,Aurora Dynamics Inc,2025-Q1,2025-01-24,APAC,Platform,expand,lost,3,257000,771000
+A0572,Parallel Grid Inc,2025-Q1,2025-02-10,AMER,Platform,expand,lost,3,277000,831000
+A0074,BluePeak Works,2025-Q1,2025-03-27,EMEA,Analytics,expand,lost,3,178000,534000
+A0397,Silverline Dynamics,2025-Q1,2025-03-06,EMEA,Analytics,expand,lost,2,292000,584000
+A0009,BluePeak Dynamics Inc,2025-Q1,2025-01-06,EMEA,Security,expand,lost,1,83000,83000
+A0220,Silverline Grid,2025-Q1,2025-02-10,APAC,Platform,expand,lost,3,83000,249000
+A0808,Vertex Systems,2025-Q1,2025-03-24,APAC,Security,expand,lost,3,230000,690000
+A0592,BluePeak Grid,2025-Q1,2025-02-21,AMER,Analytics,expand,lost,3,160000,480000
+A0872,Pinnacle Labs,2025-Q1,2025-03-22,AMER,Platform,expand,lost,3,120000,360000
+A0261,Cobalt Logic,2025-Q1,2025-01-09,AMER,Analytics,expand,lost,3,48000,144000
+A0423,Silverline Cloud Inc,2025-Q1,2025-01-09,APAC,Platform,expand,lost,3,16000,48000
+A0667,BluePeak Cloud,2025-Q1,2025-02-03,EMEA,Platform,expand,lost,1,178000,178000
+A0664,Silverline Dynamics,2025-Q1,2025-03-15,AMER,Security,expand,lost,1,74000,74000
+A0020,Cobalt Bridge Inc,2025-Q1,2025-01-13,AMER,Security,expand,lost,1,180000,180000
+A1025,Aurora Dynamics,2025-Q1,2025-01-07,APAC,Security,expand,lost,3,29000,87000
+A0191,Parallel Grid Inc,2025-Q1,2025-02-28,EMEA,Security,expand,lost,3,13000,39000
+A0697,Meridian Systems Inc,2025-Q1,2025-01-25,APAC,Security,expand,lost,3,178000,534000
+A0634,Granite Systems Inc,2025-Q1,2025-02-14,EMEA,Security,expand,lost,3,13000,39000
+A0151,Vertex Dynamics,2025-Q1,2025-03-29,EMEA,Analytics,expand,lost,3,230000,690000
+A0769,Meridian Dynamics,2025-Q1,2025-02-09,APAC,Platform,expand,lost,3,180000,540000
+A1007,Parallel Labs Inc,2025-Q1,2025-02-21,EMEA,Security,expand,lost,3,236000,708000
+A0508,Meridian Systems Inc,2025-Q2,2025-05-13,APAC,Analytics,renew,won,3,19000,57000
+A0298,Pinnacle Labs,2025-Q2,2025-04-12,AMER,Platform,renew,won,3,69000,207000
+A0290,Pinnacle Dynamics,2025-Q2,2025-06-27,AMER,Security,renew,won,1,201000,201000
+A0544,Cobalt Logic Inc,2025-Q2,2025-06-22,AMER,Analytics,renew,won,3,440000,1320000
+A0293,Silverline Grid Inc,2025-Q2,2025-06-10,EMEA,Security,renew,won,1,245000,245000
+A0178,Parallel Cloud,2025-Q2,2025-05-09,AMER,Platform,renew,won,3,32000,96000
+A0159,BluePeak Labs,2025-Q2,2025-05-12,APAC,Platform,renew,won,4,189000,756000
+A0160,BluePeak Logic,2025-Q2,2025-04-10,AMER,Platform,renew,won,3,300000,900000
+A0019,Silverline Cloud Inc,2025-Q2,2025-05-28,AMER,Security,renew,won,4,347000,1388000
+A0455,Cobalt Grid,2025-Q2,2025-04-22,AMER,Platform,renew,won,3,19000,57000
+A0556,Pinnacle Works,2025-Q2,2025-04-03,APAC,Analytics,renew,won,2,253000,506000
+A0373,BluePeak Bridge,2025-Q2,2025-04-05,APAC,Analytics,renew,won,3,18000,54000
+A0439,Cobalt Cloud,2025-Q2,2025-04-08,AMER,Analytics,renew,won,1,73000,73000
+A0138,Parallel Grid,2025-Q2,2025-04-07,AMER,Security,renew,won,3,101000,303000
+A0230,BluePeak Systems,2025-Q2,2025-06-04,EMEA,Platform,renew,won,3,65000,195000
+A0018,Parallel Systems,2025-Q2,2025-04-09,APAC,Security,renew,won,3,110000,330000
+A0344,Northwind Cloud,2025-Q2,2025-05-22,EMEA,Security,renew,won,3,296000,888000
+A0031,Meridian Works Inc,2025-Q2,2025-05-28,EMEA,Platform,renew,won,3,54000,162000
+A0052,Parallel Bridge Inc,2025-Q2,2025-04-29,EMEA,Security,renew,won,3,271000,813000
+A0430,BluePeak Grid Inc,2025-Q2,2025-05-18,EMEA,Platform,renew,won,3,12000,36000
+A0471,Vertex Works Inc,2025-Q2,2025-05-05,AMER,Analytics,renew,won,3,296000,888000
+A0100,Northwind Cloud,2025-Q2,2025-06-29,APAC,Platform,renew,won,3,74000,222000
+A0326,Silverline Works Inc,2025-Q2,2025-06-27,AMER,Analytics,renew,won,2,257000,514000
+A0126,BluePeak Logic Inc,2025-Q2,2025-05-11,AMER,Platform,renew,won,1,91000,91000
+A0348,Meridian Works,2025-Q2,2025-04-17,AMER,Security,renew,won,3,38000,114000
+A0562,Granite Logic,2025-Q2,2025-06-01,APAC,Platform,renew,won,3,42000,126000
+A0481,BluePeak Works,2025-Q2,2025-04-16,EMEA,Security,renew,won,3,101000,303000
+A0567,Meridian Cloud,2025-Q2,2025-05-07,EMEA,Security,renew,won,3,28000,84000
+A0214,Silverline Labs Inc,2025-Q2,2025-04-24,APAC,Platform,renew,won,3,19000,57000
+A0458,Granite Cloud,2025-Q2,2025-05-08,EMEA,Security,renew,won,2,227000,454000
+A0004,Northwind Works,2025-Q2,2025-05-10,AMER,Analytics,renew,lost,3,12000,36000
+A0496,BluePeak Bridge Inc,2025-Q2,2025-05-10,APAC,Security,renew,lost,3,64000,192000
+A0147,Vertex Bridge Inc,2025-Q2,2025-06-18,APAC,Security,renew,won,3,266000,798000
+A0231,Pinnacle Systems,2025-Q2,2025-05-06,APAC,Analytics,renew,won,3,55000,165000
+A0124,Northwind Labs Inc,2025-Q2,2025-06-23,APAC,Platform,renew,won,3,123000,369000
+A0219,Silverline Systems,2025-Q2,2025-06-10,APAC,Security,renew,won,3,15000,45000
+A0401,Aurora Grid Inc,2025-Q2,2025-05-25,EMEA,Platform,renew,won,5,16000,80000
+A0485,Vertex Bridge,2025-Q2,2025-04-07,EMEA,Analytics,renew,lost,3,56000,168000
+A0572,Parallel Grid Inc,2025-Q2,2025-04-15,AMER,Security,renew,won,3,205000,615000
+A0370,Parallel Labs Inc,2025-Q2,2025-05-25,EMEA,Security,renew,won,3,30000,90000
+A0404,BluePeak Bridge,2025-Q2,2025-04-14,APAC,Analytics,renew,won,3,369000,1107000
+A0376,Pinnacle Cloud Inc,2025-Q2,2025-04-27,AMER,Platform,renew,lost,3,105000,315000
+A0541,Meridian Works,2025-Q2,2025-06-25,EMEA,Platform,renew,won,3,62000,186000
+A0451,Meridian Labs,2025-Q2,2025-06-20,AMER,Platform,renew,won,3,120000,360000
+A0537,Meridian Dynamics Inc,2025-Q2,2025-06-11,EMEA,Analytics,renew,won,3,28000,84000
+A0383,BluePeak Bridge,2025-Q2,2025-04-28,APAC,Platform,renew,lost,3,154000,462000
+A0271,Cobalt Labs,2025-Q2,2025-05-06,EMEA,Analytics,renew,won,3,35000,105000
+A0202,Vertex Bridge,2025-Q2,2025-04-29,EMEA,Security,renew,won,3,133000,399000
+A0061,Aurora Grid,2025-Q2,2025-06-26,EMEA,Security,renew,won,3,331000,993000
+A0503,Granite Works Inc,2025-Q2,2025-06-27,APAC,Platform,renew,lost,2,72000,144000
+A0037,Northwind Labs,2025-Q2,2025-05-03,APAC,Analytics,renew,won,3,440000,1320000
+A0167,BluePeak Grid,2025-Q2,2025-05-13,EMEA,Security,renew,won,3,239000,717000
+A0171,Pinnacle Bridge Inc,2025-Q2,2025-04-14,AMER,Security,renew,won,5,15000,75000
+A0615,Vertex Cloud,2025-Q2,2025-06-03,EMEA,Security,renew,won,3,263000,789000
+A0392,Pinnacle Labs,2025-Q2,2025-05-20,AMER,Analytics,renew,won,3,424000,1272000
+A0409,Meridian Bridge,2025-Q2,2025-04-14,AMER,Analytics,renew,won,3,152000,456000
+A0404,BluePeak Bridge,2025-Q2,2025-06-18,APAC,Security,expand,won,3,84000,252000
+A0409,Meridian Bridge,2025-Q2,2025-06-05,AMER,Analytics,expand,won,3,13000,39000
+A0541,Meridian Works,2025-Q2,2025-04-09,EMEA,Security,expand,won,3,181000,543000
+A0164,Cobalt Logic Inc,2025-Q2,2025-05-29,AMER,Security,expand,won,3,15000,45000
+A0147,Vertex Bridge Inc,2025-Q2,2025-05-25,APAC,Platform,expand,won,3,73000,219000
+A0315,Silverline Logic Inc,2025-Q2,2025-04-02,APAC,Security,expand,won,3,118000,354000
+A0099,Vertex Bridge Inc,2025-Q2,2025-06-06,AMER,Platform,expand,won,3,68000,204000
+A0532,Parallel Grid Inc,2025-Q2,2025-05-09,APAC,Security,expand,won,3,13000,39000
+A0226,Meridian Logic Inc,2025-Q2,2025-04-24,APAC,Analytics,expand,won,3,39000,117000
+A0078,Aurora Labs,2025-Q2,2025-05-03,APAC,Analytics,expand,won,3,20000,60000
+A0335,Parallel Labs,2025-Q2,2025-06-10,APAC,Platform,expand,won,3,64000,192000
+A0416,Northwind Works,2025-Q2,2025-06-10,AMER,Security,expand,won,3,16000,48000
+A0149,Cobalt Dynamics Inc,2025-Q2,2025-06-26,AMER,Platform,expand,won,3,23000,69000
+A0295,Silverline Works Inc,2025-Q2,2025-04-21,EMEA,Security,expand,won,3,168000,504000
+A0490,Vertex Bridge Inc,2025-Q2,2025-05-09,AMER,Analytics,expand,won,3,19000,57000
+A0235,Pinnacle Works Inc,2025-Q2,2025-05-18,AMER,Platform,expand,won,4,239000,956000
+A0106,Parallel Dynamics,2025-Q2,2025-04-22,AMER,Security,expand,won,3,54000,162000
+A0547,Pinnacle Bridge Inc,2025-Q2,2025-04-03,EMEA,Analytics,expand,won,3,14000,42000
+A0592,BluePeak Grid,2025-Q2,2025-06-24,AMER,Analytics,expand,won,3,13000,39000
+A0536,Meridian Grid Inc,2025-Q2,2025-05-31,APAC,Analytics,expand,won,3,42000,126000
+A0360,Aurora Systems,2025-Q2,2025-04-10,APAC,Security,expand,won,3,173000,519000
+A0092,BluePeak Logic,2025-Q2,2025-06-25,EMEA,Platform,expand,won,3,14000,42000
+A0447,BluePeak Works,2025-Q2,2025-06-29,APAC,Platform,expand,won,3,20000,60000
+A0086,Parallel Grid,2025-Q2,2025-06-21,APAC,Analytics,expand,won,3,256000,768000
+A0404,BluePeak Bridge,2025-Q2,2025-06-08,APAC,Security,expand,won,3,17000,51000
+A0300,Silverline Bridge Inc,2025-Q2,2025-06-24,AMER,Platform,expand,won,3,136000,408000
+A0242,Meridian Logic,2025-Q2,2025-05-30,AMER,Platform,expand,won,3,14000,42000
+A0168,Silverline Logic,2025-Q2,2025-04-17,EMEA,Platform,expand,won,3,121000,363000
+A0236,Granite Bridge,2025-Q2,2025-04-13,AMER,Security,expand,won,3,175000,525000
+A0361,Meridian Dynamics,2025-Q2,2025-04-16,AMER,Analytics,expand,won,3,165000,495000
+A0073,Pinnacle Systems,2025-Q2,2025-04-06,AMER,Analytics,expand,won,3,35000,105000
+A0548,Vertex Systems,2025-Q2,2025-04-17,EMEA,Security,expand,won,3,13000,39000
+A0333,Meridian Labs Inc,2025-Q2,2025-06-03,EMEA,Security,expand,won,3,123000,369000
+A0349,Silverline Bridge Inc,2025-Q2,2025-04-07,EMEA,Analytics,expand,won,3,101000,303000
+A0612,Meridian Works Inc,2025-Q2,2025-04-06,APAC,Analytics,expand,won,3,91000,273000
+A0565,Granite Dynamics Inc,2025-Q2,2025-05-14,AMER,Platform,expand,won,1,36000,36000
+A0509,Parallel Grid,2025-Q2,2025-04-27,APAC,Analytics,expand,won,3,13000,39000
+A0618,Cobalt Systems,2025-Q2,2025-06-28,EMEA,Security,expand,won,2,13000,26000
+A0147,Vertex Bridge Inc,2025-Q2,2025-04-30,APAC,Security,expand,won,3,58000,174000
+A0408,Aurora Bridge Inc,2025-Q2,2025-06-18,APAC,Security,expand,won,3,46000,138000
+A0390,Northwind Cloud,2025-Q2,2025-05-30,EMEA,Analytics,expand,won,3,176000,528000
+A0007,Northwind Labs,2025-Q2,2025-05-10,EMEA,Platform,expand,won,3,69000,207000
+A0284,Silverline Works Inc,2025-Q2,2025-05-08,APAC,Analytics,expand,won,1,113000,113000
+A0222,Parallel Logic,2025-Q2,2025-05-09,AMER,Analytics,expand,won,3,108000,324000
+A0496,BluePeak Bridge Inc,2025-Q2,2025-04-27,APAC,Platform,expand,won,3,290000,870000
+A0369,Aurora Dynamics,2025-Q2,2025-05-17,APAC,Platform,expand,won,3,95000,285000
+A0405,BluePeak Systems,2025-Q2,2025-04-19,EMEA,Analytics,expand,won,3,71000,213000
+A0257,Cobalt Cloud Inc,2025-Q2,2025-05-11,AMER,Security,expand,won,3,13000,39000
+A0432,Aurora Cloud,2025-Q2,2025-04-28,AMER,Analytics,expand,won,3,99000,297000
+A0415,Northwind Labs Inc,2025-Q2,2025-05-13,AMER,Analytics,expand,won,5,123000,615000
+A0699,Meridian Grid,2025-Q2,2025-04-27,AMER,Platform,land,won,3,15000,45000
+A0700,Vertex Works,2025-Q2,2025-06-29,AMER,Analytics,land,won,3,53000,159000
+A0701,Aurora Labs,2025-Q2,2025-05-17,EMEA,Platform,land,won,3,149000,447000
+A0702,Northwind Dynamics Inc,2025-Q2,2025-05-20,AMER,Analytics,land,won,3,215000,645000
+A0703,Pinnacle Systems Inc,2025-Q2,2025-04-05,EMEA,Analytics,land,won,3,189000,567000
+A0704,Vertex Dynamics,2025-Q2,2025-05-08,APAC,Analytics,land,won,2,57000,114000
+A0705,Pinnacle Grid,2025-Q2,2025-05-12,APAC,Platform,land,won,3,165000,495000
+A0706,Silverline Cloud Inc,2025-Q2,2025-06-29,AMER,Platform,land,won,4,23000,92000
+A0707,Pinnacle Grid,2025-Q2,2025-04-15,APAC,Platform,land,won,3,173000,519000
+A0708,Pinnacle Labs Inc,2025-Q2,2025-06-14,APAC,Platform,land,won,3,298000,894000
+A0709,Parallel Labs Inc,2025-Q2,2025-04-10,APAC,Analytics,land,won,1,14000,14000
+A0710,Pinnacle Systems,2025-Q2,2025-04-24,AMER,Analytics,land,won,3,163000,489000
+A0711,Parallel Cloud,2025-Q2,2025-05-30,APAC,Analytics,land,won,3,172000,516000
+A0712,Cobalt Cloud,2025-Q2,2025-04-19,EMEA,Analytics,land,won,3,13000,39000
+A0713,Meridian Labs Inc,2025-Q2,2025-06-07,APAC,Analytics,land,won,3,229000,687000
+A0714,Northwind Dynamics,2025-Q2,2025-06-17,AMER,Platform,land,won,3,58000,174000
+A0715,Pinnacle Dynamics,2025-Q2,2025-04-12,EMEA,Security,land,won,3,88000,264000
+A0716,Silverline Works,2025-Q2,2025-05-19,AMER,Analytics,land,won,3,233000,699000
+A0717,Aurora Bridge,2025-Q2,2025-04-20,AMER,Security,land,won,1,60000,60000
+A0718,Meridian Systems Inc,2025-Q2,2025-06-21,EMEA,Security,land,won,3,80000,240000
+A0719,Cobalt Bridge,2025-Q2,2025-06-06,AMER,Platform,land,won,5,24000,120000
+A0720,Granite Bridge Inc,2025-Q2,2025-05-21,AMER,Analytics,land,won,3,18000,54000
+A0721,Meridian Systems,2025-Q2,2025-05-02,APAC,Analytics,land,won,2,13000,26000
+A0722,Meridian Systems Inc,2025-Q2,2025-05-10,APAC,Security,land,won,3,22000,66000
+A0723,Silverline Labs Inc,2025-Q2,2025-05-26,APAC,Analytics,land,won,3,279000,837000
+A0724,Vertex Works Inc,2025-Q2,2025-04-23,AMER,Security,land,won,3,77000,231000
+A0725,Silverline Labs Inc,2025-Q2,2025-05-28,APAC,Security,land,won,3,45000,135000
+A0726,Granite Grid Inc,2025-Q2,2025-05-20,AMER,Platform,land,won,1,14000,14000
+A0727,Meridian Works Inc,2025-Q2,2025-05-28,AMER,Platform,land,won,3,265000,795000
+A0728,Silverline Dynamics,2025-Q2,2025-04-27,APAC,Platform,land,won,3,299000,897000
+A0729,Aurora Systems,2025-Q2,2025-04-19,APAC,Platform,land,won,5,13000,65000
+A0730,Pinnacle Logic,2025-Q2,2025-06-28,APAC,Platform,land,won,3,32000,96000
+A0731,Pinnacle Labs Inc,2025-Q2,2025-05-06,EMEA,Security,land,won,1,118000,118000
+A0732,Granite Dynamics,2025-Q2,2025-05-12,APAC,Analytics,land,won,3,46000,138000
+A0733,BluePeak Dynamics,2025-Q2,2025-05-13,EMEA,Platform,land,won,3,48000,144000
+A0734,Parallel Works,2025-Q2,2025-04-24,APAC,Platform,land,won,3,39000,117000
+A0735,Silverline Labs,2025-Q2,2025-05-23,EMEA,Analytics,land,won,3,274000,822000
+A0736,Meridian Labs,2025-Q2,2025-04-13,AMER,Security,land,won,3,21000,63000
+A0737,Granite Labs Inc,2025-Q2,2025-05-02,AMER,Analytics,land,won,3,133000,399000
+A0738,Cobalt Labs Inc,2025-Q2,2025-04-25,AMER,Security,land,won,4,32000,128000
+A0739,Aurora Bridge Inc,2025-Q2,2025-06-16,APAC,Analytics,land,won,3,149000,447000
+A0740,Pinnacle Systems,2025-Q2,2025-04-04,APAC,Analytics,land,won,3,60000,180000
+A0741,Cobalt Labs Inc,2025-Q2,2025-05-27,APAC,Platform,land,won,3,139000,417000
+A0742,Parallel Cloud Inc,2025-Q2,2025-06-01,APAC,Platform,land,won,3,63000,189000
+A0743,BluePeak Labs,2025-Q2,2025-04-26,AMER,Platform,land,won,5,52000,260000
+A0744,Meridian Dynamics,2025-Q2,2025-05-24,AMER,Analytics,land,won,3,13000,39000
+A0745,Vertex Dynamics,2025-Q2,2025-06-03,APAC,Security,land,won,1,288000,288000
+A0746,Cobalt Grid Inc,2025-Q2,2025-06-11,EMEA,Analytics,land,won,3,56000,168000
+A0747,Pinnacle Bridge,2025-Q2,2025-05-17,EMEA,Analytics,land,won,3,79000,237000
+A0748,Parallel Systems,2025-Q2,2025-04-06,AMER,Security,land,won,3,131000,393000
+A0749,Meridian Logic,2025-Q2,2025-04-05,AMER,Security,land,won,3,94000,282000
+A0750,Silverline Logic Inc,2025-Q2,2025-05-27,EMEA,Platform,land,won,2,66000,132000
+A0751,BluePeak Grid Inc,2025-Q2,2025-05-21,EMEA,Analytics,land,won,3,46000,138000
+A0752,Cobalt Logic,2025-Q2,2025-05-29,APAC,Security,land,won,3,125000,375000
+A0753,BluePeak Dynamics,2025-Q2,2025-04-04,EMEA,Analytics,land,won,3,68000,204000
+A0754,Vertex Cloud Inc,2025-Q2,2025-05-12,EMEA,Platform,land,won,5,100000,500000
+A0755,Northwind Works Inc,2025-Q2,2025-06-17,EMEA,Security,land,won,3,69000,207000
+A0756,Northwind Bridge,2025-Q2,2025-06-02,AMER,Analytics,land,won,3,84000,252000
+A0757,Cobalt Systems Inc,2025-Q2,2025-06-05,APAC,Platform,land,won,3,18000,54000
+A0758,Parallel Cloud Inc,2025-Q2,2025-05-07,APAC,Platform,land,won,3,17000,51000
+A0759,Parallel Systems,2025-Q2,2025-06-21,EMEA,Analytics,land,won,3,187000,561000
+A1141,Aurora Cloud Inc,2025-Q2,2025-04-15,AMER,Analytics,land,lost,3,32000,96000
+A1142,Vertex Bridge,2025-Q2,2025-06-12,AMER,Analytics,land,lost,3,125000,375000
+A1143,Granite Labs,2025-Q2,2025-06-29,AMER,Analytics,land,lost,3,17000,51000
+A1144,Pinnacle Dynamics Inc,2025-Q2,2025-05-28,APAC,Security,land,lost,3,46000,138000
+A1145,Granite Labs Inc,2025-Q2,2025-05-26,APAC,Analytics,land,lost,3,79000,237000
+A1146,Meridian Bridge,2025-Q2,2025-04-22,APAC,Analytics,land,lost,3,274000,822000
+A1147,Aurora Cloud Inc,2025-Q2,2025-06-17,EMEA,Analytics,land,lost,3,274000,822000
+A1148,Silverline Works,2025-Q2,2025-05-02,AMER,Analytics,land,lost,3,131000,393000
+A1149,Parallel Dynamics,2025-Q2,2025-04-09,EMEA,Analytics,land,lost,3,46000,138000
+A1150,Aurora Systems,2025-Q2,2025-06-29,APAC,Analytics,land,lost,3,163000,489000
+A1151,Cobalt Dynamics,2025-Q2,2025-06-29,AMER,Security,land,lost,1,14000,14000
+A1152,Cobalt Systems,2025-Q2,2025-04-30,AMER,Analytics,land,lost,3,32000,96000
+A1153,Parallel Works,2025-Q2,2025-06-20,EMEA,Analytics,land,lost,1,14000,14000
+A1154,Pinnacle Grid Inc,2025-Q2,2025-06-10,EMEA,Platform,land,lost,3,39000,117000
+A1155,Granite Bridge,2025-Q2,2025-04-16,EMEA,Platform,land,lost,1,60000,60000
+A1156,Parallel Labs Inc,2025-Q2,2025-04-03,APAC,Platform,land,lost,3,56000,168000
+A1157,Vertex Bridge,2025-Q2,2025-06-04,AMER,Analytics,land,lost,1,60000,60000
+A1158,Silverline Dynamics,2025-Q2,2025-04-06,AMER,Platform,land,lost,3,279000,837000
+A1159,Silverline Labs Inc,2025-Q2,2025-06-19,EMEA,Platform,land,lost,3,60000,180000
+A1160,Pinnacle Logic Inc,2025-Q2,2025-04-28,EMEA,Security,land,lost,3,39000,117000
+A1161,Meridian Systems,2025-Q2,2025-04-06,EMEA,Analytics,land,lost,3,48000,144000
+A1162,Parallel Logic Inc,2025-Q2,2025-06-02,AMER,Security,land,lost,3,79000,237000
+A1163,Vertex Labs Inc,2025-Q2,2025-06-20,AMER,Security,land,lost,3,172000,516000
+A1164,Pinnacle Grid Inc,2025-Q2,2025-05-12,APAC,Analytics,land,lost,3,163000,489000
+A1165,Granite Bridge Inc,2025-Q2,2025-06-27,APAC,Platform,land,lost,3,48000,144000
+A1166,Silverline Works Inc,2025-Q2,2025-04-27,EMEA,Security,land,lost,3,63000,189000
+A1167,Northwind Works Inc,2025-Q2,2025-06-09,AMER,Security,land,lost,2,57000,114000
+A1168,Granite Labs Inc,2025-Q2,2025-05-26,AMER,Security,land,lost,5,52000,260000
+A1169,Pinnacle Logic Inc,2025-Q2,2025-04-13,AMER,Platform,land,lost,2,66000,132000
+A1170,Cobalt Works,2025-Q2,2025-04-03,APAC,Security,land,lost,3,173000,519000
+A1171,Vertex Grid,2025-Q2,2025-04-23,AMER,Platform,land,lost,4,23000,92000
+A1172,Granite Dynamics,2025-Q2,2025-06-26,EMEA,Platform,land,lost,5,52000,260000
+A1173,BluePeak Bridge Inc,2025-Q2,2025-05-10,APAC,Security,land,lost,3,265000,795000
+A1174,Pinnacle Cloud,2025-Q2,2025-05-06,AMER,Security,land,lost,3,53000,159000
+A1175,Vertex Labs Inc,2025-Q2,2025-05-02,AMER,Platform,land,lost,3,18000,54000
+A1176,Northwind Works,2025-Q2,2025-06-26,APAC,Analytics,land,lost,3,39000,117000
+A1177,Granite Grid Inc,2025-Q2,2025-04-12,APAC,Platform,land,lost,2,57000,114000
+A1178,Meridian Labs,2025-Q2,2025-04-12,EMEA,Platform,land,lost,3,84000,252000
+A1179,BluePeak Works,2025-Q2,2025-04-12,APAC,Security,land,lost,3,58000,174000
+A1180,Cobalt Works,2025-Q2,2025-04-21,EMEA,Platform,land,lost,3,279000,837000
+A1181,Pinnacle Bridge,2025-Q2,2025-06-29,AMER,Platform,land,lost,5,24000,120000
+A1182,Northwind Logic Inc,2025-Q2,2025-05-30,AMER,Security,land,lost,3,46000,138000
+A1183,Cobalt Cloud Inc,2025-Q2,2025-05-09,APAC,Platform,land,lost,3,53000,159000
+A1184,Parallel Cloud Inc,2025-Q2,2025-04-09,AMER,Analytics,land,lost,1,118000,118000
+A1185,Aurora Cloud Inc,2025-Q2,2025-06-14,APAC,Analytics,land,lost,3,133000,399000
+A1186,Silverline Logic,2025-Q2,2025-04-10,EMEA,Analytics,land,lost,3,68000,204000
+A1187,Pinnacle Bridge Inc,2025-Q2,2025-05-29,APAC,Analytics,land,lost,3,77000,231000
+A1188,BluePeak Works Inc,2025-Q2,2025-05-21,EMEA,Security,land,lost,3,68000,204000
+A1189,Aurora Systems Inc,2025-Q2,2025-04-16,APAC,Platform,land,lost,3,39000,117000
+A1190,Silverline Grid Inc,2025-Q2,2025-04-30,AMER,Security,land,lost,3,13000,39000
+A1191,Silverline Grid,2025-Q2,2025-06-23,EMEA,Security,land,lost,1,288000,288000
+A1192,Vertex Cloud Inc,2025-Q2,2025-06-24,AMER,Platform,land,lost,3,60000,180000
+A1193,BluePeak Systems,2025-Q2,2025-05-31,APAC,Security,land,lost,2,57000,114000
+A1194,Parallel Works,2025-Q2,2025-06-29,EMEA,Platform,land,lost,5,24000,120000
+A1195,Granite Dynamics,2025-Q2,2025-06-08,EMEA,Security,land,lost,3,163000,489000
+A1196,Northwind Works,2025-Q2,2025-06-15,EMEA,Security,land,lost,3,88000,264000
+A1197,Vertex Systems,2025-Q2,2025-05-19,EMEA,Platform,land,lost,3,46000,138000
+A1198,Silverline Works,2025-Q2,2025-06-29,APAC,Platform,land,lost,5,13000,65000
+A1199,Aurora Bridge Inc,2025-Q2,2025-04-16,EMEA,Platform,land,lost,3,139000,417000
+A1200,BluePeak Labs Inc,2025-Q2,2025-06-16,EMEA,Analytics,land,lost,3,77000,231000
+A1201,Granite Grid,2025-Q2,2025-05-16,AMER,Platform,land,lost,1,60000,60000
+A1202,Northwind Cloud Inc,2025-Q2,2025-06-15,APAC,Platform,land,lost,3,139000,417000
+A1203,Cobalt Cloud Inc,2025-Q2,2025-04-21,AMER,Platform,land,lost,3,15000,45000
+A1204,Aurora Works Inc,2025-Q2,2025-05-02,EMEA,Platform,land,lost,3,69000,207000
+A1205,Aurora Labs Inc,2025-Q2,2025-04-19,EMEA,Analytics,land,lost,3,13000,39000
+A1206,Cobalt Labs Inc,2025-Q2,2025-04-28,AMER,Analytics,land,lost,3,79000,237000
+A1207,Cobalt Logic Inc,2025-Q2,2025-05-15,EMEA,Platform,land,lost,3,187000,561000
+A1208,Silverline Dynamics,2025-Q2,2025-06-06,APAC,Security,land,lost,3,80000,240000
+A1209,Silverline Dynamics,2025-Q2,2025-04-11,EMEA,Platform,land,lost,3,63000,189000
+A1210,Granite Dynamics Inc,2025-Q2,2025-05-17,EMEA,Analytics,land,lost,5,13000,65000
+A1211,Silverline Bridge,2025-Q2,2025-06-13,AMER,Platform,land,lost,3,17000,51000
+A1212,Aurora Grid,2025-Q2,2025-04-11,AMER,Security,land,lost,3,189000,567000
+A1213,Granite Logic Inc,2025-Q2,2025-06-26,AMER,Platform,land,lost,3,32000,96000
+A1214,Pinnacle Dynamics,2025-Q2,2025-06-20,APAC,Platform,land,lost,3,125000,375000
+A1215,Aurora Works,2025-Q2,2025-04-17,EMEA,Security,land,lost,3,53000,159000
+A1216,Northwind Systems Inc,2025-Q2,2025-05-16,APAC,Security,land,lost,3,215000,645000
+A1217,Meridian Works,2025-Q2,2025-04-26,APAC,Security,land,lost,3,68000,204000
+A1218,BluePeak Bridge,2025-Q2,2025-05-04,EMEA,Analytics,land,lost,2,66000,132000
+A1219,Parallel Logic Inc,2025-Q2,2025-04-28,EMEA,Platform,land,lost,3,77000,231000
+A1220,Aurora Dynamics,2025-Q2,2025-06-28,EMEA,Platform,land,lost,3,233000,699000
+A1221,Northwind Dynamics,2025-Q2,2025-05-04,AMER,Analytics,land,lost,3,229000,687000
+A1222,Silverline Systems Inc,2025-Q2,2025-05-17,AMER,Analytics,land,lost,3,149000,447000
+A1223,Vertex Grid Inc,2025-Q2,2025-04-15,AMER,Platform,land,lost,1,118000,118000
+A1224,Cobalt Bridge Inc,2025-Q2,2025-06-29,EMEA,Platform,land,lost,3,298000,894000
+A1225,Granite Labs,2025-Q2,2025-05-26,EMEA,Platform,land,lost,1,14000,14000
+A1226,Meridian Works,2025-Q2,2025-05-21,AMER,Platform,land,lost,1,14000,14000
+A1227,Northwind Systems,2025-Q2,2025-06-02,AMER,Analytics,land,lost,3,17000,51000
+A1228,Granite Labs,2025-Q2,2025-05-13,EMEA,Analytics,land,lost,3,173000,519000
+A1229,Aurora Dynamics,2025-Q2,2025-06-03,AMER,Platform,land,lost,3,163000,489000
+A1230,Cobalt Dynamics,2025-Q2,2025-06-20,APAC,Security,land,lost,4,23000,92000
+A1231,Granite Cloud,2025-Q2,2025-05-11,AMER,Analytics,land,lost,2,57000,114000
+A1232,Silverline Cloud,2025-Q2,2025-04-26,APAC,Analytics,land,lost,3,233000,699000
+A1233,Silverline Works Inc,2025-Q2,2025-06-03,AMER,Analytics,land,lost,3,39000,117000
+A1234,Pinnacle Bridge,2025-Q2,2025-05-06,AMER,Analytics,land,lost,3,15000,45000
+A1235,Vertex Systems Inc,2025-Q2,2025-06-15,APAC,Platform,land,lost,3,15000,45000
+A1236,Vertex Grid Inc,2025-Q2,2025-06-05,AMER,Analytics,land,lost,3,45000,135000
+A1237,Granite Dynamics,2025-Q2,2025-04-20,APAC,Security,land,lost,3,149000,447000
+A1238,Pinnacle Grid Inc,2025-Q2,2025-05-27,AMER,Security,land,lost,3,133000,399000
+A1239,Vertex Labs,2025-Q2,2025-05-12,AMER,Security,land,lost,2,57000,114000
+A1240,Silverline Grid Inc,2025-Q2,2025-05-27,AMER,Analytics,land,lost,2,13000,26000
+A1241,Aurora Grid Inc,2025-Q2,2025-06-21,EMEA,Analytics,land,lost,3,18000,54000
+A1242,Silverline Grid Inc,2025-Q2,2025-04-20,EMEA,Analytics,land,lost,3,187000,561000
+A1243,Pinnacle Bridge Inc,2025-Q2,2025-04-20,EMEA,Analytics,land,lost,5,100000,500000
+A1244,Northwind Labs,2025-Q2,2025-04-05,EMEA,Security,land,lost,4,32000,128000
+A1245,Vertex Works,2025-Q2,2025-06-01,AMER,Analytics,land,lost,3,56000,168000
+A1246,Parallel Cloud,2025-Q2,2025-04-25,APAC,Platform,land,lost,3,149000,447000
+A1247,Parallel Labs Inc,2025-Q2,2025-06-23,AMER,Analytics,land,lost,3,94000,282000
+A1248,Granite Labs,2025-Q2,2025-06-27,AMER,Analytics,land,lost,3,299000,897000
+A1249,Meridian Systems,2025-Q2,2025-05-09,EMEA,Analytics,land,lost,3,149000,447000
+A1250,BluePeak Cloud,2025-Q2,2025-04-27,EMEA,Security,land,lost,2,66000,132000
+A1251,BluePeak Grid,2025-Q2,2025-06-05,APAC,Platform,land,lost,5,13000,65000
+A1252,Northwind Dynamics,2025-Q2,2025-06-04,AMER,Platform,land,lost,3,265000,795000
+A1253,Cobalt Grid,2025-Q2,2025-05-11,EMEA,Analytics,land,lost,1,118000,118000
+A1254,Granite Works Inc,2025-Q2,2025-05-29,AMER,Analytics,land,lost,3,265000,795000
+A1255,Vertex Systems,2025-Q2,2025-04-14,AMER,Analytics,land,lost,3,46000,138000
+A1256,Silverline Labs,2025-Q2,2025-06-29,EMEA,Security,land,lost,2,13000,26000
+A1257,Northwind Grid,2025-Q2,2025-04-10,AMER,Security,land,lost,3,79000,237000
+A1258,BluePeak Labs,2025-Q2,2025-05-15,APAC,Platform,land,lost,3,68000,204000
+A1259,Parallel Logic Inc,2025-Q2,2025-04-06,AMER,Analytics,land,lost,3,22000,66000
+A1260,Vertex Grid,2025-Q2,2025-06-24,AMER,Security,land,lost,3,18000,54000
+A1261,Northwind Dynamics Inc,2025-Q2,2025-04-23,APAC,Platform,land,lost,3,21000,63000
+A1262,Parallel Logic Inc,2025-Q2,2025-05-19,APAC,Security,land,lost,3,21000,63000
+A1263,Pinnacle Works,2025-Q2,2025-05-26,APAC,Analytics,land,lost,3,125000,375000
+A1264,Vertex Logic,2025-Q2,2025-05-20,AMER,Platform,land,lost,3,18000,54000
+A1265,Meridian Systems,2025-Q2,2025-05-30,AMER,Platform,land,lost,3,163000,489000
+A1266,Aurora Grid Inc,2025-Q2,2025-04-09,APAC,Platform,land,lost,3,88000,264000
+A1267,Vertex Labs,2025-Q2,2025-04-11,APAC,Analytics,land,lost,2,57000,114000
+A1268,Pinnacle Grid,2025-Q2,2025-04-09,APAC,Analytics,land,lost,3,233000,699000
+A1269,Northwind Dynamics,2025-Q2,2025-06-08,APAC,Platform,land,lost,3,229000,687000
+A1270,Granite Cloud,2025-Q2,2025-04-17,AMER,Platform,land,lost,1,118000,118000
+A1271,Cobalt Dynamics,2025-Q2,2025-05-03,EMEA,Analytics,land,lost,1,14000,14000
+A1272,Pinnacle Systems Inc,2025-Q2,2025-05-21,AMER,Security,land,lost,5,52000,260000
+A1273,Parallel Works Inc,2025-Q2,2025-06-02,APAC,Analytics,land,lost,3,32000,96000
+A1274,Parallel Works,2025-Q2,2025-05-15,AMER,Security,land,lost,3,46000,138000
+A1275,Vertex Systems,2025-Q2,2025-05-15,AMER,Platform,land,lost,2,13000,26000
+A1276,Aurora Grid,2025-Q2,2025-06-21,APAC,Platform,land,lost,3,32000,96000
+A1277,Granite Dynamics Inc,2025-Q2,2025-05-12,EMEA,Analytics,land,lost,3,13000,39000
+A1278,BluePeak Cloud Inc,2025-Q2,2025-04-29,APAC,Security,land,lost,3,80000,240000
+A1279,Vertex Dynamics,2025-Q2,2025-06-19,APAC,Platform,land,lost,3,233000,699000
+A1280,Northwind Dynamics Inc,2025-Q2,2025-06-12,AMER,Security,land,lost,3,215000,645000
+A1281,Granite Labs Inc,2025-Q2,2025-05-22,EMEA,Analytics,land,lost,3,46000,138000
+A1282,Silverline Cloud,2025-Q2,2025-04-27,AMER,Security,land,lost,3,299000,897000
+A0750,Silverline Logic Inc,2025-Q2,2025-06-21,EMEA,Platform,expand,lost,2,290000,580000
+A1051,Vertex Labs Inc,2025-Q2,2025-05-26,APAC,Security,expand,lost,5,123000,615000
+A1056,Meridian Dynamics,2025-Q2,2025-05-01,AMER,Platform,expand,lost,3,69000,207000
+A1253,Cobalt Grid,2025-Q2,2025-06-15,EMEA,Platform,expand,lost,3,68000,204000
+A0764,Northwind Works Inc,2025-Q2,2025-04-06,APAC,Analytics,expand,lost,3,13000,39000
+A0864,Parallel Labs Inc,2025-Q2,2025-04-20,AMER,Security,expand,lost,5,181000,905000
+A0757,Cobalt Systems Inc,2025-Q2,2025-04-08,APAC,Platform,expand,lost,3,108000,324000
+A1125,Northwind Grid Inc,2025-Q2,2025-05-03,AMER,Analytics,expand,lost,4,64000,256000
+A0542,Aurora Cloud Inc,2025-Q2,2025-04-12,AMER,Analytics,expand,lost,3,58000,174000
+A0666,Pinnacle Logic,2025-Q2,2025-04-27,EMEA,Platform,expand,lost,3,118000,354000
+A0483,Granite Works,2025-Q2,2025-05-15,EMEA,Analytics,expand,lost,3,14000,42000
+A0785,Granite Grid Inc,2025-Q2,2025-06-18,EMEA,Security,expand,lost,3,13000,39000
+A1231,Granite Cloud,2025-Q2,2025-06-18,AMER,Analytics,expand,lost,3,73000,219000
+A0485,Vertex Bridge,2025-Q2,2025-04-29,EMEA,Security,expand,lost,3,14000,42000
+A1045,Aurora Cloud,2025-Q2,2025-05-11,AMER,Platform,expand,lost,4,71000,284000
+A0391,Cobalt Logic Inc,2025-Q2,2025-04-24,EMEA,Analytics,expand,lost,3,20000,60000
+A0718,Meridian Systems Inc,2025-Q2,2025-05-13,EMEA,Platform,expand,lost,3,121000,363000
+A0454,Parallel Systems Inc,2025-Q2,2025-05-04,AMER,Security,expand,lost,5,20000,100000
+A0882,Parallel Logic,2025-Q2,2025-05-11,APAC,Analytics,expand,lost,5,101000,505000
+A0330,Pinnacle Dynamics,2025-Q2,2025-04-30,EMEA,Analytics,expand,lost,3,118000,354000
+A0877,Silverline Systems,2025-Q2,2025-06-02,AMER,Analytics,expand,lost,1,165000,165000
+A1178,Meridian Labs,2025-Q2,2025-04-23,EMEA,Platform,expand,lost,3,118000,354000
+A0717,Aurora Bridge,2025-Q2,2025-06-17,AMER,Security,expand,lost,1,101000,101000
+A0166,BluePeak Grid,2025-Q2,2025-04-27,AMER,Analytics,expand,lost,5,256000,1280000
+A0614,Cobalt Grid Inc,2025-Q2,2025-05-12,EMEA,Security,expand,lost,3,290000,870000
+A0532,Parallel Grid Inc,2025-Q2,2025-06-12,APAC,Security,expand,lost,3,35000,105000
+A0780,Parallel Grid Inc,2025-Q2,2025-04-04,APAC,Security,expand,lost,2,13000,26000
+A0581,Northwind Labs,2025-Q2,2025-06-05,EMEA,Security,expand,lost,3,168000,504000
+A0179,Cobalt Logic,2025-Q2,2025-04-17,APAC,Platform,expand,lost,2,173000,346000
+A0686,Cobalt Labs,2025-Q2,2025-06-15,APAC,Platform,expand,lost,2,181000,362000
+A0097,Granite Labs Inc,2025-Q2,2025-04-05,AMER,Security,expand,lost,1,13000,13000
+A0445,Meridian Systems Inc,2025-Q2,2025-04-24,APAC,Platform,expand,lost,3,290000,870000
+A0010,Parallel Labs,2025-Q2,2025-06-11,EMEA,Analytics,expand,lost,3,181000,543000
+A0346,Silverline Works,2025-Q3,2025-08-29,EMEA,Security,renew,won,3,49000,147000
+A0110,Vertex Cloud,2025-Q3,2025-09-07,EMEA,Security,renew,won,3,137000,411000
+A0529,Pinnacle Labs,2025-Q3,2025-07-22,EMEA,Platform,renew,won,3,59000,177000
+A0229,Vertex Systems,2025-Q3,2025-09-13,APAC,Platform,renew,won,1,524000,524000
+A0227,Vertex Cloud,2025-Q3,2025-09-05,APAC,Analytics,renew,won,3,245000,735000
+A0254,Parallel Cloud Inc,2025-Q3,2025-07-04,APAC,Platform,renew,won,5,105000,525000
+A0382,Pinnacle Works,2025-Q3,2025-09-15,EMEA,Security,renew,won,1,19000,19000
+A0492,Parallel Systems,2025-Q3,2025-09-20,AMER,Platform,renew,won,3,592000,1776000
+A0188,Silverline Systems,2025-Q3,2025-07-29,APAC,Security,renew,won,3,493000,1479000
+A0535,BluePeak Bridge Inc,2025-Q3,2025-08-27,EMEA,Platform,renew,won,3,356000,1068000
+A0150,BluePeak Labs,2025-Q3,2025-08-13,AMER,Analytics,renew,won,3,251000,753000
+A0336,Vertex Dynamics Inc,2025-Q3,2025-09-08,AMER,Analytics,renew,won,3,50000,150000
+A0329,Cobalt Systems,2025-Q3,2025-09-04,AMER,Analytics,renew,won,3,112000,336000
+A0466,Meridian Grid Inc,2025-Q3,2025-08-27,AMER,Platform,renew,won,3,211000,633000
+A0249,Northwind Cloud Inc,2025-Q3,2025-08-26,APAC,Analytics,renew,won,3,265000,795000
+A0090,Silverline Systems,2025-Q3,2025-08-10,EMEA,Platform,renew,won,5,260000,1300000
+A0210,Meridian Bridge,2025-Q3,2025-07-26,AMER,Security,renew,won,3,160000,480000
+A0237,Granite Systems,2025-Q3,2025-08-02,APAC,Security,renew,won,3,125000,375000
+A0322,BluePeak Systems,2025-Q3,2025-09-06,EMEA,Security,renew,won,3,364000,1092000
+A0479,Pinnacle Dynamics Inc,2025-Q3,2025-07-26,AMER,Analytics,renew,won,2,285000,570000
+A0340,Meridian Labs Inc,2025-Q3,2025-08-31,EMEA,Analytics,renew,won,3,350000,1050000
+A0287,Meridian Dynamics Inc,2025-Q3,2025-07-08,AMER,Security,renew,won,3,241000,723000
+A0410,Cobalt Logic,2025-Q3,2025-09-26,EMEA,Analytics,renew,won,3,594000,1782000
+A0486,Vertex Works,2025-Q3,2025-08-28,EMEA,Analytics,renew,won,3,95000,285000
+A0063,Vertex Logic Inc,2025-Q3,2025-07-19,APAC,Platform,renew,won,5,274000,1370000
+A0012,Northwind Cloud,2025-Q3,2025-09-23,AMER,Platform,renew,won,3,40000,120000
+A0089,Aurora Dynamics Inc,2025-Q3,2025-09-30,EMEA,Platform,renew,won,4,14000,56000
+A0173,Meridian Grid Inc,2025-Q3,2025-09-08,AMER,Analytics,renew,won,3,516000,1548000
+A0377,BluePeak Labs Inc,2025-Q3,2025-09-25,APAC,Analytics,renew,won,3,74000,222000
+A0208,Vertex Grid,2025-Q3,2025-09-10,APAC,Analytics,renew,lost,3,101000,303000
+A0426,Northwind Labs,2025-Q3,2025-08-30,AMER,Analytics,renew,won,3,448000,1344000
+A0308,Aurora Systems,2025-Q3,2025-09-24,APAC,Platform,renew,won,3,329000,987000
+A0499,Silverline Labs Inc,2025-Q3,2025-07-15,APAC,Analytics,renew,won,3,180000,540000
+A0067,Silverline Labs,2025-Q3,2025-09-07,EMEA,Security,renew,won,4,189000,756000
+A0114,Cobalt Dynamics,2025-Q3,2025-09-02,EMEA,Analytics,renew,won,5,38000,190000
+A0620,Silverline Grid,2025-Q3,2025-09-20,AMER,Analytics,renew,won,3,53000,159000
+A0013,Pinnacle Bridge Inc,2025-Q3,2025-09-21,APAC,Analytics,renew,won,3,391000,1173000
+A0542,Aurora Cloud Inc,2025-Q3,2025-08-23,AMER,Security,renew,lost,3,242000,726000
+A0554,BluePeak Systems Inc,2025-Q3,2025-07-20,EMEA,Security,renew,won,3,429000,1287000
+A0060,Northwind Labs Inc,2025-Q3,2025-08-29,APAC,Platform,renew,won,3,221000,663000
+A0423,Silverline Cloud Inc,2025-Q3,2025-09-29,APAC,Analytics,renew,won,3,52000,156000
+A0576,Northwind Cloud,2025-Q3,2025-07-31,EMEA,Platform,renew,won,3,470000,1410000
+A0602,Granite Grid,2025-Q3,2025-07-28,EMEA,Security,renew,won,3,257000,771000
+A0347,Silverline Dynamics,2025-Q3,2025-09-07,EMEA,Security,renew,won,3,198000,594000
+A0272,Aurora Bridge Inc,2025-Q3,2025-07-02,APAC,Analytics,renew,won,3,210000,630000
+A0207,Vertex Logic Inc,2025-Q3,2025-09-16,EMEA,Platform,renew,won,3,50000,150000
+A0087,Silverline Labs,2025-Q3,2025-08-07,AMER,Analytics,renew,won,3,291000,873000
+A0020,Cobalt Bridge Inc,2025-Q3,2025-07-09,AMER,Security,renew,won,1,144000,144000
+A0116,Silverline Cloud,2025-Q3,2025-07-19,APAC,Platform,renew,won,3,110000,330000
+A0035,Pinnacle Dynamics,2025-Q3,2025-08-21,APAC,Platform,renew,won,3,128000,384000
+A0539,Granite Dynamics Inc,2025-Q3,2025-09-15,EMEA,Analytics,renew,won,2,21000,42000
+A0617,Aurora Bridge,2025-Q3,2025-09-26,APAC,Platform,renew,lost,3,186000,558000
+A0043,Silverline Grid Inc,2025-Q3,2025-08-26,APAC,Analytics,renew,won,3,118000,354000
+A0446,BluePeak Grid,2025-Q3,2025-08-12,EMEA,Analytics,renew,won,3,617000,1851000
+A0416,Northwind Works,2025-Q3,2025-07-22,AMER,Analytics,renew,won,3,46000,138000
+A0113,Aurora Systems,2025-Q3,2025-08-14,AMER,Platform,renew,won,3,129000,387000
+A0440,Granite Grid,2025-Q3,2025-07-28,EMEA,Analytics,renew,won,3,719000,2157000
+A0070,Pinnacle Systems,2025-Q3,2025-07-07,EMEA,Security,renew,won,3,27000,81000
+A0252,Parallel Grid Inc,2025-Q3,2025-07-28,APAC,Platform,renew,won,3,47000,141000
+A0083,Vertex Bridge Inc,2025-Q3,2025-08-15,APAC,Analytics,renew,won,3,431000,1293000
+A0578,Northwind Dynamics Inc,2025-Q3,2025-08-08,APAC,Platform,renew,won,3,365000,1095000
+A0328,Cobalt Systems,2025-Q3,2025-08-12,EMEA,Platform,renew,won,3,32000,96000
+A0085,Vertex Cloud,2025-Q3,2025-09-14,EMEA,Platform,expand,won,2,128000,256000
+A0117,Cobalt Systems,2025-Q3,2025-08-26,EMEA,Analytics,expand,won,3,185000,555000
+A0528,Silverline Logic,2025-Q3,2025-07-06,EMEA,Security,expand,won,3,73000,219000
+A0447,BluePeak Works,2025-Q3,2025-07-02,APAC,Platform,expand,won,3,20000,60000
+A0177,Silverline Labs,2025-Q3,2025-09-06,EMEA,Security,expand,won,3,13000,39000
+A0320,Meridian Works Inc,2025-Q3,2025-09-18,APAC,Analytics,expand,won,3,266000,798000
+A0153,Parallel Dynamics,2025-Q3,2025-09-11,EMEA,Analytics,expand,won,3,60000,180000
+A0344,Northwind Cloud,2025-Q3,2025-08-13,EMEA,Security,expand,won,3,159000,477000
+A0136,Cobalt Labs Inc,2025-Q3,2025-07-08,APAC,Platform,expand,won,3,116000,348000
+A0081,Silverline Dynamics,2025-Q3,2025-09-15,APAC,Security,expand,won,3,193000,579000
+A0280,Granite Works,2025-Q3,2025-08-24,AMER,Platform,expand,won,3,115000,345000
+A0447,BluePeak Works,2025-Q3,2025-08-02,APAC,Analytics,expand,won,3,252000,756000
+A0464,Meridian Cloud,2025-Q3,2025-07-04,EMEA,Analytics,expand,won,3,298000,894000
+A0156,BluePeak Labs,2025-Q3,2025-08-20,AMER,Security,expand,won,3,179000,537000
+A0545,Meridian Systems Inc,2025-Q3,2025-08-17,APAC,Platform,expand,won,3,93000,279000
+A0019,Silverline Cloud Inc,2025-Q3,2025-08-09,AMER,Analytics,expand,won,4,139000,556000
+A0354,Aurora Dynamics,2025-Q3,2025-08-22,APAC,Security,expand,won,3,13000,39000
+A0299,Granite Cloud,2025-Q3,2025-08-16,EMEA,Security,expand,won,3,94000,282000
+A0438,Vertex Cloud,2025-Q3,2025-09-12,EMEA,Security,expand,won,1,35000,35000
+A0194,Silverline Logic,2025-Q3,2025-09-06,AMER,Platform,expand,won,4,40000,160000
+A0258,Silverline Dynamics,2025-Q3,2025-09-14,AMER,Analytics,expand,won,3,176000,528000
+A0214,Silverline Labs Inc,2025-Q3,2025-08-21,APAC,Security,expand,won,3,200000,600000
+A0279,Parallel Works Inc,2025-Q3,2025-07-23,EMEA,Analytics,expand,won,3,19000,57000
+A0348,Meridian Works,2025-Q3,2025-07-22,AMER,Analytics,expand,won,3,51000,153000
+A0379,Silverline Systems Inc,2025-Q3,2025-07-08,AMER,Security,expand,won,3,37000,111000
+A0128,Aurora Grid Inc,2025-Q3,2025-08-01,APAC,Analytics,expand,won,2,23000,46000
+A0073,Pinnacle Systems,2025-Q3,2025-07-12,AMER,Analytics,expand,won,3,18000,54000
+A0098,Northwind Logic Inc,2025-Q3,2025-08-13,APAC,Platform,expand,won,2,21000,42000
+A0430,BluePeak Grid Inc,2025-Q3,2025-08-05,EMEA,Platform,expand,won,3,18000,54000
+A0047,Northwind Dynamics,2025-Q3,2025-07-24,APAC,Platform,expand,won,3,27000,81000
+A0307,Vertex Systems,2025-Q3,2025-07-11,EMEA,Analytics,expand,won,3,209000,627000
+A0447,BluePeak Works,2025-Q3,2025-08-10,APAC,Security,expand,won,3,253000,759000
+A0178,Parallel Cloud,2025-Q3,2025-08-11,AMER,Security,expand,won,3,15000,45000
+A0141,BluePeak Works Inc,2025-Q3,2025-09-23,APAC,Security,expand,won,3,103000,309000
+A0311,Silverline Systems Inc,2025-Q3,2025-09-02,AMER,Security,expand,won,3,88000,264000
+A0061,Aurora Grid,2025-Q3,2025-07-16,EMEA,Security,expand,won,3,13000,39000
+A0431,Northwind Bridge Inc,2025-Q3,2025-07-11,AMER,Security,expand,won,3,37000,111000
+A0482,Vertex Dynamics Inc,2025-Q3,2025-09-02,APAC,Platform,expand,won,3,193000,579000
+A0760,BluePeak Works,2025-Q3,2025-09-17,EMEA,Platform,land,won,3,169000,507000
+A0761,Aurora Grid,2025-Q3,2025-07-05,EMEA,Platform,land,won,3,13000,39000
+A0762,Meridian Bridge,2025-Q3,2025-09-06,AMER,Security,land,won,3,13000,39000
+A0763,Aurora Logic,2025-Q3,2025-07-05,EMEA,Platform,land,won,3,27000,81000
+A0764,Northwind Works Inc,2025-Q3,2025-08-01,APAC,Platform,land,won,3,117000,351000
+A0765,Meridian Grid Inc,2025-Q3,2025-08-31,APAC,Security,land,won,3,59000,177000
+A0766,Northwind Systems,2025-Q3,2025-08-22,EMEA,Security,land,won,1,31000,31000
+A0767,Vertex Labs,2025-Q3,2025-09-20,AMER,Platform,land,won,3,17000,51000
+A0768,Vertex Grid Inc,2025-Q3,2025-08-31,EMEA,Security,land,won,3,96000,288000
+A0769,Meridian Dynamics,2025-Q3,2025-09-25,APAC,Platform,land,won,3,280000,840000
+A0770,Northwind Systems Inc,2025-Q3,2025-09-18,EMEA,Analytics,land,won,3,246000,738000
+A0771,Cobalt Works,2025-Q3,2025-07-18,APAC,Analytics,land,won,3,75000,225000
+A0772,Pinnacle Labs,2025-Q3,2025-07-22,AMER,Platform,land,won,3,36000,108000
+A0773,Cobalt Grid Inc,2025-Q3,2025-07-06,APAC,Analytics,land,won,3,22000,66000
+A0774,Meridian Cloud,2025-Q3,2025-07-30,AMER,Platform,land,won,3,258000,774000
+A0775,Granite Logic Inc,2025-Q3,2025-07-04,EMEA,Security,land,won,3,166000,498000
+A0776,Pinnacle Grid Inc,2025-Q3,2025-08-07,AMER,Security,land,won,4,103000,412000
+A0777,Parallel Grid Inc,2025-Q3,2025-07-24,AMER,Platform,land,won,3,18000,54000
+A0778,Vertex Systems Inc,2025-Q3,2025-07-13,AMER,Security,land,won,3,268000,804000
+A0779,Pinnacle Labs Inc,2025-Q3,2025-09-02,EMEA,Analytics,land,won,3,160000,480000
+A0780,Parallel Grid Inc,2025-Q3,2025-07-12,APAC,Platform,land,won,2,192000,384000
+A0781,Pinnacle Labs,2025-Q3,2025-09-09,AMER,Security,land,won,3,90000,270000
+A0782,Parallel Cloud Inc,2025-Q3,2025-08-27,AMER,Platform,land,won,3,167000,501000
+A0783,Northwind Works,2025-Q3,2025-08-10,APAC,Security,land,won,3,155000,465000
+A0784,Silverline Systems,2025-Q3,2025-09-11,APAC,Platform,land,won,3,32000,96000
+A0785,Granite Grid Inc,2025-Q3,2025-07-10,EMEA,Security,land,won,3,257000,771000
+A0786,Meridian Works,2025-Q3,2025-09-18,AMER,Platform,land,won,3,33000,99000
+A0787,Pinnacle Grid Inc,2025-Q3,2025-09-23,APAC,Analytics,land,won,3,18000,54000
+A0788,BluePeak Bridge,2025-Q3,2025-07-07,EMEA,Platform,land,won,3,123000,369000
+A0789,Vertex Logic,2025-Q3,2025-09-12,EMEA,Analytics,land,won,3,28000,84000
+A0790,Parallel Logic,2025-Q3,2025-07-06,APAC,Security,land,won,3,98000,294000
+A0791,Aurora Works,2025-Q3,2025-07-11,EMEA,Platform,land,won,3,112000,336000
+A0792,Meridian Labs Inc,2025-Q3,2025-09-20,APAC,Security,land,won,3,182000,546000
+A0793,Aurora Works,2025-Q3,2025-09-20,AMER,Platform,land,won,3,14000,42000
+A0794,Meridian Bridge,2025-Q3,2025-09-07,APAC,Analytics,land,won,1,14000,14000
+A0795,Aurora Works Inc,2025-Q3,2025-07-20,APAC,Security,land,won,3,44000,132000
+A0796,Aurora Systems,2025-Q3,2025-09-19,EMEA,Analytics,land,won,3,187000,561000
+A0797,Pinnacle Grid Inc,2025-Q3,2025-09-24,APAC,Security,land,won,3,274000,822000
+A0798,Pinnacle Works,2025-Q3,2025-08-26,EMEA,Platform,land,won,4,103000,412000
+A0799,Northwind Dynamics Inc,2025-Q3,2025-08-16,APAC,Platform,land,won,3,14000,42000
+A0800,Granite Systems,2025-Q3,2025-07-15,AMER,Security,land,won,3,112000,336000
+A0801,Pinnacle Cloud Inc,2025-Q3,2025-09-16,EMEA,Analytics,land,won,3,214000,642000
+A0802,Aurora Bridge Inc,2025-Q3,2025-07-15,EMEA,Analytics,land,won,3,62000,186000
+A0803,Pinnacle Works,2025-Q3,2025-09-17,EMEA,Security,land,won,3,231000,693000
+A0804,Cobalt Logic,2025-Q3,2025-08-14,APAC,Platform,land,won,3,198000,594000
+A0805,BluePeak Logic,2025-Q3,2025-07-04,AMER,Platform,land,won,3,14000,42000
+A0806,Northwind Bridge Inc,2025-Q3,2025-08-15,AMER,Analytics,land,won,3,255000,765000
+A0807,Pinnacle Dynamics Inc,2025-Q3,2025-07-12,AMER,Security,land,won,3,31000,93000
+A0808,Vertex Systems,2025-Q3,2025-09-06,APAC,Platform,land,won,3,70000,210000
+A0809,Parallel Cloud,2025-Q3,2025-07-26,EMEA,Security,land,won,5,57000,285000
+A0810,Northwind Works Inc,2025-Q3,2025-08-13,APAC,Analytics,land,won,3,32000,96000
+A0811,Silverline Labs,2025-Q3,2025-08-27,APAC,Analytics,land,won,3,38000,114000
+A0812,Silverline Grid Inc,2025-Q3,2025-09-18,AMER,Analytics,land,won,3,13000,39000
+A0813,Meridian Systems,2025-Q3,2025-09-28,APAC,Analytics,land,won,3,271000,813000
+A0814,Aurora Dynamics,2025-Q3,2025-08-07,APAC,Analytics,land,won,3,90000,270000
+A0815,Aurora Works Inc,2025-Q3,2025-07-20,AMER,Security,land,won,3,166000,498000
+A0816,Northwind Dynamics,2025-Q3,2025-08-13,EMEA,Analytics,land,won,3,292000,876000
+A0817,BluePeak Logic Inc,2025-Q3,2025-09-04,EMEA,Analytics,land,won,3,250000,750000
+A0818,Meridian Grid,2025-Q3,2025-09-24,AMER,Analytics,land,won,3,22000,66000
+A0819,Cobalt Cloud,2025-Q3,2025-09-10,EMEA,Analytics,land,won,3,259000,777000
+A0820,BluePeak Bridge,2025-Q3,2025-07-04,APAC,Platform,land,won,5,276000,1380000
+A0821,Aurora Systems,2025-Q3,2025-07-30,APAC,Analytics,land,won,2,14000,28000
+A0822,Cobalt Cloud Inc,2025-Q3,2025-08-27,AMER,Platform,land,won,3,28000,84000
+A0823,Aurora Dynamics,2025-Q3,2025-09-20,AMER,Security,land,won,3,23000,69000
+A0824,Pinnacle Grid Inc,2025-Q3,2025-07-15,AMER,Security,land,won,2,254000,508000
+A0825,Cobalt Grid,2025-Q3,2025-08-09,AMER,Analytics,land,won,3,65000,195000
+A0826,Vertex Cloud,2025-Q3,2025-09-20,EMEA,Security,land,won,4,69000,276000
+A0827,Pinnacle Logic Inc,2025-Q3,2025-07-03,EMEA,Platform,land,won,3,76000,228000
+A0828,Silverline Bridge Inc,2025-Q3,2025-07-16,EMEA,Platform,land,won,3,103000,309000
+A0829,Granite Works,2025-Q3,2025-09-21,EMEA,Analytics,land,won,3,146000,438000
+A0830,BluePeak Logic Inc,2025-Q3,2025-09-24,EMEA,Platform,land,won,3,88000,264000
+A0831,BluePeak Logic Inc,2025-Q3,2025-09-20,EMEA,Security,land,won,3,36000,108000
+A0832,Northwind Cloud,2025-Q3,2025-09-08,EMEA,Platform,land,won,3,20000,60000
+A0833,Northwind Logic,2025-Q3,2025-08-31,AMER,Platform,land,won,3,56000,168000
+A0834,Meridian Labs,2025-Q3,2025-07-09,AMER,Analytics,land,won,3,271000,813000
+A1283,Silverline Works,2025-Q3,2025-09-15,APAC,Platform,land,lost,3,259000,777000
+A1284,Aurora Logic,2025-Q3,2025-07-07,APAC,Analytics,land,lost,3,31000,93000
+A1285,Meridian Logic Inc,2025-Q3,2025-08-30,EMEA,Analytics,land,lost,3,280000,840000
+A1286,Granite Dynamics,2025-Q3,2025-08-07,APAC,Analytics,land,lost,3,88000,264000
+A1287,Aurora Logic,2025-Q3,2025-09-29,APAC,Security,land,lost,3,182000,546000
+A1288,Parallel Grid Inc,2025-Q3,2025-08-19,AMER,Platform,land,lost,1,31000,31000
+A1289,Pinnacle Grid,2025-Q3,2025-07-11,AMER,Analytics,land,lost,3,155000,465000
+A1290,BluePeak Grid Inc,2025-Q3,2025-08-15,EMEA,Analytics,land,lost,3,167000,501000
+A1291,BluePeak Labs Inc,2025-Q3,2025-07-14,EMEA,Analytics,land,lost,3,17000,51000
+A1292,Granite Logic Inc,2025-Q3,2025-08-03,EMEA,Platform,land,lost,3,231000,693000
+A1293,Pinnacle Works,2025-Q3,2025-07-21,EMEA,Analytics,land,lost,3,70000,210000
+A1294,Meridian Dynamics Inc,2025-Q3,2025-09-01,EMEA,Analytics,land,lost,3,14000,42000
+A1295,Parallel Labs,2025-Q3,2025-07-31,APAC,Analytics,land,lost,3,198000,594000
+A1296,Parallel Works Inc,2025-Q3,2025-08-08,APAC,Analytics,land,lost,1,14000,14000
+A1297,Parallel Systems,2025-Q3,2025-08-03,APAC,Security,land,lost,3,198000,594000
+A1298,Parallel Logic,2025-Q3,2025-08-02,AMER,Platform,land,lost,3,167000,501000
+A1299,BluePeak Logic Inc,2025-Q3,2025-08-31,APAC,Security,land,lost,5,276000,1380000
+A1300,Northwind Cloud Inc,2025-Q3,2025-09-19,AMER,Security,land,lost,3,14000,42000
+A1301,Cobalt Grid,2025-Q3,2025-07-12,AMER,Platform,land,lost,3,65000,195000
+A1302,BluePeak Works,2025-Q3,2025-09-01,EMEA,Security,land,lost,3,13000,39000
+A1303,Cobalt Systems Inc,2025-Q3,2025-07-19,AMER,Analytics,land,lost,3,59000,177000
+A1304,Meridian Cloud,2025-Q3,2025-09-04,EMEA,Platform,land,lost,3,198000,594000
+A1305,Silverline Systems,2025-Q3,2025-07-15,EMEA,Platform,land,lost,3,280000,840000
+A1306,Cobalt Grid Inc,2025-Q3,2025-08-28,APAC,Analytics,land,lost,3,22000,66000
+A1307,Parallel Cloud,2025-Q3,2025-09-05,EMEA,Analytics,land,lost,3,166000,498000
+A1308,Parallel Works,2025-Q3,2025-08-05,AMER,Security,land,lost,3,22000,66000
+A1309,Pinnacle Logic Inc,2025-Q3,2025-07-11,AMER,Security,land,lost,3,14000,42000
+A1310,Aurora Systems Inc,2025-Q3,2025-09-13,EMEA,Analytics,land,lost,3,257000,771000
+A1311,Vertex Grid,2025-Q3,2025-09-10,APAC,Security,land,lost,3,96000,288000
+A1312,Cobalt Bridge,2025-Q3,2025-09-18,EMEA,Platform,land,lost,3,36000,108000
+A1313,Granite Grid Inc,2025-Q3,2025-08-20,APAC,Analytics,land,lost,3,96000,288000
+A1314,Granite Cloud Inc,2025-Q3,2025-08-08,APAC,Analytics,land,lost,3,28000,84000
+A1315,Meridian Works Inc,2025-Q3,2025-08-19,EMEA,Security,land,lost,3,14000,42000
+A1316,Cobalt Systems Inc,2025-Q3,2025-09-24,APAC,Security,land,lost,3,13000,39000
+A1317,Pinnacle Cloud Inc,2025-Q3,2025-09-26,APAC,Security,land,lost,3,117000,351000
+A1318,Northwind Systems Inc,2025-Q3,2025-08-19,APAC,Analytics,land,lost,3,182000,546000
+A1319,Pinnacle Logic Inc,2025-Q3,2025-08-27,AMER,Security,land,lost,3,231000,693000
+A1320,Cobalt Labs Inc,2025-Q3,2025-07-17,EMEA,Security,land,lost,3,18000,54000
+A1321,Cobalt Systems Inc,2025-Q3,2025-09-14,AMER,Security,land,lost,3,65000,195000
+A1322,Vertex Labs Inc,2025-Q3,2025-08-24,EMEA,Platform,land,lost,3,187000,561000
+A1323,Vertex Works,2025-Q3,2025-08-02,AMER,Platform,land,lost,3,96000,288000
+A1324,Pinnacle Dynamics,2025-Q3,2025-08-15,EMEA,Platform,land,lost,3,17000,51000
+A1325,Northwind Systems,2025-Q3,2025-09-23,AMER,Analytics,land,lost,5,276000,1380000
+A1326,Aurora Systems Inc,2025-Q3,2025-08-06,APAC,Platform,land,lost,3,182000,546000
+A1327,Parallel Logic,2025-Q3,2025-09-08,AMER,Security,land,lost,3,32000,96000
+A1328,Cobalt Cloud Inc,2025-Q3,2025-08-30,APAC,Analytics,land,lost,3,20000,60000
+A1329,Parallel Works Inc,2025-Q3,2025-07-03,EMEA,Analytics,land,lost,3,90000,270000
+A1330,BluePeak Systems Inc,2025-Q3,2025-07-21,AMER,Platform,land,lost,3,18000,54000
+A1331,Parallel Cloud,2025-Q3,2025-08-22,EMEA,Platform,land,lost,3,90000,270000
+A1332,Parallel Bridge Inc,2025-Q3,2025-07-12,EMEA,Security,land,lost,3,32000,96000
+A1333,Parallel Bridge Inc,2025-Q3,2025-07-10,AMER,Platform,land,lost,3,198000,594000
+A1334,Pinnacle Logic,2025-Q3,2025-07-13,APAC,Platform,land,lost,3,14000,42000
+A1335,BluePeak Dynamics,2025-Q3,2025-09-19,EMEA,Security,land,lost,3,22000,66000
+A1336,Vertex Bridge,2025-Q3,2025-07-15,APAC,Platform,land,lost,3,169000,507000
+A1337,Parallel Grid,2025-Q3,2025-08-15,AMER,Security,land,lost,3,88000,264000
+A1338,Northwind Logic Inc,2025-Q3,2025-08-28,AMER,Platform,land,lost,3,36000,108000
+A1339,Vertex Labs Inc,2025-Q3,2025-08-09,EMEA,Platform,land,lost,3,112000,336000
+A1340,Silverline Works,2025-Q3,2025-08-18,EMEA,Platform,land,lost,3,155000,465000
+A1341,Northwind Works,2025-Q3,2025-08-27,APAC,Platform,land,lost,3,250000,750000
+A1342,Meridian Grid Inc,2025-Q3,2025-07-30,AMER,Analytics,land,lost,3,13000,39000
+A1343,Granite Systems,2025-Q3,2025-09-03,EMEA,Security,land,lost,3,292000,876000
+A1344,Granite Cloud Inc,2025-Q3,2025-07-06,AMER,Analytics,land,lost,3,274000,822000
+A1345,Parallel Dynamics,2025-Q3,2025-07-28,APAC,Platform,land,lost,3,112000,336000
+A1346,Cobalt Works Inc,2025-Q3,2025-07-04,AMER,Security,land,lost,3,103000,309000
+A1347,Cobalt Systems,2025-Q3,2025-09-25,EMEA,Analytics,land,lost,3,65000,195000
+A1348,Vertex Logic Inc,2025-Q3,2025-08-30,AMER,Platform,land,lost,3,88000,264000
+A1349,BluePeak Bridge,2025-Q3,2025-09-15,EMEA,Analytics,land,lost,3,22000,66000
+A1350,Vertex Bridge,2025-Q3,2025-07-10,APAC,Security,land,lost,3,28000,84000
+A1351,Parallel Systems,2025-Q3,2025-07-10,EMEA,Security,land,lost,3,38000,114000
+A1352,Northwind Dynamics Inc,2025-Q3,2025-08-10,AMER,Security,land,lost,3,31000,93000
+A1353,Vertex Grid,2025-Q3,2025-08-31,AMER,Platform,land,lost,3,27000,81000
+A1354,Meridian Logic,2025-Q3,2025-09-21,AMER,Analytics,land,lost,3,65000,195000
+A1355,Parallel Bridge,2025-Q3,2025-09-21,AMER,Security,land,lost,3,117000,351000
+A1356,Vertex Bridge,2025-Q3,2025-07-21,AMER,Security,land,lost,2,192000,384000
+A1357,BluePeak Labs Inc,2025-Q3,2025-08-09,AMER,Platform,land,lost,3,36000,108000
+A1358,Vertex Dynamics Inc,2025-Q3,2025-08-09,AMER,Analytics,land,lost,3,27000,81000
+A1359,Aurora Grid,2025-Q3,2025-09-25,EMEA,Security,land,lost,3,280000,840000
+A1360,BluePeak Works Inc,2025-Q3,2025-07-08,APAC,Security,land,lost,3,214000,642000
+A1361,Northwind Dynamics Inc,2025-Q3,2025-08-17,EMEA,Security,land,lost,2,192000,384000
+A1362,Parallel Works Inc,2025-Q3,2025-08-08,APAC,Platform,land,lost,3,18000,54000
+A1363,Pinnacle Works,2025-Q3,2025-07-13,AMER,Platform,land,lost,3,214000,642000
+A1364,Granite Logic,2025-Q3,2025-09-06,APAC,Platform,land,lost,3,268000,804000
+A1365,Cobalt Logic,2025-Q3,2025-09-07,APAC,Analytics,land,lost,3,117000,351000
+A1366,Pinnacle Grid Inc,2025-Q3,2025-07-06,APAC,Platform,land,lost,3,98000,294000
+A1367,Northwind Labs,2025-Q3,2025-09-25,AMER,Analytics,land,lost,3,31000,93000
+A1368,Cobalt Dynamics,2025-Q3,2025-08-06,AMER,Security,land,lost,3,75000,225000
+A1369,Cobalt Grid,2025-Q3,2025-08-13,EMEA,Analytics,land,lost,3,36000,108000
+A1370,Northwind Grid Inc,2025-Q3,2025-09-12,AMER,Security,land,lost,3,166000,498000
+A1371,Cobalt Systems Inc,2025-Q3,2025-09-11,EMEA,Security,land,lost,3,23000,69000
+A1372,Granite Dynamics Inc,2025-Q3,2025-07-02,AMER,Security,land,lost,3,259000,777000
+A1373,Northwind Systems,2025-Q3,2025-08-21,AMER,Security,land,lost,3,214000,642000
+A1374,Northwind Cloud Inc,2025-Q3,2025-07-21,APAC,Analytics,land,lost,3,38000,114000
+A1375,Granite Dynamics,2025-Q3,2025-08-31,AMER,Platform,land,lost,3,36000,108000
+A1376,BluePeak Grid,2025-Q3,2025-08-06,AMER,Security,land,lost,3,166000,498000
+A1377,Silverline Systems Inc,2025-Q3,2025-09-25,AMER,Analytics,land,lost,3,38000,114000
+A1378,Vertex Labs Inc,2025-Q3,2025-08-07,EMEA,Analytics,land,lost,5,276000,1380000
+A1379,BluePeak Labs Inc,2025-Q3,2025-08-22,APAC,Platform,land,lost,3,231000,693000
+A1380,Meridian Dynamics,2025-Q3,2025-09-07,APAC,Analytics,land,lost,3,36000,108000
+A1381,Aurora Labs,2025-Q3,2025-09-15,EMEA,Analytics,land,lost,5,57000,285000
+A1382,Cobalt Logic,2025-Q3,2025-09-10,AMER,Analytics,land,lost,3,14000,42000
+A1383,Pinnacle Logic Inc,2025-Q3,2025-07-05,EMEA,Platform,land,lost,3,292000,876000
+A1384,Silverline Dynamics,2025-Q3,2025-07-14,APAC,Security,land,lost,3,166000,498000
+A1385,Pinnacle Bridge,2025-Q3,2025-08-03,APAC,Analytics,land,lost,3,17000,51000
+A1386,Cobalt Works Inc,2025-Q3,2025-07-10,EMEA,Platform,land,lost,3,62000,186000
+A1387,Parallel Logic,2025-Q3,2025-08-04,APAC,Security,land,lost,3,28000,84000
+A1388,Northwind Cloud,2025-Q3,2025-08-04,APAC,Analytics,land,lost,3,88000,264000
+A1389,Pinnacle Logic,2025-Q3,2025-08-20,AMER,Security,land,lost,1,31000,31000
+A1390,Aurora Bridge,2025-Q3,2025-07-19,APAC,Platform,land,lost,3,259000,777000
+A1391,Aurora Cloud,2025-Q3,2025-08-20,EMEA,Analytics,land,lost,1,14000,14000
+A1392,Pinnacle Cloud,2025-Q3,2025-09-26,AMER,Security,land,lost,3,155000,465000
+A1393,Northwind Grid,2025-Q3,2025-08-08,AMER,Analytics,land,lost,3,166000,498000
+A1394,Vertex Works Inc,2025-Q3,2025-07-07,APAC,Analytics,land,lost,3,280000,840000
+A1395,Cobalt Grid Inc,2025-Q3,2025-07-07,AMER,Platform,land,lost,3,76000,228000
+A1396,Pinnacle Logic Inc,2025-Q3,2025-07-01,AMER,Analytics,land,lost,3,255000,765000
+A1397,Granite Works,2025-Q3,2025-09-05,APAC,Platform,land,lost,3,255000,765000
+A1398,Vertex Logic,2025-Q3,2025-08-26,EMEA,Platform,land,lost,3,17000,51000
+A1399,Cobalt Works Inc,2025-Q3,2025-08-22,AMER,Platform,land,lost,5,276000,1380000
+A1400,Pinnacle Grid,2025-Q3,2025-08-28,APAC,Analytics,land,lost,3,75000,225000
+A1401,Granite Systems,2025-Q3,2025-09-29,EMEA,Security,land,lost,3,17000,51000
+A1402,Parallel Logic,2025-Q3,2025-08-07,APAC,Security,land,lost,3,169000,507000
+A1403,BluePeak Bridge,2025-Q3,2025-08-18,APAC,Analytics,land,lost,3,292000,876000
+A1404,Northwind Works,2025-Q3,2025-09-25,APAC,Analytics,land,lost,3,56000,168000
+A1405,Pinnacle Grid Inc,2025-Q3,2025-08-23,AMER,Security,land,lost,3,268000,804000
+A1406,Vertex Works Inc,2025-Q3,2025-09-11,EMEA,Security,land,lost,2,192000,384000
+A1407,Aurora Works Inc,2025-Q3,2025-07-16,AMER,Platform,land,lost,3,28000,84000
+A1408,Northwind Labs Inc,2025-Q3,2025-07-23,EMEA,Platform,land,lost,3,88000,264000
+A1409,Meridian Systems Inc,2025-Q3,2025-07-09,EMEA,Security,land,lost,3,257000,771000
+A1410,Cobalt Works,2025-Q3,2025-07-26,AMER,Platform,land,lost,3,98000,294000
+A1411,Meridian Bridge,2025-Q3,2025-09-09,APAC,Platform,land,lost,3,112000,336000
+A1412,Meridian Labs Inc,2025-Q3,2025-09-18,EMEA,Analytics,land,lost,3,169000,507000
+A1413,Northwind Grid Inc,2025-Q3,2025-09-17,AMER,Security,land,lost,2,254000,508000
+A1414,Northwind Bridge,2025-Q3,2025-09-13,APAC,Security,land,lost,3,18000,54000
+A1415,Cobalt Logic,2025-Q3,2025-07-08,EMEA,Platform,land,lost,3,22000,66000
+A1416,Aurora Logic Inc,2025-Q3,2025-08-15,AMER,Analytics,land,lost,3,33000,99000
+A1417,Silverline Systems,2025-Q3,2025-08-14,AMER,Analytics,land,lost,3,155000,465000
+A1418,Meridian Systems Inc,2025-Q3,2025-08-21,APAC,Analytics,land,lost,3,18000,54000
+A1419,Northwind Cloud Inc,2025-Q3,2025-08-23,AMER,Analytics,land,lost,3,268000,804000
+A1420,Cobalt Cloud Inc,2025-Q3,2025-08-10,EMEA,Analytics,land,lost,3,96000,288000
+A1421,Vertex Labs Inc,2025-Q3,2025-07-14,EMEA,Analytics,land,lost,3,59000,177000
+A1422,Pinnacle Systems,2025-Q3,2025-09-18,APAC,Security,land,lost,4,103000,412000
+A1423,Pinnacle Logic,2025-Q3,2025-09-15,AMER,Security,land,lost,3,182000,546000
+A1424,Parallel Logic,2025-Q3,2025-09-23,APAC,Security,land,lost,3,90000,270000
+A1425,Cobalt Bridge Inc,2025-Q3,2025-08-12,APAC,Platform,land,lost,5,57000,285000
+A1426,Northwind Works Inc,2025-Q3,2025-07-25,AMER,Analytics,land,lost,1,31000,31000
+A1427,Meridian Cloud Inc,2025-Q3,2025-09-06,AMER,Security,land,lost,3,13000,39000
+A1428,Vertex Dynamics Inc,2025-Q3,2025-09-01,AMER,Analytics,land,lost,3,36000,108000
+A1429,Aurora Grid,2025-Q3,2025-08-30,APAC,Platform,land,lost,3,96000,288000
+A1430,Pinnacle Systems,2025-Q3,2025-07-24,APAC,Analytics,land,lost,3,268000,804000
+A1431,Cobalt Dynamics,2025-Q3,2025-09-03,AMER,Platform,land,lost,3,155000,465000
+A1432,Cobalt Systems Inc,2025-Q3,2025-08-16,AMER,Security,land,lost,3,14000,42000
+A1433,BluePeak Systems,2025-Q3,2025-08-14,EMEA,Platform,land,lost,3,271000,813000
+A1434,Meridian Cloud Inc,2025-Q3,2025-09-27,EMEA,Analytics,land,lost,3,155000,465000
+A1435,Parallel Bridge,2025-Q3,2025-08-21,APAC,Analytics,land,lost,3,167000,501000
+A1436,Aurora Labs,2025-Q3,2025-07-17,APAC,Platform,land,lost,3,14000,42000
+A1437,Parallel Bridge Inc,2025-Q3,2025-07-22,EMEA,Security,land,lost,3,169000,507000
+A1438,Pinnacle Works,2025-Q3,2025-09-21,APAC,Platform,land,lost,3,103000,309000
+A1439,Cobalt Cloud,2025-Q3,2025-08-09,EMEA,Security,land,lost,3,167000,501000
+A1440,Pinnacle Cloud,2025-Q3,2025-08-07,APAC,Platform,land,lost,3,22000,66000
+A1441,Pinnacle Bridge Inc,2025-Q3,2025-07-06,EMEA,Analytics,land,lost,4,103000,412000
+A1442,Silverline Logic,2025-Q3,2025-09-29,AMER,Platform,land,lost,3,31000,93000
+A1443,Northwind Dynamics Inc,2025-Q3,2025-08-06,EMEA,Security,land,lost,3,274000,822000
+A1444,Silverline Dynamics Inc,2025-Q3,2025-09-06,APAC,Platform,land,lost,3,28000,84000
+A1445,BluePeak Works Inc,2025-Q3,2025-08-12,AMER,Platform,land,lost,3,96000,288000
+A1446,Granite Works,2025-Q3,2025-09-04,AMER,Analytics,land,lost,3,20000,60000
+A1447,Cobalt Works Inc,2025-Q3,2025-07-01,APAC,Security,land,lost,3,123000,369000
+A1448,Silverline Cloud,2025-Q3,2025-09-27,APAC,Analytics,land,lost,1,14000,14000
+A1449,Vertex Labs Inc,2025-Q3,2025-08-14,EMEA,Security,land,lost,3,23000,69000
+A1450,Vertex Grid Inc,2025-Q3,2025-08-13,EMEA,Security,land,lost,3,280000,840000
+A1451,Cobalt Bridge Inc,2025-Q3,2025-08-25,EMEA,Platform,land,lost,2,254000,508000
+A1452,Parallel Works,2025-Q3,2025-07-15,EMEA,Platform,land,lost,3,36000,108000
+A1453,Granite Logic,2025-Q3,2025-09-26,APAC,Security,land,lost,3,146000,438000
+A1454,Silverline Bridge Inc,2025-Q3,2025-07-09,EMEA,Platform,land,lost,3,23000,69000
+A1455,Northwind Grid Inc,2025-Q3,2025-09-09,EMEA,Platform,land,lost,3,27000,81000
+A1456,Aurora Labs,2025-Q3,2025-07-28,EMEA,Security,land,lost,3,23000,69000
+A1457,Pinnacle Logic,2025-Q3,2025-07-08,APAC,Platform,land,lost,3,18000,54000
+A0335,Parallel Labs,2025-Q3,2025-07-12,APAC,Analytics,expand,lost,3,159000,477000
+A1126,BluePeak Cloud Inc,2025-Q3,2025-08-14,APAC,Analytics,expand,lost,3,23000,69000
+A0698,BluePeak Cloud,2025-Q3,2025-07-30,AMER,Analytics,expand,lost,3,139000,417000
+A1384,Silverline Dynamics,2025-Q3,2025-07-22,APAC,Security,expand,lost,3,21000,63000
+A1225,Granite Labs,2025-Q3,2025-07-20,EMEA,Platform,expand,lost,3,37000,111000
+A0554,BluePeak Systems Inc,2025-Q3,2025-07-21,EMEA,Analytics,expand,lost,3,23000,69000
+A0746,Cobalt Grid Inc,2025-Q3,2025-07-11,EMEA,Platform,expand,lost,3,298000,894000
+A0424,Cobalt Bridge Inc,2025-Q3,2025-07-25,APAC,Platform,expand,lost,3,209000,627000
+A1433,BluePeak Systems,2025-Q3,2025-08-12,EMEA,Security,expand,lost,3,116000,348000
+A0483,Granite Works,2025-Q3,2025-07-02,EMEA,Platform,expand,lost,3,20000,60000
+A1099,Granite Works Inc,2025-Q3,2025-07-06,AMER,Platform,expand,lost,3,23000,69000
+A1191,Silverline Grid,2025-Q3,2025-09-12,EMEA,Security,expand,lost,3,93000,279000
+A1002,Meridian Bridge Inc,2025-Q3,2025-07-21,AMER,Platform,expand,lost,3,179000,537000
+A0964,Aurora Grid Inc,2025-Q3,2025-09-09,EMEA,Analytics,expand,lost,4,51000,204000
+A1208,Silverline Dynamics,2025-Q3,2025-09-22,APAC,Platform,expand,lost,3,40000,120000
+A0487,BluePeak Bridge Inc,2025-Q3,2025-08-21,AMER,Platform,expand,lost,3,15000,45000
+A1297,Parallel Systems,2025-Q3,2025-09-13,APAC,Security,expand,lost,3,37000,111000
+A1021,Northwind Dynamics,2025-Q3,2025-07-30,AMER,Platform,expand,lost,1,93000,93000
+A0638,Aurora Dynamics,2025-Q3,2025-07-02,EMEA,Platform,expand,lost,3,18000,54000
+A0220,Silverline Grid,2025-Q3,2025-07-16,APAC,Security,expand,lost,3,94000,282000
+A0406,Parallel Dynamics,2025-Q3,2025-07-04,AMER,Platform,expand,lost,5,116000,580000
+A1131,Meridian Logic Inc,2025-Q3,2025-08-27,AMER,Platform,expand,lost,3,88000,264000
+A0583,Parallel Bridge Inc,2025-Q3,2025-08-06,AMER,Platform,expand,lost,5,37000,185000
+A0534,Granite Labs Inc,2025-Q3,2025-09-21,APAC,Platform,expand,lost,3,60000,180000
+A1420,Cobalt Cloud Inc,2025-Q3,2025-08-14,EMEA,Analytics,expand,lost,3,18000,54000
+A0312,Aurora Grid,2025-Q4,2025-12-24,EMEA,Platform,renew,won,2,327000,654000
+A0182,BluePeak Cloud Inc,2025-Q4,2025-11-14,APAC,Platform,renew,won,1,18000,18000
+A0267,Meridian Bridge Inc,2025-Q4,2025-11-19,APAC,Analytics,renew,won,3,30000,90000
+A0317,Meridian Works,2025-Q4,2025-11-10,EMEA,Platform,renew,won,3,78000,234000
+A0460,Aurora Works Inc,2025-Q4,2025-11-26,AMER,Analytics,renew,won,3,134000,402000
+A0015,BluePeak Works,2025-Q4,2025-10-16,APAC,Security,renew,won,4,313000,1252000
+A0174,Pinnacle Labs Inc,2025-Q4,2025-12-25,AMER,Analytics,renew,won,3,158000,474000
+A0551,Pinnacle Systems Inc,2025-Q4,2025-12-08,APAC,Platform,renew,won,3,239000,717000
+A0221,Vertex Labs,2025-Q4,2025-10-22,APAC,Analytics,renew,won,3,637000,1911000
+A0047,Northwind Dynamics,2025-Q4,2025-11-15,APAC,Platform,renew,won,3,364000,1092000
+A0045,Pinnacle Labs,2025-Q4,2025-10-20,APAC,Platform,renew,won,4,190000,760000
+A0333,Meridian Labs Inc,2025-Q4,2025-11-01,EMEA,Security,renew,won,3,319000,957000
+A0438,Vertex Cloud,2025-Q4,2025-11-25,EMEA,Platform,renew,won,1,112000,112000
+A0238,Meridian Logic Inc,2025-Q4,2025-10-03,AMER,Platform,renew,lost,3,252000,756000
+A0456,Cobalt Dynamics Inc,2025-Q4,2025-12-11,EMEA,Platform,renew,won,3,553000,1659000
+A0583,Parallel Bridge Inc,2025-Q4,2025-12-16,AMER,Platform,renew,won,5,37000,185000
+A0367,Northwind Labs Inc,2025-Q4,2025-10-18,APAC,Analytics,renew,won,3,256000,768000
+A0599,Granite Works,2025-Q4,2025-10-04,APAC,Analytics,renew,won,3,333000,999000
+A0299,Granite Cloud,2025-Q4,2025-10-04,EMEA,Security,renew,won,3,189000,567000
+A0433,Aurora Bridge,2025-Q4,2025-12-01,APAC,Security,renew,won,3,55000,165000
+A0145,Aurora Works Inc,2025-Q4,2025-10-11,APAC,Security,renew,won,3,138000,414000
+A0581,Northwind Labs,2025-Q4,2025-10-06,EMEA,Platform,renew,won,3,125000,375000
+A0065,Parallel Logic,2025-Q4,2025-11-21,EMEA,Analytics,renew,won,3,12000,36000
+A0217,Pinnacle Labs Inc,2025-Q4,2025-12-20,AMER,Analytics,renew,won,3,33000,99000
+A0563,Aurora Logic,2025-Q4,2025-12-14,AMER,Security,renew,won,2,140000,280000
+A0223,Silverline Cloud,2025-Q4,2025-11-19,EMEA,Platform,renew,won,4,64000,256000
+A0445,Meridian Systems Inc,2025-Q4,2025-12-28,APAC,Security,renew,won,3,171000,513000
+A0509,Parallel Grid,2025-Q4,2025-12-31,APAC,Platform,renew,won,3,15000,45000
+A0543,Cobalt Bridge,2025-Q4,2025-10-04,AMER,Analytics,renew,lost,3,27000,81000
+A0397,Silverline Dynamics,2025-Q4,2025-10-19,EMEA,Analytics,renew,lost,2,15000,30000
+A0621,Silverline Systems,2025-Q4,2025-12-03,EMEA,Security,renew,won,3,149000,447000
+A0010,Parallel Labs,2025-Q4,2025-12-10,EMEA,Platform,renew,won,3,21000,63000
+A0143,Vertex Cloud Inc,2025-Q4,2025-12-25,EMEA,Security,renew,won,2,199000,398000
+A0014,Vertex Logic Inc,2025-Q4,2025-12-14,EMEA,Security,renew,won,3,355000,1065000
+A0414,BluePeak Cloud,2025-Q4,2025-12-15,APAC,Security,renew,won,3,204000,612000
+A0593,Cobalt Logic Inc,2025-Q4,2025-11-05,EMEA,Analytics,renew,won,3,104000,312000
+A0512,BluePeak Labs,2025-Q4,2025-12-24,APAC,Platform,renew,won,3,343000,1029000
+A0607,Vertex Systems,2025-Q4,2025-10-24,EMEA,Analytics,renew,won,3,364000,1092000
+A0226,Meridian Logic Inc,2025-Q4,2025-10-27,APAC,Analytics,renew,won,3,195000,585000
+A0141,BluePeak Works Inc,2025-Q4,2025-12-03,APAC,Analytics,renew,won,3,88000,264000
+A0286,Parallel Systems Inc,2025-Q4,2025-10-28,AMER,Security,renew,won,3,263000,789000
+A0595,Parallel Works,2025-Q4,2025-10-08,APAC,Platform,renew,won,3,470000,1410000
+A0253,Granite Grid,2025-Q4,2025-12-15,APAC,Platform,renew,won,4,508000,2032000
+A0498,Vertex Logic Inc,2025-Q4,2025-11-28,AMER,Platform,renew,won,3,14000,42000
+A0459,Granite Works,2025-Q4,2025-10-11,APAC,Platform,renew,won,3,233000,699000
+A0069,BluePeak Bridge Inc,2025-Q4,2025-10-09,AMER,Analytics,renew,won,3,280000,840000
+A0156,BluePeak Labs,2025-Q4,2025-11-28,AMER,Platform,renew,won,3,318000,954000
+A0622,Pinnacle Works,2025-Q4,2025-12-24,APAC,Security,renew,lost,2,47000,94000
+A0180,Meridian Grid,2025-Q4,2025-10-17,APAC,Analytics,renew,won,3,284000,852000
+A0306,Parallel Dynamics Inc,2025-Q4,2025-12-25,AMER,Security,renew,won,3,263000,789000
+A0165,Pinnacle Logic Inc,2025-Q4,2025-12-06,AMER,Platform,renew,won,3,113000,339000
+A0520,Parallel Dynamics,2025-Q4,2025-10-17,EMEA,Analytics,renew,won,3,47000,141000
+A0506,Aurora Dynamics Inc,2025-Q4,2025-10-28,EMEA,Analytics,renew,won,3,280000,840000
+A0106,Parallel Dynamics,2025-Q4,2025-11-25,AMER,Platform,renew,won,3,61000,183000
+A0624,Pinnacle Works,2025-Q4,2025-11-08,EMEA,Analytics,renew,won,3,24000,72000
+A0044,Northwind Bridge Inc,2025-Q4,2025-11-27,EMEA,Analytics,renew,won,3,334000,1002000
+A0469,Vertex Works,2025-Q4,2025-12-30,AMER,Platform,renew,lost,3,28000,84000
+A0375,Cobalt Cloud Inc,2025-Q4,2025-10-02,EMEA,Security,renew,won,3,700000,2100000
+A0366,Vertex Bridge Inc,2025-Q4,2025-12-03,APAC,Analytics,renew,won,3,288000,864000
+A0055,BluePeak Grid,2025-Q4,2025-10-31,AMER,Analytics,renew,won,3,510000,1530000
+A0042,Pinnacle Logic,2025-Q4,2025-10-10,EMEA,Platform,renew,won,3,27000,81000
+A0494,Northwind Cloud,2025-Q4,2025-11-22,AMER,Security,renew,won,3,453000,1359000
+A0549,BluePeak Systems,2025-Q4,2025-12-01,EMEA,Security,renew,won,3,468000,1404000
+A0027,BluePeak Dynamics Inc,2025-Q4,2025-11-14,AMER,Analytics,renew,won,3,62000,186000
+A0135,Aurora Bridge Inc,2025-Q4,2025-11-24,APAC,Analytics,renew,won,3,112000,336000
+A0603,Cobalt Dynamics,2025-Q4,2025-10-15,EMEA,Analytics,renew,won,5,37000,185000
+A0364,Silverline Bridge,2025-Q4,2025-10-18,AMER,Security,renew,won,5,94000,470000
+A0548,Vertex Systems,2025-Q4,2025-11-19,EMEA,Analytics,renew,won,3,101000,303000
+A0393,Northwind Dynamics,2025-Q4,2025-12-13,AMER,Platform,renew,won,3,266000,798000
+A0321,BluePeak Bridge,2025-Q4,2025-10-01,AMER,Platform,expand,won,3,147000,441000
+A0199,Aurora Dynamics,2025-Q4,2025-12-03,EMEA,Analytics,expand,won,3,21000,63000
+A0372,Aurora Bridge,2025-Q4,2025-10-11,APAC,Analytics,expand,won,3,83000,249000
+A0433,Aurora Bridge,2025-Q4,2025-12-18,APAC,Security,expand,won,3,274000,822000
+A0546,Pinnacle Cloud,2025-Q4,2025-11-19,EMEA,Security,expand,won,3,205000,615000
+A0304,Aurora Cloud,2025-Q4,2025-12-05,APAC,Security,expand,won,3,39000,117000
+A0208,Vertex Grid,2025-Q4,2025-12-23,APAC,Analytics,expand,won,3,83000,249000
+A0457,Aurora Dynamics Inc,2025-Q4,2025-10-20,APAC,Platform,expand,won,3,21000,63000
+A0388,Granite Grid,2025-Q4,2025-10-21,AMER,Platform,expand,won,3,295000,885000
+A0230,BluePeak Systems,2025-Q4,2025-11-27,EMEA,Security,expand,won,3,78000,234000
+A0319,Northwind Labs Inc,2025-Q4,2025-11-07,AMER,Analytics,expand,won,3,133000,399000
+A0095,Meridian Works,2025-Q4,2025-11-26,AMER,Analytics,expand,won,3,24000,72000
+A0480,Parallel Works Inc,2025-Q4,2025-12-17,APAC,Security,expand,won,3,102000,306000
+A0368,Cobalt Logic,2025-Q4,2025-10-15,EMEA,Security,expand,won,3,13000,39000
+A0039,BluePeak Works,2025-Q4,2025-11-24,APAC,Platform,expand,won,3,70000,210000
+A0487,BluePeak Bridge Inc,2025-Q4,2025-12-16,AMER,Platform,expand,won,3,21000,63000
+A0418,Aurora Systems,2025-Q4,2025-11-04,APAC,Security,expand,won,3,20000,60000
+A0056,Granite Cloud Inc,2025-Q4,2025-11-02,APAC,Security,expand,won,3,161000,483000
+A0360,Aurora Systems,2025-Q4,2025-12-15,APAC,Analytics,expand,won,3,53000,159000
+A0136,Cobalt Labs Inc,2025-Q4,2025-12-09,APAC,Platform,expand,won,3,16000,48000
+A0357,Granite Labs Inc,2025-Q4,2025-10-31,APAC,Analytics,expand,won,3,186000,558000
+A0488,Northwind Grid Inc,2025-Q4,2025-11-27,APAC,Platform,expand,won,3,40000,120000
+A0019,Silverline Cloud Inc,2025-Q4,2025-12-04,AMER,Analytics,expand,won,4,75000,300000
+A0068,Vertex Grid Inc,2025-Q4,2025-12-22,AMER,Security,expand,won,3,134000,402000
+A0303,Granite Dynamics,2025-Q4,2025-12-18,AMER,Analytics,expand,won,4,148000,592000
+A0477,Northwind Bridge Inc,2025-Q4,2025-10-19,APAC,Platform,expand,won,3,169000,507000
+A0109,Meridian Cloud,2025-Q4,2025-10-01,APAC,Security,expand,won,3,29000,87000
+A0610,Vertex Labs,2025-Q4,2025-12-14,EMEA,Analytics,expand,won,3,15000,45000
+A0105,Parallel Logic,2025-Q4,2025-12-02,AMER,Security,expand,won,4,270000,1080000
+A0532,Parallel Grid Inc,2025-Q4,2025-12-20,APAC,Analytics,expand,won,3,58000,174000
+A0400,Aurora Systems,2025-Q4,2025-11-06,EMEA,Platform,expand,won,3,81000,243000
+A0507,Vertex Labs,2025-Q4,2025-11-30,EMEA,Security,expand,won,3,174000,522000
+A0042,Pinnacle Logic,2025-Q4,2025-10-05,EMEA,Analytics,expand,won,3,162000,486000
+A0144,Meridian Bridge,2025-Q4,2025-11-09,APAC,Security,expand,won,5,64000,320000
+A0004,Northwind Works,2025-Q4,2025-12-14,AMER,Platform,expand,won,3,156000,468000
+A0502,Pinnacle Systems Inc,2025-Q4,2025-11-08,APAC,Security,expand,won,3,99000,297000
+A0008,BluePeak Dynamics,2025-Q4,2025-10-18,APAC,Security,expand,won,3,79000,237000
+A0194,Silverline Logic,2025-Q4,2025-12-06,AMER,Platform,expand,won,4,20000,80000
+A0498,Vertex Logic Inc,2025-Q4,2025-11-14,AMER,Platform,expand,won,3,26000,78000
+A0098,Northwind Logic Inc,2025-Q4,2025-11-13,APAC,Platform,expand,won,2,275000,550000
+A0578,Northwind Dynamics Inc,2025-Q4,2025-12-15,APAC,Security,expand,won,3,112000,336000
+A0598,Silverline Systems,2025-Q4,2025-11-21,EMEA,Platform,expand,won,3,13000,39000
+A0111,Vertex Systems Inc,2025-Q4,2025-12-13,APAC,Analytics,expand,won,3,116000,348000
+A0566,BluePeak Dynamics,2025-Q4,2025-11-27,EMEA,Analytics,expand,won,3,93000,279000
+A0194,Silverline Logic,2025-Q4,2025-11-02,AMER,Platform,expand,won,4,74000,296000
+A0605,Silverline Logic Inc,2025-Q4,2025-12-09,EMEA,Analytics,expand,won,1,237000,237000
+A0164,Cobalt Logic Inc,2025-Q4,2025-11-11,AMER,Analytics,expand,won,3,63000,189000
+A0331,Aurora Works Inc,2025-Q4,2025-10-14,AMER,Platform,expand,won,3,118000,354000
+A0252,Parallel Grid Inc,2025-Q4,2025-10-09,APAC,Platform,expand,won,3,13000,39000
+A0114,Cobalt Dynamics,2025-Q4,2025-11-04,EMEA,Security,expand,won,5,217000,1085000
+A0270,Silverline Bridge Inc,2025-Q4,2025-11-21,AMER,Analytics,expand,won,3,192000,576000
+A0530,Cobalt Works Inc,2025-Q4,2025-10-28,EMEA,Platform,expand,won,3,13000,39000
+A0835,Vertex Labs Inc,2025-Q4,2025-11-05,EMEA,Security,land,won,3,55000,165000
+A0836,Parallel Works,2025-Q4,2025-10-11,EMEA,Analytics,land,won,3,14000,42000
+A0837,BluePeak Systems,2025-Q4,2025-11-19,APAC,Security,land,won,3,282000,846000
+A0838,Vertex Systems,2025-Q4,2025-11-13,AMER,Security,land,won,2,71000,142000
+A0839,BluePeak Works Inc,2025-Q4,2025-11-02,AMER,Analytics,land,won,3,246000,738000
+A0840,Cobalt Cloud,2025-Q4,2025-12-16,EMEA,Platform,land,won,3,18000,54000
+A0841,Northwind Systems,2025-Q4,2025-11-04,AMER,Platform,land,won,3,31000,93000
+A0842,Aurora Works Inc,2025-Q4,2025-11-26,AMER,Analytics,land,won,3,232000,696000
+A0843,Parallel Dynamics,2025-Q4,2025-11-07,AMER,Analytics,land,won,3,212000,636000
+A0844,Meridian Grid,2025-Q4,2025-12-19,EMEA,Security,land,won,3,62000,186000
+A0845,BluePeak Labs,2025-Q4,2025-11-20,EMEA,Platform,land,won,1,52000,52000
+A0846,Northwind Cloud Inc,2025-Q4,2025-12-11,EMEA,Security,land,won,3,44000,132000
+A0847,Aurora Grid Inc,2025-Q4,2025-11-30,APAC,Platform,land,won,3,173000,519000
+A0848,Granite Systems Inc,2025-Q4,2025-12-11,APAC,Platform,land,won,3,26000,78000
+A0849,Silverline Logic Inc,2025-Q4,2025-11-26,APAC,Analytics,land,won,3,95000,285000
+A0850,Cobalt Dynamics Inc,2025-Q4,2025-10-25,APAC,Security,land,won,3,214000,642000
+A0851,Granite Bridge,2025-Q4,2025-12-29,EMEA,Security,land,won,3,132000,396000
+A0852,Aurora Labs,2025-Q4,2025-11-16,AMER,Security,land,won,1,87000,87000
+A0853,Meridian Labs,2025-Q4,2025-10-13,APAC,Analytics,land,won,3,69000,207000
+A0854,Pinnacle Grid,2025-Q4,2025-10-20,APAC,Analytics,land,won,1,91000,91000
+A0855,Pinnacle Cloud Inc,2025-Q4,2025-12-06,EMEA,Platform,land,won,3,88000,264000
+A0856,Granite Bridge Inc,2025-Q4,2025-11-17,AMER,Security,land,won,3,49000,147000
+A0857,Pinnacle Logic Inc,2025-Q4,2025-10-10,APAC,Analytics,land,won,3,24000,72000
+A0858,Parallel Logic,2025-Q4,2025-10-04,EMEA,Security,land,won,3,260000,780000
+A0859,Meridian Labs,2025-Q4,2025-10-27,EMEA,Platform,land,won,3,152000,456000
+A0860,Pinnacle Labs Inc,2025-Q4,2025-10-01,APAC,Platform,land,won,3,235000,705000
+A0861,Vertex Bridge,2025-Q4,2025-12-31,EMEA,Analytics,land,won,5,40000,200000
+A0862,Northwind Dynamics Inc,2025-Q4,2025-11-15,APAC,Analytics,land,won,3,93000,279000
+A0863,BluePeak Systems,2025-Q4,2025-12-09,APAC,Security,land,won,3,13000,39000
+A0864,Parallel Labs Inc,2025-Q4,2025-12-19,AMER,Platform,land,won,5,78000,390000
+A0865,Silverline Logic Inc,2025-Q4,2025-12-05,EMEA,Platform,land,won,3,13000,39000
+A0866,Parallel Bridge Inc,2025-Q4,2025-12-02,EMEA,Security,land,won,3,39000,117000
+A0867,BluePeak Works,2025-Q4,2025-11-28,EMEA,Security,land,won,4,132000,528000
+A0868,Silverline Bridge Inc,2025-Q4,2025-12-07,EMEA,Analytics,land,won,3,13000,39000
+A0869,Vertex Dynamics,2025-Q4,2025-11-29,EMEA,Security,land,won,3,59000,177000
+A0870,Parallel Bridge Inc,2025-Q4,2025-10-20,APAC,Platform,land,won,3,104000,312000
+A0871,BluePeak Works Inc,2025-Q4,2025-11-18,AMER,Security,land,won,3,191000,573000
+A0872,Pinnacle Labs,2025-Q4,2025-11-19,AMER,Security,land,won,3,122000,366000
+A0873,Northwind Systems,2025-Q4,2025-10-10,AMER,Platform,land,won,2,169000,338000
+A0874,Pinnacle Systems,2025-Q4,2025-12-04,APAC,Platform,land,won,3,48000,144000
+A0875,Parallel Works Inc,2025-Q4,2025-12-30,APAC,Security,land,won,5,189000,945000
+A0876,Meridian Bridge Inc,2025-Q4,2025-11-05,APAC,Analytics,land,won,3,106000,318000
+A0877,Silverline Systems,2025-Q4,2025-12-11,AMER,Security,land,won,1,207000,207000
+A0878,Parallel Logic,2025-Q4,2025-11-28,AMER,Security,land,won,3,19000,57000
+A0879,Northwind Grid Inc,2025-Q4,2025-10-30,EMEA,Analytics,land,won,3,28000,84000
+A0880,Granite Logic,2025-Q4,2025-11-07,APAC,Platform,land,won,3,118000,354000
+A0881,Silverline Grid,2025-Q4,2025-12-09,AMER,Security,land,won,3,24000,72000
+A0882,Parallel Logic,2025-Q4,2025-12-28,APAC,Platform,land,won,5,20000,100000
+A0883,Meridian Bridge Inc,2025-Q4,2025-12-03,AMER,Analytics,land,won,5,18000,90000
+A0884,Aurora Logic,2025-Q4,2025-11-03,EMEA,Analytics,land,won,2,45000,90000
+A0885,Aurora Works,2025-Q4,2025-12-09,APAC,Platform,land,won,3,168000,504000
+A0886,Silverline Logic Inc,2025-Q4,2025-11-06,EMEA,Platform,land,won,3,299000,897000
+A0887,Granite Grid Inc,2025-Q4,2025-12-31,EMEA,Security,land,won,4,193000,772000
+A0888,Meridian Bridge,2025-Q4,2025-10-31,EMEA,Analytics,land,won,3,120000,360000
+A0889,Aurora Bridge,2025-Q4,2025-11-18,APAC,Analytics,land,won,3,192000,576000
+A0890,Northwind Systems,2025-Q4,2025-12-04,EMEA,Platform,land,won,3,13000,39000
+A0891,Granite Cloud,2025-Q4,2025-11-18,AMER,Security,land,won,3,122000,366000
+A0892,Vertex Bridge Inc,2025-Q4,2025-11-23,AMER,Platform,land,won,3,222000,666000
+A0893,Northwind Cloud,2025-Q4,2025-11-27,AMER,Platform,land,won,3,15000,45000
+A0894,Vertex Logic,2025-Q4,2025-11-19,EMEA,Analytics,land,won,1,35000,35000
+A0895,Cobalt Works,2025-Q4,2025-12-26,EMEA,Security,land,won,3,50000,150000
+A0896,Meridian Cloud,2025-Q4,2025-10-19,EMEA,Analytics,land,won,3,108000,324000
+A1458,Pinnacle Cloud Inc,2025-Q4,2025-10-16,AMER,Platform,land,lost,5,20000,100000
+A1459,Parallel Dynamics,2025-Q4,2025-11-19,EMEA,Platform,land,lost,3,191000,573000
+A1460,Aurora Works Inc,2025-Q4,2025-11-29,EMEA,Security,land,lost,3,118000,354000
+A1461,Cobalt Cloud Inc,2025-Q4,2025-12-07,EMEA,Analytics,land,lost,3,168000,504000
+A1462,Meridian Grid,2025-Q4,2025-12-28,EMEA,Security,land,lost,3,28000,84000
+A1463,Meridian Bridge,2025-Q4,2025-11-28,EMEA,Analytics,land,lost,3,246000,738000
+A1464,Aurora Labs,2025-Q4,2025-10-19,EMEA,Platform,land,lost,3,168000,504000
+A1465,Cobalt Grid,2025-Q4,2025-12-25,EMEA,Security,land,lost,2,169000,338000
+A1466,Silverline Logic,2025-Q4,2025-11-22,APAC,Security,land,lost,3,212000,636000
+A1467,Cobalt Works Inc,2025-Q4,2025-10-22,APAC,Platform,land,lost,5,20000,100000
+A1468,Pinnacle Grid Inc,2025-Q4,2025-10-30,EMEA,Security,land,lost,3,24000,72000
+A1469,Pinnacle Dynamics Inc,2025-Q4,2025-10-16,APAC,Analytics,land,lost,3,108000,324000
+A1470,Pinnacle Systems,2025-Q4,2025-11-23,EMEA,Platform,land,lost,3,55000,165000
+A1471,Meridian Grid,2025-Q4,2025-12-07,EMEA,Security,land,lost,4,193000,772000
+A1472,Silverline Grid,2025-Q4,2025-10-20,EMEA,Security,land,lost,1,207000,207000
+A1473,Pinnacle Grid,2025-Q4,2025-11-08,EMEA,Platform,land,lost,3,246000,738000
+A1474,Parallel Logic,2025-Q4,2025-10-29,EMEA,Platform,land,lost,2,45000,90000
+A1475,Vertex Labs Inc,2025-Q4,2025-10-27,APAC,Platform,land,lost,3,69000,207000
+A1476,Parallel Labs Inc,2025-Q4,2025-12-28,EMEA,Security,land,lost,3,24000,72000
+A1477,Silverline Labs,2025-Q4,2025-11-21,AMER,Analytics,land,lost,3,232000,696000
+A1478,Meridian Works,2025-Q4,2025-11-02,EMEA,Security,land,lost,3,120000,360000
+A1479,Granite Works,2025-Q4,2025-12-18,EMEA,Security,land,lost,3,48000,144000
+A1480,Vertex Cloud Inc,2025-Q4,2025-10-16,EMEA,Analytics,land,lost,3,13000,39000
+A1481,Granite Grid,2025-Q4,2025-11-04,AMER,Analytics,land,lost,3,24000,72000
+A1482,Silverline Grid,2025-Q4,2025-10-08,EMEA,Analytics,land,lost,3,93000,279000
+A1483,Cobalt Systems,2025-Q4,2025-10-24,EMEA,Security,land,lost,3,106000,318000
+A1484,Meridian Logic,2025-Q4,2025-10-24,APAC,Analytics,land,lost,3,192000,576000
+A1485,Northwind Systems,2025-Q4,2025-11-08,APAC,Platform,land,lost,3,24000,72000
+A1486,Vertex Cloud,2025-Q4,2025-11-06,EMEA,Security,land,lost,3,50000,150000
+A1487,Vertex Dynamics,2025-Q4,2025-12-03,EMEA,Security,land,lost,2,71000,142000
+A1488,BluePeak Systems Inc,2025-Q4,2025-10-07,EMEA,Security,land,lost,3,168000,504000
+A1489,Vertex Cloud,2025-Q4,2025-11-12,EMEA,Platform,land,lost,3,13000,39000
+A1490,Granite Labs Inc,2025-Q4,2025-10-03,EMEA,Security,land,lost,3,13000,39000
+A1491,Meridian Dynamics Inc,2025-Q4,2025-10-17,EMEA,Security,land,lost,3,18000,54000
+A1492,Cobalt Bridge Inc,2025-Q4,2025-12-22,EMEA,Platform,land,lost,1,35000,35000
+A1493,Granite Labs Inc,2025-Q4,2025-11-17,AMER,Analytics,land,lost,3,122000,366000
+A1494,Northwind Dynamics,2025-Q4,2025-11-18,EMEA,Security,land,lost,1,35000,35000
+A1495,Granite Logic Inc,2025-Q4,2025-12-03,EMEA,Platform,land,lost,3,55000,165000
+A1496,Aurora Works,2025-Q4,2025-12-30,EMEA,Platform,land,lost,3,50000,150000
+A1497,Meridian Systems,2025-Q4,2025-11-07,EMEA,Analytics,land,lost,5,189000,945000
+A1498,Parallel Systems,2025-Q4,2025-10-25,AMER,Security,land,lost,2,45000,90000
+A1499,Silverline Grid Inc,2025-Q4,2025-12-31,APAC,Platform,land,lost,3,31000,93000
+A1500,Cobalt Bridge Inc,2025-Q4,2025-12-11,EMEA,Platform,land,lost,3,104000,312000
+A1501,Meridian Labs Inc,2025-Q4,2025-10-09,EMEA,Security,land,lost,3,24000,72000
+A1502,Cobalt Dynamics Inc,2025-Q4,2025-10-18,EMEA,Platform,land,lost,3,13000,39000
+A1503,Northwind Dynamics Inc,2025-Q4,2025-10-04,EMEA,Analytics,land,lost,3,246000,738000
+A1504,Silverline Works Inc,2025-Q4,2025-10-19,EMEA,Platform,land,lost,3,222000,666000
+A1505,Cobalt Logic,2025-Q4,2025-11-25,AMER,Analytics,land,lost,4,193000,772000
+A1506,Parallel Dynamics Inc,2025-Q4,2025-10-29,EMEA,Analytics,land,lost,3,62000,186000
+A1507,Parallel Systems Inc,2025-Q4,2025-12-24,EMEA,Security,land,lost,3,55000,165000
+A1508,Meridian Labs,2025-Q4,2025-10-28,APAC,Security,land,lost,1,207000,207000
+A1509,Silverline Logic Inc,2025-Q4,2025-12-19,AMER,Analytics,land,lost,3,191000,573000
+A1510,Granite Cloud,2025-Q4,2025-12-15,EMEA,Analytics,land,lost,1,91000,91000
+A1511,Aurora Systems,2025-Q4,2025-11-21,EMEA,Analytics,land,lost,4,132000,528000
+A1512,Pinnacle Works Inc,2025-Q4,2025-11-19,EMEA,Analytics,land,lost,5,40000,200000
+A1513,Granite Cloud,2025-Q4,2025-12-14,EMEA,Security,land,lost,5,78000,390000
+A1514,Vertex Logic,2025-Q4,2025-10-06,EMEA,Security,land,lost,3,173000,519000
+A1515,BluePeak Dynamics Inc,2025-Q4,2025-10-20,EMEA,Platform,land,lost,3,95000,285000
+A1516,BluePeak Grid,2025-Q4,2025-11-22,APAC,Analytics,land,lost,3,104000,312000
+A1517,Cobalt Logic,2025-Q4,2025-10-12,EMEA,Security,land,lost,3,122000,366000
+A1518,Cobalt Grid Inc,2025-Q4,2025-10-13,EMEA,Security,land,lost,3,212000,636000
+A1519,Aurora Logic Inc,2025-Q4,2025-11-03,AMER,Platform,land,lost,3,260000,780000
+A1520,Pinnacle Systems,2025-Q4,2025-10-08,EMEA,Security,land,lost,3,50000,150000
+A1521,Vertex Works,2025-Q4,2025-12-28,AMER,Analytics,land,lost,4,193000,772000
+A1522,BluePeak Grid,2025-Q4,2025-11-24,EMEA,Platform,land,lost,3,88000,264000
+A1523,Granite Works Inc,2025-Q4,2025-11-02,EMEA,Analytics,land,lost,4,193000,772000
+A1524,Cobalt Dynamics,2025-Q4,2025-10-11,EMEA,Platform,land,lost,5,78000,390000
+A1525,Northwind Works,2025-Q4,2025-10-21,EMEA,Platform,land,lost,3,15000,45000
+A1526,Pinnacle Grid Inc,2025-Q4,2025-11-26,EMEA,Analytics,land,lost,3,14000,42000
+A1527,BluePeak Grid,2025-Q4,2025-10-24,EMEA,Analytics,land,lost,3,62000,186000
+A1528,Aurora Logic,2025-Q4,2025-10-24,EMEA,Analytics,land,lost,3,122000,366000
+A1529,Silverline Labs,2025-Q4,2025-12-19,EMEA,Analytics,land,lost,3,104000,312000
+A1530,Northwind Grid Inc,2025-Q4,2025-12-10,EMEA,Analytics,land,lost,3,260000,780000
+A1531,Meridian Dynamics,2025-Q4,2025-10-01,AMER,Analytics,land,lost,3,122000,366000
+A1532,Cobalt Cloud,2025-Q4,2025-10-11,EMEA,Analytics,land,lost,3,13000,39000
+A1533,Meridian Labs,2025-Q4,2025-12-05,EMEA,Analytics,land,lost,3,212000,636000
+A1534,Parallel Grid,2025-Q4,2025-11-15,AMER,Platform,land,lost,3,24000,72000
+A1535,Parallel Labs Inc,2025-Q4,2025-11-04,AMER,Security,land,lost,2,45000,90000
+A1536,Aurora Cloud Inc,2025-Q4,2025-11-15,EMEA,Security,land,lost,3,13000,39000
+A1537,Cobalt Logic,2025-Q4,2025-12-07,APAC,Platform,land,lost,3,62000,186000
+A1538,Pinnacle Cloud,2025-Q4,2025-11-02,EMEA,Analytics,land,lost,3,24000,72000
+A1539,Cobalt Labs Inc,2025-Q4,2025-11-21,EMEA,Analytics,land,lost,1,52000,52000
+A1540,Pinnacle Systems Inc,2025-Q4,2025-12-13,EMEA,Security,land,lost,3,13000,39000
+A1541,Meridian Cloud,2025-Q4,2025-11-05,EMEA,Analytics,land,lost,3,122000,366000
+A1542,Pinnacle Labs,2025-Q4,2025-10-06,EMEA,Analytics,land,lost,3,120000,360000
+A1543,Granite Works Inc,2025-Q4,2025-10-29,EMEA,Platform,land,lost,3,62000,186000
+A1544,BluePeak Grid,2025-Q4,2025-10-10,APAC,Analytics,land,lost,1,207000,207000
+A1545,BluePeak Logic,2025-Q4,2025-10-12,EMEA,Security,land,lost,1,91000,91000
+A1546,Vertex Systems Inc,2025-Q4,2025-11-06,APAC,Platform,land,lost,3,13000,39000
+A1547,Northwind Grid Inc,2025-Q4,2025-10-23,APAC,Platform,land,lost,3,39000,117000
+A1548,Vertex Works Inc,2025-Q4,2025-10-14,EMEA,Analytics,land,lost,3,19000,57000
+A1549,Cobalt Systems,2025-Q4,2025-10-08,EMEA,Platform,land,lost,3,104000,312000
+A1550,Parallel Dynamics Inc,2025-Q4,2025-12-11,EMEA,Platform,land,lost,5,189000,945000
+A1551,BluePeak Works,2025-Q4,2025-11-06,EMEA,Security,land,lost,3,222000,666000
+A1552,Aurora Grid Inc,2025-Q4,2025-12-10,EMEA,Platform,land,lost,5,18000,90000
+A1553,Aurora Works,2025-Q4,2025-11-02,AMER,Analytics,land,lost,1,207000,207000
+A1554,Cobalt Dynamics Inc,2025-Q4,2025-12-03,APAC,Security,land,lost,5,18000,90000
+A1555,Aurora Works,2025-Q4,2025-11-24,EMEA,Security,land,lost,3,122000,366000
+A1556,Northwind Cloud,2025-Q4,2025-10-02,EMEA,Platform,land,lost,3,44000,132000
+A1557,Parallel Systems Inc,2025-Q4,2025-12-07,EMEA,Platform,land,lost,3,246000,738000
+A1558,BluePeak Labs Inc,2025-Q4,2025-11-18,AMER,Security,land,lost,3,44000,132000
+A1559,Granite Logic,2025-Q4,2025-10-15,APAC,Platform,land,lost,3,212000,636000
+A1560,Pinnacle Works,2025-Q4,2025-12-13,EMEA,Analytics,land,lost,3,122000,366000
+A1561,BluePeak Works Inc,2025-Q4,2025-10-29,EMEA,Platform,land,lost,3,50000,150000
+A1562,Aurora Labs,2025-Q4,2025-10-20,EMEA,Analytics,land,lost,3,212000,636000
+A1563,BluePeak Cloud,2025-Q4,2025-12-12,EMEA,Analytics,land,lost,3,13000,39000
+A1564,Aurora Grid,2025-Q4,2025-10-04,EMEA,Security,land,lost,3,122000,366000
+A1565,Northwind Works Inc,2025-Q4,2025-12-18,APAC,Security,land,lost,3,122000,366000
+A1566,Granite Labs,2025-Q4,2025-12-22,EMEA,Security,land,lost,5,40000,200000
+A1567,Vertex Works,2025-Q4,2025-11-10,EMEA,Security,land,lost,3,232000,696000
+A1568,Meridian Labs,2025-Q4,2025-11-11,APAC,Platform,land,lost,3,120000,360000
+A1569,Aurora Dynamics,2025-Q4,2025-11-07,APAC,Security,land,lost,5,189000,945000
+A1570,Vertex Dynamics Inc,2025-Q4,2025-10-05,EMEA,Platform,land,lost,3,13000,39000
+A1571,Parallel Bridge,2025-Q4,2025-12-05,EMEA,Platform,land,lost,3,19000,57000
+A1572,Cobalt Dynamics,2025-Q4,2025-12-14,EMEA,Platform,land,lost,3,168000,504000
+A1573,Northwind Logic,2025-Q4,2025-11-09,EMEA,Analytics,land,lost,3,13000,39000
+A1574,BluePeak Logic,2025-Q4,2025-10-22,EMEA,Analytics,land,lost,1,35000,35000
+A1575,Silverline Cloud Inc,2025-Q4,2025-12-12,EMEA,Security,land,lost,2,71000,142000
+A1576,Cobalt Grid Inc,2025-Q4,2025-11-19,EMEA,Platform,land,lost,5,20000,100000
+A1577,Parallel Cloud,2025-Q4,2025-12-06,EMEA,Security,land,lost,3,18000,54000
+A1578,Granite Grid,2025-Q4,2025-10-28,AMER,Platform,land,lost,3,62000,186000
+A1579,Vertex Labs,2025-Q4,2025-10-25,EMEA,Platform,land,lost,1,87000,87000
+A1580,Vertex Dynamics Inc,2025-Q4,2025-12-15,EMEA,Analytics,land,lost,2,45000,90000
+A1581,Silverline Systems Inc,2025-Q4,2025-10-12,EMEA,Platform,land,lost,3,55000,165000
+A1582,Granite Cloud,2025-Q4,2025-12-05,APAC,Platform,land,lost,3,48000,144000
+A1583,Vertex Logic Inc,2025-Q4,2025-10-12,EMEA,Platform,land,lost,5,78000,390000
+A1584,Granite Works,2025-Q4,2025-10-02,AMER,Security,land,lost,3,13000,39000
+A1585,Parallel Bridge Inc,2025-Q4,2025-12-21,AMER,Security,land,lost,3,28000,84000
+A1586,Pinnacle Dynamics,2025-Q4,2025-10-07,EMEA,Analytics,land,lost,3,19000,57000
+A1587,Cobalt Works Inc,2025-Q4,2025-12-05,EMEA,Platform,land,lost,1,52000,52000
+A1588,Granite Labs Inc,2025-Q4,2025-12-16,EMEA,Analytics,land,lost,3,106000,318000
+A1589,Parallel Cloud Inc,2025-Q4,2025-11-05,EMEA,Platform,land,lost,2,169000,338000
+A1590,Vertex Bridge,2025-Q4,2025-11-28,EMEA,Security,land,lost,1,91000,91000
+A1591,Cobalt Systems Inc,2025-Q4,2025-11-20,EMEA,Platform,land,lost,3,19000,57000
+A1592,Cobalt Works Inc,2025-Q4,2025-12-10,EMEA,Analytics,land,lost,5,18000,90000
+A1593,Northwind Bridge,2025-Q4,2025-12-08,EMEA,Security,land,lost,1,207000,207000
+A1594,Meridian Labs,2025-Q4,2025-12-14,EMEA,Security,land,lost,3,118000,354000
+A1595,Meridian Cloud Inc,2025-Q4,2025-12-19,AMER,Analytics,land,lost,3,214000,642000
+A1596,Cobalt Dynamics,2025-Q4,2025-10-23,APAC,Platform,land,lost,4,193000,772000
+A1597,BluePeak Grid,2025-Q4,2025-12-12,EMEA,Platform,land,lost,3,24000,72000
+A1598,BluePeak Labs,2025-Q4,2025-12-21,AMER,Platform,land,lost,3,26000,78000
+A1599,Silverline Grid Inc,2025-Q4,2025-12-31,APAC,Platform,land,lost,3,232000,696000
+A1600,Meridian Cloud,2025-Q4,2025-10-29,EMEA,Platform,land,lost,2,71000,142000
+A1601,Silverline Dynamics Inc,2025-Q4,2025-10-11,EMEA,Analytics,land,lost,3,62000,186000
+A1602,Pinnacle Systems,2025-Q4,2025-12-05,EMEA,Platform,land,lost,3,191000,573000
+A1603,Parallel Labs,2025-Q4,2025-10-20,APAC,Security,land,lost,4,132000,528000
+A1604,Vertex Logic,2025-Q4,2025-12-27,AMER,Analytics,land,lost,3,49000,147000
+A1605,Granite Logic,2025-Q4,2025-12-22,APAC,Analytics,land,lost,3,235000,705000
+A1606,Aurora Logic Inc,2025-Q4,2025-10-01,EMEA,Security,land,lost,3,260000,780000
+A1607,Northwind Labs,2025-Q4,2025-11-20,EMEA,Analytics,land,lost,5,18000,90000
+A1608,Meridian Grid,2025-Q4,2025-10-06,EMEA,Security,land,lost,3,192000,576000
+A1609,Pinnacle Systems,2025-Q4,2025-11-10,EMEA,Analytics,land,lost,3,118000,354000
+A1610,Granite Labs,2025-Q4,2025-10-28,EMEA,Platform,land,lost,5,18000,90000
+A1611,Vertex Logic,2025-Q4,2025-11-30,EMEA,Security,land,lost,1,207000,207000
+A1612,Cobalt Logic,2025-Q4,2025-12-05,APAC,Platform,land,lost,5,78000,390000
+A1613,Cobalt Logic Inc,2025-Q4,2025-10-15,EMEA,Analytics,land,lost,3,13000,39000
+A1614,Vertex Logic,2025-Q4,2025-12-09,APAC,Platform,land,lost,1,207000,207000
+A1615,Vertex Labs Inc,2025-Q4,2025-10-18,EMEA,Analytics,land,lost,3,88000,264000
+A1616,BluePeak Dynamics Inc,2025-Q4,2025-10-28,EMEA,Analytics,land,lost,3,106000,318000
+A1617,Cobalt Works,2025-Q4,2025-10-22,APAC,Analytics,land,lost,3,88000,264000
+A1618,BluePeak Dynamics,2025-Q4,2025-12-25,EMEA,Analytics,land,lost,3,15000,45000
+A1619,Northwind Dynamics Inc,2025-Q4,2025-12-03,AMER,Analytics,land,lost,1,35000,35000
+A1620,Vertex Logic,2025-Q4,2025-10-27,EMEA,Security,land,lost,1,52000,52000
+A1621,Aurora Dynamics Inc,2025-Q4,2025-10-17,EMEA,Analytics,land,lost,3,222000,666000
+A1622,Cobalt Systems,2025-Q4,2025-10-15,APAC,Platform,land,lost,3,31000,93000
+A1623,BluePeak Grid,2025-Q4,2025-11-29,AMER,Security,land,lost,3,173000,519000
+A1624,Cobalt Bridge Inc,2025-Q4,2025-12-06,EMEA,Security,land,lost,3,120000,360000
+A1625,Silverline Cloud Inc,2025-Q4,2025-10-19,AMER,Platform,land,lost,1,91000,91000
+A1626,BluePeak Logic,2025-Q4,2025-12-30,EMEA,Analytics,land,lost,3,246000,738000
+A1627,BluePeak Logic,2025-Q4,2025-12-25,EMEA,Platform,land,lost,3,93000,279000
+A1628,Aurora Bridge Inc,2025-Q4,2025-11-22,EMEA,Platform,land,lost,3,212000,636000
+A1629,BluePeak Cloud,2025-Q4,2025-11-11,EMEA,Platform,land,lost,3,214000,642000
+A1630,BluePeak Bridge,2025-Q4,2025-11-29,AMER,Analytics,land,lost,2,169000,338000
+A1631,Vertex Labs Inc,2025-Q4,2025-12-27,APAC,Security,land,lost,3,260000,780000
+A1632,Aurora Grid,2025-Q4,2025-10-19,EMEA,Security,land,lost,3,13000,39000
+A1633,Silverline Bridge Inc,2025-Q4,2025-12-13,EMEA,Analytics,land,lost,3,173000,519000
+A1634,BluePeak Grid Inc,2025-Q4,2025-10-05,EMEA,Platform,land,lost,3,59000,177000
+A1635,Pinnacle Systems Inc,2025-Q4,2025-12-11,EMEA,Platform,land,lost,3,44000,132000
+A1636,Silverline Labs Inc,2025-Q4,2025-11-11,EMEA,Security,land,lost,3,62000,186000
+A1637,Vertex Bridge,2025-Q4,2025-12-09,EMEA,Analytics,land,lost,3,69000,207000
+A1638,BluePeak Cloud,2025-Q4,2025-12-20,APAC,Platform,land,lost,3,235000,705000
+A1639,Northwind Dynamics,2025-Q4,2025-12-04,EMEA,Analytics,land,lost,3,69000,207000
+A1640,Vertex Cloud Inc,2025-Q4,2025-12-05,APAC,Platform,land,lost,3,13000,39000
+A1641,Vertex Works,2025-Q4,2025-11-15,EMEA,Security,land,lost,3,122000,366000
+A1642,Cobalt Labs Inc,2025-Q4,2025-10-19,EMEA,Platform,land,lost,3,95000,285000
+A1643,Silverline Works,2025-Q4,2025-10-03,EMEA,Security,land,lost,3,14000,42000
+A1644,Pinnacle Cloud,2025-Q4,2025-12-28,EMEA,Analytics,land,lost,3,59000,177000
+A1645,Pinnacle Cloud,2025-Q4,2025-11-16,EMEA,Analytics,land,lost,3,39000,117000
+A1646,Meridian Labs,2025-Q4,2025-12-06,EMEA,Security,land,lost,3,122000,366000
+A1647,Cobalt Logic,2025-Q4,2025-11-29,EMEA,Platform,land,lost,3,260000,780000
+A1648,Vertex Dynamics Inc,2025-Q4,2025-10-28,EMEA,Platform,land,lost,3,282000,846000
+A1649,BluePeak Grid Inc,2025-Q4,2025-10-10,EMEA,Analytics,land,lost,2,71000,142000
+A1650,Northwind Dynamics,2025-Q4,2025-11-18,EMEA,Analytics,land,lost,5,40000,200000
+A1651,Pinnacle Systems,2025-Q4,2025-12-03,EMEA,Security,land,lost,3,235000,705000
+A1652,Vertex Systems,2025-Q4,2025-11-23,EMEA,Security,land,lost,3,106000,318000
+A1653,Meridian Dynamics,2025-Q4,2025-10-08,EMEA,Analytics,land,lost,5,78000,390000
+A1654,Meridian Systems,2025-Q4,2025-10-04,EMEA,Platform,land,lost,3,173000,519000
+A1655,Silverline Labs,2025-Q4,2025-10-09,EMEA,Analytics,land,lost,5,20000,100000
+A1656,Cobalt Grid Inc,2025-Q4,2025-12-17,APAC,Security,land,lost,3,95000,285000
+A1657,Northwind Logic,2025-Q4,2025-12-10,EMEA,Analytics,land,lost,3,104000,312000
+A1658,Northwind Works,2025-Q4,2025-12-23,EMEA,Analytics,land,lost,3,212000,636000
+A1659,Aurora Bridge Inc,2025-Q4,2025-12-21,EMEA,Platform,land,lost,3,232000,696000
+A1660,Vertex Cloud,2025-Q4,2025-11-25,APAC,Security,land,lost,3,48000,144000
+A1661,BluePeak Systems,2025-Q4,2025-12-03,EMEA,Analytics,land,lost,3,88000,264000
+A1662,Granite Labs,2025-Q4,2025-12-18,EMEA,Platform,land,lost,3,232000,696000
+A1663,Cobalt Dynamics Inc,2025-Q4,2025-10-19,APAC,Security,land,lost,3,168000,504000
+A1664,Vertex Labs,2025-Q4,2025-11-22,EMEA,Platform,land,lost,3,31000,93000
+A1665,Granite Dynamics,2025-Q4,2025-12-14,EMEA,Platform,land,lost,3,55000,165000
+A1666,Vertex Works,2025-Q4,2025-11-03,EMEA,Analytics,land,lost,3,173000,519000
+A1667,Meridian Dynamics,2025-Q4,2025-10-12,APAC,Analytics,land,lost,3,299000,897000
+A1668,Pinnacle Systems,2025-Q4,2025-12-05,EMEA,Platform,land,lost,3,118000,354000
+A1669,Pinnacle Works Inc,2025-Q4,2025-11-18,EMEA,Analytics,land,lost,3,13000,39000
+A1670,Aurora Systems Inc,2025-Q4,2025-11-20,EMEA,Platform,land,lost,3,88000,264000
+A1671,Pinnacle Cloud Inc,2025-Q4,2025-10-31,EMEA,Security,land,lost,1,52000,52000
+A1672,Vertex Systems Inc,2025-Q4,2025-10-27,EMEA,Security,land,lost,3,18000,54000
+A1673,Cobalt Dynamics,2025-Q4,2025-12-22,EMEA,Analytics,land,lost,3,104000,312000
+A1674,Northwind Cloud Inc,2025-Q4,2025-10-26,EMEA,Analytics,land,lost,1,207000,207000
+A1675,Meridian Dynamics Inc,2025-Q4,2025-11-24,EMEA,Platform,land,lost,3,282000,846000
+A1676,Aurora Cloud,2025-Q4,2025-11-24,EMEA,Platform,land,lost,3,282000,846000
+A1677,Aurora Systems Inc,2025-Q4,2025-10-29,AMER,Security,land,lost,1,207000,207000
+A1678,Northwind Bridge,2025-Q4,2025-12-16,EMEA,Platform,land,lost,3,13000,39000
+A1679,BluePeak Grid Inc,2025-Q4,2025-11-19,EMEA,Platform,land,lost,3,50000,150000
+A1680,Aurora Dynamics,2025-Q4,2025-12-28,EMEA,Platform,land,lost,2,71000,142000
+A1681,Aurora Dynamics,2025-Q4,2025-11-04,AMER,Security,land,lost,1,35000,35000
+A1682,Parallel Logic,2025-Q4,2025-11-08,APAC,Security,land,lost,4,132000,528000
+A1683,Cobalt Bridge,2025-Q4,2025-11-14,EMEA,Analytics,land,lost,3,191000,573000
+A1684,Granite Labs,2025-Q4,2025-11-23,EMEA,Platform,land,lost,3,18000,54000
+A1685,BluePeak Bridge,2025-Q4,2025-12-14,EMEA,Security,land,lost,5,189000,945000
+A1686,Meridian Grid,2025-Q4,2025-12-12,EMEA,Analytics,land,lost,3,122000,366000
+A1687,Pinnacle Logic,2025-Q4,2025-12-21,APAC,Platform,land,lost,1,87000,87000
+A1688,BluePeak Dynamics,2025-Q4,2025-10-18,EMEA,Security,land,lost,3,222000,666000
+A1689,BluePeak Cloud Inc,2025-Q4,2025-12-19,EMEA,Security,land,lost,3,222000,666000
+A1690,Northwind Works,2025-Q4,2025-11-14,EMEA,Platform,land,lost,3,48000,144000
+A1691,Silverline Bridge Inc,2025-Q4,2025-10-31,EMEA,Security,land,lost,1,52000,52000
+A1692,Granite Cloud,2025-Q4,2025-10-19,EMEA,Platform,land,lost,1,207000,207000
+A1693,Aurora Bridge,2025-Q4,2025-11-10,EMEA,Platform,land,lost,3,222000,666000
+A1694,Aurora Cloud Inc,2025-Q4,2025-12-19,APAC,Security,land,lost,3,222000,666000
+A1695,Granite Labs Inc,2025-Q4,2025-11-08,EMEA,Platform,land,lost,3,118000,354000
+A1696,Aurora Labs,2025-Q4,2025-12-22,EMEA,Security,land,lost,3,232000,696000
+A1697,Northwind Logic Inc,2025-Q4,2025-10-14,EMEA,Platform,land,lost,3,246000,738000
+A1698,BluePeak Bridge,2025-Q4,2025-12-27,EMEA,Analytics,land,lost,3,19000,57000
+A1699,Granite Labs,2025-Q4,2025-12-23,EMEA,Platform,land,lost,3,108000,324000
+A1700,Aurora Works,2025-Q4,2025-12-03,AMER,Security,land,lost,1,52000,52000
+A1701,Parallel Cloud Inc,2025-Q4,2025-10-18,EMEA,Analytics,land,lost,3,55000,165000
+A1702,BluePeak Systems Inc,2025-Q4,2025-12-17,EMEA,Platform,land,lost,3,39000,117000
+A1703,Meridian Bridge Inc,2025-Q4,2025-10-30,APAC,Security,land,lost,3,191000,573000
+A1704,Aurora Cloud,2025-Q4,2025-12-17,AMER,Security,land,lost,3,232000,696000
+A1705,Pinnacle Dynamics Inc,2025-Q4,2025-11-17,EMEA,Security,land,lost,5,18000,90000
+A0815,Aurora Works Inc,2025-Q4,2025-11-13,AMER,Security,expand,lost,3,70000,210000
+A1479,Granite Works,2025-Q4,2025-10-16,EMEA,Platform,expand,lost,3,75000,225000
+A0938,Pinnacle Works,2025-Q4,2025-11-20,EMEA,Platform,expand,lost,3,274000,822000
+A0186,BluePeak Dynamics,2025-Q4,2025-11-14,AMER,Platform,expand,lost,3,99000,297000
+A1512,Pinnacle Works Inc,2025-Q4,2025-11-15,EMEA,Platform,expand,lost,3,13000,39000
+A1261,Northwind Dynamics Inc,2025-Q4,2025-12-14,APAC,Security,expand,lost,4,13000,52000
+A0345,Silverline Bridge,2025-Q4,2025-11-29,AMER,Analytics,expand,lost,5,13000,65000
+A0269,Aurora Labs Inc,2025-Q4,2025-12-20,EMEA,Platform,expand,lost,5,15000,75000
+A0114,Cobalt Dynamics,2025-Q4,2025-11-07,EMEA,Analytics,expand,lost,5,133000,665000
+A0954,Northwind Labs,2025-Q4,2025-10-21,APAC,Analytics,expand,lost,3,275000,825000
+A1188,BluePeak Works Inc,2025-Q4,2025-10-02,EMEA,Analytics,expand,lost,5,20000,100000
+A0833,Northwind Logic,2025-Q4,2025-12-04,AMER,Platform,expand,lost,3,118000,354000
+A1188,BluePeak Works Inc,2025-Q4,2025-11-11,EMEA,Security,expand,lost,5,83000,415000
+A0295,Silverline Works Inc,2025-Q4,2025-11-19,EMEA,Security,expand,lost,3,24000,72000
+A0473,Pinnacle Grid,2025-Q4,2025-11-21,APAC,Analytics,expand,lost,3,102000,306000
+A0794,Meridian Bridge,2025-Q4,2025-12-28,APAC,Security,expand,lost,1,15000,15000
+A1386,Cobalt Works Inc,2025-Q4,2025-10-28,EMEA,Platform,expand,lost,4,205000,820000
+A0149,Cobalt Dynamics Inc,2025-Q4,2025-12-05,AMER,Analytics,expand,lost,3,205000,615000
+A1223,Vertex Grid Inc,2025-Q4,2025-11-23,AMER,Analytics,expand,lost,3,29000,87000
+A0093,Aurora Dynamics,2025-Q4,2025-11-04,EMEA,Analytics,expand,lost,3,116000,348000
+A0616,Vertex Logic,2025-Q4,2025-12-03,APAC,Security,expand,lost,3,205000,615000
+A0003,Granite Dynamics Inc,2025-Q4,2025-12-18,EMEA,Security,expand,lost,3,79000,237000
+A1256,Silverline Labs,2025-Q4,2025-10-23,EMEA,Security,expand,lost,3,169000,507000
+A1658,Northwind Works,2025-Q4,2025-10-31,EMEA,Security,expand,lost,5,24000,120000
+A1026,Meridian Bridge,2025-Q4,2025-12-20,APAC,Analytics,expand,lost,3,20000,60000
+A0497,Cobalt Bridge Inc,2025-Q4,2025-11-28,APAC,Platform,expand,lost,3,53000,159000
+A0843,Parallel Dynamics,2025-Q4,2025-11-12,AMER,Platform,expand,lost,3,21000,63000
+A0037,Northwind Labs,2025-Q4,2025-12-13,APAC,Analytics,expand,lost,3,134000,402000
+A0497,Cobalt Bridge Inc,2025-Q4,2025-12-16,APAC,Platform,expand,lost,3,81000,243000
+A1597,BluePeak Grid,2025-Q4,2025-12-04,EMEA,Platform,expand,lost,3,70000,210000
+A0642,Granite Bridge Inc,2025-Q4,2025-11-15,EMEA,Security,expand,lost,3,39000,117000
+A0034,Granite Grid,2025-Q4,2025-12-05,EMEA,Security,expand,lost,3,53000,159000
+A1702,BluePeak Systems Inc,2025-Q4,2025-11-06,EMEA,Security,expand,lost,5,21000,105000
+A1210,Granite Dynamics Inc,2025-Q4,2025-11-12,EMEA,Analytics,expand,lost,1,75000,75000
+A1702,BluePeak Systems Inc,2025-Q4,2025-10-25,EMEA,Security,expand,lost,5,99000,495000
+A1225,Granite Labs,2025-Q4,2025-11-17,EMEA,Platform,expand,lost,3,147000,441000
+A1487,Vertex Dynamics,2025-Q4,2025-12-16,EMEA,Analytics,expand,lost,3,133000,399000
+A0134,Northwind Grid,2025-Q4,2025-11-25,EMEA,Platform,expand,lost,3,15000,45000
+A1361,Northwind Dynamics Inc,2025-Q4,2025-10-26,EMEA,Security,expand,lost,3,134000,402000
+A0647,Meridian Systems,2025-Q4,2025-12-12,APAC,Platform,expand,lost,3,133000,399000
+A0434,Aurora Logic,2025-Q4,2025-11-20,EMEA,Analytics,expand,lost,3,186000,558000
+A0833,Northwind Logic,2025-Q4,2025-10-05,AMER,Platform,expand,lost,3,21000,63000
+A0093,Aurora Dynamics,2025-Q4,2025-10-30,EMEA,Platform,expand,lost,3,53000,159000
+A0329,Cobalt Systems,2025-Q4,2025-12-15,AMER,Security,expand,lost,3,93000,279000
+A0821,Aurora Systems,2025-Q4,2025-10-12,APAC,Security,expand,lost,2,26000,52000
+A0996,Meridian Dynamics,2025-Q4,2025-10-07,EMEA,Analytics,expand,lost,4,39000,156000
+A0364,Silverline Bridge,2025-Q4,2025-11-05,AMER,Security,expand,lost,5,20000,100000
+A1260,Vertex Grid,2025-Q4,2025-11-19,AMER,Platform,expand,lost,1,64000,64000
+A0485,Vertex Bridge,2025-Q4,2025-11-14,EMEA,Platform,expand,lost,3,58000,174000
+A0190,Meridian Systems Inc,2025-Q4,2025-12-02,AMER,Security,expand,lost,3,15000,45000
+A1390,Aurora Bridge,2025-Q4,2025-11-22,APAC,Platform,expand,lost,1,21000,21000
+A0507,Vertex Labs,2025-Q4,2025-12-07,EMEA,Platform,expand,lost,3,63000,189000
+A0151,Vertex Dynamics,2025-Q4,2025-10-06,EMEA,Analytics,expand,lost,3,102000,306000
+A0410,Cobalt Logic,2025-Q4,2025-10-12,EMEA,Security,expand,lost,3,78000,234000
+A1086,Meridian Grid Inc,2025-Q4,2025-11-13,EMEA,Security,expand,lost,3,75000,225000
+A1634,BluePeak Grid Inc,2025-Q4,2025-12-26,EMEA,Analytics,expand,lost,3,118000,354000
+A0887,Granite Grid Inc,2025-Q4,2025-11-20,EMEA,Analytics,expand,lost,4,29000,116000
+A0332,Pinnacle Grid,2025-Q4,2025-11-19,EMEA,Security,expand,lost,3,24000,72000
+A1048,Granite Cloud,2025-Q4,2025-12-26,APAC,Platform,expand,lost,2,58000,116000
+A0518,Aurora Bridge,2025-Q4,2025-12-07,APAC,Platform,expand,lost,3,13000,39000
+A0276,Cobalt Grid,2025-Q4,2025-12-16,EMEA,Security,expand,lost,3,217000,651000
+A0189,Northwind Labs,2025-Q4,2025-10-06,EMEA,Platform,expand,lost,3,20000,60000
+A1031,Granite Labs,2025-Q4,2025-12-20,APAC,Security,expand,lost,3,169000,507000
+A0213,Pinnacle Logic,2025-Q4,2025-10-26,EMEA,Analytics,expand,lost,3,15000,45000
+A0781,Pinnacle Labs,2025-Q4,2025-11-15,AMER,Security,expand,lost,3,205000,615000
+A0511,Cobalt Labs,2025-Q4,2025-10-03,EMEA,Platform,expand,lost,4,58000,232000
+A1642,Cobalt Labs Inc,2025-Q4,2025-10-27,EMEA,Analytics,expand,lost,3,192000,576000
+A1618,BluePeak Dynamics,2025-Q4,2025-12-27,EMEA,Security,expand,lost,3,192000,576000
+A0861,Vertex Bridge,2025-Q4,2025-11-23,EMEA,Platform,expand,lost,5,20000,100000
+A0044,Northwind Bridge Inc,2025-Q4,2025-10-15,EMEA,Security,expand,lost,3,83000,249000
+A1320,Cobalt Labs Inc,2025-Q4,2025-10-06,EMEA,Analytics,expand,lost,1,63000,63000
+A1532,Cobalt Cloud,2025-Q4,2025-10-28,EMEA,Platform,expand,lost,3,13000,39000
+A1512,Pinnacle Works Inc,2025-Q4,2025-10-26,EMEA,Analytics,expand,lost,3,118000,354000
+A0475,Northwind Dynamics,2025-Q4,2025-10-25,APAC,Platform,expand,lost,3,133000,399000
+A0002,BluePeak Logic,2025-Q4,2025-10-20,EMEA,Security,expand,lost,3,275000,825000
+A1063,Pinnacle Dynamics,2025-Q4,2025-11-30,EMEA,Security,expand,lost,5,63000,315000
+A0962,Granite Logic Inc,2025-Q4,2025-11-02,EMEA,Platform,expand,lost,2,74000,148000
+A0943,Silverline Systems,2025-Q4,2025-10-30,APAC,Platform,expand,lost,3,26000,78000
+A0146,Parallel Grid Inc,2026-Q1,2026-03-11,EMEA,Analytics,renew,lost,3,41000,123000
+A0335,Parallel Labs,2026-Q1,2026-03-23,APAC,Platform,renew,won,3,232000,696000
+A0166,BluePeak Grid,2026-Q1,2026-01-20,AMER,Platform,renew,lost,5,30000,150000
+A0255,Pinnacle Dynamics Inc,2026-Q1,2026-01-18,APAC,Analytics,renew,won,3,15000,45000
+A0023,BluePeak Dynamics Inc,2026-Q1,2026-02-13,AMER,Platform,renew,won,3,464000,1392000
+A0211,Aurora Dynamics,2026-Q1,2026-01-16,APAC,Security,renew,won,3,210000,630000
+A0525,Pinnacle Logic Inc,2026-Q1,2026-03-09,APAC,Security,renew,lost,3,27000,81000
+A0059,Northwind Labs Inc,2026-Q1,2026-03-07,APAC,Security,renew,won,1,208000,208000
+A0406,Parallel Dynamics,2026-Q1,2026-03-10,AMER,Platform,renew,lost,5,45000,225000
+A0281,Parallel Logic,2026-Q1,2026-02-06,APAC,Platform,renew,won,3,182000,546000
+A0081,Silverline Dynamics,2026-Q1,2026-01-05,APAC,Platform,renew,won,3,183000,549000
+A0094,Pinnacle Labs,2026-Q1,2026-03-10,APAC,Analytics,renew,won,3,127000,381000
+A0289,Silverline Bridge Inc,2026-Q1,2026-03-22,EMEA,Analytics,renew,lost,3,48000,144000
+A0359,Northwind Cloud,2026-Q1,2026-02-20,APAC,Analytics,renew,won,3,405000,1215000
+A0009,BluePeak Dynamics Inc,2026-Q1,2026-03-09,EMEA,Platform,renew,won,1,338000,338000
+A0411,Vertex Works,2026-Q1,2026-02-13,AMER,Analytics,renew,won,3,21000,63000
+A0028,Silverline Cloud Inc,2026-Q1,2026-02-05,AMER,Platform,renew,won,5,27000,135000
+A0084,Meridian Works Inc,2026-Q1,2026-02-05,APAC,Platform,renew,won,3,102000,306000
+A0215,Northwind Dynamics,2026-Q1,2026-03-16,EMEA,Security,renew,lost,3,169000,507000
+A0519,Vertex Works Inc,2026-Q1,2026-03-13,APAC,Security,renew,lost,3,98000,294000
+A0457,Aurora Dynamics Inc,2026-Q1,2026-01-25,APAC,Platform,renew,won,3,195000,585000
+A0353,Silverline Bridge,2026-Q1,2026-03-28,AMER,Security,renew,won,3,76000,228000
+A0310,Pinnacle Labs,2026-Q1,2026-02-11,AMER,Analytics,renew,won,3,295000,885000
+A0601,Aurora Bridge,2026-Q1,2026-03-05,AMER,Security,renew,won,1,44000,44000
+A0263,Pinnacle Cloud,2026-Q1,2026-03-31,APAC,Platform,renew,won,3,204000,612000
+A0186,BluePeak Dynamics,2026-Q1,2026-01-11,AMER,Platform,renew,won,3,23000,69000
+A0600,Northwind Cloud,2026-Q1,2026-03-06,AMER,Analytics,renew,won,3,304000,912000
+A0292,Northwind Systems Inc,2026-Q1,2026-03-28,AMER,Security,renew,won,3,42000,126000
+A0246,Cobalt Systems,2026-Q1,2026-01-24,EMEA,Security,renew,won,4,208000,832000
+A0395,Northwind Cloud Inc,2026-Q1,2026-01-20,APAC,Platform,renew,won,5,117000,585000
+A0582,Silverline Systems,2026-Q1,2026-01-28,AMER,Platform,renew,won,2,395000,790000
+A0107,Pinnacle Works Inc,2026-Q1,2026-02-13,AMER,Platform,renew,won,3,137000,411000
+A0108,Cobalt Logic Inc,2026-Q1,2026-03-04,EMEA,Security,renew,won,3,172000,516000
+A0033,Granite Labs Inc,2026-Q1,2026-03-22,AMER,Security,renew,won,4,390000,1560000
+A0402,Parallel Dynamics Inc,2026-Q1,2026-02-14,AMER,Analytics,renew,won,3,470000,1410000
+A0118,Meridian Labs,2026-Q1,2026-02-23,EMEA,Analytics,renew,won,3,328000,984000
+A0274,Granite Works,2026-Q1,2026-01-19,EMEA,Analytics,renew,won,1,135000,135000
+A0351,Vertex Logic,2026-Q1,2026-02-19,AMER,Platform,renew,lost,3,67000,201000
+A0115,Silverline Dynamics,2026-Q1,2026-02-25,APAC,Security,renew,won,3,105000,315000
+A0448,Aurora Works,2026-Q1,2026-02-08,AMER,Platform,renew,won,3,205000,615000
+A0354,Aurora Dynamics,2026-Q1,2026-02-22,APAC,Security,renew,lost,3,135000,405000
+A0050,Parallel Cloud,2026-Q1,2026-03-23,APAC,Platform,renew,won,1,167000,167000
+A0453,Aurora Grid,2026-Q1,2026-02-24,EMEA,Security,renew,won,5,303000,1515000
+A0408,Aurora Bridge Inc,2026-Q1,2026-02-01,APAC,Platform,renew,lost,3,39000,117000
+A0057,Vertex Labs,2026-Q1,2026-01-19,APAC,Analytics,renew,won,3,98000,294000
+A0154,Cobalt Systems,2026-Q1,2026-02-20,APAC,Platform,renew,won,3,379000,1137000
+A0278,Pinnacle Systems,2026-Q1,2026-03-10,AMER,Platform,renew,won,3,128000,384000
+A0517,Pinnacle Cloud,2026-Q1,2026-03-01,AMER,Platform,renew,won,2,521000,1042000
+A0117,Cobalt Systems,2026-Q1,2026-02-17,EMEA,Platform,renew,won,3,12000,36000
+A0325,Parallel Logic,2026-Q1,2026-01-13,EMEA,Platform,renew,won,3,229000,687000
+A0257,Cobalt Cloud Inc,2026-Q1,2026-02-26,AMER,Platform,renew,won,3,91000,273000
+A0282,Vertex Works Inc,2026-Q1,2026-03-14,APAC,Analytics,renew,won,1,166000,166000
+A0606,Meridian Grid Inc,2026-Q1,2026-01-13,AMER,Platform,renew,lost,3,119000,357000
+A0176,Vertex Bridge,2026-Q1,2026-03-03,APAC,Platform,renew,won,3,79000,237000
+A0103,Cobalt Cloud,2026-Q1,2026-03-18,APAC,Platform,renew,won,3,90000,270000
+A0085,Vertex Cloud,2026-Q1,2026-02-27,EMEA,Analytics,renew,won,2,220000,440000
+A0341,BluePeak Bridge,2026-Q1,2026-01-18,AMER,Analytics,renew,won,3,186000,558000
+A0029,Pinnacle Systems,2026-Q1,2026-03-22,EMEA,Security,renew,won,5,332000,1660000
+A0534,Granite Labs Inc,2026-Q1,2026-03-14,APAC,Platform,renew,won,3,74000,222000
+A0598,Silverline Systems,2026-Q1,2026-03-01,EMEA,Analytics,renew,won,3,199000,597000
+A0054,Pinnacle Bridge,2026-Q1,2026-01-27,APAC,Platform,renew,won,3,26000,78000
+A0555,Silverline Bridge,2026-Q1,2026-03-17,AMER,Platform,renew,lost,3,80000,240000
+A0288,Meridian Grid Inc,2026-Q1,2026-01-25,APAC,Platform,renew,won,3,187000,561000
+A0243,Silverline Bridge,2026-Q1,2026-01-30,AMER,Platform,renew,lost,3,16000,48000
+A0484,BluePeak Bridge,2026-Q1,2026-02-15,APAC,Analytics,renew,lost,3,74000,222000
+A0046,Pinnacle Bridge,2026-Q1,2026-02-20,AMER,Platform,renew,lost,3,16000,48000
+A0158,Granite Bridge,2026-Q1,2026-03-05,AMER,Analytics,renew,won,2,76000,152000
+A0444,Cobalt Grid,2026-Q1,2026-02-10,AMER,Analytics,renew,won,3,271000,813000
+A0613,Silverline Dynamics,2026-Q1,2026-02-27,AMER,Platform,renew,won,3,228000,684000
+A0316,Parallel Grid,2026-Q1,2026-01-29,EMEA,Security,renew,won,3,628000,1884000
+A0573,BluePeak Bridge Inc,2026-Q1,2026-01-17,AMER,Security,renew,won,4,544000,2176000
+A0358,Silverline Cloud,2026-Q1,2026-02-05,EMEA,Analytics,renew,won,3,207000,621000
+A0585,Pinnacle Grid,2026-Q1,2026-01-04,APAC,Analytics,renew,won,3,197000,591000
+A0097,Granite Labs Inc,2026-Q1,2026-01-27,AMER,Platform,renew,won,1,18000,18000
+A0233,Parallel Systems,2026-Q1,2026-03-20,AMER,Security,renew,won,3,344000,1032000
+A0117,Cobalt Systems,2026-Q1,2026-03-01,EMEA,Security,expand,won,3,94000,282000
+A0542,Aurora Cloud Inc,2026-Q1,2026-01-19,AMER,Analytics,expand,won,3,26000,78000
+A0207,Vertex Logic Inc,2026-Q1,2026-02-10,EMEA,Analytics,expand,won,3,136000,408000
+A0388,Granite Grid,2026-Q1,2026-02-12,AMER,Platform,expand,won,3,49000,147000
+A0157,Silverline Systems Inc,2026-Q1,2026-03-06,EMEA,Platform,expand,won,3,203000,609000
+A0119,Pinnacle Cloud,2026-Q1,2026-01-19,APAC,Analytics,expand,won,3,123000,369000
+A0176,Vertex Bridge,2026-Q1,2026-02-19,APAC,Platform,expand,won,3,15000,45000
+A0272,Aurora Bridge Inc,2026-Q1,2026-03-27,APAC,Analytics,expand,won,3,155000,465000
+A0304,Aurora Cloud,2026-Q1,2026-02-20,APAC,Security,expand,won,3,74000,222000
+A0114,Cobalt Dynamics,2026-Q1,2026-02-11,EMEA,Analytics,expand,won,5,172000,860000
+A0171,Pinnacle Bridge Inc,2026-Q1,2026-02-15,AMER,Security,expand,won,5,13000,65000
+A0558,Northwind Systems Inc,2026-Q1,2026-01-10,EMEA,Security,expand,won,3,13000,39000
+A0092,BluePeak Logic,2026-Q1,2026-01-01,EMEA,Analytics,expand,won,3,87000,261000
+A0050,Parallel Cloud,2026-Q1,2026-03-25,APAC,Security,expand,won,1,160000,160000
+A0336,Vertex Dynamics Inc,2026-Q1,2026-03-27,AMER,Analytics,expand,won,3,153000,459000
+A0312,Aurora Grid,2026-Q1,2026-03-01,EMEA,Security,expand,won,2,233000,466000
+A0070,Pinnacle Systems,2026-Q1,2026-01-24,EMEA,Security,expand,won,3,30000,90000
+A0431,Northwind Bridge Inc,2026-Q1,2026-03-28,AMER,Analytics,expand,won,3,39000,117000
+A0279,Parallel Works Inc,2026-Q1,2026-03-02,EMEA,Analytics,expand,won,3,262000,786000
+A0561,Pinnacle Bridge,2026-Q1,2026-02-14,AMER,Security,expand,won,3,74000,222000
+A0158,Granite Bridge,2026-Q1,2026-02-15,AMER,Security,expand,won,2,13000,26000
+A0553,Aurora Systems,2026-Q1,2026-01-28,APAC,Platform,expand,won,3,66000,198000
+A0247,Northwind Dynamics,2026-Q1,2026-03-04,APAC,Analytics,expand,won,3,24000,72000
+A0075,Silverline Grid,2026-Q1,2026-01-11,EMEA,Platform,expand,won,5,57000,285000
+A0148,Northwind Grid,2026-Q1,2026-02-27,EMEA,Analytics,expand,won,3,20000,60000
+A0570,Cobalt Grid Inc,2026-Q1,2026-01-01,EMEA,Analytics,expand,won,3,186000,558000
+A0390,Northwind Cloud,2026-Q1,2026-01-24,EMEA,Security,expand,won,3,39000,117000
+A0111,Vertex Systems Inc,2026-Q1,2026-02-17,APAC,Security,expand,won,3,16000,48000
+A0523,Cobalt Grid Inc,2026-Q1,2026-01-05,EMEA,Security,expand,won,3,13000,39000
+A0593,Cobalt Logic Inc,2026-Q1,2026-02-12,EMEA,Platform,expand,won,3,103000,309000
+A0354,Aurora Dynamics,2026-Q1,2026-02-13,APAC,Platform,expand,won,3,277000,831000
+A0005,BluePeak Labs Inc,2026-Q1,2026-03-13,APAC,Security,expand,won,3,149000,447000
+A0105,Parallel Logic,2026-Q1,2026-02-01,AMER,Security,expand,won,4,133000,532000
+A0346,Silverline Works,2026-Q1,2026-01-31,EMEA,Platform,expand,won,3,234000,702000
+A0235,Pinnacle Works Inc,2026-Q1,2026-01-28,AMER,Analytics,expand,won,4,38000,152000
+A0058,Vertex Logic,2026-Q1,2026-03-04,EMEA,Analytics,expand,won,3,138000,414000
+A0038,Vertex Cloud Inc,2026-Q1,2026-03-14,AMER,Analytics,expand,won,3,26000,78000
+A0002,BluePeak Logic,2026-Q1,2026-02-08,EMEA,Security,expand,won,3,176000,528000
+A0566,BluePeak Dynamics,2026-Q1,2026-01-05,EMEA,Platform,expand,won,3,158000,474000
+A0002,BluePeak Logic,2026-Q1,2026-03-14,EMEA,Security,expand,won,3,15000,45000
+A0201,BluePeak Dynamics Inc,2026-Q1,2026-01-07,AMER,Analytics,expand,won,3,18000,54000
+A0348,Meridian Works,2026-Q1,2026-02-01,AMER,Security,expand,won,3,57000,171000
+A0207,Vertex Logic Inc,2026-Q1,2026-01-04,EMEA,Platform,expand,won,3,31000,93000
+A0897,Aurora Labs,2026-Q1,2026-01-22,APAC,Security,land,won,3,27000,81000
+A0898,Aurora Bridge,2026-Q1,2026-02-24,AMER,Security,land,won,3,23000,69000
+A0899,Cobalt Labs Inc,2026-Q1,2026-03-15,APAC,Security,land,won,3,138000,414000
+A0900,Silverline Dynamics Inc,2026-Q1,2026-03-20,EMEA,Analytics,land,won,5,52000,260000
+A0901,Meridian Logic,2026-Q1,2026-02-09,EMEA,Analytics,land,won,3,43000,129000
+A0902,Northwind Labs,2026-Q1,2026-03-25,EMEA,Platform,land,won,3,124000,372000
+A0903,BluePeak Labs Inc,2026-Q1,2026-03-11,EMEA,Analytics,land,won,3,89000,267000
+A0904,Parallel Systems Inc,2026-Q1,2026-02-20,EMEA,Analytics,land,won,3,195000,585000
+A0905,Cobalt Works Inc,2026-Q1,2026-01-18,APAC,Security,land,won,3,117000,351000
+A0906,Pinnacle Systems Inc,2026-Q1,2026-01-01,AMER,Platform,land,won,3,203000,609000
+A0907,Aurora Cloud,2026-Q1,2026-01-04,APAC,Analytics,land,won,2,273000,546000
+A0908,Meridian Logic,2026-Q1,2026-01-13,AMER,Platform,land,won,3,16000,48000
+A0909,Northwind Dynamics,2026-Q1,2026-01-20,AMER,Analytics,land,won,3,13000,39000
+A0910,Granite Works,2026-Q1,2026-02-20,APAC,Security,land,won,3,79000,237000
+A0911,Parallel Logic,2026-Q1,2026-03-31,EMEA,Security,land,won,3,20000,60000
+A0912,Aurora Bridge,2026-Q1,2026-02-17,APAC,Platform,land,won,3,132000,396000
+A0913,Northwind Logic,2026-Q1,2026-03-08,EMEA,Analytics,land,won,5,29000,145000
+A0914,Cobalt Dynamics,2026-Q1,2026-01-15,EMEA,Analytics,land,won,3,128000,384000
+A0915,Cobalt Logic Inc,2026-Q1,2026-03-23,AMER,Analytics,land,won,3,90000,270000
+A0916,Northwind Works Inc,2026-Q1,2026-02-17,APAC,Security,land,won,3,202000,606000
+A0917,Cobalt Labs Inc,2026-Q1,2026-02-09,EMEA,Analytics,land,won,3,17000,51000
+A0918,Meridian Bridge,2026-Q1,2026-02-06,AMER,Platform,land,won,3,13000,39000
+A0919,Silverline Systems Inc,2026-Q1,2026-02-16,APAC,Platform,land,won,3,13000,39000
+A0920,Northwind Logic Inc,2026-Q1,2026-03-11,AMER,Platform,land,won,4,221000,884000
+A0921,Vertex Systems,2026-Q1,2026-01-30,EMEA,Analytics,land,won,3,166000,498000
+A0922,Meridian Bridge Inc,2026-Q1,2026-02-15,AMER,Security,land,won,3,23000,69000
+A0923,Parallel Systems,2026-Q1,2026-03-20,APAC,Security,land,won,4,45000,180000
+A0924,Meridian Bridge Inc,2026-Q1,2026-01-26,AMER,Analytics,land,won,5,168000,840000
+A0925,Vertex Labs,2026-Q1,2026-01-28,EMEA,Analytics,land,won,3,81000,243000
+A0926,Pinnacle Grid,2026-Q1,2026-01-07,APAC,Platform,land,won,3,85000,255000
+A0927,Cobalt Cloud,2026-Q1,2026-01-27,EMEA,Platform,land,won,3,138000,414000
+A0928,Cobalt Systems,2026-Q1,2026-01-02,AMER,Security,land,won,5,28000,140000
+A0929,BluePeak Bridge,2026-Q1,2026-01-22,AMER,Security,land,won,4,186000,744000
+A0930,Parallel Cloud,2026-Q1,2026-02-26,AMER,Platform,land,won,3,21000,63000
+A0931,Parallel Systems,2026-Q1,2026-01-09,EMEA,Platform,land,won,3,205000,615000
+A0932,Cobalt Grid Inc,2026-Q1,2026-03-23,AMER,Platform,land,won,3,14000,42000
+A0933,Cobalt Grid,2026-Q1,2026-02-01,EMEA,Platform,land,won,3,90000,270000
+A0934,Northwind Systems Inc,2026-Q1,2026-01-18,APAC,Platform,land,won,3,17000,51000
+A0935,Granite Works,2026-Q1,2026-02-21,APAC,Platform,land,won,3,126000,378000
+A0936,Granite Bridge,2026-Q1,2026-01-21,AMER,Security,land,won,3,36000,108000
+A0937,Aurora Dynamics,2026-Q1,2026-02-13,AMER,Analytics,land,won,3,193000,579000
+A0938,Pinnacle Works,2026-Q1,2026-02-04,EMEA,Security,land,won,3,35000,105000
+A0939,Pinnacle Cloud,2026-Q1,2026-03-24,EMEA,Security,land,won,3,16000,48000
+A0940,Granite Bridge,2026-Q1,2026-02-24,APAC,Analytics,land,won,3,101000,303000
+A0941,Meridian Grid Inc,2026-Q1,2026-01-10,APAC,Platform,land,won,3,81000,243000
+A0942,Aurora Works Inc,2026-Q1,2026-03-24,AMER,Platform,land,won,5,49000,245000
+A0943,Silverline Systems,2026-Q1,2026-03-31,APAC,Security,land,won,3,112000,336000
+A0944,Granite Bridge,2026-Q1,2026-01-28,APAC,Security,land,won,3,159000,477000
+A0945,Aurora Grid,2026-Q1,2026-02-24,APAC,Analytics,land,won,3,138000,414000
+A0946,Meridian Systems,2026-Q1,2026-01-12,AMER,Analytics,land,won,3,45000,135000
+A0947,Meridian Grid,2026-Q1,2026-03-05,EMEA,Analytics,land,won,3,44000,132000
+A0948,Northwind Cloud,2026-Q1,2026-02-05,APAC,Analytics,land,won,3,86000,258000
+A0949,Silverline Dynamics Inc,2026-Q1,2026-03-05,APAC,Security,land,won,3,48000,144000
+A0950,Granite Grid,2026-Q1,2026-02-23,AMER,Security,land,won,3,61000,183000
+A0951,Meridian Bridge,2026-Q1,2026-01-13,APAC,Analytics,land,won,3,143000,429000
+A0952,Cobalt Works Inc,2026-Q1,2026-01-04,EMEA,Platform,land,won,3,52000,156000
+A0953,Silverline Cloud Inc,2026-Q1,2026-01-27,EMEA,Platform,land,won,3,58000,174000
+A0954,Northwind Labs,2026-Q1,2026-03-27,APAC,Platform,land,won,3,31000,93000
+A0955,Parallel Logic Inc,2026-Q1,2026-01-06,AMER,Security,land,won,3,107000,321000
+A0956,Cobalt Grid,2026-Q1,2026-01-09,AMER,Platform,land,won,3,24000,72000
+A0957,Cobalt Systems Inc,2026-Q1,2026-02-08,APAC,Platform,land,won,3,298000,894000
+A0958,Aurora Grid,2026-Q1,2026-01-17,EMEA,Security,land,won,3,180000,540000
+A0959,Aurora Works Inc,2026-Q1,2026-01-13,AMER,Security,land,won,3,84000,252000
+A0960,Meridian Labs,2026-Q1,2026-02-18,APAC,Security,land,won,3,85000,255000
+A0961,Silverline Grid Inc,2026-Q1,2026-02-28,AMER,Analytics,land,won,5,26000,130000
+A0962,Granite Logic Inc,2026-Q1,2026-03-10,EMEA,Analytics,land,won,2,71000,142000
+A0963,BluePeak Logic,2026-Q1,2026-01-28,AMER,Platform,land,won,3,200000,600000
+A0964,Aurora Grid Inc,2026-Q1,2026-01-25,EMEA,Analytics,land,won,4,14000,56000
+A0965,Parallel Cloud Inc,2026-Q1,2026-02-05,AMER,Analytics,land,won,3,18000,54000
+A0966,Cobalt Grid,2026-Q1,2026-02-09,APAC,Analytics,land,won,3,38000,114000
+A0967,Meridian Cloud,2026-Q1,2026-01-28,EMEA,Analytics,land,won,3,203000,609000
+A0968,Meridian Logic,2026-Q1,2026-02-17,APAC,Security,land,won,3,18000,54000
+A0969,Meridian Logic Inc,2026-Q1,2026-01-10,AMER,Security,land,won,3,108000,324000
+A0970,Parallel Cloud Inc,2026-Q1,2026-01-04,EMEA,Security,land,won,3,152000,456000
+A0971,Northwind Grid,2026-Q1,2026-03-06,AMER,Security,land,won,3,41000,123000
+A0972,Northwind Works,2026-Q1,2026-02-28,EMEA,Security,land,won,3,58000,174000
+A1706,Parallel Labs,2026-Q1,2026-01-02,AMER,Analytics,land,lost,3,180000,540000
+A1707,Cobalt Logic,2026-Q1,2026-01-23,EMEA,Platform,land,lost,5,26000,130000
+A1708,BluePeak Dynamics Inc,2026-Q1,2026-02-25,APAC,Security,land,lost,3,79000,237000
+A1709,Parallel Labs,2026-Q1,2026-02-11,EMEA,Platform,land,lost,3,52000,156000
+A1710,Silverline Bridge,2026-Q1,2026-02-15,EMEA,Analytics,land,lost,2,273000,546000
+A1711,Northwind Grid Inc,2026-Q1,2026-01-12,EMEA,Platform,land,lost,3,13000,39000
+A1712,Aurora Works,2026-Q1,2026-03-03,APAC,Security,land,lost,3,36000,108000
+A1713,Meridian Bridge Inc,2026-Q1,2026-02-05,EMEA,Analytics,land,lost,3,298000,894000
+A1714,Vertex Labs Inc,2026-Q1,2026-02-02,EMEA,Platform,land,lost,5,52000,260000
+A1715,Meridian Systems Inc,2026-Q1,2026-03-17,EMEA,Platform,land,lost,3,138000,414000
+A1716,Granite Works Inc,2026-Q1,2026-02-23,EMEA,Platform,land,lost,3,79000,237000
+A1717,Northwind Systems Inc,2026-Q1,2026-03-10,EMEA,Security,land,lost,3,48000,144000
+A1718,BluePeak Labs Inc,2026-Q1,2026-03-28,AMER,Platform,land,lost,3,43000,129000
+A1719,Aurora Cloud Inc,2026-Q1,2026-01-08,EMEA,Analytics,land,lost,3,23000,69000
+A1720,Meridian Logic Inc,2026-Q1,2026-01-03,EMEA,Platform,land,lost,3,14000,42000
+A1721,BluePeak Grid Inc,2026-Q1,2026-02-14,AMER,Analytics,land,lost,3,112000,336000
+A1722,Parallel Works Inc,2026-Q1,2026-02-24,EMEA,Platform,land,lost,3,138000,414000
+A1723,Parallel Grid,2026-Q1,2026-02-20,EMEA,Analytics,land,lost,3,27000,81000
+A1724,Vertex Works Inc,2026-Q1,2026-02-10,APAC,Analytics,land,lost,3,203000,609000
+A1725,Silverline Cloud,2026-Q1,2026-01-30,EMEA,Analytics,land,lost,3,138000,414000
+A1726,BluePeak Cloud,2026-Q1,2026-01-21,EMEA,Analytics,land,lost,3,81000,243000
+A1727,Pinnacle Labs Inc,2026-Q1,2026-03-18,EMEA,Platform,land,lost,3,202000,606000
+A1728,BluePeak Dynamics Inc,2026-Q1,2026-02-25,EMEA,Security,land,lost,3,35000,105000
+A1729,Granite Systems Inc,2026-Q1,2026-01-01,EMEA,Analytics,land,lost,3,138000,414000
+A1730,Northwind Dynamics Inc,2026-Q1,2026-03-28,AMER,Platform,land,lost,2,71000,142000
+A1731,Aurora Dynamics,2026-Q1,2026-03-24,EMEA,Platform,land,lost,3,13000,39000
+A1732,Northwind Works,2026-Q1,2026-03-21,EMEA,Analytics,land,lost,3,203000,609000
+A1733,Northwind Dynamics,2026-Q1,2026-03-11,AMER,Security,land,lost,3,13000,39000
+A1734,BluePeak Dynamics Inc,2026-Q1,2026-01-11,AMER,Security,land,lost,3,132000,396000
+A1735,Vertex Labs,2026-Q1,2026-02-05,EMEA,Analytics,land,lost,3,44000,132000
+A1736,BluePeak Systems,2026-Q1,2026-01-24,APAC,Platform,land,lost,2,71000,142000
+A1737,Aurora Labs Inc,2026-Q1,2026-01-14,AMER,Platform,land,lost,3,81000,243000
+A1738,Meridian Works,2026-Q1,2026-03-14,EMEA,Analytics,land,lost,3,200000,600000
+A1739,Meridian Dynamics,2026-Q1,2026-02-05,EMEA,Security,land,lost,2,273000,546000
+A1740,Silverline Grid,2026-Q1,2026-02-17,EMEA,Security,land,lost,3,35000,105000
+A1741,Silverline Logic Inc,2026-Q1,2026-01-04,AMER,Security,land,lost,5,52000,260000
+A1742,Northwind Dynamics Inc,2026-Q1,2026-01-17,EMEA,Security,land,lost,3,45000,135000
+A1743,Pinnacle Labs Inc,2026-Q1,2026-03-03,EMEA,Analytics,land,lost,3,152000,456000
+A1744,Cobalt Dynamics,2026-Q1,2026-03-04,APAC,Security,land,lost,3,35000,105000
+A1745,Vertex Labs Inc,2026-Q1,2026-03-07,EMEA,Security,land,lost,3,35000,105000
+A1746,Northwind Dynamics,2026-Q1,2026-02-28,AMER,Security,land,lost,5,29000,145000
+A1747,Cobalt Systems Inc,2026-Q1,2026-01-02,APAC,Analytics,land,lost,3,13000,39000
+A1748,Silverline Bridge Inc,2026-Q1,2026-02-17,EMEA,Analytics,land,lost,3,38000,114000
+A1749,Meridian Logic Inc,2026-Q1,2026-01-29,EMEA,Analytics,land,lost,3,16000,48000
+A1750,Silverline Bridge,2026-Q1,2026-02-01,EMEA,Platform,land,lost,5,29000,145000
+A1751,Northwind Labs Inc,2026-Q1,2026-03-18,EMEA,Platform,land,lost,4,221000,884000
+A1752,Meridian Works,2026-Q1,2026-02-19,APAC,Analytics,land,lost,3,18000,54000
+A1753,Granite Works,2026-Q1,2026-01-26,EMEA,Platform,land,lost,3,38000,114000
+A1754,Pinnacle Bridge,2026-Q1,2026-03-29,AMER,Platform,land,lost,3,86000,258000
+A1755,Pinnacle Cloud Inc,2026-Q1,2026-02-12,APAC,Analytics,land,lost,3,90000,270000
+A1756,Vertex Bridge Inc,2026-Q1,2026-01-25,EMEA,Security,land,lost,3,138000,414000
+A1757,BluePeak Cloud,2026-Q1,2026-03-25,EMEA,Analytics,land,lost,3,89000,267000
+A1758,Silverline Labs Inc,2026-Q1,2026-03-11,EMEA,Platform,land,lost,3,124000,372000
+A1759,Cobalt Works Inc,2026-Q1,2026-03-10,EMEA,Security,land,lost,3,13000,39000
+A1760,Cobalt Systems Inc,2026-Q1,2026-03-24,EMEA,Analytics,land,lost,3,107000,321000
+A1761,Vertex Labs,2026-Q1,2026-01-09,EMEA,Security,land,lost,3,17000,51000
+A1762,Granite Systems Inc,2026-Q1,2026-03-23,EMEA,Platform,land,lost,3,48000,144000
+A1763,Aurora Bridge,2026-Q1,2026-03-01,AMER,Platform,land,lost,4,221000,884000
+A1764,Pinnacle Grid,2026-Q1,2026-02-18,AMER,Platform,land,lost,3,298000,894000
+A1765,Granite Systems,2026-Q1,2026-02-18,APAC,Security,land,lost,3,166000,498000
+A1766,Pinnacle Works,2026-Q1,2026-03-05,AMER,Security,land,lost,3,79000,237000
+A1767,Vertex Dynamics,2026-Q1,2026-01-17,EMEA,Security,land,lost,3,143000,429000
+A1768,Silverline Systems Inc,2026-Q1,2026-03-13,EMEA,Analytics,land,lost,3,16000,48000
+A1769,BluePeak Works,2026-Q1,2026-01-24,EMEA,Platform,land,lost,3,205000,615000
+A1770,Aurora Labs,2026-Q1,2026-02-13,EMEA,Security,land,lost,3,90000,270000
+A1771,BluePeak Cloud,2026-Q1,2026-03-24,EMEA,Security,land,lost,3,23000,69000
+A1772,Northwind Bridge Inc,2026-Q1,2026-02-19,EMEA,Security,land,lost,3,44000,132000
+A1773,Meridian Dynamics,2026-Q1,2026-01-21,EMEA,Analytics,land,lost,3,152000,456000
+A1774,Aurora Works,2026-Q1,2026-03-03,AMER,Security,land,lost,3,18000,54000
+A1775,Cobalt Logic Inc,2026-Q1,2026-02-23,EMEA,Platform,land,lost,3,180000,540000
+A1776,Meridian Logic Inc,2026-Q1,2026-02-13,EMEA,Security,land,lost,3,143000,429000
+A1777,Pinnacle Systems,2026-Q1,2026-03-30,EMEA,Platform,land,lost,3,27000,81000
+A1778,Parallel Labs,2026-Q1,2026-02-24,APAC,Analytics,land,lost,3,13000,39000
+A1779,Parallel Dynamics Inc,2026-Q1,2026-02-21,EMEA,Security,land,lost,3,195000,585000
+A1780,Parallel Grid,2026-Q1,2026-02-14,APAC,Analytics,land,lost,5,52000,260000
+A1781,Parallel Bridge,2026-Q1,2026-01-02,AMER,Platform,land,lost,3,45000,135000
+A1782,Meridian Works Inc,2026-Q1,2026-01-28,EMEA,Analytics,land,lost,3,107000,321000
+A1783,Parallel Grid,2026-Q1,2026-02-03,EMEA,Platform,land,lost,3,58000,174000
+A1784,Granite Labs Inc,2026-Q1,2026-01-15,EMEA,Security,land,lost,2,273000,546000
+A1785,Northwind Works Inc,2026-Q1,2026-01-19,EMEA,Platform,land,lost,3,24000,72000
+A1786,Northwind Cloud,2026-Q1,2026-03-09,AMER,Platform,land,lost,3,90000,270000
+A1787,Silverline Works Inc,2026-Q1,2026-03-01,EMEA,Security,land,lost,3,61000,183000
+A1788,Cobalt Logic Inc,2026-Q1,2026-02-04,EMEA,Platform,land,lost,3,48000,144000
+A1789,Silverline Labs Inc,2026-Q1,2026-03-31,AMER,Platform,land,lost,5,49000,245000
+A1790,Northwind Labs,2026-Q1,2026-03-06,EMEA,Platform,land,lost,3,79000,237000
+A1791,Cobalt Labs Inc,2026-Q1,2026-02-18,AMER,Analytics,land,lost,4,186000,744000
+A1792,BluePeak Grid,2026-Q1,2026-02-01,EMEA,Platform,land,lost,3,132000,396000
+A1793,Vertex Labs Inc,2026-Q1,2026-03-17,AMER,Security,land,lost,5,28000,140000
+A1794,Northwind Labs Inc,2026-Q1,2026-02-03,AMER,Analytics,land,lost,3,14000,42000
+A1795,BluePeak Cloud,2026-Q1,2026-03-05,EMEA,Platform,land,lost,3,107000,321000
+A1796,Parallel Logic Inc,2026-Q1,2026-01-10,EMEA,Security,land,lost,3,84000,252000
+A1797,Aurora Grid,2026-Q1,2026-03-11,EMEA,Platform,land,lost,3,36000,108000
+A1798,Parallel Cloud,2026-Q1,2026-01-10,EMEA,Security,land,lost,3,20000,60000
+A1799,Pinnacle Cloud,2026-Q1,2026-02-23,APAC,Analytics,land,lost,3,124000,372000
+A1800,Aurora Works Inc,2026-Q1,2026-01-29,APAC,Analytics,land,lost,4,186000,744000
+A1801,Parallel Logic Inc,2026-Q1,2026-03-02,EMEA,Security,land,lost,3,23000,69000
+A1802,Silverline Systems,2026-Q1,2026-01-12,APAC,Security,land,lost,3,14000,42000
+A1803,Northwind Dynamics Inc,2026-Q1,2026-02-27,EMEA,Platform,land,lost,3,41000,123000
+A1804,Silverline Bridge Inc,2026-Q1,2026-03-30,EMEA,Platform,land,lost,3,24000,72000
+A1805,Northwind Dynamics,2026-Q1,2026-03-12,EMEA,Security,land,lost,3,13000,39000
+A1806,Pinnacle Works,2026-Q1,2026-01-09,AMER,Security,land,lost,3,38000,114000
+A1807,Pinnacle Systems,2026-Q1,2026-02-14,AMER,Security,land,lost,3,18000,54000
+A1808,Aurora Systems Inc,2026-Q1,2026-03-16,EMEA,Security,land,lost,3,58000,174000
+A1809,BluePeak Labs Inc,2026-Q1,2026-03-12,APAC,Platform,land,lost,3,24000,72000
+A1810,Parallel Systems,2026-Q1,2026-01-02,APAC,Platform,land,lost,3,195000,585000
+A1811,Silverline Systems Inc,2026-Q1,2026-03-12,APAC,Platform,land,lost,3,21000,63000
+A1812,Aurora Logic Inc,2026-Q1,2026-03-03,EMEA,Platform,land,lost,5,29000,145000
+A1813,BluePeak Systems,2026-Q1,2026-02-17,EMEA,Security,land,lost,3,31000,93000
+A1814,Meridian Dynamics,2026-Q1,2026-03-20,EMEA,Platform,land,lost,3,20000,60000
+A1815,BluePeak Systems,2026-Q1,2026-03-22,EMEA,Analytics,land,lost,3,203000,609000
+A1816,Cobalt Labs Inc,2026-Q1,2026-03-19,EMEA,Analytics,land,lost,3,112000,336000
+A1817,Granite Logic Inc,2026-Q1,2026-01-19,EMEA,Analytics,land,lost,3,90000,270000
+A1818,Aurora Cloud,2026-Q1,2026-02-22,EMEA,Analytics,land,lost,2,71000,142000
+A1819,Pinnacle Labs,2026-Q1,2026-03-01,APAC,Platform,land,lost,3,23000,69000
+A1820,Cobalt Logic Inc,2026-Q1,2026-03-31,EMEA,Platform,land,lost,3,101000,303000
+A1821,Cobalt Labs,2026-Q1,2026-02-18,EMEA,Analytics,land,lost,3,193000,579000
+A1822,Vertex Cloud Inc,2026-Q1,2026-02-25,EMEA,Platform,land,lost,3,38000,114000
+A1823,BluePeak Grid,2026-Q1,2026-01-11,APAC,Platform,land,lost,2,273000,546000
+A1824,Northwind Works,2026-Q1,2026-02-24,APAC,Security,land,lost,3,45000,135000
+A1825,Cobalt Dynamics Inc,2026-Q1,2026-01-19,EMEA,Platform,land,lost,5,52000,260000
+A1826,Silverline Labs,2026-Q1,2026-02-09,AMER,Security,land,lost,4,45000,180000
+A1827,Pinnacle Systems Inc,2026-Q1,2026-02-03,AMER,Analytics,land,lost,3,85000,255000
+A1828,Silverline Bridge Inc,2026-Q1,2026-03-10,AMER,Analytics,land,lost,3,61000,183000
+A1829,Silverline Grid,2026-Q1,2026-02-12,EMEA,Analytics,land,lost,4,221000,884000
+A1830,Northwind Dynamics,2026-Q1,2026-01-19,EMEA,Analytics,land,lost,3,14000,42000
+A1831,Parallel Dynamics,2026-Q1,2026-01-09,EMEA,Security,land,lost,3,166000,498000
+A1832,Pinnacle Dynamics,2026-Q1,2026-02-02,AMER,Analytics,land,lost,3,27000,81000
+A1833,BluePeak Works Inc,2026-Q1,2026-01-02,EMEA,Platform,land,lost,3,90000,270000
+A1834,BluePeak Systems,2026-Q1,2026-01-17,EMEA,Security,land,lost,3,14000,42000
+A1835,Pinnacle Labs Inc,2026-Q1,2026-01-22,EMEA,Security,land,lost,3,52000,156000
+A1836,Meridian Grid Inc,2026-Q1,2026-03-21,APAC,Security,land,lost,3,202000,606000
+A1837,Aurora Works Inc,2026-Q1,2026-01-11,EMEA,Security,land,lost,3,38000,114000
+A1838,Aurora Dynamics,2026-Q1,2026-03-08,EMEA,Analytics,land,lost,3,200000,600000
+A1839,Meridian Systems,2026-Q1,2026-02-12,EMEA,Analytics,land,lost,3,203000,609000
+A1840,Aurora Logic,2026-Q1,2026-01-09,EMEA,Platform,land,lost,3,48000,144000
+A1841,Meridian Cloud,2026-Q1,2026-03-14,APAC,Platform,land,lost,3,152000,456000
+A1842,Pinnacle Bridge Inc,2026-Q1,2026-03-01,EMEA,Analytics,land,lost,3,180000,540000
+A1843,Vertex Logic,2026-Q1,2026-02-15,APAC,Platform,land,lost,3,108000,324000
+A1844,Pinnacle Systems Inc,2026-Q1,2026-01-19,EMEA,Platform,land,lost,4,221000,884000
+A1845,Northwind Dynamics Inc,2026-Q1,2026-02-03,APAC,Platform,land,lost,4,45000,180000
+A1846,Silverline Cloud Inc,2026-Q1,2026-03-11,EMEA,Platform,land,lost,3,31000,93000
+A1847,Granite Systems,2026-Q1,2026-02-11,EMEA,Platform,land,lost,3,124000,372000
+A1848,BluePeak Systems,2026-Q1,2026-01-10,EMEA,Platform,land,lost,2,71000,142000
+A1849,Northwind Systems Inc,2026-Q1,2026-01-28,EMEA,Analytics,land,lost,3,21000,63000
+A1850,Aurora Bridge Inc,2026-Q1,2026-02-28,EMEA,Security,land,lost,3,16000,48000
+A1851,Granite Grid Inc,2026-Q1,2026-02-11,AMER,Platform,land,lost,3,124000,372000
+A1852,Pinnacle Systems Inc,2026-Q1,2026-02-12,EMEA,Security,land,lost,3,107000,321000
+A1853,Parallel Bridge Inc,2026-Q1,2026-03-24,AMER,Analytics,land,lost,5,29000,145000
+A1854,Granite Works,2026-Q1,2026-01-06,EMEA,Analytics,land,lost,3,31000,93000
+A1855,Parallel Grid,2026-Q1,2026-01-26,EMEA,Analytics,land,lost,2,273000,546000
+A1856,Silverline Logic,2026-Q1,2026-02-07,AMER,Security,land,lost,3,138000,414000
+A1857,Silverline Grid Inc,2026-Q1,2026-03-11,EMEA,Analytics,land,lost,3,128000,384000
+A1858,Pinnacle Labs,2026-Q1,2026-01-28,EMEA,Security,land,lost,3,85000,255000
+A1859,BluePeak Cloud Inc,2026-Q1,2026-02-15,EMEA,Security,land,lost,3,81000,243000
+A1860,Pinnacle Cloud,2026-Q1,2026-02-01,EMEA,Platform,land,lost,3,124000,372000
+A1861,Vertex Dynamics Inc,2026-Q1,2026-02-21,AMER,Platform,land,lost,3,18000,54000
+A1862,Cobalt Bridge Inc,2026-Q1,2026-01-20,AMER,Platform,land,lost,3,81000,243000
+A1863,Granite Dynamics,2026-Q1,2026-03-23,EMEA,Platform,land,lost,3,108000,324000
+A1864,Parallel Labs Inc,2026-Q1,2026-03-27,EMEA,Analytics,land,lost,3,84000,252000
+A1865,Meridian Grid,2026-Q1,2026-02-28,EMEA,Analytics,land,lost,3,195000,585000
+A1866,Silverline Bridge,2026-Q1,2026-03-16,EMEA,Platform,land,lost,3,195000,585000
+A1867,Vertex Cloud,2026-Q1,2026-03-07,EMEA,Analytics,land,lost,3,52000,156000
+A1868,BluePeak Dynamics Inc,2026-Q1,2026-02-11,EMEA,Security,land,lost,3,48000,144000
+A1869,Vertex Bridge Inc,2026-Q1,2026-01-27,APAC,Analytics,land,lost,3,132000,396000
+A1870,Aurora Bridge,2026-Q1,2026-02-01,EMEA,Security,land,lost,3,203000,609000
+A1871,Northwind Labs,2026-Q1,2026-01-25,APAC,Platform,land,lost,3,85000,255000
+A1872,Aurora Bridge,2026-Q1,2026-02-25,EMEA,Security,land,lost,3,48000,144000
+A1873,Northwind Logic,2026-Q1,2026-02-20,EMEA,Security,land,lost,3,81000,243000
+A1874,Granite Cloud,2026-Q1,2026-03-12,AMER,Security,land,lost,3,61000,183000
+A1875,Cobalt Works Inc,2026-Q1,2026-01-29,EMEA,Security,land,lost,3,108000,324000
+A1876,Pinnacle Works Inc,2026-Q1,2026-03-08,APAC,Analytics,land,lost,3,31000,93000
+A1877,Granite Logic Inc,2026-Q1,2026-01-15,AMER,Security,land,lost,3,90000,270000
+A1878,Pinnacle Dynamics,2026-Q1,2026-03-28,EMEA,Analytics,land,lost,3,203000,609000
+A1879,BluePeak Labs,2026-Q1,2026-03-16,EMEA,Platform,land,lost,3,24000,72000
+A1880,Aurora Works,2026-Q1,2026-03-25,APAC,Security,land,lost,3,18000,54000
+A1881,Meridian Labs Inc,2026-Q1,2026-01-29,EMEA,Analytics,land,lost,3,108000,324000
+A1882,Parallel Bridge Inc,2026-Q1,2026-02-06,EMEA,Security,land,lost,4,14000,56000
+A1883,Silverline Labs Inc,2026-Q1,2026-03-26,EMEA,Security,land,lost,3,85000,255000
+A1884,Pinnacle Systems,2026-Q1,2026-02-14,AMER,Security,land,lost,5,29000,145000
+A1885,Granite Cloud,2026-Q1,2026-03-18,EMEA,Analytics,land,lost,3,107000,321000
+A1886,Silverline Bridge,2026-Q1,2026-02-22,EMEA,Analytics,land,lost,3,101000,303000
+A1887,Meridian Dynamics,2026-Q1,2026-01-26,EMEA,Analytics,land,lost,3,16000,48000
+A1888,BluePeak Labs,2026-Q1,2026-01-27,EMEA,Analytics,land,lost,3,36000,108000
+A1889,Cobalt Systems Inc,2026-Q1,2026-01-29,EMEA,Analytics,land,lost,5,28000,140000
+A1890,Aurora Labs,2026-Q1,2026-03-08,EMEA,Security,land,lost,3,152000,456000
+A1891,Meridian Systems Inc,2026-Q1,2026-03-22,EMEA,Platform,land,lost,5,168000,840000
+A1892,Granite Systems Inc,2026-Q1,2026-03-05,EMEA,Platform,land,lost,3,16000,48000
+A1893,Pinnacle Grid,2026-Q1,2026-03-17,EMEA,Platform,land,lost,3,17000,51000
+A1894,Northwind Dynamics,2026-Q1,2026-02-08,EMEA,Platform,land,lost,5,49000,245000
+A1895,Aurora Bridge Inc,2026-Q1,2026-02-04,EMEA,Security,land,lost,3,18000,54000
+A1896,Aurora Logic Inc,2026-Q1,2026-02-13,EMEA,Analytics,land,lost,3,200000,600000
+A1897,Silverline Bridge Inc,2026-Q1,2026-03-31,EMEA,Security,land,lost,2,273000,546000
+A1898,Granite Cloud,2026-Q1,2026-02-24,EMEA,Security,land,lost,3,31000,93000
+A1899,Meridian Bridge,2026-Q1,2026-03-20,EMEA,Analytics,land,lost,3,27000,81000
+A1900,Aurora Grid Inc,2026-Q1,2026-02-07,EMEA,Security,land,lost,3,112000,336000
+A1901,Meridian Labs,2026-Q1,2026-02-02,EMEA,Analytics,land,lost,5,28000,140000
+A1902,Vertex Labs,2026-Q1,2026-03-17,EMEA,Security,land,lost,3,203000,609000
+A1903,Parallel Systems,2026-Q1,2026-03-25,EMEA,Analytics,land,lost,4,14000,56000
+A1904,Vertex Cloud,2026-Q1,2026-03-06,APAC,Platform,land,lost,3,13000,39000
+A1905,Granite Systems,2026-Q1,2026-03-16,EMEA,Analytics,land,lost,3,35000,105000
+A1906,Cobalt Grid Inc,2026-Q1,2026-01-05,EMEA,Security,land,lost,3,126000,378000
+A1907,Parallel Dynamics Inc,2026-Q1,2026-01-14,EMEA,Analytics,land,lost,3,128000,384000
+A1908,Parallel Labs,2026-Q1,2026-01-06,AMER,Platform,land,lost,3,128000,384000
+A1909,Meridian Grid Inc,2026-Q1,2026-02-11,EMEA,Platform,land,lost,3,180000,540000
+A1910,BluePeak Grid,2026-Q1,2026-03-10,EMEA,Platform,land,lost,3,24000,72000
+A1911,Pinnacle Cloud,2026-Q1,2026-03-12,EMEA,Security,land,lost,3,45000,135000
+A1912,Northwind Logic,2026-Q1,2026-02-15,EMEA,Analytics,land,lost,3,84000,252000
+A1913,Silverline Grid Inc,2026-Q1,2026-02-23,APAC,Analytics,land,lost,3,159000,477000
+A1914,Pinnacle Systems Inc,2026-Q1,2026-02-21,EMEA,Analytics,land,lost,5,52000,260000
+A1915,Northwind Cloud Inc,2026-Q1,2026-03-07,EMEA,Security,land,lost,5,52000,260000
+A1916,Pinnacle Dynamics,2026-Q1,2026-01-30,EMEA,Security,land,lost,3,126000,378000
+A1917,Parallel Systems Inc,2026-Q1,2026-02-02,EMEA,Security,land,lost,3,298000,894000
+A1918,Cobalt Labs Inc,2026-Q1,2026-03-20,EMEA,Security,land,lost,3,200000,600000
+A1919,Aurora Cloud Inc,2026-Q1,2026-02-17,EMEA,Analytics,land,lost,3,48000,144000
+A1920,Aurora Dynamics Inc,2026-Q1,2026-01-20,APAC,Platform,land,lost,3,126000,378000
+A1921,Aurora Bridge,2026-Q1,2026-02-27,EMEA,Security,land,lost,3,43000,129000
+A1922,Silverline Labs,2026-Q1,2026-02-07,EMEA,Platform,land,lost,3,89000,267000
+A1923,Silverline Dynamics Inc,2026-Q1,2026-03-26,EMEA,Security,land,lost,4,14000,56000
+A1924,Cobalt Dynamics Inc,2026-Q1,2026-03-10,APAC,Platform,land,lost,3,200000,600000
+A1925,Granite Systems,2026-Q1,2026-02-07,EMEA,Security,land,lost,3,23000,69000
+A1926,Aurora Logic,2026-Q1,2026-03-12,EMEA,Analytics,land,lost,3,90000,270000
+A1927,Cobalt Systems,2026-Q1,2026-01-28,EMEA,Security,land,lost,3,58000,174000
+A1928,Pinnacle Labs Inc,2026-Q1,2026-02-08,EMEA,Security,land,lost,2,273000,546000
+A1929,Parallel Systems,2026-Q1,2026-01-22,AMER,Analytics,land,lost,3,44000,132000
+A1930,Vertex Cloud,2026-Q1,2026-02-16,APAC,Analytics,land,lost,3,16000,48000
+A1931,Parallel Cloud Inc,2026-Q1,2026-01-27,AMER,Analytics,land,lost,5,28000,140000
+A1932,Parallel Systems Inc,2026-Q1,2026-02-07,EMEA,Platform,land,lost,3,203000,609000
+A1933,Northwind Logic,2026-Q1,2026-02-16,EMEA,Analytics,land,lost,3,143000,429000
+A1934,Northwind Works Inc,2026-Q1,2026-03-27,EMEA,Analytics,land,lost,3,18000,54000
+A1935,Silverline Grid,2026-Q1,2026-02-06,EMEA,Security,land,lost,5,26000,130000
+A1936,Parallel Works,2026-Q1,2026-02-08,APAC,Platform,land,lost,5,49000,245000
+A1937,Northwind Dynamics Inc,2026-Q1,2026-02-01,EMEA,Analytics,land,lost,3,138000,414000
+A1938,Parallel Logic Inc,2026-Q1,2026-01-11,EMEA,Security,land,lost,3,107000,321000
+A1939,Pinnacle Works,2026-Q1,2026-02-15,APAC,Platform,land,lost,3,44000,132000
+A1940,BluePeak Cloud Inc,2026-Q1,2026-03-20,EMEA,Security,land,lost,3,138000,414000
+A1941,Granite Grid,2026-Q1,2026-02-10,EMEA,Platform,land,lost,5,29000,145000
+A1942,Parallel Logic Inc,2026-Q1,2026-03-03,EMEA,Security,land,lost,5,168000,840000
+A1943,Meridian Logic,2026-Q1,2026-03-16,APAC,Platform,land,lost,5,26000,130000
+A1944,Northwind Labs Inc,2026-Q1,2026-02-03,APAC,Platform,land,lost,3,117000,351000
+A1945,Pinnacle Grid Inc,2026-Q1,2026-03-18,AMER,Security,land,lost,3,86000,258000
+A1946,Northwind Bridge Inc,2026-Q1,2026-02-19,EMEA,Platform,land,lost,3,23000,69000
+A1947,Meridian Works Inc,2026-Q1,2026-02-27,EMEA,Platform,land,lost,3,101000,303000
+A1948,Meridian Logic,2026-Q1,2026-03-03,EMEA,Platform,land,lost,3,86000,258000
+A1949,Northwind Works,2026-Q1,2026-01-09,APAC,Platform,land,lost,5,168000,840000
+A1950,BluePeak Bridge,2026-Q1,2026-03-05,EMEA,Security,land,lost,3,108000,324000
+A1951,Northwind Grid,2026-Q1,2026-03-24,EMEA,Analytics,land,lost,2,71000,142000
+A1952,Vertex Cloud Inc,2026-Q1,2026-01-18,EMEA,Platform,land,lost,5,26000,130000
+A1953,BluePeak Bridge,2026-Q1,2026-01-07,EMEA,Analytics,land,lost,3,200000,600000
+A1954,Vertex Bridge,2026-Q1,2026-02-07,EMEA,Analytics,land,lost,3,138000,414000
+A1955,BluePeak Grid,2026-Q1,2026-03-17,EMEA,Analytics,land,lost,3,180000,540000
+A1956,Meridian Labs Inc,2026-Q1,2026-03-23,EMEA,Security,land,lost,3,205000,615000
+A1957,Vertex Systems Inc,2026-Q1,2026-01-12,EMEA,Platform,land,lost,3,107000,321000
+A1958,Vertex Logic,2026-Q1,2026-03-11,EMEA,Security,land,lost,3,27000,81000
+A1959,Aurora Dynamics Inc,2026-Q1,2026-03-20,EMEA,Platform,land,lost,5,29000,145000
+A1960,Cobalt Bridge Inc,2026-Q1,2026-01-04,EMEA,Platform,land,lost,3,132000,396000
+A1961,Pinnacle Grid Inc,2026-Q1,2026-03-11,APAC,Analytics,land,lost,5,28000,140000
+A1962,Vertex Dynamics,2026-Q1,2026-02-26,EMEA,Analytics,land,lost,3,132000,396000
+A1963,Pinnacle Works,2026-Q1,2026-03-07,AMER,Platform,land,lost,3,81000,243000
+A1964,Silverline Labs,2026-Q1,2026-01-03,EMEA,Platform,land,lost,3,38000,114000
+A1965,Aurora Cloud,2026-Q1,2026-03-13,EMEA,Analytics,land,lost,3,200000,600000
+A1966,Vertex Dynamics,2026-Q1,2026-01-12,EMEA,Security,land,lost,3,48000,144000
+A1967,Vertex Labs Inc,2026-Q1,2026-03-08,EMEA,Platform,land,lost,3,298000,894000
+A1968,Meridian Dynamics,2026-Q1,2026-03-22,EMEA,Platform,land,lost,3,58000,174000
+A1969,Parallel Labs,2026-Q1,2026-02-04,EMEA,Analytics,land,lost,3,21000,63000
+A1970,BluePeak Dynamics Inc,2026-Q1,2026-01-27,APAC,Analytics,land,lost,3,45000,135000
+A1971,Silverline Cloud,2026-Q1,2026-02-20,EMEA,Security,land,lost,3,85000,255000
+A1972,Silverline Bridge Inc,2026-Q1,2026-03-18,EMEA,Security,land,lost,4,186000,744000
+A1973,Vertex Dynamics Inc,2026-Q1,2026-03-17,EMEA,Platform,land,lost,3,41000,123000
+A1974,Northwind Systems Inc,2026-Q1,2026-03-06,AMER,Security,land,lost,3,38000,114000
+A1975,Aurora Works Inc,2026-Q1,2026-03-22,EMEA,Security,land,lost,3,13000,39000
+A1976,Granite Systems Inc,2026-Q1,2026-03-14,AMER,Security,land,lost,5,28000,140000
+A1977,Northwind Labs,2026-Q1,2026-01-03,EMEA,Analytics,land,lost,3,85000,255000
+A1978,Vertex Dynamics,2026-Q1,2026-01-19,EMEA,Platform,land,lost,3,101000,303000
+A1979,Northwind Cloud Inc,2026-Q1,2026-03-16,EMEA,Platform,land,lost,3,138000,414000
+A1980,Cobalt Systems Inc,2026-Q1,2026-01-09,EMEA,Analytics,land,lost,3,35000,105000
+A1981,Silverline Dynamics Inc,2026-Q1,2026-02-15,EMEA,Analytics,land,lost,4,14000,56000
+A1982,Parallel Bridge,2026-Q1,2026-01-02,EMEA,Platform,land,lost,3,85000,255000
+A1983,Silverline Dynamics Inc,2026-Q1,2026-02-08,APAC,Platform,land,lost,3,84000,252000
+A1984,Aurora Systems Inc,2026-Q1,2026-01-08,EMEA,Security,land,lost,3,203000,609000
+A1985,Silverline Logic,2026-Q1,2026-01-14,EMEA,Analytics,land,lost,3,52000,156000
+A1986,Meridian Logic,2026-Q1,2026-02-18,EMEA,Platform,land,lost,3,18000,54000
+A1987,Vertex Logic,2026-Q1,2026-03-21,EMEA,Analytics,land,lost,3,203000,609000
+A1988,Northwind Works,2026-Q1,2026-02-07,EMEA,Security,land,lost,3,18000,54000
+A1989,Meridian Grid Inc,2026-Q1,2026-01-31,EMEA,Security,land,lost,5,28000,140000
+A1990,Parallel Logic Inc,2026-Q1,2026-02-01,EMEA,Analytics,land,lost,3,200000,600000
+A1991,Aurora Labs,2026-Q1,2026-02-10,EMEA,Analytics,land,lost,3,52000,156000
+A1992,BluePeak Logic Inc,2026-Q1,2026-03-09,AMER,Analytics,land,lost,3,14000,42000
+A1993,Northwind Bridge Inc,2026-Q1,2026-02-15,EMEA,Security,land,lost,3,298000,894000
+A1994,Pinnacle Works,2026-Q1,2026-01-24,EMEA,Security,land,lost,3,205000,615000
+A1995,Meridian Cloud,2026-Q1,2026-01-24,AMER,Platform,land,lost,5,29000,145000
+A1996,Vertex Works,2026-Q1,2026-02-13,EMEA,Analytics,land,lost,3,20000,60000
+A1997,Cobalt Works,2026-Q1,2026-02-08,EMEA,Platform,land,lost,3,41000,123000
+A1998,BluePeak Grid,2026-Q1,2026-01-10,EMEA,Security,land,lost,3,44000,132000
+A1999,Cobalt Grid,2026-Q1,2026-01-20,EMEA,Analytics,land,lost,3,86000,258000
+A2000,Silverline Cloud Inc,2026-Q1,2026-01-22,EMEA,Platform,land,lost,4,186000,744000
+A2001,Meridian Dynamics,2026-Q1,2026-03-23,EMEA,Security,land,lost,3,21000,63000
+A2002,Vertex Cloud Inc,2026-Q1,2026-02-10,APAC,Platform,land,lost,3,143000,429000
+A2003,BluePeak Works Inc,2026-Q1,2026-03-22,APAC,Analytics,land,lost,3,159000,477000
+A2004,Pinnacle Cloud,2026-Q1,2026-01-02,AMER,Analytics,land,lost,3,138000,414000
+A2005,Aurora Works,2026-Q1,2026-03-17,EMEA,Analytics,land,lost,3,81000,243000
+A2006,Pinnacle Logic Inc,2026-Q1,2026-03-10,EMEA,Platform,land,lost,3,143000,429000
+A2007,Vertex Systems,2026-Q1,2026-02-20,EMEA,Platform,land,lost,3,159000,477000
+A2008,Aurora Cloud Inc,2026-Q1,2026-03-28,APAC,Security,land,lost,3,200000,600000
+A2009,Northwind Works,2026-Q1,2026-03-28,APAC,Platform,land,lost,3,16000,48000
+A1772,Northwind Bridge Inc,2026-Q1,2026-02-20,EMEA,Analytics,expand,lost,3,74000,222000
+A1897,Silverline Bridge Inc,2026-Q1,2026-01-20,EMEA,Analytics,expand,lost,3,186000,558000
+A0139,Northwind Cloud,2026-Q1,2026-01-11,EMEA,Platform,expand,lost,4,234000,936000
+A0837,BluePeak Systems,2026-Q1,2026-03-29,APAC,Platform,expand,lost,3,30000,90000
+A1745,Vertex Labs Inc,2026-Q1,2026-02-08,EMEA,Security,expand,lost,3,94000,282000
+A0906,Pinnacle Systems Inc,2026-Q1,2026-03-18,AMER,Platform,expand,lost,3,158000,474000
+A0763,Aurora Logic,2026-Q1,2026-03-11,EMEA,Platform,expand,lost,3,24000,72000
+A0501,Silverline Works,2026-Q1,2026-03-17,EMEA,Security,expand,lost,3,16000,48000
+A1086,Meridian Grid Inc,2026-Q1,2026-02-03,EMEA,Security,expand,lost,3,234000,702000
+A0179,Cobalt Logic,2026-Q1,2026-01-12,APAC,Security,expand,lost,2,155000,310000
+A0850,Cobalt Dynamics Inc,2026-Q1,2026-03-30,APAC,Analytics,expand,lost,3,30000,90000
+A1911,Pinnacle Cloud,2026-Q1,2026-02-13,EMEA,Analytics,expand,lost,3,262000,786000
+A0052,Parallel Bridge Inc,2026-Q1,2026-02-18,EMEA,Analytics,expand,lost,3,13000,39000
+A1982,Parallel Bridge,2026-Q1,2026-01-09,EMEA,Platform,expand,lost,3,49000,147000
+A0660,Cobalt Logic Inc,2026-Q1,2026-01-20,EMEA,Platform,expand,lost,3,153000,459000
+A0049,BluePeak Grid,2026-Q1,2026-01-07,AMER,Security,expand,lost,5,153000,765000
+A1847,Granite Systems,2026-Q1,2026-03-26,EMEA,Platform,expand,lost,3,31000,93000
+A1482,Silverline Grid,2026-Q1,2026-03-27,EMEA,Security,expand,lost,3,15000,45000
+A0311,Silverline Systems Inc,2026-Q1,2026-03-21,AMER,Analytics,expand,lost,3,18000,54000
+A0867,BluePeak Works,2026-Q1,2026-03-15,EMEA,Analytics,expand,lost,4,49000,196000
+A0659,BluePeak Dynamics,2026-Q1,2026-03-11,EMEA,Platform,expand,lost,3,66000,198000
+A1418,Meridian Systems Inc,2026-Q1,2026-01-27,APAC,Security,expand,lost,3,26000,78000
+A1252,Northwind Dynamics,2026-Q1,2026-01-30,AMER,Security,expand,lost,2,13000,26000
+A0746,Cobalt Grid Inc,2026-Q1,2026-01-16,EMEA,Security,expand,lost,3,26000,78000
+A0279,Parallel Works Inc,2026-Q1,2026-03-20,EMEA,Platform,expand,lost,3,155000,465000
+A1356,Vertex Bridge,2026-Q1,2026-02-01,AMER,Analytics,expand,lost,3,13000,39000
+A1520,Pinnacle Systems,2026-Q1,2026-03-25,EMEA,Analytics,expand,lost,3,20000,60000
+A0616,Vertex Logic,2026-Q1,2026-01-30,APAC,Security,expand,lost,3,26000,78000
+A1529,Silverline Labs,2026-Q1,2026-03-07,EMEA,Platform,expand,lost,2,136000,272000
+A1486,Vertex Cloud,2026-Q1,2026-02-18,EMEA,Analytics,expand,lost,3,57000,171000
+A1456,Aurora Labs,2026-Q1,2026-03-17,EMEA,Analytics,expand,lost,3,26000,78000
+A0534,Granite Labs Inc,2026-Q1,2026-01-21,APAC,Security,expand,lost,3,74000,222000
+A0153,Parallel Dynamics,2026-Q1,2026-03-02,EMEA,Analytics,expand,lost,3,30000,90000
+A1903,Parallel Systems,2026-Q1,2026-03-21,EMEA,Platform,expand,lost,3,13000,39000
+A0200,BluePeak Dynamics,2026-Q1,2026-01-24,AMER,Platform,expand,lost,3,74000,222000
+A0093,Aurora Dynamics,2026-Q1,2026-03-14,EMEA,Platform,expand,lost,3,39000,117000
+A1743,Pinnacle Labs Inc,2026-Q1,2026-01-14,EMEA,Security,expand,lost,1,13000,13000
+A1431,Cobalt Dynamics,2026-Q1,2026-01-28,AMER,Analytics,expand,lost,1,160000,160000
+A1913,Silverline Grid Inc,2026-Q1,2026-02-10,APAC,Analytics,expand,lost,1,155000,155000
+A0069,BluePeak Bridge Inc,2026-Q1,2026-02-05,AMER,Analytics,expand,lost,3,277000,831000
+A0293,Silverline Grid Inc,2026-Q1,2026-01-03,EMEA,Analytics,expand,lost,1,26000,26000
+A1588,Granite Labs Inc,2026-Q1,2026-03-13,EMEA,Platform,expand,lost,3,138000,414000
+A0290,Pinnacle Dynamics,2026-Q1,2026-03-25,AMER,Security,expand,lost,1,15000,15000
+A0179,Cobalt Logic,2026-Q1,2026-02-07,APAC,Analytics,expand,lost,2,20000,40000
+A0046,Pinnacle Bridge,2026-Q1,2026-02-01,AMER,Analytics,expand,lost,3,277000,831000
+A0476,Vertex Grid Inc,2026-Q1,2026-03-01,APAC,Platform,expand,lost,3,103000,309000
+A1804,Silverline Bridge Inc,2026-Q1,2026-01-21,EMEA,Platform,expand,lost,3,262000,786000
+A1029,BluePeak Logic Inc,2026-Q1,2026-02-03,AMER,Platform,expand,lost,3,13000,39000
+A0016,Vertex Logic Inc,2026-Q1,2026-02-09,AMER,Analytics,expand,lost,3,234000,702000
+A0924,Meridian Bridge Inc,2026-Q1,2026-03-22,AMER,Platform,expand,lost,5,158000,790000
+A1697,Northwind Logic Inc,2026-Q1,2026-02-12,EMEA,Platform,expand,lost,3,57000,171000
+A1495,Granite Logic Inc,2026-Q1,2026-03-14,EMEA,Platform,expand,lost,3,123000,369000
+A0481,BluePeak Works,2026-Q1,2026-02-23,EMEA,Security,expand,lost,3,186000,558000
+A0388,Granite Grid,2026-Q1,2026-03-29,AMER,Security,expand,lost,3,66000,198000
+A0440,Granite Grid,2026-Q1,2026-01-02,EMEA,Platform,expand,lost,3,74000,222000
+A0640,Northwind Cloud Inc,2026-Q1,2026-01-05,AMER,Analytics,expand,lost,3,26000,78000
+A0526,Cobalt Grid,2026-Q1,2026-03-17,EMEA,Platform,expand,lost,3,94000,282000
+A0034,Granite Grid,2026-Q1,2026-01-06,EMEA,Security,expand,lost,3,57000,171000
+A1912,Northwind Logic,2026-Q1,2026-01-07,EMEA,Analytics,expand,lost,2,136000,272000
+A0143,Vertex Cloud Inc,2026-Q1,2026-03-16,EMEA,Platform,expand,lost,2,13000,26000
+A0256,Granite Logic,2026-Q1,2026-02-10,APAC,Platform,expand,lost,2,153000,306000
+A1984,Aurora Systems Inc,2026-Q1,2026-02-27,EMEA,Analytics,expand,lost,3,24000,72000
+A1832,Pinnacle Dynamics,2026-Q1,2026-01-20,AMER,Platform,expand,lost,2,172000,344000
+A0312,Aurora Grid,2026-Q1,2026-01-18,EMEA,Analytics,expand,lost,2,39000,78000
+A1928,Pinnacle Labs Inc,2026-Q1,2026-03-18,EMEA,Security,expand,lost,3,158000,474000
