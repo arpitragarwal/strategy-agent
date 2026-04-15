@@ -13,10 +13,10 @@ export function formatMemoryArtifactDigest(payload: unknown, summaryFallback: st
   const synthesis = typeof p?.synthesis === "string" ? p.synthesis.trim() : "";
   if (synthesis) {
     parts.push(
-      `**Strategy memo (excerpt)**\n${synthesis.slice(0, 3200)}${synthesis.length > 3200 ? "…" : ""}`,
+      `**Recommendations (excerpt)**\n${synthesis.slice(0, 3200)}${synthesis.length > 3200 ? "…" : ""}`,
     );
   } else if (summaryFallback.trim()) {
-    parts.push(`**Strategy memo (excerpt)**\n${summaryFallback.trim()}`);
+    parts.push(`**Recommendations (excerpt)**\n${summaryFallback.trim()}`);
   }
 
   const outlineDoc = normalizeOutlineDoc(p?.outline);

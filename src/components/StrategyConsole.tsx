@@ -168,7 +168,7 @@ const PIPELINE: readonly { id: string; title: string; subtitle: string }[] = [
   },
   { id: "analysis", title: "Analysis", subtitle: "Deep-dive each branch" },
   { id: "manager", title: "Manager critique", subtitle: "Pressure-test the analyses" },
-  { id: "synthesis", title: "Strategy memo", subtitle: "Integrative synthesis" },
+  { id: "synthesis", title: "Recommendations", subtitle: "Integrative synthesis" },
 ];
 
 type PipelineStepStatus = "complete" | "active" | "upcoming";
