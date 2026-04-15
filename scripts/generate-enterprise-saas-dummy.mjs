@@ -5,7 +5,8 @@
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
  * Also writes cx/product_usage.csv (usage_tier by active quarter), cx/customer_satisfaction.csv (CSAT + NPS),
- * merged crm/deal_data.csv (renewals + new ACV), finance/finance_summary.csv, plus deal-data-dashboard.html.
+ * merged crm/deal_data.csv (renewals + new ACV + account_vertical), finance/finance_summary.csv,
+ * support/support_summary.csv, plus deal-data-dashboard.html.
  *
  * Run: node scripts/generate-enterprise-saas-dummy.mjs
  * Or: npm run data:generate
@@ -404,12 +405,14 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
 }
 
 function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, idPad) {
+  const accountsById = new Map(accountsRows.map((a) => [a.account_id, a]));
   const renewalRowsFull = allRenewals.map((r) => ({
     account_id: r.account_id,
     account_name: r.account_name,
     quarter: r.renewal_quarter,
     close_date: sampleCloseDateInQuarter(r.renewal_quarter, rnd),
     region: r.region,
+    account_vertical: accountsById.get(r.account_id)?.industry || "Technology",
     product_line: pick(PRODUCT_LINES, rnd),
     deal_type: "renew",
     outcome: r.outcome === "renewed" ? "won" : "lost",
@@ -438,6 +441,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
     quarter: d.quarter,
     close_date: sampleCloseDateInQuarter(d.quarter, rnd),
     region: d.region,
+    account_vertical: accountsById.get(d.account_id)?.industry || "Technology",
     product_line: pick(PRODUCT_LINES, rnd),
     deal_type: d.new_acv_motion === "land" ? "land" : "expand",
     outcome: "won",
@@ -446,7 +450,6 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
     tcv_usd: d.tcv_usd || acvToTcvUsd(d.acv_usd || 0, d.contract_term_years),
   }));
 
-  const accountsById = new Map(accountsRows.map((a) => [a.account_id, a]));
   let nextAccountIdx = maxAccountIndex(accountsRows) + 1;
   const heavyIndustries = new Set(["Professional Services", "Retail", "Manufacturing"]);
   const heavyQuarters = new Set(["2025-Q4", "2026-Q1"]);
@@ -524,6 +527,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
             quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
+            account_vertical: a.industry || "Technology",
             product_line: pick(PRODUCT_LINES, rnd),
             deal_type: "land",
             outcome: "lost",
@@ -539,6 +543,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
             quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
+            account_vertical: a.industry || "Technology",
             product_line: pick(PRODUCT_LINES, rnd),
             deal_type: "expand",
             outcome: "lost",
@@ -661,6 +666,38 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
     const row = { ...b };
     for (const f of intFields) row[f] = Math.round(row[f]);
     return row;
+  });
+}
+
+function buildSupportSummaryRows(dealRows, accountsRows, rnd) {
+  const wonByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
+  const lostByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
+  for (const d of dealRows) {
+    if (!wonByQ[d.quarter] && wonByQ[d.quarter] !== 0) continue;
+    if (d.outcome === "won") wonByQ[d.quarter] += 1;
+    if (d.outcome === "lost") lostByQ[d.quarter] += 1;
+  }
+
+  const baseAccounts = accountsRows.filter((a) => String(a.renewal_quarter || "").trim() !== "").length;
+  return RENEWAL_QUARTERS.map((q, qi) => {
+    const won = wonByQ[q];
+    const lost = lostByQ[q];
+    const noiseTickets = Math.round((rnd() * 2 - 1) * 22);
+    const tickets = Math.max(
+      40,
+      Math.round(baseAccounts * 0.05 + won * 0.55 + lost * 1.35 + qi * 8 + noiseTickets),
+    );
+    const lateQuarterPenalty = q === "2025-Q4" || q === "2026-Q1" ? 0.9 : 0;
+    const noiseDays = (rnd() * 2 - 1) * 0.8;
+    const avgDays = Math.max(
+      1.2,
+      Math.round((4.3 + lateQuarterPenalty + lost * 0.012 + tickets * 0.003 + noiseDays) * 10) / 10,
+    );
+    return {
+      quarter: q,
+      ticket_count: tickets,
+      avg_days_to_resolution: avgDays,
+    };
   });
 }
 
@@ -1237,7 +1274,7 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
       <div style="overflow-x:auto; max-height: min(60vh, 28rem); overflow-y: auto;">
         <table>
           <thead><tr>
-            <th>Account</th><th>Quarter</th><th>Close date</th><th>Outcome</th><th>Deal type</th><th>Product</th><th>Region</th><th class="num">Term</th><th class="num">ACV</th><th class="num">TCV</th>
+            <th>Account</th><th>Quarter</th><th>Close date</th><th>Outcome</th><th>Deal type</th><th>Vertical</th><th>Product</th><th>Region</th><th class="num">Term</th><th class="num">ACV</th><th class="num">TCV</th>
           </tr></thead>
           <tbody id="tblDeals"></tbody>
         </table>
@@ -1407,6 +1444,9 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
           esc(DEAL_TYPE_LABEL[d.deal_type] || d.deal_type || "") +
           "</td>" +
           "<td>" +
+          esc(d.account_vertical || "") +
+          "</td>" +
+          "<td>" +
           esc(d.product_line || "") +
           "</td>" +
           "<td>" +
@@ -1472,6 +1512,7 @@ function main() {
   mkdirSync(join(OUT, "crm"), { recursive: true });
   mkdirSync(join(OUT, "cx"), { recursive: true });
   mkdirSync(join(OUT, "finance"), { recursive: true });
+  mkdirSync(join(OUT, "support"), { recursive: true });
 
   const idPad = Math.max(4, String(CUSTOMER_COUNT).length);
   const accounts = [];
@@ -1651,6 +1692,7 @@ function main() {
       "quarter",
       "close_date",
       "region",
+      "account_vertical",
       "product_line",
       "deal_type",
       "outcome",
@@ -1682,6 +1724,16 @@ function main() {
     ]),
   );
 
+  const supportSummaryRows = buildSupportSummaryRows(unifiedDealRows, accountsExtended, rnd);
+  writeFileSync(
+    join(OUT, "support", "support_summary.csv"),
+    toCsv(supportSummaryRows, [
+      "quarter",
+      "ticket_count",
+      "avg_days_to_resolution",
+    ]),
+  );
+
   const dealDataDashPath = join(OUT, "deal-data-dashboard.html");
   writeDealDataDashboardHtml(unifiedDealRows, dealDataDashPath);
 
@@ -1708,6 +1760,7 @@ function main() {
     `Wrote ${join(OUT, "crm", "deal_data.csv")} (${unifiedDealRows.length} unified rows: renewals + new ACV, with ${wonNewDeals.length} new ACV rows)`,
   );
   console.log(`Wrote ${join(OUT, "finance", "finance_summary.csv")} (${financeSummaryRows.length} rows)`);
+  console.log(`Wrote ${join(OUT, "support", "support_summary.csv")} (${supportSummaryRows.length} rows)`);
   console.log(`Wrote ${join(OUT, "cx", "product_usage.csv")} (${productUsageRows.length} rows)`);
   console.log(
     `Wrote ${join(OUT, "cx", "customer_satisfaction.csv")} (${satisfactionRows.length} rows)`,

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-15T18:56:38.648Z",
+  "generated_at": "2026-04-15T20:34:53.090Z",
   "data_root": "data",
   "files": [
     {
@@ -8,7 +8,7 @@
     },
     {
       "path": "dummy_data/crm/deal_data.csv",
-      "bytes": 174783
+      "bytes": 205190
     },
     {
       "path": "dummy_data/cx/customer_satisfaction.csv",
@@ -20,11 +20,15 @@
     },
     {
       "path": "dummy_data/deal-data-dashboard.html",
-      "bytes": 526142
+      "bytes": 601591
     },
     {
       "path": "dummy_data/finance/finance_summary.csv",
       "bytes": 770
+    },
+    {
+      "path": "dummy_data/support/support_summary.csv",
+      "bytes": 126
     }
   ]
 }

@@ -22,7 +22,7 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Unified deal fact table for the window (renew + land + expand): close_date, product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
+      "Unified deal fact table for the window (renew + land + expand): close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
   },
   {
     id: "cx/product_usage",
@@ -44,6 +44,13 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     domain: "finance",
     description:
       "Quarterly finance rollup derived from deal_data + accounts: won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts.",
+  },
+  {
+    id: "support/support_summary",
+    relativePath: "support/support_summary.csv",
+    domain: "support",
+    description:
+      "Quarterly support rollup derived from deal/account activity: ticket_count and avg_days_to_resolution for each quarter.",
   },
 ];
 
@@ -89,6 +96,7 @@ export function quantPlanReferencesValidDatasets(plan: {
 export const QUANT_JOIN_RELATIONSHIPS = [
   "**crm/deal_data** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, region consistency checks, and account attributes.",
   "**finance/finance_summary** is already aggregated by quarter; join to CRM/CX only on quarter-level summaries if needed.",
+  "**support/support_summary** is quarter-aggregated; combine with finance/finance_summary by quarter for service load vs unit economics.",
   "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"]] (attribute usage by account to deal_type/outcome).",
   "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] for usage_tier with csat_score / nps_score.",
 ] as const;
