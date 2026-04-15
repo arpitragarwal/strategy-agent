@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   QUANT_DATASETS,
+  QUANT_ENUMS_BY_DATASET,
   QUANT_JOIN_RELATIONSHIPS,
   buildDataCatalogMarkdown,
   peekColumns,
@@ -21,6 +22,7 @@ export async function GET() {
   return NextResponse.json({
     markdown: buildDataCatalogMarkdown(),
     joinRelationships: [...QUANT_JOIN_RELATIONSHIPS],
+    enumsByDataset: QUANT_ENUMS_BY_DATASET,
     datasets,
   });
 }

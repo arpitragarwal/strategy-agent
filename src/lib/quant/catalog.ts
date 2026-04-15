@@ -8,6 +8,113 @@ export type DatasetMeta = {
   description: string;
 };
 
+/**
+ * Exact categorical literals in prototype CSVs (matches `scripts/generate-enterprise-saas-dummy.mjs`).
+ * Quant `filter` with `cmp: "eq"` / `"neq"` is case-sensitive — use these strings, not synonyms.
+ */
+export const PROTOTYPE_FISCAL_QUARTERS = [
+  "2025-Q1",
+  "2025-Q2",
+  "2025-Q3",
+  "2025-Q4",
+  "2026-Q1",
+] as const;
+
+export const PROTOTYPE_REGIONS = ["AMER", "EMEA", "APAC"] as const;
+
+export const PROTOTYPE_PRODUCT_LINES = ["Platform", "Security", "Analytics"] as const;
+
+export const PROTOTYPE_INDUSTRIES = [
+  "Financial Services",
+  "Healthcare",
+  "Manufacturing",
+  "Technology",
+  "Retail",
+  "Professional Services",
+] as const;
+
+export const PROTOTYPE_DEAL_TYPES = ["land", "expand", "renew"] as const;
+
+export const PROTOTYPE_OUTCOMES = ["won", "lost"] as const;
+
+export const PROTOTYPE_USAGE_TIERS = [
+  "no_usage",
+  "minimal_usage",
+  "high_usage",
+  "power_usage",
+] as const;
+
+/** contract_term_years in crm/deal_data and crm/accounts (integers 1–5 in prototype data). */
+export const PROTOTYPE_CONTRACT_TERM_YEARS = [1, 2, 3, 4, 5] as const;
+
+/**
+ * Published allowed values per dataset for agent filters (string columns).
+ * Numeric columns: use `gt`/`gte`/`lt`/`lte` with numbers — e.g. csat_score 1–5, nps_score −100…100.
+ */
+export const QUANT_ENUMS_BY_DATASET: Record<string, Record<string, readonly string[]>> = {
+  "crm/deal_data": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+    deal_type: [...PROTOTYPE_DEAL_TYPES],
+    outcome: [...PROTOTYPE_OUTCOMES],
+    product_line: [...PROTOTYPE_PRODUCT_LINES],
+    region: [...PROTOTYPE_REGIONS],
+    /** Same value set as `crm/accounts.industry`. */
+    account_vertical: [...PROTOTYPE_INDUSTRIES],
+  },
+  "crm/accounts": {
+    region: [...PROTOTYPE_REGIONS],
+    industry: [...PROTOTYPE_INDUSTRIES],
+    renewal_fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+  },
+  "cx/product_usage": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+    usage_tier: [...PROTOTYPE_USAGE_TIERS],
+  },
+  "cx/customer_satisfaction": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+  },
+  "finance/finance_summary": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+  },
+  "support/support_summary": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+  },
+};
+
+function buildQuantEnumMarkdown(): string {
+  const lines: string[] = [
+    "### Filter literals (exact strings)",
+    "",
+    "For `filter` with `cmp: \"eq\"` or `\"neq\"`, use **only** the values below for these columns (case-sensitive). Do **not** use `Lost`, `Won`, `Renewal`, title case, or other CRM synonyms.",
+    "",
+    "- **crm/accounts** — `renewal_fiscal_quarter` may also be empty (`\"\"`) on some rows (e.g. new logos); omit filter or allow empty if you need those accounts.",
+    "- **cx/customer_satisfaction** — `csat_score` and `nps_score` are numeric; use range compares, not string `eq`, unless comparing to a number.",
+    "",
+  ];
+  const ids = [
+    "crm/deal_data",
+    "crm/accounts",
+    "cx/product_usage",
+    "cx/customer_satisfaction",
+    "finance/finance_summary",
+    "support/support_summary",
+  ] as const;
+  for (const id of ids) {
+    const cols = QUANT_ENUMS_BY_DATASET[id];
+    if (!cols) continue;
+    lines.push(`- **${id}**`);
+    for (const [col, vals] of Object.entries(cols)) {
+      lines.push(`  - \`${col}\`: ${vals.map((v) => `\`${v}\``).join(", ")}`);
+    }
+  }
+  lines.push("");
+  lines.push(
+    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}.`,
+  );
+  lines.push("");
+  return lines.join("\n");
+}
+
 /** Registry of prototype datasets (CSV under /data/dummy_data). */
 export const QUANT_DATASETS: DatasetMeta[] = [
   {
@@ -15,14 +122,14 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/accounts.csv",
     domain: "crm",
     description:
-      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); last_deal_year = renewal fiscal year − term; arr_usd_current after renewal (0 if churned)",
+      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); last_deal_year = renewal fiscal year − term; renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned)",
   },
   {
     id: "crm/deal_data",
     relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Unified deal fact table for the window (renew + land + expand): close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
+      "Unified deal fact table for the window (renew + land + expand): fiscal_quarter (2025-Q1…2026-Q1, same label as CX), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
   },
   {
     id: "cx/product_usage",
@@ -43,14 +150,14 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "finance/finance_summary.csv",
     domain: "finance",
     description:
-      "Quarterly finance rollup derived from deal_data + accounts: won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts.",
+      "Quarterly finance rollup derived from deal_data + accounts: fiscal_quarter, won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts.",
   },
   {
     id: "support/support_summary",
     relativePath: "support/support_summary.csv",
     domain: "support",
     description:
-      "Quarterly support rollup derived from deal/account activity: ticket_count and avg_days_to_resolution for each quarter.",
+      "Quarterly support rollup derived from deal/account activity: fiscal_quarter, ticket_count, avg_days_to_resolution.",
   },
 ];
 
@@ -95,9 +202,8 @@ export function quantPlanReferencesValidDatasets(plan: {
 /** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
 export const QUANT_JOIN_RELATIONSHIPS = [
   "**crm/deal_data** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, region consistency checks, and account attributes.",
-  "**finance/finance_summary** is already aggregated by quarter; join to CRM/CX only on quarter-level summaries if needed.",
-  "**support/support_summary** is quarter-aggregated; combine with finance/finance_summary by quarter for service load vs unit economics.",
-  "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"]] (attribute usage by account to deal_type/outcome).",
+  "**finance/finance_summary** ↔ **support/support_summary** on [[\"fiscal_quarter\",\"fiscal_quarter\"]] for quarter-level rollups.",
+  "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] to align usage with deals in the same fiscal quarter (optional second key; account-only join is valid for account-level cuts).",
   "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] for usage_tier with csat_score / nps_score.",
 ] as const;
 
@@ -111,8 +217,9 @@ export function buildDataCatalogMarkdown(): string {
     "",
     ...QUANT_JOIN_RELATIONSHIPS.map((s) => `- ${s}`),
     "",
-    "Use datasetId values exactly as listed below. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
+    "Use datasetId values exactly as listed below. **Time bucket column is always `fiscal_quarter`** (string like 2025-Q1) on deal_data, CX, finance_summary, and support_summary. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
     "",
+    buildQuantEnumMarkdown(),
   ];
   const byDomain: Record<string, DatasetMeta[]> = { crm: [], cx: [], finance: [], support: [] };
   for (const d of QUANT_DATASETS) {

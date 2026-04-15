@@ -1,4 +1,4 @@
-quarter,ticket_count,avg_days_to_resolution
+fiscal_quarter,ticket_count,avg_days_to_resolution
 2025-Q1,390,8.4
 2025-Q2,380,7.9
 2025-Q3,398,7.3

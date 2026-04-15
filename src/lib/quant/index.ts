@@ -1,10 +1,19 @@
 export * from "./types";
 export {
-  QUANT_DATASETS,
-  QUANT_JOIN_RELATIONSHIPS,
   buildDataCatalogMarkdown,
   getDatasetMeta,
   listQuantDatasetIds,
+  PROTOTYPE_CONTRACT_TERM_YEARS,
+  PROTOTYPE_DEAL_TYPES,
+  PROTOTYPE_FISCAL_QUARTERS,
+  PROTOTYPE_INDUSTRIES,
+  PROTOTYPE_OUTCOMES,
+  PROTOTYPE_PRODUCT_LINES,
+  PROTOTYPE_REGIONS,
+  PROTOTYPE_USAGE_TIERS,
+  QUANT_DATASETS,
+  QUANT_ENUMS_BY_DATASET,
+  QUANT_JOIN_RELATIONSHIPS,
   quantPlanReferencesValidDatasets,
   resolveDatasetPath,
 } from "./catalog";

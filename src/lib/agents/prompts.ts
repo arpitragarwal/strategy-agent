@@ -17,6 +17,10 @@ export const QUANT_PIPELINE_OPS_FOR_PROMPTS = `Allowed quant.steps operations (e
 
 For cross-table questions, use **join** as documented in the catalog instead of reasoning from one file only.
 
+**Time bucket:** prototype CSVs use the column name **fiscal_quarter** (values like 2025-Q1) on crm/deal_data, cx/*, finance/finance_summary, and support/support_summary — not \`quarter\`. crm/accounts uses **renewal_fiscal_quarter** for the account’s renewal slot.
+
+**Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`).
+
 Optional chart per plan: {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} — x/y must exist on rows **after** all steps.`;
 
 /** Model decides whether to run a Memory repository search (like optional web search). */

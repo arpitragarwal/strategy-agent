@@ -307,7 +307,7 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
   for (const r of allRenewals) {
     if (r.outcome !== "renewed") continue;
     const startQuarter = shiftQuarterByYears(
-      r.renewal_quarter,
+      r.renewal_fiscal_quarter,
       r.contract_term_years,
     );
     if (!startQuarter || !RENEWAL_QUARTERS.includes(startQuarter)) continue;
@@ -315,7 +315,7 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
     inferredExpandByQuarter.get(startQuarter).push({
       account_id: r.account_id,
       account_name: r.account_name,
-      quarter: startQuarter,
+      fiscal_quarter: startQuarter,
       region: r.region,
       contract_term_years: r.contract_term_years,
       acv_usd: acv,
@@ -354,7 +354,7 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
       wonNewDeals.push({
         account_id: profile.account_id,
         account_name: profile.account_name,
-        quarter: q,
+        fiscal_quarter: q,
         region: profile.region,
         contract_term_years: term,
         acv_usd: acv,
@@ -372,7 +372,7 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
       wonNewDeals.push({
         account_id: id,
         account_name: `${pick(ADJ, rnd)} ${pick(NOUN, rnd)}${rnd() < 0.45 ? " Inc" : ""}`,
-        quarter: q,
+        fiscal_quarter: q,
         region: pick(REGIONS, rnd),
         contract_term_years: term,
         acv_usd: acv,
@@ -392,7 +392,8 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
 
   wonNewDeals.sort(
     (a, b) =>
-      RENEWAL_QUARTERS.indexOf(a.quarter) - RENEWAL_QUARTERS.indexOf(b.quarter),
+      RENEWAL_QUARTERS.indexOf(a.fiscal_quarter) -
+      RENEWAL_QUARTERS.indexOf(b.fiscal_quarter),
   );
 
   return {
@@ -409,8 +410,8 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
   const renewalRowsFull = allRenewals.map((r) => ({
     account_id: r.account_id,
     account_name: r.account_name,
-    quarter: r.renewal_quarter,
-    close_date: sampleCloseDateInQuarter(r.renewal_quarter, rnd),
+    fiscal_quarter: r.renewal_fiscal_quarter,
+    close_date: sampleCloseDateInQuarter(r.renewal_fiscal_quarter, rnd),
     region: r.region,
     account_vertical: accountsById.get(r.account_id)?.industry || "Technology",
     product_line: pick(PRODUCT_LINES, rnd),
@@ -426,7 +427,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
 
   const renewalRows = [];
   for (const q of RENEWAL_QUARTERS) {
-    const inQuarter = renewalRowsFull.filter((r) => r.quarter === q);
+    const inQuarter = renewalRowsFull.filter((r) => r.fiscal_quarter === q);
     const pickCount = Math.max(1, Math.floor(inQuarter.length * 0.5));
     for (let i = inQuarter.length - 1; i > 0; i--) {
       const j = Math.floor(rnd() * (i + 1));
@@ -438,8 +439,8 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
   const newAcvRows = wonNewDeals.map((d) => ({
     account_id: d.account_id,
     account_name: d.account_name,
-    quarter: d.quarter,
-    close_date: sampleCloseDateInQuarter(d.quarter, rnd),
+    fiscal_quarter: d.fiscal_quarter,
+    close_date: sampleCloseDateInQuarter(d.fiscal_quarter, rnd),
     region: d.region,
     account_vertical: accountsById.get(d.account_id)?.industry || "Technology",
     product_line: pick(PRODUCT_LINES, rnd),
@@ -485,7 +486,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
       industry,
       contract_term_years,
       last_deal_year: priorDealYear(quarter, contract_term_years),
-      renewal_quarter: "",
+      renewal_fiscal_quarter: "",
       arr_usd_current: 0,
     };
     accountsRows.push(row);
@@ -509,7 +510,8 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
   for (const q of RENEWAL_QUARTERS) {
     for (const dealType of ["land", "expand"]) {
       const wonRows = newAcvRows.filter(
-        (d) => d.quarter === q && d.deal_type === dealType && d.outcome === "won",
+        (d) =>
+          d.fiscal_quarter === q && d.deal_type === dealType && d.outcome === "won",
       );
       const wonCount = wonRows.length;
       const winRate = winRateFor(dealType, q);
@@ -524,7 +526,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
-            quarter: q,
+            fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
             account_vertical: a.industry || "Technology",
@@ -540,7 +542,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
-            quarter: q,
+            fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
             account_vertical: a.industry || "Technology",
@@ -558,7 +560,8 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
 
   return [...renewalRows, ...newAcvRows, ...lostNewAcvRows].sort(
     (a, b) =>
-      RENEWAL_QUARTERS.indexOf(a.quarter) - RENEWAL_QUARTERS.indexOf(b.quarter),
+      RENEWAL_QUARTERS.indexOf(a.fiscal_quarter) -
+      RENEWAL_QUARTERS.indexOf(b.fiscal_quarter),
   );
 }
 
@@ -572,7 +575,7 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
     RENEWAL_QUARTERS.map((q) => [
       q,
       {
-        quarter: q,
+        fiscal_quarter: q,
         won_deals: 0,
         lost_deals: 0,
         won_deal_acv_usd: 0,
@@ -592,7 +595,7 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
   );
 
   for (const d of dealRows) {
-    const q = byQ[d.quarter];
+    const q = byQ[d.fiscal_quarter];
     if (!q) continue;
     const acv = d.acv_usd || 0;
     const tcv = d.tcv_usd || acv * Math.max(1, d.contract_term_years || 1);
@@ -608,7 +611,7 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
 
   for (const d of dealRows) {
     if (d.outcome !== "won") continue;
-    const start = RENEWAL_QUARTERS.indexOf(d.quarter);
+    const start = RENEWAL_QUARTERS.indexOf(d.fiscal_quarter);
     if (start < 0) continue;
     const durationQ = Math.max(1, (d.contract_term_years || 1) * 4);
     const revPerQuarter = (d.acv_usd || 0) / 4;
@@ -623,7 +626,9 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
   const activeWonAccounts = new Set();
   const wonByQuarter = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, []]));
   for (const d of dealRows) {
-    if (d.outcome === "won" && wonByQuarter[d.quarter]) wonByQuarter[d.quarter].push(d);
+    if (d.outcome === "won" && wonByQuarter[d.fiscal_quarter]) {
+      wonByQuarter[d.fiscal_quarter].push(d);
+    }
   }
   for (const q of RENEWAL_QUARTERS) {
     for (const d of wonByQuarter[q]) {
@@ -673,12 +678,12 @@ function buildSupportSummaryRows(dealRows, accountsRows, rnd) {
   const wonByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
   const lostByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
   for (const d of dealRows) {
-    if (!wonByQ[d.quarter] && wonByQ[d.quarter] !== 0) continue;
-    if (d.outcome === "won") wonByQ[d.quarter] += 1;
-    if (d.outcome === "lost") lostByQ[d.quarter] += 1;
+    if (!wonByQ[d.fiscal_quarter] && wonByQ[d.fiscal_quarter] !== 0) continue;
+    if (d.outcome === "won") wonByQ[d.fiscal_quarter] += 1;
+    if (d.outcome === "lost") lostByQ[d.fiscal_quarter] += 1;
   }
 
-  const baseAccounts = accountsRows.filter((a) => String(a.renewal_quarter || "").trim() !== "").length;
+  const baseAccounts = accountsRows.filter((a) => String(a.renewal_fiscal_quarter || "").trim() !== "").length;
   return RENEWAL_QUARTERS.map((q, qi) => {
     const won = wonByQ[q];
     const lost = lostByQ[q];
@@ -694,7 +699,7 @@ function buildSupportSummaryRows(dealRows, accountsRows, rnd) {
       Math.round((4.3 + lateQuarterPenalty + lost * 0.012 + tickets * 0.003 + noiseDays) * 10) / 10,
     );
     return {
-      quarter: q,
+      fiscal_quarter: q,
       ticket_count: tickets,
       avg_days_to_resolution: avgDays,
     };
@@ -780,7 +785,7 @@ function pickChurnIndicesForSegment(cohort, segmentIndices, churnDollarTarget, r
 
 /**
  * Simulate one renewal cohort (GRR targets; NRR emerges from per-deal renewal multipliers).
- * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, last_deal_year: number, arr_up_for_renewal_usd: number, renewal_quarter: string}>} cohort
+ * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, last_deal_year: number, arr_up_for_renewal_usd: number, renewal_fiscal_quarter: string}>} cohort
  */
 function simulateRenewalCohort(cohort, rnd) {
   const n = cohort.length;
@@ -824,7 +829,7 @@ function simulateRenewalCohort(cohort, rnd) {
     renewals.push({
       account_id: a.account_id,
       account_name: a.account_name,
-      renewal_quarter: a.renewal_quarter,
+      renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       region: a.region,
       contract_term_years: a.contract_term_years,
       last_deal_year: a.last_deal_year,
@@ -928,7 +933,7 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
     byQ[q] = [];
   }
   for (const r of allRenewals) {
-    if (byQ[r.renewal_quarter]) byQ[r.renewal_quarter].push(r);
+    if (byQ[r.renewal_fiscal_quarter]) byQ[r.renewal_fiscal_quarter].push(r);
   }
 
   const rollup = quarterSummary(allRenewals);
@@ -983,13 +988,13 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
   }).join("\n");
 
   const sorted = [...allRenewals].sort((a, b) => {
-    const qi = RENEWAL_QUARTERS.indexOf(a.renewal_quarter) - RENEWAL_QUARTERS.indexOf(b.renewal_quarter);
+    const qi = RENEWAL_QUARTERS.indexOf(a.renewal_fiscal_quarter) - RENEWAL_QUARTERS.indexOf(b.renewal_fiscal_quarter);
     if (qi !== 0) return qi;
     return b.arr_up_for_renewal_usd - a.arr_up_for_renewal_usd;
   });
 
   function detailRowsForQuarter(q) {
-    const quarterRows = sorted.filter((r) => r.renewal_quarter === q);
+    const quarterRows = sorted.filter((r) => r.renewal_fiscal_quarter === q);
     return quarterRows
       .map((r) => {
         const bookedCell =
@@ -1314,7 +1319,7 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
       const fo = document.getElementById("fOutcome").value;
       const q = document.getElementById("fSearch").value.trim().toLowerCase();
       return DEALS.filter((d) => {
-        if (fq && d.quarter !== fq) return false;
+        if (fq && d.fiscal_quarter !== fq) return false;
         if (fr && d.region !== fr) return false;
         if (ft && String(d.contract_term_years) !== ft) return false;
         if (fo && d.outcome !== fo) return false;
@@ -1363,7 +1368,7 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
         ]),
       );
       for (const d of bookingRows) {
-        const b = byQ[d.quarter];
+        const b = byQ[d.fiscal_quarter];
         if (!b) continue;
         b.n += 1;
         const amount = d.acv_usd || 0;
@@ -1413,7 +1418,8 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
       const tbD = document.getElementById("tblDeals");
       tbD.innerHTML = "";
       const sorted = [...rows].sort((a, b) => {
-        const i = QUARTERS.indexOf(a.quarter) - QUARTERS.indexOf(b.quarter);
+        const i =
+          QUARTERS.indexOf(a.fiscal_quarter) - QUARTERS.indexOf(b.fiscal_quarter);
         if (i !== 0) return i;
         return (b.acv_usd || 0) - (a.acv_usd || 0);
       });
@@ -1432,7 +1438,7 @@ function writeDealDataDashboardHtml(dealRows, outPath) {
           esc(d.account_id) +
           "</span></td>" +
           "<td>" +
-          esc(d.quarter) +
+          esc(d.fiscal_quarter) +
           "</td>" +
           "<td>" +
           esc(d.close_date || "") +
@@ -1527,7 +1533,7 @@ function main() {
       contract_term_years: 0,
       last_deal_year: 0,
       arr_up_for_renewal_usd: sampleArrUsd(rnd),
-      renewal_quarter: "",
+      renewal_fiscal_quarter: "",
     });
   }
 
@@ -1554,16 +1560,16 @@ function main() {
     [slotQuarters[i], slotQuarters[j]] = [slotQuarters[j], slotQuarters[i]];
   }
   for (let k = 0; k < CUSTOMER_COUNT; k++) {
-    accounts[k].renewal_quarter = slotQuarters[k];
+    accounts[k].renewal_fiscal_quarter = slotQuarters[k];
   }
 
   for (const a of accounts) {
-    a.last_deal_year = priorDealYear(a.renewal_quarter, a.contract_term_years);
+    a.last_deal_year = priorDealYear(a.renewal_fiscal_quarter, a.contract_term_years);
   }
 
   const allRenewals = [];
   for (const q of RENEWAL_QUARTERS) {
-    const cohort = accounts.filter((a) => a.renewal_quarter === q);
+    const cohort = accounts.filter((a) => a.renewal_fiscal_quarter === q);
     const rows = simulateRenewalCohort(cohort, rnd);
     allRenewals.push(...rows);
   }
@@ -1581,7 +1587,7 @@ function main() {
       industry: a.industry,
       contract_term_years: a.contract_term_years,
       last_deal_year: a.last_deal_year,
-      renewal_quarter: a.renewal_quarter,
+      renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       arr_usd_current: current,
     };
   });
@@ -1593,10 +1599,10 @@ function main() {
     const r = byAccountRenewal.get(a.account_id);
     const renewed = r.outcome === "renewed";
     const churned = r.outcome === "churned";
-    const ir = RENEWAL_QUARTERS.indexOf(a.renewal_quarter);
+    const ir = RENEWAL_QUARTERS.indexOf(a.renewal_fiscal_quarter);
     for (let qi = 0; qi < RENEWAL_QUARTERS.length; qi++) {
       const q = RENEWAL_QUARTERS[qi];
-      if (!isActiveInQuarter(a.renewal_quarter, q, renewed)) continue;
+      if (!isActiveInQuarter(a.renewal_fiscal_quarter, q, renewed)) continue;
       const quartersUntilRenewal =
         churned && ir >= 0 ? Math.max(0, ir - qi) : null;
       const tier = sampleUsageTier(rnd, {
@@ -1642,8 +1648,8 @@ function main() {
       region: d.region,
       industry: pick(INDUSTRIES, rnd),
       contract_term_years: d.contract_term_years,
-      last_deal_year: priorDealYear(d.quarter, d.contract_term_years),
-      renewal_quarter: "",
+      last_deal_year: priorDealYear(d.fiscal_quarter, d.contract_term_years),
+      renewal_fiscal_quarter: "",
       arr_usd_current: d.acv_usd || 0,
     });
   }
@@ -1658,7 +1664,7 @@ function main() {
       "industry",
       "contract_term_years",
       "last_deal_year",
-      "renewal_quarter",
+      "renewal_fiscal_quarter",
       "arr_usd_current",
     ]),
   );
@@ -1680,7 +1686,7 @@ function main() {
       "industry",
       "contract_term_years",
       "last_deal_year",
-      "renewal_quarter",
+      "renewal_fiscal_quarter",
       "arr_usd_current",
     ]),
   );
@@ -1689,7 +1695,7 @@ function main() {
     toCsv(unifiedDealRows, [
       "account_id",
       "account_name",
-      "quarter",
+      "fiscal_quarter",
       "close_date",
       "region",
       "account_vertical",
@@ -1706,7 +1712,7 @@ function main() {
   writeFileSync(
     join(OUT, "finance", "finance_summary.csv"),
     toCsv(financeSummaryRows, [
-      "quarter",
+      "fiscal_quarter",
       "won_deals",
       "lost_deals",
       "won_deal_acv_usd",
@@ -1728,7 +1734,7 @@ function main() {
   writeFileSync(
     join(OUT, "support", "support_summary.csv"),
     toCsv(supportSummaryRows, [
-      "quarter",
+      "fiscal_quarter",
       "ticket_count",
       "avg_days_to_resolution",
     ]),

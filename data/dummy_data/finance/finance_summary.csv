@@ -1,4 +1,4 @@
-quarter,won_deals,lost_deals,won_deal_acv_usd,lost_deal_acv_usd,billings_tcv_usd,recognized_revenue_usd,cogs_usd,gross_profit_usd,sales_marketing_opex_usd,rnd_opex_usd,gna_opex_usd,ebitda_usd,active_accounts,account_base_count
+fiscal_quarter,won_deals,lost_deals,won_deal_acv_usd,lost_deal_acv_usd,billings_tcv_usd,recognized_revenue_usd,cogs_usd,gross_profit_usd,sales_marketing_opex_usd,rnd_opex_usd,gna_opex_usd,ebitda_usd,active_accounts,account_base_count
 2025-Q1,157,195,22539000,23153000,66058000,5634750,1399005,4235745,4490500,1454250,941080,-2650085,155,2009
 2025-Q2,161,181,17824000,17339000,51596000,10090750,2523303,7567448,4463500,1505700,941080,657168,302,2009
 2025-Q3,172,203,26085000,22444000,78460000,16612000,4149198,12462803,4661500,1559600,941080,5300623,456,2009

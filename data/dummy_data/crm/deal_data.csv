@@ -1,4 +1,4 @@
-account_id,account_name,quarter,close_date,region,account_vertical,product_line,deal_type,outcome,contract_term_years,acv_usd,tcv_usd
+account_id,account_name,fiscal_quarter,close_date,region,account_vertical,product_line,deal_type,outcome,contract_term_years,acv_usd,tcv_usd
 A0169,Vertex Works,2025-Q1,2025-01-15,AMER,Retail,Platform,renew,won,3,334000,1002000
 A0225,Parallel Bridge,2025-Q1,2025-03-06,AMER,Financial Services,Platform,renew,won,3,42000,126000
 A0490,Vertex Bridge Inc,2025-Q1,2025-02-12,AMER,Manufacturing,Analytics,renew,won,3,77000,231000

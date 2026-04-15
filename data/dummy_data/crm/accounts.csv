@@ -1,4 +1,4 @@
-account_id,account_name,region,industry,contract_term_years,last_deal_year,renewal_quarter,arr_usd_current
+account_id,account_name,region,industry,contract_term_years,last_deal_year,renewal_fiscal_quarter,arr_usd_current
 A0001,Aurora Works,APAC,Healthcare,3,2022,2025-Q3,106000
 A0002,BluePeak Logic,EMEA,Healthcare,3,2022,2025-Q2,534000
 A0003,Granite Dynamics Inc,EMEA,Retail,3,2022,2025-Q2,237000
