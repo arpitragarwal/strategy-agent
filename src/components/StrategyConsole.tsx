@@ -1438,11 +1438,11 @@ export function StrategyConsole() {
         <div className="space-y-6 min-w-0">
         <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-4 space-y-3">
           <label className="block text-xs font-medium uppercase tracking-wide text-zinc-500">
-            Goal, question & context
+            Strategy Question & Additional Context
           </label>
           <textarea
             className="w-full min-h-[80px] rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
-            placeholder="Put everything here: the strategic question, constraints, metrics, and any internal notes the agents should use."
+            placeholder="Example prompt: How can we improve the renewal rates in Q2-2026? I am concerned about the GRR."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             disabled={busy}
