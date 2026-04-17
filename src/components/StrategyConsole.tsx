@@ -676,7 +676,15 @@ function OutlineBranch({
   const state = states[node.id];
 
   return (
-    <li className="relative list-none m-0 p-0">
+    <li
+      className={[
+        "relative list-none m-0 p-0",
+        // If this is the last sibling, mask the parent trunk below this node's connector
+        // so the line visibly terminates at the final branch rather than trailing past it.
+        // bg-white matches the tree panel background.
+        "last:before:pointer-events-none last:before:absolute last:before:-left-5 last:before:top-5 last:before:bottom-0 last:before:w-1 last:before:bg-white last:before:content-['']",
+      ].join(" ")}
+    >
       {/*
         Horizontal connector from the parent trunk into this node's card.
         Parent wrappers all use `pl-5` (20px) so the trunk sits at content-x=-20.
