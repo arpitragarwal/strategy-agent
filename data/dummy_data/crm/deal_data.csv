@@ -1,4 +1,4 @@
-account_id,account_name,logo_acquisition_year,fiscal_quarter,created_date,close_date,region,account_vertical,product_line,deal_type,outcome,contract_term_years,acv_usd,tcv_usd,deal_source,primary_loss_reason
+account_id,account_name,logo_acquisition_cohort,fiscal_quarter,created_date,close_date,region,account_vertical,product_line,deal_type,outcome,contract_term_years,acv_usd,tcv_usd,deal_source,primary_loss_reason
 A0449,Silverline Systems Inc,2022,2025-Q1,2024-07-15,2025-02-17,EMEA,Professional Services,Platform,renew,won,3,20000,60000,sales_outbound,
 A0843,Northwind Cloud,2022,2025-Q1,2024-07-27,2025-01-13,AMER,Technology,Analytics,renew,won,3,374000,1122000,inbound,
 A0777,Cobalt Dynamics,2022,2025-Q1,2024-05-14,2025-01-01,EMEA,Financial Services,Analytics,renew,won,3,42000,126000,sales_outbound,

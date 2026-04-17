@@ -3,7 +3,7 @@
  * Enterprise SaaS prototype: logos up for renewal ramp 2025-Q1 (200) → 2026-Q1 (~300) across five Qs.
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
- * Revenue GRR: logo_acquisition_year === 2023 cohort → ~85%; otherwise ~95%.
+ * Revenue GRR: logo_acquisition_cohort === 2023 cohort → ~85%; otherwise ~95%.
  * Also writes cx/product_usage.csv (usage_tier per account × fiscal_quarter × product_line),
  * cx/customer_satisfaction.csv (CSAT + NPS at the same grain),
  * merged crm/deal_data.csv (renewals + new ACV + account_vertical), finance/finance_summary.csv,
@@ -137,14 +137,14 @@ function shuffleIndices(arr, rnd) {
   }
 }
 
-/** ~50% pricing for churned rows with logo_acquisition_year === 2023 (2023-logo cohort); uniform mix for other churned. */
+/** ~50% pricing for churned rows with logo_acquisition_cohort === 2023 (2023-logo cohort); uniform mix for other churned. */
 function assignChurnLossReasons(renewals, rnd) {
   const idx2023Churn = [];
   const idxOtherChurn = [];
   for (let i = 0; i < renewals.length; i++) {
     const r = renewals[i];
     if (r.outcome !== "churned") continue;
-    if (r.logo_acquisition_year === 2023) idx2023Churn.push(i);
+    if (r.logo_acquisition_cohort === 2023) idx2023Churn.push(i);
     else idxOtherChurn.push(i);
   }
 
@@ -459,14 +459,14 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
 function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, idPad) {
   const accountsById = new Map(accountsRows.map((a) => [a.account_id, a]));
   const logoYearFor = (accountId) => {
-    const y = accountsById.get(accountId)?.logo_acquisition_year;
+    const y = accountsById.get(accountId)?.logo_acquisition_cohort;
     return typeof y === "number" && Number.isFinite(y) ? y : 0;
   };
 
   const renewalRowsFull = allRenewals.map((r) => ({
     account_id: r.account_id,
     account_name: r.account_name,
-    logo_acquisition_year: logoYearFor(r.account_id),
+    logo_acquisition_cohort: logoYearFor(r.account_id),
     fiscal_quarter: r.renewal_fiscal_quarter,
     close_date: sampleCloseDateInQuarter(r.renewal_fiscal_quarter, rnd),
     region: r.region,
@@ -496,7 +496,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
   const newAcvRows = wonNewDeals.map((d) => ({
     account_id: d.account_id,
     account_name: d.account_name,
-    logo_acquisition_year: logoYearFor(d.account_id),
+    logo_acquisition_cohort: logoYearFor(d.account_id),
     fiscal_quarter: d.fiscal_quarter,
     close_date: sampleCloseDateInQuarter(d.fiscal_quarter, rnd),
     region: d.region,
@@ -543,7 +543,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
       region,
       industry,
       contract_term_years,
-      logo_acquisition_year: priorDealYear(quarter, contract_term_years),
+      logo_acquisition_cohort: priorDealYear(quarter, contract_term_years),
       renewal_fiscal_quarter: "",
       arr_usd_current: 0,
       company_size_band: rnd() < 0.34 ? "Enterprise" : "SMB",
@@ -585,7 +585,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
-            logo_acquisition_year: logoYearFor(a.account_id),
+            logo_acquisition_cohort: logoYearFor(a.account_id),
             fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
@@ -602,7 +602,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
-            logo_acquisition_year: logoYearFor(a.account_id),
+            logo_acquisition_cohort: logoYearFor(a.account_id),
             fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
@@ -931,14 +931,14 @@ function pickChurnIndicesForSegment(cohort, segmentIndices, churnDollarTarget, r
 
 /**
  * Simulate one renewal cohort (GRR targets; NRR emerges from per-deal renewal multipliers).
- * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, logo_acquisition_year: number, arr_up_for_renewal_usd: number, renewal_fiscal_quarter: string}>} cohort
+ * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, logo_acquisition_cohort: number, arr_up_for_renewal_usd: number, renewal_fiscal_quarter: string}>} cohort
  */
 function simulateRenewalCohort(cohort, rnd) {
   const n = cohort.length;
   if (n === 0) return [];
 
-  const idx2023 = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_year === 2023);
-  const idxOther = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_year !== 2023);
+  const idx2023 = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_cohort === 2023);
+  const idxOther = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_cohort !== 2023);
 
   const sumArr2023 = idx2023.reduce((s, i) => s + cohort[i].arr_up_for_renewal_usd, 0);
   const sumArrOther = idxOther.reduce((s, i) => s + cohort[i].arr_up_for_renewal_usd, 0);
@@ -978,7 +978,7 @@ function simulateRenewalCohort(cohort, rnd) {
       renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       region: a.region,
       contract_term_years: a.contract_term_years,
-      logo_acquisition_year: a.logo_acquisition_year,
+      logo_acquisition_cohort: a.logo_acquisition_cohort,
       arr_up_for_renewal_usd: a.arr_up_for_renewal_usd,
       outcome,
       loss_reason: "",
@@ -1059,9 +1059,9 @@ function quarterSummary(rows) {
   return { totalUp, totalBooked, grr, nrr, logos: rows.length };
 }
 
-/** Revenue GRR among rows with logo_acquisition_year === 2023 (logo renewal rate in .logoRenewPct). */
+/** Revenue GRR among rows with logo_acquisition_cohort === 2023 (logo renewal rate in .logoRenewPct). */
 function cohort2023Metrics(rows) {
-  const sub = rows.filter((r) => r.logo_acquisition_year === 2023);
+  const sub = rows.filter((r) => r.logo_acquisition_cohort === 2023);
   if (!sub.length) return null;
   const totalUp = sub.reduce((s, r) => s + r.arr_up_for_renewal_usd, 0);
   const churnedUp = sub
@@ -1153,7 +1153,7 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
               }</span>`;
         return `<tr>
         <td><span class="acct">${escapeHtml(r.account_name)}</span><span class="mono">${escapeHtml(r.account_id)}</span></td>
-        <td class="num">${r.logo_acquisition_year}</td>
+        <td class="num">${r.logo_acquisition_cohort}</td>
         <td class="num">${r.contract_term_years}</td>
         <td class="muted">${escapeHtml(r.region)}</td>
         <td class="num">${escapeHtml(formatUsd(r.arr_up_for_renewal_usd))}</td>
@@ -1677,7 +1677,7 @@ function main() {
       region: pick(REGIONS, rnd),
       industry: pick(INDUSTRIES, rnd),
       contract_term_years: 0,
-      logo_acquisition_year: 0,
+      logo_acquisition_cohort: 0,
       arr_up_for_renewal_usd: sampleArrUsd(rnd),
       renewal_fiscal_quarter: "",
     });
@@ -1710,7 +1710,7 @@ function main() {
   }
 
   for (const a of accounts) {
-    a.logo_acquisition_year = priorDealYear(a.renewal_fiscal_quarter, a.contract_term_years);
+    a.logo_acquisition_cohort = priorDealYear(a.renewal_fiscal_quarter, a.contract_term_years);
   }
 
   const allRenewals = [];
@@ -1734,7 +1734,7 @@ function main() {
       region: a.region,
       industry: a.industry,
       contract_term_years: a.contract_term_years,
-      logo_acquisition_year: a.logo_acquisition_year,
+      logo_acquisition_cohort: a.logo_acquisition_cohort,
       renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       arr_usd_current: current,
       company_size_band,
@@ -1813,7 +1813,7 @@ function main() {
       region: d.region,
       industry: pick(INDUSTRIES, rnd),
       contract_term_years: d.contract_term_years,
-      logo_acquisition_year: priorDealYear(d.fiscal_quarter, d.contract_term_years),
+      logo_acquisition_cohort: priorDealYear(d.fiscal_quarter, d.contract_term_years),
       renewal_fiscal_quarter: "",
       arr_usd_current: d.acv_usd || 0,
       company_size_band: rnd() < (big ? 0.65 : 0.3) ? "Enterprise" : "SMB",
@@ -1837,7 +1837,7 @@ function main() {
       "region",
       "industry",
       "contract_term_years",
-      "logo_acquisition_year",
+      "logo_acquisition_cohort",
       "renewal_fiscal_quarter",
       "arr_usd_current",
       "company_size_band",
@@ -1848,7 +1848,7 @@ function main() {
     toCsv(unifiedDealRows, [
       "account_id",
       "account_name",
-      "logo_acquisition_year",
+      "logo_acquisition_cohort",
       "fiscal_quarter",
       "created_date",
       "close_date",
