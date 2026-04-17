@@ -315,28 +315,44 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
     const cols = Object.keys(rows[0] ?? {});
     safe.tables.push({ name: "result", columns: cols, rows });
 
+    const chartNotes: string[] = [];
     if (plan.chart && rows.length) {
       const cx = plan.chart.x;
       const cy = plan.chart.y;
-      if (typeof cx !== "string" || !cx.trim() || typeof cy !== "string" || !cy.trim()) {
-        throw new Error(
-          `Chart: fields "x" and "y" must be non-empty strings naming columns on the result rows (got x=${JSON.stringify(cx)}, y=${JSON.stringify(cy)}).`,
+      const cxOk = typeof cx === "string" && cx.trim().length > 0;
+      const cyOk = typeof cy === "string" && cy.trim().length > 0;
+      if (!cxOk || !cyOk) {
+        chartNotes.push(
+          `Chart skipped — "x" and "y" must be non-empty column names on the result rows (got x=${JSON.stringify(cx)}, y=${JSON.stringify(cy)}).`,
         );
+      } else {
+        const available = new Set(Object.keys(rows[0]!));
+        const missing = [cx, cy].filter((c) => !available.has(c as string));
+        if (missing.length > 0) {
+          chartNotes.push(
+            `Chart skipped — column(s) ${missing.map((m) => `"${m}"`).join(", ")} not in result rows. Available: ${[...available].join(", ")}.`,
+          );
+        } else {
+          const spec = buildVegaLiteSpec(plan.chart, rows);
+          safe.vegaLiteSpecs.push({
+            title: plan.chart.title ?? `${plan.chart.y} by ${plan.chart.x}`,
+            spec,
+          });
+        }
       }
-      validateColumns(rows, [cx, cy], "Chart");
-      const spec = buildVegaLiteSpec(plan.chart, rows);
-      safe.vegaLiteSpecs.push({
-        title: plan.chart.title ?? `${plan.chart.y} by ${plan.chart.x}`,
-        spec,
-      });
     }
 
     const multi = datasetIdsUsed.size > 1;
+    let narrative: string;
     if (rows.length === 1 && cols.length <= 6) {
-      safe.narrative = cols.map((c) => `${c}: ${rows[0]![c]}`).join("; ");
+      narrative = cols.map((c) => `${c}: ${rows[0]![c]}`).join("; ");
     } else {
-      safe.narrative = `${rows.length} row(s) after pipeline${multi ? ` (${[...datasetIdsUsed].join(" + ")})` : ""}.`;
+      narrative = `${rows.length} row(s) after pipeline${multi ? ` (${[...datasetIdsUsed].join(" + ")})` : ""}.`;
     }
+    if (chartNotes.length > 0) {
+      narrative = [narrative, ...chartNotes].filter(Boolean).join(" ");
+    }
+    safe.narrative = narrative;
 
     return safe;
   } catch (e) {

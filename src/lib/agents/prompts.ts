@@ -23,7 +23,10 @@ For cross-table questions, use **join** as documented in the catalog instead of 
 
 **Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`).
 
-Optional chart per plan: {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} — \`x\` and \`y\` must be **literal non-empty strings** (column names on the final rows), never null or omitted.`;
+Optional chart per plan: either \`"chart": null\` (no chart) **or** an object with **all four required string fields** filled in: \`{"type":"bar"|"line","x":"<col>","y":"<col>","title":"<short string>"}\`. Rules for the chart object:
+- \`x\` and \`y\` MUST be **non-empty string** column names that exist on the **final** result rows (after the last \`project\` / \`groupby\`). Most common \`y\` is a **groupby measure alias** (e.g. "churn_rate", "account_count").
+- Do **not** omit \`x\` or \`y\`, do **not** set them to \`null\`, empty string, or a placeholder. If you cannot confidently name both columns, set \`chart\` to \`null\` instead.
+- \`title\` is a short string for the chart header; never null.`;
 
 /** Model decides whether to run a Memory repository search (like optional web search). */
 export function discoveryMemoryRoutePrompt(userGoal: string): string {
