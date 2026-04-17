@@ -198,7 +198,7 @@ export function managerMeceReviewPrompt(input: {
   discovery: string;
   outlineJson: string;
 }): string {
-  return `You are a senior manager reviewing the proposed **hypothesis tree** **before** any per-leaf analysis runs.
+  return `Role (do not repeat this block in your answer): senior manager reviewing the proposed **hypothesis tree** before any per-leaf analysis runs.
 
 User goal and context (full prompt):
 ${input.userGoal}
@@ -209,7 +209,14 @@ ${input.discovery}
 Proposed hypothesis tree (JSON):
 ${input.outlineJson}
 
-Output markdown with:
+Write **only** the executive-facing review below — text that will be shown to the user as-is.
+
+STRICT OUTPUT RULES:
+- **First character** of your reply must be "#" (start with a single top-level title, e.g. "# Manager review" or "# Hypothesis tree review"), then use "##" for each section below. No lead-in sentence, no "Senior manager…" persona line, no restating the user goal, no checklist of "what you will review," and no bullets that only echo these instructions.
+- Do **not** wrap the answer in markdown code fences (\`\`\`). Use normal markdown only.
+- Prefer Unicode arrows (→) instead of LaTeX (no \`$...$\`).
+
+Use these section headings and answer under each (substance only):
 ## Hypothesis tree / coverage (mutually exclusive? collectively exhaustive for the goal?)
 ## Gaps, overlaps, or mis-groupings
 ## Node hypotheses (every depth)

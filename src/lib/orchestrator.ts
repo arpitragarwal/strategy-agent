@@ -24,6 +24,7 @@ import {
   type LeafManagerReviewJson,
 } from "./agents/prompts";
 import { generateJson, generateText, getModelId } from "./genai";
+import { sanitizeManagerTreeReviewMarkdown } from "./sanitizeManagerTreeReview";
 import {
   stripExecutiveMarkdownPreamble,
   stripSynthesisMarkdown,
@@ -1183,7 +1184,7 @@ async function runStructureRevisionPhase(
     `Initial hypothesis tree (${flattenLeaves(roots).length} leaves) — manager review`,
   );
 
-  const treeReviewNotes = await withTokenPhase("manager_tree", () =>
+  const treeReviewRaw = await withTokenPhase("manager_tree", () =>
     generateText(
       managerMeceReviewPrompt({
         userGoal: run.prompt,
@@ -1192,6 +1193,8 @@ async function runStructureRevisionPhase(
       }),
     ),
   );
+  const treeReviewNotes =
+    sanitizeManagerTreeReviewMarkdown(treeReviewRaw).trim() || treeReviewRaw.trim();
   await prisma.strategyRun.update({
     where: { id: runId },
     data: { treeReviewNotes },

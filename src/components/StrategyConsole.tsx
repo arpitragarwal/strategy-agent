@@ -11,6 +11,7 @@ import {
   RUNNING_STREAM_RECONNECT_BASE_MS,
   RUNNING_STREAM_RECONNECT_JITTER_MS,
 } from "@/lib/runStream";
+import { sanitizeManagerTreeReviewMarkdown } from "@/lib/sanitizeManagerTreeReview";
 import { stripSynthesisMarkdown } from "@/lib/stripExecutiveMarkdownPreamble";
 import type {
   HypothesisVerdict,
@@ -1666,7 +1667,7 @@ export function StrategyConsole() {
             cardClassName="border-blue-200 bg-blue-50/90"
           >
             <div className="min-w-0 max-w-full max-h-[min(70vh,28rem)] overflow-y-auto overflow-x-auto overscroll-contain">
-              <MarkdownBody content={treeReviewNotes} />
+              <MarkdownBody content={sanitizeManagerTreeReviewMarkdown(treeReviewNotes)} />
             </div>
           </OutputPanel>
         ) : null}
