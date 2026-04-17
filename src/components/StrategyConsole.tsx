@@ -11,6 +11,7 @@ import {
   RUNNING_STREAM_RECONNECT_BASE_MS,
   RUNNING_STREAM_RECONNECT_JITTER_MS,
 } from "@/lib/runStream";
+import { stripSynthesisMarkdown } from "@/lib/stripExecutiveMarkdownPreamble";
 import type {
   HypothesisVerdict,
   OutlineNode,
@@ -142,7 +143,9 @@ function formatMemoryTimestamp(iso: string): string {
 
 /** Older runs used ## Recommendation / ## Supporting points; strip those headings for display. */
 function normalizeSynthesisDisplayMarkdown(md: string): string {
-  return md
+  const stripped = stripSynthesisMarkdown(md);
+  const base = stripped.length > 0 ? stripped : md.trim();
+  return base
     .replace(/^##\s*Recommendation\s*$/gim, "")
     .replace(/^##\s*Supporting points\s*$/gim, "")
     .replace(/\n{3,}/g, "\n\n")

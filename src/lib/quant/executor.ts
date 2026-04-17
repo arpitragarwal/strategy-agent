@@ -89,6 +89,11 @@ function validateColumns(rows: Record<string, unknown>[], cols: string[], ctx: s
   if (!rows.length) return;
   const have = new Set(Object.keys(rows[0]!));
   for (const c of cols) {
+    if (typeof c !== "string" || !c.trim()) {
+      throw new Error(
+        `${ctx}: column name must be a non-empty string (got ${JSON.stringify(c)}). Check JSON for missing "column", "x", or "y".`,
+      );
+    }
     if (!have.has(c)) {
       throw new Error(`${ctx}: column "${c}" not in data. Available: ${[...have].join(", ")}`);
     }
@@ -126,6 +131,11 @@ function applyJoin(
   }
   validateColumns(rightRows, rightKeyCols, `Step ${stepIdx} join (right)`);
 
+  const rightColNames = new Set<string>();
+  for (const r of rightRows) {
+    for (const col of Object.keys(r)) rightColNames.add(col);
+  }
+
   const index = new Map<string, Record<string, unknown>[]>();
   for (const r of rightRows) {
     const k = compositeKey(r, rightKeyCols);
@@ -133,12 +143,30 @@ function applyJoin(
     index.get(k)!.push(r);
   }
 
+  const stripDuplicateJoinKeys = (
+    merged: Record<string, unknown>,
+  ): Record<string, unknown> => {
+    for (const [lc, rc] of step.on) {
+      if (lc === rc) {
+        delete merged[`${prefix}${rc}`];
+      }
+    }
+    return merged;
+  };
+
   const out: Record<string, unknown>[] = [];
   for (const l of leftRows) {
     const k = compositeKey(l, leftKeyCols);
     const matches = index.get(k) ?? [];
     if (matches.length === 0) {
-      if (how === "left") out.push({ ...l });
+      if (how === "left") {
+        // Keep a stable schema: SQL-style LEFT JOIN still exposes right columns as NULL.
+        const merged: Record<string, unknown> = { ...l };
+        for (const col of rightColNames) {
+          merged[`${prefix}${col}`] = null;
+        }
+        out.push(stripDuplicateJoinKeys(merged));
+      }
       continue;
     }
     for (const r of matches) {
@@ -146,12 +174,7 @@ function applyJoin(
       for (const [col, val] of Object.entries(r)) {
         merged[`${prefix}${col}`] = val;
       }
-      for (const [lc, rc] of step.on) {
-        if (lc === rc) {
-          delete merged[`${prefix}${rc}`];
-        }
-      }
-      out.push(merged);
+      out.push(stripDuplicateJoinKeys(merged));
     }
   }
   return out;
@@ -255,7 +278,14 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
     safe.tables.push({ name: "result", columns: cols, rows });
 
     if (plan.chart && rows.length) {
-      validateColumns(rows, [plan.chart.x, plan.chart.y], "Chart");
+      const cx = plan.chart.x;
+      const cy = plan.chart.y;
+      if (typeof cx !== "string" || !cx.trim() || typeof cy !== "string" || !cy.trim()) {
+        throw new Error(
+          `Chart: fields "x" and "y" must be non-empty strings naming columns on the result rows (got x=${JSON.stringify(cx)}, y=${JSON.stringify(cy)}).`,
+        );
+      }
+      validateColumns(rows, [cx, cy], "Chart");
       const spec = buildVegaLiteSpec(plan.chart, rows);
       safe.vegaLiteSpecs.push({
         title: plan.chart.title ?? `${plan.chart.y} by ${plan.chart.x}`,

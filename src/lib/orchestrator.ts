@@ -25,6 +25,10 @@ import {
 } from "./agents/prompts";
 import { generateJson, generateText, getModelId } from "./genai";
 import {
+  stripExecutiveMarkdownPreamble,
+  stripSynthesisMarkdown,
+} from "./stripExecutiveMarkdownPreamble";
+import {
   mergeTokenUsageIntoStored,
   runTokenTrackingContext,
   RunTokenUsageAccumulator,
@@ -884,7 +888,7 @@ async function finalizePartialSynthesis(
   send({ type: "progress", entry: entryStart });
 
   const analysesMd = analysesMarkdown(roots, states);
-  const managerNotes = await withTokenPhase("partial_manager", () =>
+  const managerNotesRaw = await withTokenPhase("partial_manager", () =>
     generateText(
       partialManagerPrompt({
         userGoal: run.prompt,
@@ -893,13 +897,16 @@ async function finalizePartialSynthesis(
       }),
     ),
   );
+  const managerNotesStripped = stripExecutiveMarkdownPreamble(managerNotesRaw);
+  const managerNotes =
+    managerNotesStripped.length > 0 ? managerNotesStripped : managerNotesRaw.trim();
   await prisma.strategyRun.update({
     where: { id: runId },
     data: { managerNotes },
   });
   send({ type: "manager", notes: managerNotes });
 
-  const synthesis = await withTokenPhase("partial_synthesis", () =>
+  const synthesisRaw = await withTokenPhase("partial_synthesis", () =>
     generateText(
       partialSynthesisPrompt({
         userGoal: run.prompt,
@@ -910,6 +917,9 @@ async function finalizePartialSynthesis(
       }),
     ),
   );
+  const synthesisStripped = stripSynthesisMarkdown(synthesisRaw);
+  const synthesis =
+    synthesisStripped.length > 0 ? synthesisStripped : synthesisRaw.trim();
   await prisma.strategyRun.update({
     where: { id: runId },
     data: {
@@ -1419,7 +1429,7 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   send({ type: "progress", entry });
 
   const analysesMd = analysesMarkdown(roots, states);
-  const managerNotes = await withRunHeartbeat(run.id, () =>
+  const managerNotesRaw = await withRunHeartbeat(run.id, () =>
     withTokenPhase("manager_analyses", () =>
       generateText(
         managerPrompt({
@@ -1430,6 +1440,9 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
       ),
     ),
   );
+  const managerNotesStripped = stripExecutiveMarkdownPreamble(managerNotesRaw);
+  const managerNotes =
+    managerNotesStripped.length > 0 ? managerNotesStripped : managerNotesRaw.trim();
   await prisma.strategyRun.update({
     where: { id: runId },
     data: { managerNotes },
@@ -1439,7 +1452,7 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
   const synEntry = await appendProgress(runId, "synthesis", "Writing final memo");
   send({ type: "progress", entry: synEntry });
 
-  const synthesis = await withRunHeartbeat(run.id, () =>
+  const synthesisRaw = await withRunHeartbeat(run.id, () =>
     withTokenPhase("synthesis", () =>
       generateText(
         synthesisPrompt({
@@ -1451,6 +1464,9 @@ async function runManagerAndSynthesisPhase(runId: string, send: StreamSender) {
       ),
     ),
   );
+  const synthesisStripped = stripSynthesisMarkdown(synthesisRaw);
+  const synthesis =
+    synthesisStripped.length > 0 ? synthesisStripped : synthesisRaw.trim();
   await prisma.strategyRun.update({
     where: { id: runId },
     data: {

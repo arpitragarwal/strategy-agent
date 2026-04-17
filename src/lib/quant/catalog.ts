@@ -68,10 +68,12 @@ export const QUANT_ENUMS_BY_DATASET: Record<string, Record<string, readonly stri
   },
   "cx/product_usage": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+    product_line: [...PROTOTYPE_PRODUCT_LINES],
     usage_tier: [...PROTOTYPE_USAGE_TIERS],
   },
   "cx/customer_satisfaction": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+    product_line: [...PROTOTYPE_PRODUCT_LINES],
   },
   "finance/finance_summary": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
@@ -136,14 +138,14 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "cx/product_usage.csv",
     domain: "cx",
     description:
-      "Quarterly product engagement for active subscribers: account_id, fiscal_quarter (2025-Q1…2026-Q1), usage_tier ∈ {no_usage, minimal_usage, high_usage, power_usage}. One row per account per quarter they had an active subscription in the window; churned accounts have no rows after their renewal quarter.",
+      "Quarterly product engagement by SKU line: account_id, fiscal_quarter, product_line (Platform | Security | Analytics), usage_tier ∈ {no_usage, minimal_usage, high_usage, power_usage}. One row per account × fiscal_quarter × product_line while subscribed in the window; churned accounts have no rows after their renewal quarter.",
   },
   {
     id: "cx/customer_satisfaction",
     relativePath: "cx/customer_satisfaction.csv",
     domain: "cx",
     description:
-      "Quarterly satisfaction aligned to cx/product_usage rows: account_id, fiscal_quarter, csat_score (1–5 Likert), nps_score (−100…100). CSAT/NPS correlate weakly with usage_tier in the generator.",
+      "Quarterly satisfaction at product line grain (matches cx/product_usage): account_id, fiscal_quarter, product_line (Platform | Security | Analytics), csat_score (1–5 Likert), nps_score (−100…100). CSAT/NPS correlate weakly with that line’s usage_tier in the generator.",
   },
   {
     id: "finance/finance_summary",
@@ -203,8 +205,8 @@ export function quantPlanReferencesValidDatasets(plan: {
 export const QUANT_JOIN_RELATIONSHIPS = [
   "**crm/deal_data** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, region consistency checks, and account attributes.",
   "**finance/finance_summary** ↔ **support/support_summary** on [[\"fiscal_quarter\",\"fiscal_quarter\"]] for quarter-level rollups.",
-  "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] to align usage with deals in the same fiscal quarter (optional second key; account-only join is valid for account-level cuts).",
-  "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] for usage_tier with csat_score / nps_score.",
+  "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"],[\"product_line\",\"product_line\"]] when tying usage to booked product; account + quarter only is valid for account-level cuts.",
+  "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"],[\"product_line\",\"product_line\"]] for usage_tier with csat_score / nps_score.",
 ] as const;
 
 export function buildDataCatalogMarkdown(): string {
@@ -218,6 +220,8 @@ export function buildDataCatalogMarkdown(): string {
     ...QUANT_JOIN_RELATIONSHIPS.map((s) => `- ${s}`),
     "",
     "Use datasetId values exactly as listed below. **Time bucket column is always `fiscal_quarter`** (string like 2025-Q1) on deal_data, CX, finance_summary, and support_summary. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
+    "",
+    "**Join naming:** If `on` includes `[\"product_line\",\"product_line\"]` (same name both sides), the merged row has a single **`product_line`** column — not `r_product_line`. Right-only fields (e.g. `usage_tier` from CX when the left table is `crm/deal_data`) appear as **`r_usage_tier`**.",
     "",
     buildQuantEnumMarkdown(),
   ];

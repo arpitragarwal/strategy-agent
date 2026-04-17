@@ -10,7 +10,9 @@ export type DiscoveryMemoryRoute = {
 export const QUANT_PIPELINE_OPS_FOR_PROMPTS = `Allowed quant.steps operations (execute in order):
 - {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
 - {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId (or each plan's datasetId) as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
-- {"op":"project","columns":["col1","col2",...]} — optional; drop columns before groupby/chart (use actual names after joins, e.g. acc_arr_usd).
+  - **Same name on both sides:** if a pair is \`["product_line","product_line"]\` (or any \`["x","x"]\`), the result has **one** column \`x\` — there is **no** \`r_x\`. Only right-only columns (not in \`on\`, or different right-side name) appear as \`r_<col>\`.
+  - **Left join:** rows with no key match still get all \`r_*\` columns set to null (stable schema).
+- {"op":"project","columns":["col1","col2",...]} — **destructive:** only listed columns survive. Include **every** column you need for later filter, groupby, or chart \`x\`/\`y\` (e.g. keep \`outcome\` or \`r_outcome\` if you filter on it later).
 - {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
 - {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
 - {"op":"limit","n": number}
@@ -21,7 +23,7 @@ For cross-table questions, use **join** as documented in the catalog instead of 
 
 **Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`).
 
-Optional chart per plan: {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} — x/y must exist on rows **after** all steps.`;
+Optional chart per plan: {"type":"bar"|"line","x":"<col>","y":"<col>","title":"optional"} — \`x\` and \`y\` must be **literal non-empty strings** (column names on the final rows), never null or omitted.`;
 
 /** Model decides whether to run a Memory repository search (like optional web search). */
 export function discoveryMemoryRoutePrompt(userGoal: string): string {
@@ -566,12 +568,15 @@ ${input.discovery}
 Per-leaf analyses (deepest leaves — branch rollups appear in the UI but focus on leaf evidence here):
 ${input.analysesMarkdown}
 
-Output markdown with:
+Output markdown with **exactly** these four H2 sections (use \`##\` at column 0 — not bullet lists like \`* ##\`):
 ## Challenge assumptions
 ## Contradictions / gaps
 ## What would change the recommendation
 ## Go / no-go checks for the next phase
-Be direct and skeptical but constructive.`;
+
+**FORBIDDEN in your reply:** (1) Re-stating your role, the user goal, or this task as a preamble (e.g. "Manager Agent pressure-testing…"). (2) Quoted or paraphrased instructions / section titles as a checklist before the real sections. (3) Wrapping the answer in \`\`\` code fences. (4) Any prose before the first \`## Challenge assumptions\` line.
+
+Your entire response must **begin** with the characters \`## Challenge assumptions\` (after any leading whitespace). Be direct and skeptical but constructive.`;
 }
 
 export function synthesisPrompt(input: {
@@ -603,6 +608,8 @@ Then 3–7 bullet lines only (no "Supporting points" heading or any H2 before th
 ## Open questions
 - Bullet list only: what still **needs more data, analysis, or decisions** before acting with confidence. If none, use a single bullet: _None material — proceed with monitoring as above._
 
+**FORBIDDEN in your reply:** (1) Re-stating the task, role, or structure instructions as bullets (e.g. "* Bold summary? Yes."). (2) Self-check / verification checklist lines. (3) Wrapping any part of the answer in \`\`\` code fences. (4) Any prose before the first line that begins with \`**\` (your bold recommendation).
+
 Do not add other sections, tables, or long prose.`;
 }
 
@@ -622,12 +629,13 @@ ${input.discovery}
 Per-leaf analyses (some branches show "pending" or were skipped):
 ${input.analysesMarkdown}
 
-Output concise markdown:
+Output concise markdown with **exactly** these four H2 sections (\`##\` at column 0, not \`* ##\`):
 ## Challenge assumptions (given partial coverage)
 ## Biggest gaps from incomplete branches
 ## What to validate before acting
 ## Go / no-go checks
-Be direct; flag uncertainty from missing analyses.`;
+
+**FORBIDDEN:** role/task preamble, echoing the prompt as bullets, \`\`\` fences, or any text before the first \`## Challenge assumptions\`. Your reply must **begin** with \`## Challenge assumptions\`. Be direct; flag uncertainty from missing analyses.`;
 }
 
 export function partialSynthesisPrompt(input: {
@@ -665,6 +673,8 @@ Then 3–7 bullets (no "Supporting points" heading): only what the **completed**
 
 ## Open questions
 - Bullets: **gaps from incomplete branches**, missing data, and what to analyze next before a final call.
+
+**FORBIDDEN:** role echo, self-check lines (\`* …? Yes.\`), \`\`\` fences, or any checklist repeating these instructions before the real output.
 
 No other sections or long prose.`;
 }
