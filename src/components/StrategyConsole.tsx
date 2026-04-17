@@ -574,8 +574,13 @@ function StatusDot({ status }: { status: NodeState["status"] }) {
             : "bg-zinc-500";
   // All statuses use the same 10px core so their visual size matches.
   // Running adds an expanding ping halo that fades out — purely additive, no fatter core.
+  // z-10 + rounded bg-white wrapper lets the dot "cut out" the tree connector line
+  // behind it so the horizontal trunk tick doesn't visually slice through the dot.
   return (
-    <span className="relative inline-flex h-3 w-3 items-center justify-center" title={status}>
+    <span
+      className="relative z-10 inline-flex h-3 w-3 items-center justify-center rounded-full bg-white"
+      title={status}
+    >
       {status === "running" ? (
         <span className="pointer-events-none absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-amber-400 opacity-75" />
       ) : null}
@@ -671,14 +676,26 @@ function OutlineBranch({
   const state = states[node.id];
 
   return (
-    <li className="list-none m-0 p-0">
+    <li className="relative list-none m-0 p-0">
+      {/*
+        Horizontal connector from the parent trunk into this node's card.
+        Parent wrappers all use `pl-5` (20px) so the trunk sits at content-x=-20.
+        Our content is: [w-7 dot col 28px] + [gap-2 8px] + [card] → card left edge sits at x=36.
+        Total span: -20 → 36 = 56px (w-14). The line passes "through" the dot (dot draws on top),
+        giving the classic tree look where the node marker sits on the spine and the card
+        extends to the right of the horizontal tick.
+      */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -left-5 top-4 h-0.5 w-14 bg-zinc-200"
+      />
       <div className="flex items-start gap-2">
-        <div className="flex w-7 shrink-0 flex-col items-center gap-1 pt-2.5">
+        <div className="flex w-7 shrink-0 flex-col items-center gap-1 self-stretch pt-2.5">
           {hasKids ? (
             <>
               <button
                 type="button"
-                className="rounded p-0.5 text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
+                className="relative z-10 rounded bg-white p-0.5 text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
                 aria-expanded={expanded}
                 aria-label={expanded ? "Collapse branch" : "Expand branch"}
                 onClick={() => onToggleBranch(node.id, depth, hasKids)}
@@ -690,10 +707,15 @@ function OutlineBranch({
           ) : state ? (
             <StatusDot status={state.status} />
           ) : (
-            <span className="relative inline-flex h-3 w-3 items-center justify-center" title="Pending">
+            <span className="relative z-10 inline-flex h-3 w-3 items-center justify-center rounded-full bg-white" title="Pending">
               <span className="inline-block h-2.5 w-2.5 rounded-full bg-zinc-200" />
             </span>
           )}
+          {hasKids && expanded ? (
+            // Vertical filler that continues the trunk from below this node's dot down to the
+            // bottom of the row, so the trunk visibly flows from the dot into the child trunk.
+            <span aria-hidden className="w-0.5 flex-1 bg-zinc-200" />
+          ) : null}
         </div>
         <div className="min-w-0 flex-1 rounded-xl border border-zinc-200/95 bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-zinc-100/80">
           <div className="font-medium text-zinc-900 break-words">{node.title}</div>
@@ -810,7 +832,7 @@ function OutlineBranch({
         </div>
       </div>
       {hasKids && expanded && node.children ? (
-        <div className="relative mt-3 ml-[0.875rem] border-l-2 border-zinc-200 pl-5">
+        <div className="relative ml-[0.875rem] border-l-2 border-zinc-200 pl-5 pt-4">
           <ul className="m-0 list-none space-y-4 p-0">
             {node.children.map((c) => (
               <OutlineBranch
@@ -1674,7 +1696,7 @@ export function StrategyConsole() {
 
         {roots.length ? (
           <OutputPanel title="Hypothesis tree & analysis" cardClassName="border-zinc-200 bg-white">
-            <div className="min-w-0 max-w-full space-y-4 overflow-x-auto overscroll-contain">
+            <div className="min-w-0 max-w-full overflow-x-auto overscroll-contain">
               {prompt.trim() ? (
                 <div className="rounded-xl border-2 border-emerald-200/90 bg-gradient-to-b from-emerald-50/90 to-white px-4 py-3 shadow-sm ring-1 ring-emerald-100/50">
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-emerald-900/75">
@@ -1685,34 +1707,41 @@ export function StrategyConsole() {
                   </p>
                 </div>
               ) : null}
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={expandAllTreeBranches}
-                  className="rounded-md border border-emerald-200/80 bg-emerald-50/60 px-2 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-50 hover:text-emerald-950"
-                >
-                  Expand all
-                </button>
-                <button
-                  type="button"
-                  onClick={collapseAllTreeBranches}
-                  className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
-                >
-                  Collapse all
-                </button>
+              {/*
+                Root-level trunk — extends from directly under the Strategy Question card
+                through the expand/collapse row and down past every root node so the whole
+                tree is visibly anchored to the top-level box.
+              */}
+              <div className="relative ml-[0.875rem] border-l-2 border-zinc-200 pl-5 pt-4">
+                <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={expandAllTreeBranches}
+                    className="rounded-md border border-emerald-200/80 bg-emerald-50/60 px-2 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-50 hover:text-emerald-950"
+                  >
+                    Expand all
+                  </button>
+                  <button
+                    type="button"
+                    onClick={collapseAllTreeBranches}
+                    className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                  >
+                    Collapse all
+                  </button>
+                </div>
+                <ul className="m-0 min-w-0 list-none space-y-4 p-0">
+                  {roots.map((r) => (
+                    <OutlineBranch
+                      key={r.id}
+                      node={r}
+                      states={nodeStates}
+                      depth={0}
+                      isBranchExpanded={isTreeBranchExpanded}
+                      onToggleBranch={toggleTreeBranch}
+                    />
+                  ))}
+                </ul>
               </div>
-              <ul className="m-0 min-w-0 list-none space-y-4 p-0">
-                {roots.map((r) => (
-                  <OutlineBranch
-                    key={r.id}
-                    node={r}
-                    states={nodeStates}
-                    depth={0}
-                    isBranchExpanded={isTreeBranchExpanded}
-                    onToggleBranch={toggleTreeBranch}
-                  />
-                ))}
-              </ul>
             </div>
           </OutputPanel>
         ) : null}
