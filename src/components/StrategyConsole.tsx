@@ -562,17 +562,30 @@ function PipelineTimeline({
 }
 
 function StatusDot({ status }: { status: NodeState["status"] }) {
+  if (status === "running") {
+    return (
+      <span
+        className="relative inline-flex h-3 w-3 items-center justify-center"
+        title={status}
+      >
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-80" />
+        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500 shadow-[0_0_0_2px_rgba(251,191,36,0.35),0_0_8px_2px_rgba(245,158,11,0.65)] ring-1 ring-amber-600/70" />
+      </span>
+    );
+  }
   const color =
     status === "done"
-      ? "bg-emerald-400"
-      : status === "running"
-        ? "bg-amber-400 animate-pulse"
-        : status === "blocked"
-          ? "bg-rose-400"
-          : status === "skipped"
-            ? "bg-slate-500"
-            : "bg-zinc-500";
-  return <span className={`inline-block h-2 w-2 rounded-full ${color}`} title={status} />;
+      ? "bg-emerald-500"
+      : status === "blocked"
+        ? "bg-rose-500"
+        : status === "skipped"
+          ? "bg-slate-500"
+          : "bg-zinc-500";
+  return (
+    <span className="relative inline-flex h-3 w-3 items-center justify-center" title={status}>
+      <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />
+    </span>
+  );
 }
 
 /** Branches with children: deeper than this default to collapsed until the user expands or uses “Expand all”. */
@@ -681,7 +694,9 @@ function OutlineBranch({
           ) : state ? (
             <StatusDot status={state.status} />
           ) : (
-            <span className="inline-block h-2 w-2 rounded-full bg-zinc-200" title="Pending" />
+            <span className="relative inline-flex h-3 w-3 items-center justify-center" title="Pending">
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-zinc-200" />
+            </span>
           )}
         </div>
         <div className="min-w-0 flex-1 rounded-xl border border-zinc-200/95 bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-zinc-100/80">
