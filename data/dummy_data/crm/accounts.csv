@@ -625,1386 +625,1511 @@ A0623,Cobalt Works Inc,EMEA,Healthcare,3,2022,2025-Q1,187000
 A0624,Pinnacle Works,EMEA,Financial Services,3,2022,2025-Q4,24000
 A0625,Granite Bridge,AMER,Professional Services,3,2023,2026-Q1,173000
 A0626,Meridian Labs,APAC,Technology,3,2022,2025-Q1,62000
-A0627,Silverline Bridge,APAC,Financial Services,3,2022,,110000
-A0628,Silverline Grid,EMEA,Manufacturing,3,2022,,241000
-A0629,BluePeak Labs,APAC,Manufacturing,3,2022,,43000
-A0630,Northwind Bridge,AMER,Financial Services,3,2022,,16000
-A0631,Cobalt Labs,AMER,Healthcare,3,2022,,73000
-A0632,Silverline Systems,EMEA,Technology,3,2022,,186000
-A0633,Meridian Grid Inc,APAC,Retail,5,2020,,24000
-A0634,Granite Systems Inc,EMEA,Retail,3,2022,,45000
-A0635,Granite Systems Inc,AMER,Professional Services,3,2022,,272000
-A0636,Granite Logic,EMEA,Manufacturing,3,2022,,281000
-A0637,Pinnacle Labs Inc,APAC,Manufacturing,3,2022,,79000
-A0638,Aurora Dynamics,EMEA,Professional Services,3,2022,,151000
-A0639,Aurora Logic Inc,EMEA,Technology,3,2022,,217000
-A0640,Northwind Cloud Inc,AMER,Healthcare,3,2022,,26000
-A0641,BluePeak Dynamics,EMEA,Professional Services,3,2022,,30000
-A0642,Granite Bridge Inc,EMEA,Professional Services,3,2022,,278000
-A0643,Cobalt Works,EMEA,Technology,3,2022,,156000
-A0644,Silverline Bridge Inc,AMER,Financial Services,3,2022,,278000
-A0645,Silverline Cloud Inc,AMER,Retail,3,2022,,16000
-A0646,Northwind Grid Inc,APAC,Manufacturing,3,2022,,37000
-A0647,Meridian Systems,APAC,Manufacturing,3,2022,,136000
-A0648,Meridian Bridge Inc,APAC,Professional Services,3,2022,,125000
-A0649,Meridian Grid,AMER,Professional Services,3,2022,,70000
-A0650,Aurora Cloud,APAC,Manufacturing,3,2022,,54000
-A0651,Cobalt Works,EMEA,Healthcare,3,2022,,13000
-A0652,Granite Grid,AMER,Technology,3,2022,,13000
-A0653,BluePeak Logic,AMER,Manufacturing,3,2022,,216000
-A0654,Vertex Systems,EMEA,Retail,3,2022,,219000
-A0655,Pinnacle Logic Inc,EMEA,Retail,3,2022,,40000
-A0656,BluePeak Labs,AMER,Manufacturing,1,2024,,49000
-A0657,Vertex Cloud,APAC,Professional Services,3,2022,,16000
-A0658,Silverline Grid Inc,EMEA,Healthcare,3,2022,,36000
-A0659,BluePeak Dynamics,EMEA,Retail,3,2022,,30000
-A0660,Cobalt Logic Inc,EMEA,Healthcare,3,2022,,16000
-A0661,Vertex Cloud Inc,EMEA,Healthcare,3,2022,,115000
-A0662,Pinnacle Bridge,AMER,Financial Services,3,2022,,60000
-A0663,Meridian Systems Inc,AMER,Manufacturing,5,2020,,16000
-A0664,Silverline Dynamics,AMER,Manufacturing,1,2024,,250000
-A0665,Silverline Logic,AMER,Manufacturing,3,2022,,169000
-A0666,Pinnacle Logic,EMEA,Retail,3,2022,,297000
-A0667,BluePeak Cloud,EMEA,Retail,1,2024,,235000
-A0668,Parallel Works Inc,APAC,Technology,3,2022,,36000
-A0669,Pinnacle Systems,APAC,Healthcare,3,2022,,83000
-A0670,Northwind Grid,AMER,Healthcare,3,2022,,40000
-A0671,Pinnacle Dynamics,EMEA,Technology,3,2022,,223000
-A0672,Northwind Cloud,AMER,Financial Services,3,2022,,95000
-A0673,Pinnacle Works,AMER,Healthcare,4,2021,,237000
-A0674,Northwind Works,EMEA,Retail,3,2022,,75000
-A0675,Silverline Grid,APAC,Financial Services,3,2022,,171000
-A0676,Aurora Logic Inc,EMEA,Manufacturing,3,2022,,210000
-A0677,Cobalt Grid,APAC,Technology,3,2022,,106000
-A0678,Silverline Works Inc,APAC,Professional Services,3,2022,,220000
-A0679,Meridian Dynamics Inc,APAC,Retail,3,2022,,122000
-A0680,Vertex Dynamics Inc,EMEA,Professional Services,3,2022,,13000
-A0681,Meridian Logic,APAC,Professional Services,3,2022,,213000
-A0682,Cobalt Labs Inc,APAC,Retail,3,2022,,103000
-A0683,Silverline Bridge Inc,APAC,Retail,3,2022,,140000
-A0684,Granite Labs,APAC,Financial Services,3,2022,,162000
-A0685,Aurora Cloud Inc,EMEA,Financial Services,3,2022,,139000
-A0686,Cobalt Labs,APAC,Healthcare,2,2023,,168000
-A0687,Parallel Systems Inc,AMER,Healthcare,3,2022,,86000
-A0688,BluePeak Grid Inc,AMER,Healthcare,3,2022,,132000
-A0689,Meridian Grid,AMER,Healthcare,3,2022,,123000
-A0690,Silverline Bridge Inc,APAC,Healthcare,3,2022,,13000
-A0691,Silverline Systems,EMEA,Manufacturing,3,2022,,58000
-A0692,Granite Works Inc,AMER,Technology,3,2022,,125000
-A0693,Northwind Labs Inc,AMER,Technology,3,2022,,216000
-A0694,BluePeak Systems,APAC,Healthcare,3,2022,,58000
-A0695,Granite Grid Inc,APAC,Healthcare,3,2022,,157000
-A0696,Vertex Labs,APAC,Healthcare,1,2024,,85000
-A0697,Meridian Systems Inc,APAC,Financial Services,3,2022,,153000
-A0698,BluePeak Cloud,AMER,Retail,3,2022,,122000
-A0699,Meridian Grid,AMER,Retail,3,2022,,15000
-A0700,Vertex Works,AMER,Financial Services,3,2022,,53000
-A0701,Aurora Labs,EMEA,Healthcare,3,2022,,149000
-A0702,Northwind Dynamics Inc,AMER,Manufacturing,3,2022,,215000
-A0703,Pinnacle Systems Inc,EMEA,Manufacturing,3,2022,,189000
-A0704,Vertex Dynamics,APAC,Technology,2,2023,,57000
-A0705,Pinnacle Grid,APAC,Financial Services,3,2022,,165000
-A0706,Silverline Cloud Inc,AMER,Professional Services,4,2021,,23000
-A0707,Pinnacle Grid,APAC,Financial Services,3,2022,,173000
-A0708,Pinnacle Labs Inc,APAC,Manufacturing,3,2022,,298000
-A0709,Parallel Labs Inc,APAC,Retail,1,2024,,14000
-A0710,Pinnacle Systems,AMER,Retail,3,2022,,163000
-A0711,Parallel Cloud,APAC,Retail,3,2022,,172000
-A0712,Cobalt Cloud,EMEA,Financial Services,3,2022,,13000
-A0713,Meridian Labs Inc,APAC,Retail,3,2022,,229000
-A0714,Northwind Dynamics,AMER,Retail,3,2022,,58000
-A0715,Pinnacle Dynamics,EMEA,Financial Services,3,2022,,88000
-A0716,Silverline Works,AMER,Professional Services,3,2022,,233000
-A0717,Aurora Bridge,AMER,Professional Services,1,2024,,60000
-A0718,Meridian Systems Inc,EMEA,Manufacturing,3,2022,,80000
-A0719,Cobalt Bridge,AMER,Healthcare,5,2020,,24000
-A0720,Granite Bridge Inc,AMER,Professional Services,3,2022,,18000
-A0721,Meridian Systems,APAC,Manufacturing,2,2023,,13000
-A0722,Meridian Systems Inc,APAC,Healthcare,3,2022,,22000
-A0723,Silverline Labs Inc,APAC,Retail,3,2022,,279000
-A0724,Vertex Works Inc,AMER,Retail,3,2022,,77000
-A0725,Silverline Labs Inc,APAC,Manufacturing,3,2022,,45000
-A0726,Granite Grid Inc,AMER,Healthcare,1,2024,,14000
-A0727,Meridian Works Inc,AMER,Healthcare,3,2022,,265000
-A0728,Silverline Dynamics,APAC,Financial Services,3,2022,,299000
-A0729,Aurora Systems,APAC,Manufacturing,5,2020,,13000
-A0730,Pinnacle Logic,APAC,Manufacturing,3,2022,,32000
-A0731,Pinnacle Labs Inc,EMEA,Healthcare,1,2024,,118000
-A0732,Granite Dynamics,APAC,Healthcare,3,2022,,46000
-A0733,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,48000
-A0734,Parallel Works,APAC,Technology,3,2022,,39000
-A0735,Silverline Labs,EMEA,Technology,3,2022,,274000
-A0736,Meridian Labs,AMER,Professional Services,3,2022,,21000
-A0737,Granite Labs Inc,AMER,Manufacturing,3,2022,,133000
-A0738,Cobalt Labs Inc,AMER,Healthcare,4,2021,,32000
-A0739,Aurora Bridge Inc,APAC,Professional Services,3,2022,,149000
-A0740,Pinnacle Systems,APAC,Professional Services,3,2022,,60000
-A0741,Cobalt Labs Inc,APAC,Manufacturing,3,2022,,139000
-A0742,Parallel Cloud Inc,APAC,Manufacturing,3,2022,,63000
-A0743,BluePeak Labs,AMER,Professional Services,5,2020,,52000
-A0744,Meridian Dynamics,AMER,Financial Services,3,2022,,13000
-A0745,Vertex Dynamics,APAC,Financial Services,1,2024,,288000
-A0746,Cobalt Grid Inc,EMEA,Retail,3,2022,,56000
-A0747,Pinnacle Bridge,EMEA,Technology,3,2022,,79000
-A0748,Parallel Systems,AMER,Healthcare,3,2022,,131000
-A0749,Meridian Logic,AMER,Financial Services,3,2022,,94000
-A0750,Silverline Logic Inc,EMEA,Healthcare,2,2023,,66000
-A0751,BluePeak Grid Inc,EMEA,Healthcare,3,2022,,46000
-A0752,Cobalt Logic,APAC,Healthcare,3,2022,,125000
-A0753,BluePeak Dynamics,EMEA,Healthcare,3,2022,,68000
-A0754,Vertex Cloud Inc,EMEA,Retail,5,2020,,100000
-A0755,Northwind Works Inc,EMEA,Financial Services,3,2022,,69000
-A0756,Northwind Bridge,AMER,Retail,3,2022,,84000
-A0757,Cobalt Systems Inc,APAC,Healthcare,3,2022,,18000
-A0758,Parallel Cloud Inc,APAC,Technology,3,2022,,17000
-A0759,Parallel Systems,EMEA,Retail,3,2022,,187000
-A0760,BluePeak Works,EMEA,Retail,3,2022,,169000
-A0761,Aurora Grid,EMEA,Financial Services,3,2022,,13000
-A0762,Meridian Bridge,AMER,Technology,3,2022,,13000
-A0763,Aurora Logic,EMEA,Manufacturing,3,2022,,27000
-A0764,Northwind Works Inc,APAC,Financial Services,3,2022,,117000
-A0765,Meridian Grid Inc,APAC,Healthcare,3,2022,,59000
-A0766,Northwind Systems,EMEA,Technology,1,2024,,31000
-A0767,Vertex Labs,AMER,Manufacturing,3,2022,,17000
-A0768,Vertex Grid Inc,EMEA,Healthcare,3,2022,,96000
-A0769,Meridian Dynamics,APAC,Healthcare,3,2022,,280000
-A0770,Northwind Systems Inc,EMEA,Manufacturing,3,2022,,246000
-A0771,Cobalt Works,APAC,Technology,3,2022,,75000
-A0772,Pinnacle Labs,AMER,Healthcare,3,2022,,36000
-A0773,Cobalt Grid Inc,APAC,Retail,3,2022,,22000
-A0774,Meridian Cloud,AMER,Manufacturing,3,2022,,258000
-A0775,Granite Logic Inc,EMEA,Healthcare,3,2022,,166000
-A0776,Pinnacle Grid Inc,AMER,Manufacturing,4,2021,,103000
-A0777,Parallel Grid Inc,AMER,Professional Services,3,2022,,18000
-A0778,Vertex Systems Inc,AMER,Professional Services,3,2022,,268000
-A0779,Pinnacle Labs Inc,EMEA,Financial Services,3,2022,,160000
-A0780,Parallel Grid Inc,APAC,Financial Services,2,2023,,192000
-A0781,Pinnacle Labs,AMER,Professional Services,3,2022,,90000
-A0782,Parallel Cloud Inc,AMER,Professional Services,3,2022,,167000
-A0783,Northwind Works,APAC,Financial Services,3,2022,,155000
-A0784,Silverline Systems,APAC,Financial Services,3,2022,,32000
-A0785,Granite Grid Inc,EMEA,Manufacturing,3,2022,,257000
-A0786,Meridian Works,AMER,Professional Services,3,2022,,33000
-A0787,Pinnacle Grid Inc,APAC,Professional Services,3,2022,,18000
-A0788,BluePeak Bridge,EMEA,Technology,3,2022,,123000
-A0789,Vertex Logic,EMEA,Financial Services,3,2022,,28000
-A0790,Parallel Logic,APAC,Financial Services,3,2022,,98000
-A0791,Aurora Works,EMEA,Manufacturing,3,2022,,112000
-A0792,Meridian Labs Inc,APAC,Technology,3,2022,,182000
-A0793,Aurora Works,AMER,Financial Services,3,2022,,14000
-A0794,Meridian Bridge,APAC,Technology,1,2024,,14000
-A0795,Aurora Works Inc,APAC,Manufacturing,3,2022,,44000
-A0796,Aurora Systems,EMEA,Healthcare,3,2022,,187000
-A0797,Pinnacle Grid Inc,APAC,Manufacturing,3,2022,,274000
-A0798,Pinnacle Works,EMEA,Retail,4,2021,,103000
-A0799,Northwind Dynamics Inc,APAC,Financial Services,3,2022,,14000
-A0800,Granite Systems,AMER,Technology,3,2022,,112000
-A0801,Pinnacle Cloud Inc,EMEA,Technology,3,2022,,214000
-A0802,Aurora Bridge Inc,EMEA,Technology,3,2022,,62000
-A0803,Pinnacle Works,EMEA,Professional Services,3,2022,,231000
-A0804,Cobalt Logic,APAC,Retail,3,2022,,198000
-A0805,BluePeak Logic,AMER,Professional Services,3,2022,,14000
-A0806,Northwind Bridge Inc,AMER,Retail,3,2022,,255000
-A0807,Pinnacle Dynamics Inc,AMER,Manufacturing,3,2022,,31000
-A0808,Vertex Systems,APAC,Manufacturing,3,2022,,70000
-A0809,Parallel Cloud,EMEA,Manufacturing,5,2020,,57000
-A0810,Northwind Works Inc,APAC,Healthcare,3,2022,,32000
-A0811,Silverline Labs,APAC,Professional Services,3,2022,,38000
-A0812,Silverline Grid Inc,AMER,Technology,3,2022,,13000
-A0813,Meridian Systems,APAC,Financial Services,3,2022,,271000
-A0814,Aurora Dynamics,APAC,Retail,3,2022,,90000
-A0815,Aurora Works Inc,AMER,Professional Services,3,2022,,166000
-A0816,Northwind Dynamics,EMEA,Manufacturing,3,2022,,292000
-A0817,BluePeak Logic Inc,EMEA,Financial Services,3,2022,,250000
-A0818,Meridian Grid,AMER,Technology,3,2022,,22000
-A0819,Cobalt Cloud,EMEA,Technology,3,2022,,259000
-A0820,BluePeak Bridge,APAC,Professional Services,5,2020,,276000
-A0821,Aurora Systems,APAC,Professional Services,2,2023,,14000
-A0822,Cobalt Cloud Inc,AMER,Technology,3,2022,,28000
-A0823,Aurora Dynamics,AMER,Financial Services,3,2022,,23000
-A0824,Pinnacle Grid Inc,AMER,Financial Services,2,2023,,254000
-A0825,Cobalt Grid,AMER,Professional Services,3,2022,,65000
-A0826,Vertex Cloud,EMEA,Financial Services,4,2021,,69000
-A0827,Pinnacle Logic Inc,EMEA,Technology,3,2022,,76000
-A0828,Silverline Bridge Inc,EMEA,Manufacturing,3,2022,,103000
-A0829,Granite Works,EMEA,Professional Services,3,2022,,146000
-A0830,BluePeak Logic Inc,EMEA,Technology,3,2022,,88000
-A0831,BluePeak Logic Inc,EMEA,Manufacturing,3,2022,,36000
-A0832,Northwind Cloud,EMEA,Technology,3,2022,,20000
-A0833,Northwind Logic,AMER,Manufacturing,3,2022,,56000
-A0834,Meridian Labs,AMER,Financial Services,3,2022,,271000
-A0835,Vertex Labs Inc,EMEA,Technology,3,2022,,55000
-A0836,Parallel Works,EMEA,Retail,3,2022,,14000
-A0837,BluePeak Systems,APAC,Technology,3,2022,,282000
-A0838,Vertex Systems,AMER,Financial Services,2,2023,,71000
-A0839,BluePeak Works Inc,AMER,Professional Services,3,2022,,246000
-A0840,Cobalt Cloud,EMEA,Professional Services,3,2022,,18000
-A0841,Northwind Systems,AMER,Healthcare,3,2022,,31000
-A0842,Aurora Works Inc,AMER,Healthcare,3,2022,,232000
-A0843,Parallel Dynamics,AMER,Manufacturing,3,2022,,212000
-A0844,Meridian Grid,EMEA,Retail,3,2022,,62000
-A0845,BluePeak Labs,EMEA,Technology,1,2024,,52000
-A0846,Northwind Cloud Inc,EMEA,Professional Services,3,2022,,44000
-A0847,Aurora Grid Inc,APAC,Technology,3,2022,,173000
-A0848,Granite Systems Inc,APAC,Professional Services,3,2022,,26000
-A0849,Silverline Logic Inc,APAC,Retail,3,2022,,95000
-A0850,Cobalt Dynamics Inc,APAC,Professional Services,3,2022,,214000
-A0851,Granite Bridge,EMEA,Retail,3,2022,,132000
-A0852,Aurora Labs,AMER,Financial Services,1,2024,,87000
-A0853,Meridian Labs,APAC,Financial Services,3,2022,,69000
-A0854,Pinnacle Grid,APAC,Financial Services,1,2024,,91000
-A0855,Pinnacle Cloud Inc,EMEA,Technology,3,2022,,88000
-A0856,Granite Bridge Inc,AMER,Manufacturing,3,2022,,49000
-A0857,Pinnacle Logic Inc,APAC,Retail,3,2022,,24000
-A0858,Parallel Logic,EMEA,Financial Services,3,2022,,260000
-A0859,Meridian Labs,EMEA,Retail,3,2022,,152000
-A0860,Pinnacle Labs Inc,APAC,Financial Services,3,2022,,235000
-A0861,Vertex Bridge,EMEA,Retail,5,2020,,40000
-A0862,Northwind Dynamics Inc,APAC,Financial Services,3,2022,,93000
-A0863,BluePeak Systems,APAC,Technology,3,2022,,13000
-A0864,Parallel Labs Inc,AMER,Professional Services,5,2020,,78000
-A0865,Silverline Logic Inc,EMEA,Professional Services,3,2022,,13000
-A0866,Parallel Bridge Inc,EMEA,Manufacturing,3,2022,,39000
-A0867,BluePeak Works,EMEA,Professional Services,4,2021,,132000
-A0868,Silverline Bridge Inc,EMEA,Professional Services,3,2022,,13000
-A0869,Vertex Dynamics,EMEA,Manufacturing,3,2022,,59000
-A0870,Parallel Bridge Inc,APAC,Professional Services,3,2022,,104000
-A0871,BluePeak Works Inc,AMER,Professional Services,3,2022,,191000
-A0872,Pinnacle Labs,AMER,Retail,3,2022,,122000
-A0873,Northwind Systems,AMER,Retail,2,2023,,169000
-A0874,Pinnacle Systems,APAC,Professional Services,3,2022,,48000
-A0875,Parallel Works Inc,APAC,Technology,5,2020,,189000
-A0876,Meridian Bridge Inc,APAC,Financial Services,3,2022,,106000
-A0877,Silverline Systems,AMER,Retail,1,2024,,207000
-A0878,Parallel Logic,AMER,Technology,3,2022,,19000
-A0879,Northwind Grid Inc,EMEA,Manufacturing,3,2022,,28000
-A0880,Granite Logic,APAC,Financial Services,3,2022,,118000
-A0881,Silverline Grid,AMER,Retail,3,2022,,24000
-A0882,Parallel Logic,APAC,Technology,5,2020,,20000
-A0883,Meridian Bridge Inc,AMER,Healthcare,5,2020,,18000
-A0884,Aurora Logic,EMEA,Manufacturing,2,2023,,45000
-A0885,Aurora Works,APAC,Technology,3,2022,,168000
-A0886,Silverline Logic Inc,EMEA,Professional Services,3,2022,,299000
-A0887,Granite Grid Inc,EMEA,Technology,4,2021,,193000
-A0888,Meridian Bridge,EMEA,Manufacturing,3,2022,,120000
-A0889,Aurora Bridge,APAC,Financial Services,3,2022,,192000
-A0890,Northwind Systems,EMEA,Manufacturing,3,2022,,13000
-A0891,Granite Cloud,AMER,Manufacturing,3,2022,,122000
-A0892,Vertex Bridge Inc,AMER,Professional Services,3,2022,,222000
-A0893,Northwind Cloud,AMER,Retail,3,2022,,15000
-A0894,Vertex Logic,EMEA,Manufacturing,1,2024,,35000
-A0895,Cobalt Works,EMEA,Manufacturing,3,2022,,50000
-A0896,Meridian Cloud,EMEA,Financial Services,3,2022,,108000
-A0897,Aurora Labs,APAC,Manufacturing,3,2023,,27000
-A0898,Aurora Bridge,AMER,Manufacturing,3,2023,,23000
-A0899,Cobalt Labs Inc,APAC,Healthcare,3,2023,,138000
-A0900,Silverline Dynamics Inc,EMEA,Healthcare,5,2021,,52000
-A0901,Meridian Logic,EMEA,Financial Services,3,2023,,43000
-A0902,Northwind Labs,EMEA,Professional Services,3,2023,,124000
-A0903,BluePeak Labs Inc,EMEA,Technology,3,2023,,89000
-A0904,Parallel Systems Inc,EMEA,Financial Services,3,2023,,195000
-A0905,Cobalt Works Inc,APAC,Technology,3,2023,,117000
-A0906,Pinnacle Systems Inc,AMER,Manufacturing,3,2023,,203000
-A0907,Aurora Cloud,APAC,Healthcare,2,2024,,273000
-A0908,Meridian Logic,AMER,Technology,3,2023,,16000
-A0909,Northwind Dynamics,AMER,Manufacturing,3,2023,,13000
-A0910,Granite Works,APAC,Technology,3,2023,,79000
-A0911,Parallel Logic,EMEA,Retail,3,2023,,20000
-A0912,Aurora Bridge,APAC,Manufacturing,3,2023,,132000
-A0913,Northwind Logic,EMEA,Technology,5,2021,,29000
-A0914,Cobalt Dynamics,EMEA,Manufacturing,3,2023,,128000
-A0915,Cobalt Logic Inc,AMER,Professional Services,3,2023,,90000
-A0916,Northwind Works Inc,APAC,Retail,3,2023,,202000
-A0917,Cobalt Labs Inc,EMEA,Manufacturing,3,2023,,17000
-A0918,Meridian Bridge,AMER,Retail,3,2023,,13000
-A0919,Silverline Systems Inc,APAC,Healthcare,3,2023,,13000
-A0920,Northwind Logic Inc,AMER,Healthcare,4,2022,,221000
-A0921,Vertex Systems,EMEA,Retail,3,2023,,166000
-A0922,Meridian Bridge Inc,AMER,Technology,3,2023,,23000
-A0923,Parallel Systems,APAC,Technology,4,2022,,45000
-A0924,Meridian Bridge Inc,AMER,Technology,5,2021,,168000
-A0925,Vertex Labs,EMEA,Retail,3,2023,,81000
-A0926,Pinnacle Grid,APAC,Technology,3,2023,,85000
-A0927,Cobalt Cloud,EMEA,Technology,3,2023,,138000
-A0928,Cobalt Systems,AMER,Technology,5,2021,,28000
-A0929,BluePeak Bridge,AMER,Healthcare,4,2022,,186000
-A0930,Parallel Cloud,AMER,Technology,3,2023,,21000
-A0931,Parallel Systems,EMEA,Manufacturing,3,2023,,205000
-A0932,Cobalt Grid Inc,AMER,Professional Services,3,2023,,14000
-A0933,Cobalt Grid,EMEA,Healthcare,3,2023,,90000
-A0934,Northwind Systems Inc,APAC,Technology,3,2023,,17000
-A0935,Granite Works,APAC,Retail,3,2023,,126000
-A0936,Granite Bridge,AMER,Retail,3,2023,,36000
-A0937,Aurora Dynamics,AMER,Retail,3,2023,,193000
-A0938,Pinnacle Works,EMEA,Manufacturing,3,2023,,35000
-A0939,Pinnacle Cloud,EMEA,Technology,3,2023,,16000
-A0940,Granite Bridge,APAC,Technology,3,2023,,101000
-A0941,Meridian Grid Inc,APAC,Financial Services,3,2023,,81000
-A0942,Aurora Works Inc,AMER,Manufacturing,5,2021,,49000
-A0943,Silverline Systems,APAC,Healthcare,3,2023,,112000
-A0944,Granite Bridge,APAC,Healthcare,3,2023,,159000
-A0945,Aurora Grid,APAC,Manufacturing,3,2023,,138000
-A0946,Meridian Systems,AMER,Manufacturing,3,2023,,45000
-A0947,Meridian Grid,EMEA,Financial Services,3,2023,,44000
-A0948,Northwind Cloud,APAC,Financial Services,3,2023,,86000
-A0949,Silverline Dynamics Inc,APAC,Retail,3,2023,,48000
-A0950,Granite Grid,AMER,Professional Services,3,2023,,61000
-A0951,Meridian Bridge,APAC,Healthcare,3,2023,,143000
-A0952,Cobalt Works Inc,EMEA,Professional Services,3,2023,,52000
-A0953,Silverline Cloud Inc,EMEA,Professional Services,3,2023,,58000
-A0954,Northwind Labs,APAC,Financial Services,3,2023,,31000
-A0955,Parallel Logic Inc,AMER,Professional Services,3,2023,,107000
-A0956,Cobalt Grid,AMER,Manufacturing,3,2023,,24000
-A0957,Cobalt Systems Inc,APAC,Technology,3,2023,,298000
-A0958,Aurora Grid,EMEA,Financial Services,3,2023,,180000
-A0959,Aurora Works Inc,AMER,Healthcare,3,2023,,84000
-A0960,Meridian Labs,APAC,Professional Services,3,2023,,85000
-A0961,Silverline Grid Inc,AMER,Retail,5,2021,,26000
-A0962,Granite Logic Inc,EMEA,Technology,2,2024,,71000
-A0963,BluePeak Logic,AMER,Technology,3,2023,,200000
-A0964,Aurora Grid Inc,EMEA,Professional Services,4,2022,,14000
-A0965,Parallel Cloud Inc,AMER,Retail,3,2023,,18000
-A0966,Cobalt Grid,APAC,Retail,3,2023,,38000
-A0967,Meridian Cloud,EMEA,Retail,3,2023,,203000
-A0968,Meridian Logic,APAC,Professional Services,3,2023,,18000
-A0969,Meridian Logic Inc,AMER,Retail,3,2023,,108000
-A0970,Parallel Cloud Inc,EMEA,Financial Services,3,2023,,152000
-A0971,Northwind Grid,AMER,Retail,3,2023,,41000
-A0972,Northwind Works,EMEA,Financial Services,3,2023,,58000
-A0973,BluePeak Grid Inc,APAC,Financial Services,3,2022,,0
-A0974,Granite Grid Inc,EMEA,Technology,3,2022,,0
-A0975,Granite Bridge,AMER,Healthcare,3,2022,,0
-A0976,Vertex Grid,APAC,Financial Services,2,2023,,0
-A0977,Vertex Logic,EMEA,Retail,4,2021,,0
-A0978,Parallel Systems Inc,EMEA,Technology,4,2021,,0
-A0979,Pinnacle Works Inc,EMEA,Technology,3,2022,,0
-A0980,Meridian Bridge,EMEA,Financial Services,3,2022,,0
-A0981,Parallel Dynamics,APAC,Financial Services,3,2022,,0
-A0982,Parallel Works,APAC,Healthcare,1,2024,,0
-A0983,Granite Logic Inc,APAC,Professional Services,5,2020,,0
-A0984,Vertex Labs Inc,APAC,Retail,1,2024,,0
-A0985,Pinnacle Systems Inc,EMEA,Retail,3,2022,,0
-A0986,BluePeak Dynamics Inc,APAC,Manufacturing,3,2022,,0
-A0987,BluePeak Cloud Inc,EMEA,Financial Services,3,2022,,0
-A0988,Granite Grid Inc,APAC,Healthcare,3,2022,,0
-A0989,Northwind Bridge,APAC,Financial Services,3,2022,,0
-A0990,Silverline Labs,APAC,Financial Services,3,2022,,0
-A0991,Aurora Logic Inc,APAC,Healthcare,3,2022,,0
-A0992,Pinnacle Dynamics,AMER,Manufacturing,3,2022,,0
-A0993,Granite Labs,EMEA,Technology,3,2022,,0
-A0994,Northwind Grid Inc,APAC,Technology,3,2022,,0
-A0995,Northwind Bridge Inc,APAC,Healthcare,5,2020,,0
-A0996,Meridian Dynamics,EMEA,Manufacturing,4,2021,,0
-A0997,Aurora Logic Inc,AMER,Financial Services,3,2022,,0
-A0998,BluePeak Dynamics,EMEA,Financial Services,3,2022,,0
-A0999,Granite Cloud,AMER,Technology,3,2022,,0
-A1000,Northwind Grid,EMEA,Retail,3,2022,,0
-A1001,Granite Bridge Inc,EMEA,Manufacturing,5,2020,,0
-A1002,Meridian Bridge Inc,AMER,Manufacturing,3,2022,,0
-A1003,Northwind Logic,APAC,Financial Services,3,2022,,0
-A1004,Meridian Works Inc,EMEA,Manufacturing,4,2021,,0
-A1005,Cobalt Cloud Inc,AMER,Technology,3,2022,,0
-A1006,Silverline Logic Inc,APAC,Professional Services,3,2022,,0
-A1007,Parallel Labs Inc,EMEA,Technology,3,2022,,0
-A1008,BluePeak Labs,APAC,Professional Services,4,2021,,0
-A1009,Vertex Grid,APAC,Manufacturing,3,2022,,0
-A1010,Aurora Logic Inc,EMEA,Professional Services,3,2022,,0
-A1011,BluePeak Bridge,AMER,Manufacturing,3,2022,,0
-A1012,Vertex Bridge Inc,AMER,Retail,3,2022,,0
-A1013,Cobalt Bridge,APAC,Financial Services,3,2022,,0
-A1014,Silverline Logic,AMER,Professional Services,1,2024,,0
-A1015,Aurora Cloud,AMER,Retail,3,2022,,0
-A1016,BluePeak Systems Inc,AMER,Manufacturing,3,2022,,0
-A1017,Vertex Labs,EMEA,Healthcare,5,2020,,0
-A1018,Northwind Bridge Inc,APAC,Healthcare,3,2022,,0
-A1019,Silverline Grid,AMER,Technology,5,2020,,0
-A1020,Vertex Logic Inc,AMER,Technology,3,2022,,0
-A1021,Northwind Dynamics,AMER,Retail,1,2024,,0
-A1022,Granite Works,EMEA,Manufacturing,4,2021,,0
-A1023,Parallel Cloud,AMER,Retail,3,2022,,0
-A1024,Vertex Systems Inc,APAC,Manufacturing,3,2022,,0
-A1025,Aurora Dynamics,APAC,Financial Services,3,2022,,0
-A1026,Meridian Bridge,APAC,Technology,3,2022,,0
-A1027,Northwind Works,APAC,Manufacturing,3,2022,,0
-A1028,Meridian Labs,APAC,Retail,4,2021,,0
-A1029,BluePeak Logic Inc,AMER,Manufacturing,3,2022,,0
-A1030,Silverline Cloud,APAC,Manufacturing,5,2020,,0
-A1031,Granite Labs,APAC,Professional Services,3,2022,,0
-A1032,Granite Cloud,EMEA,Healthcare,3,2022,,0
-A1033,Meridian Works Inc,APAC,Healthcare,3,2022,,0
-A1034,BluePeak Labs Inc,EMEA,Financial Services,3,2022,,0
-A1035,Parallel Grid,APAC,Manufacturing,4,2021,,0
-A1036,Granite Cloud Inc,AMER,Manufacturing,3,2022,,0
-A1037,Northwind Labs Inc,APAC,Retail,3,2022,,0
-A1038,BluePeak Grid,APAC,Professional Services,3,2022,,0
-A1039,Parallel Cloud Inc,APAC,Retail,3,2022,,0
-A1040,Parallel Labs,EMEA,Technology,3,2022,,0
-A1041,Pinnacle Dynamics,APAC,Retail,3,2022,,0
-A1042,Aurora Works,APAC,Manufacturing,3,2022,,0
-A1043,Pinnacle Grid,EMEA,Healthcare,3,2022,,0
-A1044,Granite Labs Inc,AMER,Technology,3,2022,,0
-A1045,Aurora Cloud,AMER,Retail,4,2021,,0
-A1046,BluePeak Systems,APAC,Healthcare,3,2022,,0
-A1047,Cobalt Cloud Inc,AMER,Technology,3,2022,,0
-A1048,Granite Cloud,APAC,Professional Services,2,2023,,0
-A1049,Meridian Bridge Inc,APAC,Professional Services,3,2022,,0
-A1050,BluePeak Dynamics Inc,AMER,Manufacturing,3,2022,,0
-A1051,Vertex Labs Inc,APAC,Financial Services,5,2020,,0
-A1052,BluePeak Dynamics Inc,EMEA,Manufacturing,2,2023,,0
-A1053,Vertex Works,EMEA,Professional Services,3,2022,,0
-A1054,Silverline Labs,AMER,Professional Services,3,2022,,0
-A1055,Silverline Dynamics Inc,AMER,Retail,4,2021,,0
-A1056,Meridian Dynamics,AMER,Financial Services,3,2022,,0
-A1057,Parallel Logic,APAC,Financial Services,3,2022,,0
-A1058,Meridian Dynamics,APAC,Financial Services,2,2023,,0
-A1059,Silverline Bridge,AMER,Professional Services,3,2022,,0
-A1060,Vertex Grid Inc,APAC,Technology,3,2022,,0
-A1061,Vertex Labs Inc,EMEA,Technology,3,2022,,0
-A1062,Northwind Works,APAC,Manufacturing,3,2022,,0
-A1063,Pinnacle Dynamics,EMEA,Manufacturing,5,2020,,0
-A1064,Pinnacle Logic,AMER,Professional Services,3,2022,,0
-A1065,Aurora Systems,AMER,Technology,4,2021,,0
-A1066,Cobalt Logic,AMER,Retail,3,2022,,0
-A1067,Cobalt Bridge,EMEA,Professional Services,3,2022,,0
-A1068,Cobalt Labs,AMER,Healthcare,3,2022,,0
-A1069,Vertex Labs Inc,AMER,Technology,3,2022,,0
-A1070,Pinnacle Dynamics Inc,EMEA,Healthcare,5,2020,,0
-A1071,Northwind Labs,EMEA,Manufacturing,3,2022,,0
-A1072,Silverline Logic,EMEA,Technology,3,2022,,0
-A1073,Northwind Dynamics,APAC,Financial Services,2,2023,,0
-A1074,Granite Grid,EMEA,Professional Services,4,2021,,0
-A1075,Cobalt Cloud,EMEA,Technology,3,2022,,0
-A1076,Aurora Dynamics Inc,AMER,Healthcare,3,2022,,0
-A1077,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,0
-A1078,Granite Cloud,AMER,Healthcare,2,2023,,0
-A1079,Cobalt Works Inc,AMER,Financial Services,3,2022,,0
-A1080,Pinnacle Grid,EMEA,Financial Services,3,2022,,0
-A1081,Pinnacle Systems,EMEA,Retail,3,2022,,0
-A1082,Vertex Cloud,APAC,Manufacturing,3,2022,,0
-A1083,Parallel Cloud,AMER,Professional Services,3,2022,,0
-A1084,Vertex Logic,APAC,Professional Services,3,2022,,0
-A1085,Meridian Cloud,EMEA,Financial Services,1,2024,,0
-A1086,Meridian Grid Inc,EMEA,Financial Services,3,2022,,0
-A1087,Vertex Logic,AMER,Healthcare,4,2021,,0
-A1088,Northwind Grid,EMEA,Professional Services,3,2022,,0
-A1089,Meridian Grid,APAC,Manufacturing,3,2022,,0
-A1090,BluePeak Works,EMEA,Healthcare,3,2022,,0
-A1091,Silverline Systems,AMER,Retail,1,2024,,0
-A1092,Cobalt Cloud,AMER,Healthcare,3,2022,,0
-A1093,BluePeak Logic Inc,EMEA,Financial Services,3,2022,,0
-A1094,Meridian Grid Inc,APAC,Professional Services,3,2022,,0
-A1095,Aurora Cloud,EMEA,Financial Services,3,2022,,0
-A1096,BluePeak Cloud Inc,AMER,Financial Services,3,2022,,0
-A1097,BluePeak Grid Inc,EMEA,Healthcare,3,2022,,0
-A1098,Vertex Bridge,AMER,Retail,3,2022,,0
-A1099,Granite Works Inc,AMER,Manufacturing,3,2022,,0
-A1100,Northwind Labs,AMER,Professional Services,5,2020,,0
-A1101,Pinnacle Systems Inc,EMEA,Healthcare,3,2022,,0
-A1102,Northwind Works,AMER,Healthcare,3,2022,,0
-A1103,Granite Systems,AMER,Professional Services,3,2022,,0
-A1104,Northwind Dynamics Inc,AMER,Manufacturing,3,2022,,0
-A1105,Silverline Dynamics Inc,AMER,Retail,3,2022,,0
-A1106,Silverline Bridge,AMER,Professional Services,3,2022,,0
-A1107,Meridian Logic,AMER,Healthcare,3,2022,,0
-A1108,Silverline Grid,AMER,Retail,3,2022,,0
-A1109,Silverline Logic Inc,EMEA,Retail,3,2022,,0
-A1110,BluePeak Grid,AMER,Professional Services,3,2022,,0
-A1111,Pinnacle Logic Inc,APAC,Retail,3,2022,,0
-A1112,Northwind Logic,EMEA,Manufacturing,3,2022,,0
-A1113,BluePeak Grid Inc,APAC,Retail,2,2023,,0
-A1114,Granite Grid,EMEA,Professional Services,3,2022,,0
-A1115,Granite Dynamics,EMEA,Healthcare,4,2021,,0
-A1116,BluePeak Cloud,APAC,Technology,3,2022,,0
-A1117,Vertex Bridge Inc,AMER,Retail,3,2022,,0
-A1118,Silverline Logic Inc,EMEA,Manufacturing,1,2024,,0
-A1119,Granite Dynamics,AMER,Manufacturing,3,2022,,0
-A1120,Meridian Labs,EMEA,Healthcare,3,2022,,0
-A1121,BluePeak Systems Inc,EMEA,Healthcare,3,2022,,0
-A1122,Aurora Systems Inc,EMEA,Healthcare,3,2022,,0
-A1123,Cobalt Cloud,APAC,Healthcare,3,2022,,0
-A1124,Vertex Dynamics,EMEA,Manufacturing,3,2022,,0
-A1125,Northwind Grid Inc,AMER,Technology,4,2021,,0
-A1126,BluePeak Cloud Inc,APAC,Technology,3,2022,,0
-A1127,Granite Works Inc,APAC,Professional Services,3,2022,,0
-A1128,Meridian Dynamics Inc,AMER,Financial Services,3,2022,,0
-A1129,Pinnacle Bridge,EMEA,Healthcare,3,2022,,0
-A1130,Granite Logic,EMEA,Retail,3,2022,,0
-A1131,Meridian Logic Inc,AMER,Technology,3,2022,,0
-A1132,Northwind Labs,APAC,Technology,4,2021,,0
-A1133,BluePeak Cloud Inc,EMEA,Technology,5,2020,,0
-A1134,Meridian Dynamics,APAC,Financial Services,3,2022,,0
-A1135,Aurora Logic,AMER,Professional Services,3,2022,,0
-A1136,Meridian Logic,EMEA,Professional Services,3,2022,,0
-A1137,Aurora Systems Inc,APAC,Manufacturing,3,2022,,0
-A1138,Northwind Cloud Inc,APAC,Retail,5,2020,,0
-A1139,Northwind Bridge Inc,AMER,Healthcare,3,2022,,0
-A1140,BluePeak Labs,EMEA,Healthcare,3,2022,,0
-A1141,Aurora Cloud Inc,AMER,Financial Services,3,2022,,0
-A1142,Vertex Bridge,AMER,Manufacturing,1,2024,,0
-A1143,Granite Labs,AMER,Professional Services,3,2022,,0
-A1144,Pinnacle Dynamics Inc,APAC,Manufacturing,3,2022,,0
-A1145,Granite Labs Inc,APAC,Manufacturing,3,2022,,0
-A1146,Meridian Bridge,APAC,Retail,3,2022,,0
-A1147,Aurora Cloud Inc,EMEA,Financial Services,3,2022,,0
-A1148,Silverline Works,AMER,Technology,3,2022,,0
-A1149,Parallel Dynamics,EMEA,Manufacturing,3,2022,,0
-A1150,Aurora Systems,APAC,Manufacturing,3,2022,,0
-A1151,Cobalt Dynamics,AMER,Technology,4,2021,,0
-A1152,Cobalt Systems,AMER,Professional Services,3,2022,,0
-A1153,Parallel Works,EMEA,Financial Services,3,2022,,0
-A1154,Pinnacle Grid Inc,EMEA,Financial Services,2,2023,,0
-A1155,Granite Bridge,EMEA,Technology,3,2022,,0
-A1156,Parallel Labs Inc,APAC,Manufacturing,4,2021,,0
-A1157,Vertex Bridge,AMER,Healthcare,3,2022,,0
-A1158,Silverline Dynamics,AMER,Professional Services,3,2022,,0
-A1159,Silverline Labs Inc,EMEA,Healthcare,2,2023,,0
-A1160,Pinnacle Logic Inc,EMEA,Financial Services,3,2022,,0
-A1161,Meridian Systems,EMEA,Healthcare,3,2022,,0
-A1162,Parallel Logic Inc,AMER,Professional Services,3,2022,,0
-A1163,Vertex Labs Inc,AMER,Manufacturing,3,2022,,0
-A1164,Pinnacle Grid Inc,APAC,Professional Services,3,2022,,0
-A1165,Granite Bridge Inc,APAC,Retail,5,2020,,0
-A1166,Silverline Works Inc,EMEA,Healthcare,3,2022,,0
-A1167,Northwind Works Inc,AMER,Retail,3,2022,,0
-A1168,Granite Labs Inc,AMER,Manufacturing,3,2022,,0
-A1169,Pinnacle Logic Inc,AMER,Technology,3,2022,,0
-A1170,Cobalt Works,APAC,Retail,3,2022,,0
-A1171,Vertex Grid,AMER,Healthcare,3,2022,,0
-A1172,Granite Dynamics,EMEA,Technology,1,2024,,0
-A1173,BluePeak Bridge Inc,APAC,Manufacturing,3,2022,,0
-A1174,Pinnacle Cloud,AMER,Healthcare,3,2022,,0
-A1175,Vertex Labs Inc,AMER,Manufacturing,3,2022,,0
-A1176,Northwind Works,APAC,Healthcare,3,2022,,0
-A1177,Granite Grid Inc,APAC,Healthcare,3,2022,,0
-A1178,Meridian Labs,EMEA,Manufacturing,3,2022,,0
-A1179,BluePeak Works,APAC,Financial Services,3,2022,,0
-A1180,Cobalt Works,EMEA,Financial Services,3,2022,,0
-A1181,Pinnacle Bridge,AMER,Healthcare,3,2022,,0
-A1182,Northwind Logic Inc,AMER,Healthcare,3,2022,,0
-A1183,Cobalt Cloud Inc,APAC,Retail,3,2022,,0
-A1184,Parallel Cloud Inc,AMER,Financial Services,3,2022,,0
-A1185,Aurora Cloud Inc,APAC,Healthcare,3,2022,,0
-A1186,Silverline Logic,EMEA,Technology,3,2022,,0
-A1187,Pinnacle Bridge Inc,APAC,Financial Services,3,2022,,0
-A1188,BluePeak Works Inc,EMEA,Financial Services,5,2020,,0
-A1189,Aurora Systems Inc,APAC,Financial Services,3,2022,,0
-A1190,Silverline Grid Inc,AMER,Financial Services,3,2022,,0
-A1191,Silverline Grid,EMEA,Technology,3,2022,,0
-A1192,Vertex Cloud Inc,AMER,Healthcare,3,2022,,0
-A1193,BluePeak Systems,APAC,Healthcare,3,2022,,0
-A1194,Parallel Works,EMEA,Financial Services,2,2023,,0
-A1195,Granite Dynamics,EMEA,Manufacturing,3,2022,,0
-A1196,Northwind Works,EMEA,Financial Services,3,2022,,0
-A1197,Vertex Systems,EMEA,Manufacturing,1,2024,,0
-A1198,Silverline Works,APAC,Retail,3,2022,,0
-A1199,Aurora Bridge Inc,EMEA,Retail,3,2022,,0
-A1200,BluePeak Labs Inc,EMEA,Healthcare,3,2022,,0
-A1201,Granite Grid,AMER,Manufacturing,3,2022,,0
-A1202,Northwind Cloud Inc,APAC,Financial Services,3,2022,,0
-A1203,Cobalt Cloud Inc,AMER,Professional Services,3,2022,,0
-A1204,Aurora Works Inc,EMEA,Technology,3,2022,,0
-A1205,Aurora Labs Inc,EMEA,Financial Services,3,2022,,0
-A1206,Cobalt Labs Inc,AMER,Manufacturing,3,2022,,0
-A1207,Cobalt Logic Inc,EMEA,Technology,3,2022,,0
-A1208,Silverline Dynamics,APAC,Manufacturing,3,2022,,0
-A1209,Silverline Dynamics,EMEA,Professional Services,3,2022,,0
-A1210,Granite Dynamics Inc,EMEA,Retail,1,2024,,0
-A1211,Silverline Bridge,AMER,Financial Services,5,2020,,0
-A1212,Aurora Grid,AMER,Financial Services,3,2022,,0
-A1213,Granite Logic Inc,AMER,Financial Services,3,2022,,0
-A1214,Pinnacle Dynamics,APAC,Technology,3,2022,,0
-A1215,Aurora Works,EMEA,Technology,3,2022,,0
-A1216,Northwind Systems Inc,APAC,Healthcare,3,2022,,0
-A1217,Meridian Works,APAC,Financial Services,3,2022,,0
-A1218,BluePeak Bridge,EMEA,Healthcare,3,2022,,0
-A1219,Parallel Logic Inc,EMEA,Financial Services,4,2021,,0
-A1220,Aurora Dynamics,EMEA,Financial Services,3,2022,,0
-A1221,Northwind Dynamics,AMER,Financial Services,3,2022,,0
-A1222,Silverline Systems Inc,AMER,Manufacturing,3,2022,,0
-A1223,Vertex Grid Inc,AMER,Retail,3,2022,,0
-A1224,Cobalt Bridge Inc,EMEA,Financial Services,3,2022,,0
-A1225,Granite Labs,EMEA,Healthcare,3,2022,,0
-A1226,Meridian Works,AMER,Manufacturing,3,2022,,0
-A1227,Northwind Systems,AMER,Professional Services,5,2020,,0
-A1228,Granite Labs,EMEA,Financial Services,3,2022,,0
-A1229,Aurora Dynamics,AMER,Professional Services,3,2022,,0
-A1230,Cobalt Dynamics,APAC,Professional Services,4,2021,,0
-A1231,Granite Cloud,AMER,Professional Services,3,2022,,0
-A1232,Silverline Cloud,APAC,Manufacturing,3,2022,,0
-A1233,Silverline Works Inc,AMER,Financial Services,3,2022,,0
-A1234,Pinnacle Bridge,AMER,Healthcare,3,2022,,0
-A1235,Vertex Systems Inc,APAC,Professional Services,3,2022,,0
-A1236,Vertex Grid Inc,AMER,Professional Services,3,2022,,0
-A1237,Granite Dynamics,APAC,Financial Services,3,2022,,0
-A1238,Pinnacle Grid Inc,AMER,Financial Services,3,2022,,0
-A1239,Vertex Labs,AMER,Financial Services,3,2022,,0
-A1240,Silverline Grid Inc,AMER,Technology,3,2022,,0
-A1241,Aurora Grid Inc,EMEA,Healthcare,3,2022,,0
-A1242,Silverline Grid Inc,EMEA,Healthcare,3,2022,,0
-A1243,Pinnacle Bridge Inc,EMEA,Healthcare,3,2022,,0
-A1244,Northwind Labs,EMEA,Healthcare,3,2022,,0
-A1245,Vertex Works,AMER,Manufacturing,1,2024,,0
-A1246,Parallel Cloud,APAC,Retail,3,2022,,0
-A1247,Parallel Labs Inc,AMER,Manufacturing,4,2021,,0
-A1248,Granite Labs,AMER,Retail,3,2022,,0
-A1249,Meridian Systems,EMEA,Professional Services,3,2022,,0
-A1250,BluePeak Cloud,EMEA,Professional Services,5,2020,,0
-A1251,BluePeak Grid,APAC,Financial Services,3,2022,,0
-A1252,Northwind Dynamics,AMER,Retail,2,2023,,0
-A1253,Cobalt Grid,EMEA,Professional Services,3,2022,,0
-A1254,Granite Works Inc,AMER,Financial Services,3,2022,,0
-A1255,Vertex Systems,AMER,Retail,3,2022,,0
-A1256,Silverline Labs,EMEA,Manufacturing,3,2022,,0
-A1257,Northwind Grid,AMER,Retail,1,2024,,0
-A1258,BluePeak Labs,APAC,Manufacturing,3,2022,,0
-A1259,Parallel Logic Inc,AMER,Professional Services,3,2022,,0
-A1260,Vertex Grid,AMER,Retail,1,2024,,0
-A1261,Northwind Dynamics Inc,APAC,Retail,4,2021,,0
-A1262,Parallel Logic Inc,APAC,Professional Services,3,2022,,0
-A1263,Pinnacle Works,APAC,Manufacturing,3,2022,,0
-A1264,Vertex Logic,AMER,Retail,2,2023,,0
-A1265,Meridian Systems,AMER,Healthcare,3,2022,,0
-A1266,Aurora Grid Inc,APAC,Manufacturing,3,2022,,0
-A1267,Vertex Labs,APAC,Manufacturing,3,2022,,0
-A1268,Pinnacle Grid,APAC,Technology,3,2022,,0
-A1269,Northwind Dynamics,APAC,Manufacturing,3,2022,,0
-A1270,Granite Cloud,AMER,Financial Services,3,2022,,0
-A1271,Cobalt Dynamics,EMEA,Manufacturing,3,2022,,0
-A1272,Pinnacle Systems Inc,AMER,Manufacturing,3,2022,,0
-A1273,Parallel Works Inc,APAC,Financial Services,3,2022,,0
-A1274,Parallel Works,AMER,Manufacturing,3,2022,,0
-A1275,Vertex Systems,AMER,Financial Services,3,2022,,0
-A1276,Aurora Grid,APAC,Professional Services,3,2022,,0
-A1277,Granite Dynamics Inc,EMEA,Financial Services,3,2022,,0
-A1278,BluePeak Cloud Inc,APAC,Financial Services,3,2022,,0
-A1279,Vertex Dynamics,APAC,Retail,3,2022,,0
-A1280,Northwind Dynamics Inc,AMER,Healthcare,3,2022,,0
-A1281,Granite Labs Inc,EMEA,Professional Services,3,2022,,0
-A1282,Silverline Cloud,AMER,Financial Services,3,2022,,0
-A1283,Silverline Works,APAC,Financial Services,3,2022,,0
-A1284,Aurora Logic,APAC,Manufacturing,3,2022,,0
-A1285,Meridian Logic Inc,EMEA,Manufacturing,3,2022,,0
-A1286,Granite Dynamics,APAC,Manufacturing,3,2022,,0
-A1287,Aurora Logic,APAC,Financial Services,3,2022,,0
-A1288,Parallel Grid Inc,AMER,Technology,3,2022,,0
-A1289,Pinnacle Grid,AMER,Manufacturing,3,2022,,0
-A1290,BluePeak Grid Inc,EMEA,Healthcare,3,2022,,0
-A1291,BluePeak Labs Inc,EMEA,Technology,5,2020,,0
-A1292,Granite Logic Inc,EMEA,Financial Services,3,2022,,0
-A1293,Pinnacle Works,EMEA,Financial Services,3,2022,,0
-A1294,Meridian Dynamics Inc,EMEA,Manufacturing,3,2022,,0
-A1295,Parallel Labs,APAC,Manufacturing,3,2022,,0
-A1296,Parallel Works Inc,APAC,Technology,3,2022,,0
-A1297,Parallel Systems,APAC,Professional Services,3,2022,,0
-A1298,Parallel Logic,AMER,Healthcare,3,2022,,0
-A1299,BluePeak Logic Inc,APAC,Retail,3,2022,,0
-A1300,Northwind Cloud Inc,AMER,Professional Services,1,2024,,0
-A1301,Cobalt Grid,AMER,Financial Services,5,2020,,0
-A1302,BluePeak Works,EMEA,Technology,3,2022,,0
-A1303,Cobalt Systems Inc,AMER,Financial Services,3,2022,,0
-A1304,Meridian Cloud,EMEA,Healthcare,2,2023,,0
-A1305,Silverline Systems,EMEA,Financial Services,3,2022,,0
-A1306,Cobalt Grid Inc,APAC,Technology,3,2022,,0
-A1307,Parallel Cloud,EMEA,Financial Services,3,2022,,0
-A1308,Parallel Works,AMER,Professional Services,3,2022,,0
-A1309,Pinnacle Logic Inc,AMER,Manufacturing,3,2022,,0
-A1310,Aurora Systems Inc,EMEA,Technology,3,2022,,0
-A1311,Vertex Grid,APAC,Technology,4,2021,,0
-A1312,Cobalt Bridge,EMEA,Professional Services,3,2022,,0
-A1313,Granite Grid Inc,APAC,Manufacturing,3,2022,,0
-A1314,Granite Cloud Inc,APAC,Financial Services,3,2022,,0
-A1315,Meridian Works Inc,EMEA,Financial Services,5,2020,,0
-A1316,Cobalt Systems Inc,APAC,Professional Services,3,2022,,0
-A1317,Pinnacle Cloud Inc,APAC,Manufacturing,3,2022,,0
-A1318,Northwind Systems Inc,APAC,Professional Services,3,2022,,0
-A1319,Pinnacle Logic Inc,AMER,Financial Services,3,2022,,0
-A1320,Cobalt Labs Inc,EMEA,Professional Services,1,2024,,0
-A1321,Cobalt Systems Inc,AMER,Retail,3,2022,,0
-A1322,Vertex Labs Inc,EMEA,Retail,3,2022,,0
-A1323,Vertex Works,AMER,Retail,3,2022,,0
-A1324,Pinnacle Dynamics,EMEA,Financial Services,3,2022,,0
-A1325,Northwind Systems,AMER,Financial Services,3,2022,,0
-A1326,Aurora Systems Inc,APAC,Professional Services,3,2022,,0
-A1327,Parallel Logic,AMER,Technology,3,2022,,0
-A1328,Cobalt Cloud Inc,APAC,Financial Services,3,2022,,0
-A1329,Parallel Works Inc,EMEA,Financial Services,3,2022,,0
-A1330,BluePeak Systems Inc,AMER,Financial Services,3,2022,,0
-A1331,Parallel Cloud,EMEA,Technology,3,2022,,0
-A1332,Parallel Bridge Inc,EMEA,Professional Services,2,2023,,0
-A1333,Parallel Bridge Inc,AMER,Technology,3,2022,,0
-A1334,Pinnacle Logic,APAC,Financial Services,3,2022,,0
-A1335,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,0
-A1336,Vertex Bridge,APAC,Healthcare,3,2022,,0
-A1337,Parallel Grid,AMER,Financial Services,3,2022,,0
-A1338,Northwind Logic Inc,AMER,Retail,3,2022,,0
-A1339,Vertex Labs Inc,EMEA,Technology,3,2022,,0
-A1340,Silverline Works,EMEA,Manufacturing,3,2022,,0
-A1341,Northwind Works,APAC,Technology,2,2023,,0
-A1342,Meridian Grid Inc,AMER,Professional Services,5,2020,,0
-A1343,Granite Systems,EMEA,Financial Services,3,2022,,0
-A1344,Granite Cloud Inc,AMER,Retail,4,2021,,0
-A1345,Parallel Dynamics,APAC,Retail,3,2022,,0
-A1346,Cobalt Works Inc,AMER,Financial Services,3,2022,,0
-A1347,Cobalt Systems,EMEA,Financial Services,3,2022,,0
-A1348,Vertex Logic Inc,AMER,Professional Services,3,2022,,0
-A1349,BluePeak Bridge,EMEA,Professional Services,5,2020,,0
-A1350,Vertex Bridge,APAC,Financial Services,3,2022,,0
-A1351,Parallel Systems,EMEA,Retail,3,2022,,0
-A1352,Northwind Dynamics Inc,AMER,Manufacturing,3,2022,,0
-A1353,Vertex Grid,AMER,Healthcare,3,2022,,0
-A1354,Meridian Logic,AMER,Technology,3,2022,,0
-A1355,Parallel Bridge,AMER,Professional Services,3,2022,,0
-A1356,Vertex Bridge,AMER,Professional Services,3,2022,,0
-A1357,BluePeak Labs Inc,AMER,Technology,3,2022,,0
-A1358,Vertex Dynamics Inc,AMER,Technology,4,2021,,0
-A1359,Aurora Grid,EMEA,Manufacturing,3,2022,,0
-A1360,BluePeak Works Inc,APAC,Technology,3,2022,,0
-A1361,Northwind Dynamics Inc,EMEA,Professional Services,3,2022,,0
-A1362,Parallel Works Inc,APAC,Financial Services,5,2020,,0
-A1363,Pinnacle Works,AMER,Manufacturing,3,2022,,0
-A1364,Granite Logic,APAC,Technology,3,2022,,0
-A1365,Cobalt Logic,APAC,Financial Services,3,2022,,0
-A1366,Pinnacle Grid Inc,APAC,Manufacturing,3,2022,,0
-A1367,Northwind Labs,AMER,Healthcare,3,2022,,0
-A1368,Cobalt Dynamics,AMER,Technology,3,2022,,0
-A1369,Cobalt Grid,EMEA,Retail,3,2022,,0
-A1370,Northwind Grid Inc,AMER,Manufacturing,3,2022,,0
-A1371,Cobalt Systems Inc,EMEA,Technology,1,2024,,0
-A1372,Granite Dynamics Inc,AMER,Professional Services,2,2023,,0
-A1373,Northwind Systems,AMER,Technology,3,2022,,0
-A1374,Northwind Cloud Inc,APAC,Retail,3,2022,,0
-A1375,Granite Dynamics,AMER,Technology,3,2022,,0
-A1376,BluePeak Grid,AMER,Financial Services,3,2022,,0
-A1377,Silverline Systems Inc,AMER,Professional Services,3,2022,,0
-A1378,Vertex Labs Inc,EMEA,Technology,2,2023,,0
-A1379,BluePeak Labs Inc,APAC,Retail,1,2024,,0
-A1380,Meridian Dynamics,APAC,Healthcare,3,2022,,0
-A1381,Aurora Labs,EMEA,Healthcare,3,2022,,0
-A1382,Cobalt Logic,AMER,Financial Services,3,2022,,0
-A1383,Pinnacle Logic Inc,EMEA,Technology,3,2022,,0
-A1384,Silverline Dynamics,APAC,Healthcare,3,2022,,0
-A1385,Pinnacle Bridge,APAC,Professional Services,3,2022,,0
-A1386,Cobalt Works Inc,EMEA,Manufacturing,4,2021,,0
-A1387,Parallel Logic,APAC,Manufacturing,3,2022,,0
-A1388,Northwind Cloud,APAC,Manufacturing,1,2024,,0
-A1389,Pinnacle Logic,AMER,Financial Services,3,2022,,0
-A1390,Aurora Bridge,APAC,Retail,1,2024,,0
-A1391,Aurora Cloud,EMEA,Professional Services,3,2022,,0
-A1392,Pinnacle Cloud,AMER,Financial Services,3,2022,,0
-A1393,Northwind Grid,AMER,Healthcare,3,2022,,0
-A1394,Vertex Works Inc,APAC,Retail,3,2022,,0
-A1395,Cobalt Grid Inc,AMER,Financial Services,3,2022,,0
-A1396,Pinnacle Logic Inc,AMER,Manufacturing,3,2022,,0
-A1397,Granite Works,APAC,Technology,3,2022,,0
-A1398,Vertex Logic,EMEA,Retail,3,2022,,0
-A1399,Cobalt Works Inc,AMER,Technology,3,2022,,0
-A1400,Pinnacle Grid,APAC,Technology,3,2022,,0
-A1401,Granite Systems,EMEA,Retail,3,2022,,0
-A1402,Parallel Logic,APAC,Healthcare,3,2022,,0
-A1403,BluePeak Bridge,APAC,Technology,3,2022,,0
-A1404,Northwind Works,APAC,Manufacturing,1,2024,,0
-A1405,Pinnacle Grid Inc,AMER,Healthcare,1,2024,,0
-A1406,Vertex Works Inc,EMEA,Professional Services,2,2023,,0
-A1407,Aurora Works Inc,AMER,Healthcare,3,2022,,0
-A1408,Northwind Labs Inc,EMEA,Financial Services,3,2022,,0
-A1409,Meridian Systems Inc,EMEA,Professional Services,3,2022,,0
-A1410,Cobalt Works,AMER,Manufacturing,3,2022,,0
-A1411,Meridian Bridge,APAC,Professional Services,5,2020,,0
-A1412,Meridian Labs Inc,EMEA,Retail,3,2022,,0
-A1413,Northwind Grid Inc,AMER,Technology,3,2022,,0
-A1414,Northwind Bridge,APAC,Financial Services,3,2022,,0
-A1415,Cobalt Logic,EMEA,Healthcare,5,2020,,0
-A1416,Aurora Logic Inc,AMER,Professional Services,3,2022,,0
-A1417,Silverline Systems,AMER,Professional Services,4,2021,,0
-A1418,Meridian Systems Inc,APAC,Financial Services,3,2022,,0
-A1419,Northwind Cloud Inc,AMER,Financial Services,3,2022,,0
-A1420,Cobalt Cloud Inc,EMEA,Healthcare,3,2022,,0
-A1421,Vertex Labs Inc,EMEA,Manufacturing,3,2022,,0
-A1422,Pinnacle Systems,APAC,Professional Services,3,2022,,0
-A1423,Pinnacle Logic,AMER,Healthcare,3,2022,,0
-A1424,Parallel Logic,APAC,Healthcare,2,2023,,0
-A1425,Cobalt Bridge Inc,APAC,Professional Services,3,2022,,0
-A1426,Northwind Works Inc,AMER,Manufacturing,3,2022,,0
-A1427,Meridian Cloud Inc,AMER,Manufacturing,3,2022,,0
-A1428,Vertex Dynamics Inc,AMER,Manufacturing,4,2021,,0
-A1429,Aurora Grid,APAC,Technology,5,2020,,0
-A1430,Pinnacle Systems,APAC,Manufacturing,5,2020,,0
-A1431,Cobalt Dynamics,AMER,Technology,1,2024,,0
-A1432,Cobalt Systems Inc,AMER,Professional Services,3,2022,,0
-A1433,BluePeak Systems,EMEA,Professional Services,3,2022,,0
-A1434,Meridian Cloud Inc,EMEA,Technology,3,2022,,0
-A1435,Parallel Bridge,APAC,Professional Services,3,2022,,0
-A1436,Aurora Labs,APAC,Financial Services,3,2022,,0
-A1437,Parallel Bridge Inc,EMEA,Retail,3,2022,,0
-A1438,Pinnacle Works,APAC,Retail,3,2022,,0
-A1439,Cobalt Cloud,EMEA,Financial Services,5,2020,,0
-A1440,Pinnacle Cloud,APAC,Technology,3,2022,,0
-A1441,Pinnacle Bridge Inc,EMEA,Professional Services,2,2023,,0
-A1442,Silverline Logic,AMER,Manufacturing,3,2022,,0
-A1443,Northwind Dynamics Inc,EMEA,Professional Services,4,2021,,0
-A1444,Silverline Dynamics Inc,APAC,Healthcare,3,2022,,0
-A1445,BluePeak Works Inc,AMER,Healthcare,4,2021,,0
-A1446,Granite Works,AMER,Healthcare,3,2022,,0
-A1447,Cobalt Works Inc,APAC,Manufacturing,3,2022,,0
-A1448,Silverline Cloud,APAC,Technology,5,2020,,0
-A1449,Vertex Labs Inc,EMEA,Technology,3,2022,,0
-A1450,Vertex Grid Inc,EMEA,Financial Services,4,2021,,0
-A1451,Cobalt Bridge Inc,EMEA,Professional Services,5,2020,,0
-A1452,Parallel Works,EMEA,Professional Services,3,2022,,0
-A1453,Granite Logic,APAC,Retail,2,2023,,0
-A1454,Silverline Bridge Inc,EMEA,Manufacturing,3,2022,,0
-A1455,Northwind Grid Inc,EMEA,Professional Services,3,2022,,0
-A1456,Aurora Labs,EMEA,Retail,3,2022,,0
-A1457,Pinnacle Logic,APAC,Financial Services,1,2024,,0
-A1458,Pinnacle Cloud Inc,AMER,Retail,3,2022,,0
-A1459,Parallel Dynamics,EMEA,Technology,3,2022,,0
-A1460,Aurora Works Inc,EMEA,Manufacturing,3,2022,,0
-A1461,Cobalt Cloud Inc,EMEA,Manufacturing,1,2024,,0
-A1462,Meridian Grid,EMEA,Retail,3,2022,,0
-A1463,Meridian Bridge,EMEA,Manufacturing,3,2022,,0
-A1464,Aurora Labs,EMEA,Professional Services,3,2022,,0
-A1465,Cobalt Grid,EMEA,Technology,4,2021,,0
-A1466,Silverline Logic,APAC,Retail,3,2022,,0
-A1467,Cobalt Works Inc,APAC,Financial Services,3,2022,,0
-A1468,Pinnacle Grid Inc,EMEA,Retail,4,2021,,0
-A1469,Pinnacle Dynamics Inc,APAC,Healthcare,3,2022,,0
-A1470,Pinnacle Systems,EMEA,Healthcare,3,2022,,0
-A1471,Meridian Grid,EMEA,Manufacturing,3,2022,,0
-A1472,Silverline Grid,EMEA,Professional Services,3,2022,,0
-A1473,Pinnacle Grid,EMEA,Professional Services,3,2022,,0
-A1474,Parallel Logic,EMEA,Retail,2,2023,,0
-A1475,Vertex Labs Inc,APAC,Financial Services,3,2022,,0
-A1476,Parallel Labs Inc,EMEA,Technology,5,2020,,0
-A1477,Silverline Labs,AMER,Technology,3,2022,,0
-A1478,Meridian Works,EMEA,Professional Services,3,2022,,0
-A1479,Granite Works,EMEA,Professional Services,3,2022,,0
-A1480,Vertex Cloud Inc,EMEA,Professional Services,3,2022,,0
-A1481,Granite Grid,AMER,Healthcare,4,2021,,0
-A1482,Silverline Grid,EMEA,Financial Services,3,2022,,0
-A1483,Cobalt Systems,EMEA,Professional Services,2,2023,,0
-A1484,Meridian Logic,APAC,Professional Services,3,2022,,0
-A1485,Northwind Systems,APAC,Manufacturing,2,2023,,0
-A1486,Vertex Cloud,EMEA,Professional Services,3,2022,,0
-A1487,Vertex Dynamics,EMEA,Manufacturing,3,2022,,0
-A1488,BluePeak Systems Inc,EMEA,Manufacturing,3,2022,,0
-A1489,Vertex Cloud,EMEA,Professional Services,2,2023,,0
-A1490,Granite Labs Inc,EMEA,Retail,3,2022,,0
-A1491,Meridian Dynamics Inc,EMEA,Professional Services,3,2022,,0
-A1492,Cobalt Bridge Inc,EMEA,Healthcare,3,2022,,0
-A1493,Granite Labs Inc,AMER,Manufacturing,2,2023,,0
-A1494,Northwind Dynamics,EMEA,Professional Services,3,2022,,0
-A1495,Granite Logic Inc,EMEA,Professional Services,3,2022,,0
-A1496,Aurora Works,EMEA,Technology,3,2022,,0
-A1497,Meridian Systems,EMEA,Retail,3,2022,,0
-A1498,Parallel Systems,AMER,Retail,5,2020,,0
-A1499,Silverline Grid Inc,APAC,Manufacturing,3,2022,,0
-A1500,Cobalt Bridge Inc,EMEA,Manufacturing,3,2022,,0
-A1501,Meridian Labs Inc,EMEA,Manufacturing,5,2020,,0
-A1502,Cobalt Dynamics Inc,EMEA,Manufacturing,3,2022,,0
-A1503,Northwind Dynamics Inc,EMEA,Healthcare,3,2022,,0
-A1504,Silverline Works Inc,EMEA,Retail,3,2022,,0
-A1505,Cobalt Logic,AMER,Retail,3,2022,,0
-A1506,Parallel Dynamics Inc,EMEA,Financial Services,3,2022,,0
-A1507,Parallel Systems Inc,EMEA,Retail,3,2022,,0
-A1508,Meridian Labs,APAC,Retail,3,2022,,0
-A1509,Silverline Logic Inc,AMER,Professional Services,3,2022,,0
-A1510,Granite Cloud,EMEA,Manufacturing,3,2022,,0
-A1511,Aurora Systems,EMEA,Manufacturing,3,2022,,0
-A1512,Pinnacle Works Inc,EMEA,Manufacturing,3,2022,,0
-A1513,Granite Cloud,EMEA,Manufacturing,2,2023,,0
-A1514,Vertex Logic,EMEA,Manufacturing,3,2022,,0
-A1515,BluePeak Dynamics Inc,EMEA,Financial Services,3,2022,,0
-A1516,BluePeak Grid,APAC,Retail,2,2023,,0
-A1517,Cobalt Logic,EMEA,Professional Services,3,2022,,0
-A1518,Cobalt Grid Inc,EMEA,Professional Services,3,2022,,0
-A1519,Aurora Logic Inc,AMER,Manufacturing,3,2022,,0
-A1520,Pinnacle Systems,EMEA,Professional Services,3,2022,,0
-A1521,Vertex Works,AMER,Manufacturing,3,2022,,0
-A1522,BluePeak Grid,EMEA,Technology,3,2022,,0
-A1523,Granite Works Inc,EMEA,Financial Services,3,2022,,0
-A1524,Cobalt Dynamics,EMEA,Manufacturing,3,2022,,0
-A1525,Northwind Works,EMEA,Professional Services,3,2022,,0
-A1526,Pinnacle Grid Inc,EMEA,Financial Services,3,2022,,0
-A1527,BluePeak Grid,EMEA,Manufacturing,3,2022,,0
-A1528,Aurora Logic,EMEA,Retail,3,2022,,0
-A1529,Silverline Labs,EMEA,Retail,2,2023,,0
-A1530,Northwind Grid Inc,EMEA,Manufacturing,3,2022,,0
-A1531,Meridian Dynamics,AMER,Healthcare,3,2022,,0
-A1532,Cobalt Cloud,EMEA,Retail,3,2022,,0
-A1533,Meridian Labs,EMEA,Retail,2,2023,,0
-A1534,Parallel Grid,AMER,Manufacturing,3,2022,,0
-A1535,Parallel Labs Inc,AMER,Healthcare,3,2022,,0
-A1536,Aurora Cloud Inc,EMEA,Retail,3,2022,,0
-A1537,Cobalt Logic,APAC,Manufacturing,3,2022,,0
-A1538,Pinnacle Cloud,EMEA,Retail,3,2022,,0
-A1539,Cobalt Labs Inc,EMEA,Manufacturing,3,2022,,0
-A1540,Pinnacle Systems Inc,EMEA,Professional Services,3,2022,,0
-A1541,Meridian Cloud,EMEA,Retail,3,2022,,0
-A1542,Pinnacle Labs,EMEA,Healthcare,2,2023,,0
-A1543,Granite Works Inc,EMEA,Professional Services,3,2022,,0
-A1544,BluePeak Grid,APAC,Retail,3,2022,,0
-A1545,BluePeak Logic,EMEA,Manufacturing,3,2022,,0
-A1546,Vertex Systems Inc,APAC,Financial Services,3,2022,,0
-A1547,Northwind Grid Inc,APAC,Financial Services,3,2022,,0
-A1548,Vertex Works Inc,EMEA,Professional Services,3,2022,,0
-A1549,Cobalt Systems,EMEA,Technology,3,2022,,0
-A1550,Parallel Dynamics Inc,EMEA,Healthcare,3,2022,,0
-A1551,BluePeak Works,EMEA,Financial Services,3,2022,,0
-A1552,Aurora Grid Inc,EMEA,Manufacturing,2,2023,,0
-A1553,Aurora Works,AMER,Manufacturing,3,2022,,0
-A1554,Cobalt Dynamics Inc,APAC,Professional Services,3,2022,,0
-A1555,Aurora Works,EMEA,Retail,3,2022,,0
-A1556,Northwind Cloud,EMEA,Manufacturing,3,2022,,0
-A1557,Parallel Systems Inc,EMEA,Financial Services,3,2022,,0
-A1558,BluePeak Labs Inc,AMER,Retail,3,2022,,0
-A1559,Granite Logic,APAC,Professional Services,3,2022,,0
-A1560,Pinnacle Works,EMEA,Healthcare,3,2022,,0
-A1561,BluePeak Works Inc,EMEA,Manufacturing,3,2022,,0
-A1562,Aurora Labs,EMEA,Healthcare,4,2021,,0
-A1563,BluePeak Cloud,EMEA,Manufacturing,3,2022,,0
-A1564,Aurora Grid,EMEA,Technology,1,2024,,0
-A1565,Northwind Works Inc,APAC,Technology,2,2023,,0
-A1566,Granite Labs,EMEA,Financial Services,1,2024,,0
-A1567,Vertex Works,EMEA,Technology,1,2024,,0
-A1568,Meridian Labs,APAC,Retail,3,2022,,0
-A1569,Aurora Dynamics,APAC,Manufacturing,3,2022,,0
-A1570,Vertex Dynamics Inc,EMEA,Manufacturing,3,2022,,0
-A1571,Parallel Bridge,EMEA,Professional Services,3,2022,,0
-A1572,Cobalt Dynamics,EMEA,Manufacturing,3,2022,,0
-A1573,Northwind Logic,EMEA,Healthcare,3,2022,,0
-A1574,BluePeak Logic,EMEA,Professional Services,3,2022,,0
-A1575,Silverline Cloud Inc,EMEA,Retail,3,2022,,0
-A1576,Cobalt Grid Inc,EMEA,Financial Services,3,2022,,0
-A1577,Parallel Cloud,EMEA,Manufacturing,3,2022,,0
-A1578,Granite Grid,AMER,Manufacturing,3,2022,,0
-A1579,Vertex Labs,EMEA,Financial Services,3,2022,,0
-A1580,Vertex Dynamics Inc,EMEA,Manufacturing,3,2022,,0
-A1581,Silverline Systems Inc,EMEA,Manufacturing,3,2022,,0
-A1582,Granite Cloud,APAC,Technology,3,2022,,0
-A1583,Vertex Logic Inc,EMEA,Retail,3,2022,,0
-A1584,Granite Works,AMER,Retail,3,2022,,0
-A1585,Parallel Bridge Inc,AMER,Technology,1,2024,,0
-A1586,Pinnacle Dynamics,EMEA,Professional Services,3,2022,,0
-A1587,Cobalt Works Inc,EMEA,Financial Services,3,2022,,0
-A1588,Granite Labs Inc,EMEA,Retail,3,2022,,0
-A1589,Parallel Cloud Inc,EMEA,Professional Services,3,2022,,0
-A1590,Vertex Bridge,EMEA,Professional Services,2,2023,,0
-A1591,Cobalt Systems Inc,EMEA,Professional Services,3,2022,,0
-A1592,Cobalt Works Inc,EMEA,Manufacturing,3,2022,,0
-A1593,Northwind Bridge,EMEA,Professional Services,3,2022,,0
-A1594,Meridian Labs,EMEA,Manufacturing,3,2022,,0
-A1595,Meridian Cloud Inc,AMER,Professional Services,3,2022,,0
-A1596,Cobalt Dynamics,APAC,Financial Services,3,2022,,0
-A1597,BluePeak Grid,EMEA,Manufacturing,3,2022,,0
-A1598,BluePeak Labs,AMER,Retail,3,2022,,0
-A1599,Silverline Grid Inc,APAC,Professional Services,4,2021,,0
-A1600,Meridian Cloud,EMEA,Manufacturing,3,2022,,0
-A1601,Silverline Dynamics Inc,EMEA,Financial Services,3,2022,,0
-A1602,Pinnacle Systems,EMEA,Retail,3,2022,,0
-A1603,Parallel Labs,APAC,Manufacturing,3,2022,,0
-A1604,Vertex Logic,AMER,Retail,2,2023,,0
-A1605,Granite Logic,APAC,Manufacturing,3,2022,,0
-A1606,Aurora Logic Inc,EMEA,Manufacturing,3,2022,,0
-A1607,Northwind Labs,EMEA,Manufacturing,5,2020,,0
-A1608,Meridian Grid,EMEA,Manufacturing,3,2022,,0
-A1609,Pinnacle Systems,EMEA,Professional Services,3,2022,,0
-A1610,Granite Labs,EMEA,Professional Services,3,2022,,0
-A1611,Vertex Logic,EMEA,Technology,3,2022,,0
-A1612,Cobalt Logic,APAC,Professional Services,3,2022,,0
-A1613,Cobalt Logic Inc,EMEA,Manufacturing,3,2022,,0
-A1614,Vertex Logic,APAC,Professional Services,1,2024,,0
-A1615,Vertex Labs Inc,EMEA,Technology,3,2022,,0
-A1616,BluePeak Dynamics Inc,EMEA,Retail,1,2024,,0
-A1617,Cobalt Works,APAC,Professional Services,3,2022,,0
-A1618,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,0
-A1619,Northwind Dynamics Inc,AMER,Professional Services,2,2023,,0
-A1620,Vertex Logic,EMEA,Professional Services,3,2022,,0
-A1621,Aurora Dynamics Inc,EMEA,Retail,3,2022,,0
-A1622,Cobalt Systems,APAC,Retail,3,2022,,0
-A1623,BluePeak Grid,AMER,Manufacturing,3,2022,,0
-A1624,Cobalt Bridge Inc,EMEA,Retail,3,2022,,0
-A1625,Silverline Cloud Inc,AMER,Retail,2,2023,,0
-A1626,BluePeak Logic,EMEA,Retail,3,2022,,0
-A1627,BluePeak Logic,EMEA,Manufacturing,3,2022,,0
-A1628,Aurora Bridge Inc,EMEA,Professional Services,4,2021,,0
-A1629,BluePeak Cloud,EMEA,Retail,3,2022,,0
-A1630,BluePeak Bridge,AMER,Professional Services,3,2022,,0
-A1631,Vertex Labs Inc,APAC,Retail,1,2024,,0
-A1632,Aurora Grid,EMEA,Healthcare,3,2022,,0
-A1633,Silverline Bridge Inc,EMEA,Manufacturing,3,2022,,0
-A1634,BluePeak Grid Inc,EMEA,Retail,3,2022,,0
-A1635,Pinnacle Systems Inc,EMEA,Manufacturing,3,2022,,0
-A1636,Silverline Labs Inc,EMEA,Manufacturing,3,2022,,0
-A1637,Vertex Bridge,EMEA,Professional Services,1,2024,,0
-A1638,BluePeak Cloud,APAC,Professional Services,3,2022,,0
-A1639,Northwind Dynamics,EMEA,Manufacturing,3,2022,,0
-A1640,Vertex Cloud Inc,APAC,Healthcare,3,2022,,0
-A1641,Vertex Works,EMEA,Retail,3,2022,,0
-A1642,Cobalt Labs Inc,EMEA,Manufacturing,3,2022,,0
-A1643,Silverline Works,EMEA,Manufacturing,2,2023,,0
-A1644,Pinnacle Cloud,EMEA,Financial Services,3,2022,,0
-A1645,Pinnacle Cloud,EMEA,Healthcare,3,2022,,0
-A1646,Meridian Labs,EMEA,Technology,3,2022,,0
-A1647,Cobalt Logic,EMEA,Financial Services,3,2022,,0
-A1648,Vertex Dynamics Inc,EMEA,Healthcare,5,2020,,0
-A1649,BluePeak Grid Inc,EMEA,Manufacturing,3,2022,,0
-A1650,Northwind Dynamics,EMEA,Manufacturing,3,2022,,0
-A1651,Pinnacle Systems,EMEA,Manufacturing,3,2022,,0
-A1652,Vertex Systems,EMEA,Retail,3,2022,,0
-A1653,Meridian Dynamics,EMEA,Retail,1,2024,,0
-A1654,Meridian Systems,EMEA,Professional Services,3,2022,,0
-A1655,Silverline Labs,EMEA,Financial Services,2,2023,,0
-A1656,Cobalt Grid Inc,APAC,Retail,3,2022,,0
-A1657,Northwind Logic,EMEA,Professional Services,2,2023,,0
-A1658,Northwind Works,EMEA,Retail,5,2020,,0
-A1659,Aurora Bridge Inc,EMEA,Manufacturing,3,2022,,0
-A1660,Vertex Cloud,APAC,Professional Services,5,2020,,0
-A1661,BluePeak Systems,EMEA,Healthcare,3,2022,,0
-A1662,Granite Labs,EMEA,Manufacturing,3,2022,,0
-A1663,Cobalt Dynamics Inc,APAC,Retail,3,2022,,0
-A1664,Vertex Labs,EMEA,Retail,2,2023,,0
-A1665,Granite Dynamics,EMEA,Healthcare,3,2022,,0
-A1666,Vertex Works,EMEA,Manufacturing,3,2022,,0
-A1667,Meridian Dynamics,APAC,Financial Services,2,2023,,0
-A1668,Pinnacle Systems,EMEA,Professional Services,3,2022,,0
-A1669,Pinnacle Works Inc,EMEA,Retail,3,2022,,0
-A1670,Aurora Systems Inc,EMEA,Manufacturing,3,2022,,0
-A1671,Pinnacle Cloud Inc,EMEA,Retail,5,2020,,0
-A1672,Vertex Systems Inc,EMEA,Retail,5,2020,,0
-A1673,Cobalt Dynamics,EMEA,Retail,3,2022,,0
-A1674,Northwind Cloud Inc,EMEA,Manufacturing,3,2022,,0
-A1675,Meridian Dynamics Inc,EMEA,Manufacturing,3,2022,,0
-A1676,Aurora Cloud,EMEA,Manufacturing,1,2024,,0
-A1677,Aurora Systems Inc,AMER,Manufacturing,3,2022,,0
-A1678,Northwind Bridge,EMEA,Healthcare,3,2022,,0
-A1679,BluePeak Grid Inc,EMEA,Professional Services,3,2022,,0
-A1680,Aurora Dynamics,EMEA,Financial Services,3,2022,,0
-A1681,Aurora Dynamics,AMER,Financial Services,3,2022,,0
-A1682,Parallel Logic,APAC,Retail,4,2021,,0
-A1683,Cobalt Bridge,EMEA,Retail,3,2022,,0
-A1684,Granite Labs,EMEA,Technology,3,2022,,0
-A1685,BluePeak Bridge,EMEA,Professional Services,3,2022,,0
-A1686,Meridian Grid,EMEA,Manufacturing,2,2023,,0
-A1687,Pinnacle Logic,APAC,Manufacturing,3,2022,,0
-A1688,BluePeak Dynamics,EMEA,Retail,2,2023,,0
-A1689,BluePeak Cloud Inc,EMEA,Healthcare,1,2024,,0
-A1690,Northwind Works,EMEA,Retail,3,2022,,0
-A1691,Silverline Bridge Inc,EMEA,Healthcare,2,2023,,0
-A1692,Granite Cloud,EMEA,Retail,3,2022,,0
-A1693,Aurora Bridge,EMEA,Manufacturing,3,2022,,0
-A1694,Aurora Cloud Inc,APAC,Professional Services,3,2022,,0
-A1695,Granite Labs Inc,EMEA,Manufacturing,2,2023,,0
-A1696,Aurora Labs,EMEA,Professional Services,3,2022,,0
-A1697,Northwind Logic Inc,EMEA,Manufacturing,3,2022,,0
-A1698,BluePeak Bridge,EMEA,Retail,2,2023,,0
-A1699,Granite Labs,EMEA,Manufacturing,3,2022,,0
-A1700,Aurora Works,AMER,Financial Services,2,2023,,0
-A1701,Parallel Cloud Inc,EMEA,Manufacturing,3,2022,,0
-A1702,BluePeak Systems Inc,EMEA,Manufacturing,5,2020,,0
-A1703,Meridian Bridge Inc,APAC,Retail,3,2022,,0
-A1704,Aurora Cloud,AMER,Financial Services,3,2022,,0
-A1705,Pinnacle Dynamics Inc,EMEA,Retail,3,2022,,0
-A1706,Parallel Labs,AMER,Retail,3,2023,,0
-A1707,Cobalt Logic,EMEA,Professional Services,2,2024,,0
-A1708,BluePeak Dynamics Inc,APAC,Manufacturing,3,2023,,0
-A1709,Parallel Labs,EMEA,Manufacturing,3,2023,,0
-A1710,Silverline Bridge,EMEA,Retail,3,2023,,0
-A1711,Northwind Grid Inc,EMEA,Professional Services,3,2023,,0
-A1712,Aurora Works,APAC,Retail,3,2023,,0
-A1713,Meridian Bridge Inc,EMEA,Technology,3,2023,,0
-A1714,Vertex Labs Inc,EMEA,Professional Services,3,2023,,0
-A1715,Meridian Systems Inc,EMEA,Technology,3,2023,,0
-A1716,Granite Works Inc,EMEA,Technology,3,2023,,0
-A1717,Northwind Systems Inc,EMEA,Professional Services,3,2023,,0
-A1718,BluePeak Labs Inc,AMER,Manufacturing,3,2023,,0
-A1719,Aurora Cloud Inc,EMEA,Technology,3,2023,,0
-A1720,Meridian Logic Inc,EMEA,Retail,1,2025,,0
-A1721,BluePeak Grid Inc,AMER,Professional Services,3,2023,,0
-A1722,Parallel Works Inc,EMEA,Technology,3,2023,,0
-A1723,Parallel Grid,EMEA,Financial Services,3,2023,,0
-A1724,Vertex Works Inc,APAC,Manufacturing,3,2023,,0
-A1725,Silverline Cloud,EMEA,Retail,2,2024,,0
-A1726,BluePeak Cloud,EMEA,Professional Services,3,2023,,0
-A1727,Pinnacle Labs Inc,EMEA,Professional Services,3,2023,,0
-A1728,BluePeak Dynamics Inc,EMEA,Manufacturing,1,2025,,0
-A1729,Granite Systems Inc,EMEA,Professional Services,3,2023,,0
-A1730,Northwind Dynamics Inc,AMER,Financial Services,3,2023,,0
-A1731,Aurora Dynamics,EMEA,Healthcare,3,2023,,0
-A1732,Northwind Works,EMEA,Professional Services,3,2023,,0
-A1733,Northwind Dynamics,AMER,Manufacturing,3,2023,,0
-A1734,BluePeak Dynamics Inc,AMER,Professional Services,2,2024,,0
-A1735,Vertex Labs,EMEA,Retail,3,2023,,0
-A1736,BluePeak Systems,APAC,Retail,3,2023,,0
-A1737,Aurora Labs Inc,AMER,Retail,3,2023,,0
-A1738,Meridian Works,EMEA,Professional Services,3,2023,,0
-A1739,Meridian Dynamics,EMEA,Manufacturing,3,2023,,0
-A1740,Silverline Grid,EMEA,Healthcare,3,2023,,0
-A1741,Silverline Logic Inc,AMER,Manufacturing,3,2023,,0
-A1742,Northwind Dynamics Inc,EMEA,Professional Services,3,2023,,0
-A1743,Pinnacle Labs Inc,EMEA,Professional Services,1,2025,,0
-A1744,Cobalt Dynamics,APAC,Professional Services,3,2023,,0
-A1745,Vertex Labs Inc,EMEA,Manufacturing,3,2023,,0
-A1746,Northwind Dynamics,AMER,Retail,3,2023,,0
-A1747,Cobalt Systems Inc,APAC,Professional Services,3,2023,,0
-A1748,Silverline Bridge Inc,EMEA,Healthcare,2,2024,,0
-A1749,Meridian Logic Inc,EMEA,Retail,3,2023,,0
-A1750,Silverline Bridge,EMEA,Technology,3,2023,,0
-A1751,Northwind Labs Inc,EMEA,Financial Services,3,2023,,0
-A1752,Meridian Works,APAC,Manufacturing,3,2023,,0
-A1753,Granite Works,EMEA,Manufacturing,3,2023,,0
-A1754,Pinnacle Bridge,AMER,Retail,2,2024,,0
-A1755,Pinnacle Cloud Inc,APAC,Professional Services,1,2025,,0
-A1756,Vertex Bridge Inc,EMEA,Professional Services,3,2023,,0
-A1757,BluePeak Cloud,EMEA,Technology,3,2023,,0
-A1758,Silverline Labs Inc,EMEA,Professional Services,3,2023,,0
-A1759,Cobalt Works Inc,EMEA,Financial Services,3,2023,,0
-A1760,Cobalt Systems Inc,EMEA,Manufacturing,5,2021,,0
-A1761,Vertex Labs,EMEA,Professional Services,3,2023,,0
-A1762,Granite Systems Inc,EMEA,Professional Services,4,2022,,0
-A1763,Aurora Bridge,AMER,Technology,5,2021,,0
-A1764,Pinnacle Grid,AMER,Manufacturing,5,2021,,0
-A1765,Granite Systems,APAC,Professional Services,3,2023,,0
-A1766,Pinnacle Works,AMER,Technology,4,2022,,0
-A1767,Vertex Dynamics,EMEA,Retail,3,2023,,0
-A1768,Silverline Systems Inc,EMEA,Manufacturing,3,2023,,0
-A1769,BluePeak Works,EMEA,Manufacturing,3,2023,,0
-A1770,Aurora Labs,EMEA,Retail,3,2023,,0
-A1771,BluePeak Cloud,EMEA,Retail,5,2021,,0
-A1772,Northwind Bridge Inc,EMEA,Manufacturing,3,2023,,0
-A1773,Meridian Dynamics,EMEA,Manufacturing,2,2024,,0
-A1774,Aurora Works,AMER,Professional Services,3,2023,,0
-A1775,Cobalt Logic Inc,EMEA,Retail,3,2023,,0
-A1776,Meridian Logic Inc,EMEA,Manufacturing,3,2023,,0
-A1777,Pinnacle Systems,EMEA,Professional Services,3,2023,,0
-A1778,Parallel Labs,APAC,Financial Services,3,2023,,0
-A1779,Parallel Dynamics Inc,EMEA,Retail,3,2023,,0
-A1780,Parallel Grid,APAC,Financial Services,4,2022,,0
-A1781,Parallel Bridge,AMER,Retail,3,2023,,0
-A1782,Meridian Works Inc,EMEA,Manufacturing,3,2023,,0
-A1783,Parallel Grid,EMEA,Professional Services,3,2023,,0
-A1784,Granite Labs Inc,EMEA,Manufacturing,5,2021,,0
-A1785,Northwind Works Inc,EMEA,Healthcare,3,2023,,0
-A1786,Northwind Cloud,AMER,Professional Services,3,2023,,0
-A1787,Silverline Works Inc,EMEA,Professional Services,3,2023,,0
-A1788,Cobalt Logic Inc,EMEA,Manufacturing,3,2023,,0
-A1789,Silverline Labs Inc,AMER,Professional Services,3,2023,,0
-A1790,Northwind Labs,EMEA,Retail,1,2025,,0
-A1791,Cobalt Labs Inc,AMER,Professional Services,3,2023,,0
-A1792,BluePeak Grid,EMEA,Healthcare,3,2023,,0
-A1793,Vertex Labs Inc,AMER,Financial Services,3,2023,,0
-A1794,Northwind Labs Inc,AMER,Professional Services,3,2023,,0
-A1795,BluePeak Cloud,EMEA,Retail,3,2023,,0
-A1796,Parallel Logic Inc,EMEA,Financial Services,3,2023,,0
-A1797,Aurora Grid,EMEA,Professional Services,3,2023,,0
-A1798,Parallel Cloud,EMEA,Professional Services,4,2022,,0
-A1799,Pinnacle Cloud,APAC,Manufacturing,3,2023,,0
-A1800,Aurora Works Inc,APAC,Retail,3,2023,,0
-A1801,Parallel Logic Inc,EMEA,Retail,3,2023,,0
-A1802,Silverline Systems,APAC,Retail,3,2023,,0
-A1803,Northwind Dynamics Inc,EMEA,Professional Services,3,2023,,0
-A1804,Silverline Bridge Inc,EMEA,Retail,3,2023,,0
-A1805,Northwind Dynamics,EMEA,Retail,3,2023,,0
-A1806,Pinnacle Works,AMER,Professional Services,3,2023,,0
-A1807,Pinnacle Systems,AMER,Retail,3,2023,,0
-A1808,Aurora Systems Inc,EMEA,Retail,3,2023,,0
-A1809,BluePeak Labs Inc,APAC,Manufacturing,3,2023,,0
-A1810,Parallel Systems,APAC,Professional Services,3,2023,,0
-A1811,Silverline Systems Inc,APAC,Retail,1,2025,,0
-A1812,Aurora Logic Inc,EMEA,Retail,3,2023,,0
-A1813,BluePeak Systems,EMEA,Professional Services,2,2024,,0
-A1814,Meridian Dynamics,EMEA,Manufacturing,3,2023,,0
-A1815,BluePeak Systems,EMEA,Retail,2,2024,,0
-A1816,Cobalt Labs Inc,EMEA,Retail,3,2023,,0
-A1817,Granite Logic Inc,EMEA,Retail,3,2023,,0
-A1818,Aurora Cloud,EMEA,Retail,3,2023,,0
-A1819,Pinnacle Labs,APAC,Professional Services,3,2023,,0
-A1820,Cobalt Logic Inc,EMEA,Professional Services,3,2023,,0
-A1821,Cobalt Labs,EMEA,Technology,4,2022,,0
-A1822,Vertex Cloud Inc,EMEA,Technology,3,2023,,0
-A1823,BluePeak Grid,APAC,Retail,3,2023,,0
-A1824,Northwind Works,APAC,Retail,5,2021,,0
-A1825,Cobalt Dynamics Inc,EMEA,Manufacturing,3,2023,,0
-A1826,Silverline Labs,AMER,Retail,3,2023,,0
-A1827,Pinnacle Systems Inc,AMER,Retail,1,2025,,0
-A1828,Silverline Bridge Inc,AMER,Retail,3,2023,,0
-A1829,Silverline Grid,EMEA,Retail,5,2021,,0
-A1830,Northwind Dynamics,EMEA,Manufacturing,4,2022,,0
-A1831,Parallel Dynamics,EMEA,Manufacturing,3,2023,,0
-A1832,Pinnacle Dynamics,AMER,Professional Services,2,2024,,0
-A1833,BluePeak Works Inc,EMEA,Professional Services,3,2023,,0
-A1834,BluePeak Systems,EMEA,Manufacturing,3,2023,,0
-A1835,Pinnacle Labs Inc,EMEA,Professional Services,3,2023,,0
-A1836,Meridian Grid Inc,APAC,Healthcare,3,2023,,0
-A1837,Aurora Works Inc,EMEA,Retail,3,2023,,0
-A1838,Aurora Dynamics,EMEA,Technology,3,2023,,0
-A1839,Meridian Systems,EMEA,Professional Services,4,2022,,0
-A1840,Aurora Logic,EMEA,Manufacturing,3,2023,,0
-A1841,Meridian Cloud,APAC,Professional Services,2,2024,,0
-A1842,Pinnacle Bridge Inc,EMEA,Manufacturing,3,2023,,0
-A1843,Vertex Logic,APAC,Manufacturing,4,2022,,0
-A1844,Pinnacle Systems Inc,EMEA,Retail,3,2023,,0
-A1845,Northwind Dynamics Inc,APAC,Financial Services,3,2023,,0
-A1846,Silverline Cloud Inc,EMEA,Financial Services,3,2023,,0
-A1847,Granite Systems,EMEA,Manufacturing,3,2023,,0
-A1848,BluePeak Systems,EMEA,Manufacturing,3,2023,,0
-A1849,Northwind Systems Inc,EMEA,Retail,2,2024,,0
-A1850,Aurora Bridge Inc,EMEA,Financial Services,3,2023,,0
-A1851,Granite Grid Inc,AMER,Technology,3,2023,,0
-A1852,Pinnacle Systems Inc,EMEA,Retail,3,2023,,0
-A1853,Parallel Bridge Inc,AMER,Healthcare,3,2023,,0
-A1854,Granite Works,EMEA,Financial Services,3,2023,,0
-A1855,Parallel Grid,EMEA,Manufacturing,3,2023,,0
-A1856,Silverline Logic,AMER,Retail,3,2023,,0
-A1857,Silverline Grid Inc,EMEA,Professional Services,3,2023,,0
-A1858,Pinnacle Labs,EMEA,Manufacturing,3,2023,,0
-A1859,BluePeak Cloud Inc,EMEA,Manufacturing,1,2025,,0
-A1860,Pinnacle Cloud,EMEA,Technology,3,2023,,0
-A1861,Vertex Dynamics Inc,AMER,Manufacturing,3,2023,,0
-A1862,Cobalt Bridge Inc,AMER,Professional Services,5,2021,,0
-A1863,Granite Dynamics,EMEA,Retail,3,2023,,0
-A1864,Parallel Labs Inc,EMEA,Manufacturing,3,2023,,0
-A1865,Meridian Grid,EMEA,Retail,5,2021,,0
-A1866,Silverline Bridge,EMEA,Professional Services,3,2023,,0
-A1867,Vertex Cloud,EMEA,Retail,3,2023,,0
-A1868,BluePeak Dynamics Inc,EMEA,Professional Services,3,2023,,0
-A1869,Vertex Bridge Inc,APAC,Professional Services,3,2023,,0
-A1870,Aurora Bridge,EMEA,Retail,3,2023,,0
-A1871,Northwind Labs,APAC,Retail,3,2023,,0
-A1872,Aurora Bridge,EMEA,Manufacturing,3,2023,,0
-A1873,Northwind Logic,EMEA,Professional Services,3,2023,,0
-A1874,Granite Cloud,AMER,Manufacturing,3,2023,,0
-A1875,Cobalt Works Inc,EMEA,Professional Services,3,2023,,0
-A1876,Pinnacle Works Inc,APAC,Professional Services,3,2023,,0
-A1877,Granite Logic Inc,AMER,Healthcare,3,2023,,0
-A1878,Pinnacle Dynamics,EMEA,Retail,3,2023,,0
-A1879,BluePeak Labs,EMEA,Retail,3,2023,,0
-A1880,Aurora Works,APAC,Manufacturing,4,2022,,0
-A1881,Meridian Labs Inc,EMEA,Professional Services,3,2023,,0
-A1882,Parallel Bridge Inc,EMEA,Healthcare,3,2023,,0
-A1883,Silverline Labs Inc,EMEA,Professional Services,3,2023,,0
-A1884,Pinnacle Systems,AMER,Professional Services,2,2024,,0
-A1885,Granite Cloud,EMEA,Technology,5,2021,,0
-A1886,Silverline Bridge,EMEA,Technology,3,2023,,0
-A1887,Meridian Dynamics,EMEA,Manufacturing,3,2023,,0
-A1888,BluePeak Labs,EMEA,Professional Services,3,2023,,0
-A1889,Cobalt Systems Inc,EMEA,Technology,3,2023,,0
-A1890,Aurora Labs,EMEA,Retail,3,2023,,0
-A1891,Meridian Systems Inc,EMEA,Financial Services,4,2022,,0
-A1892,Granite Systems Inc,EMEA,Healthcare,5,2021,,0
-A1893,Pinnacle Grid,EMEA,Professional Services,4,2022,,0
-A1894,Northwind Dynamics,EMEA,Manufacturing,4,2022,,0
-A1895,Aurora Bridge Inc,EMEA,Professional Services,3,2023,,0
-A1896,Aurora Logic Inc,EMEA,Retail,5,2021,,0
-A1897,Silverline Bridge Inc,EMEA,Professional Services,3,2023,,0
-A1898,Granite Cloud,EMEA,Retail,3,2023,,0
-A1899,Meridian Bridge,EMEA,Manufacturing,3,2023,,0
-A1900,Aurora Grid Inc,EMEA,Professional Services,3,2023,,0
-A1901,Meridian Labs,EMEA,Manufacturing,3,2023,,0
-A1902,Vertex Labs,EMEA,Professional Services,3,2023,,0
-A1903,Parallel Systems,EMEA,Manufacturing,3,2023,,0
-A1904,Vertex Cloud,APAC,Professional Services,1,2025,,0
-A1905,Granite Systems,EMEA,Retail,4,2022,,0
-A1906,Cobalt Grid Inc,EMEA,Retail,2,2024,,0
-A1907,Parallel Dynamics Inc,EMEA,Healthcare,3,2023,,0
-A1908,Parallel Labs,AMER,Manufacturing,5,2021,,0
-A1909,Meridian Grid Inc,EMEA,Manufacturing,3,2023,,0
-A1910,BluePeak Grid,EMEA,Professional Services,4,2022,,0
-A1911,Pinnacle Cloud,EMEA,Professional Services,3,2023,,0
-A1912,Northwind Logic,EMEA,Professional Services,2,2024,,0
-A1913,Silverline Grid Inc,APAC,Professional Services,1,2025,,0
-A1914,Pinnacle Systems Inc,EMEA,Manufacturing,3,2023,,0
-A1915,Northwind Cloud Inc,EMEA,Healthcare,3,2023,,0
-A1916,Pinnacle Dynamics,EMEA,Retail,3,2023,,0
-A1917,Parallel Systems Inc,EMEA,Professional Services,3,2023,,0
-A1918,Cobalt Labs Inc,EMEA,Retail,3,2023,,0
-A1919,Aurora Cloud Inc,EMEA,Manufacturing,3,2023,,0
-A1920,Aurora Dynamics Inc,APAC,Retail,3,2023,,0
-A1921,Aurora Bridge,EMEA,Retail,3,2023,,0
-A1922,Silverline Labs,EMEA,Retail,3,2023,,0
-A1923,Silverline Dynamics Inc,EMEA,Professional Services,2,2024,,0
-A1924,Cobalt Dynamics Inc,APAC,Healthcare,3,2023,,0
-A1925,Granite Systems,EMEA,Professional Services,4,2022,,0
-A1926,Aurora Logic,EMEA,Manufacturing,4,2022,,0
-A1927,Cobalt Systems,EMEA,Financial Services,3,2023,,0
-A1928,Pinnacle Labs Inc,EMEA,Manufacturing,3,2023,,0
-A1929,Parallel Systems,AMER,Manufacturing,1,2025,,0
-A1930,Vertex Cloud,APAC,Professional Services,3,2023,,0
-A1931,Parallel Cloud Inc,AMER,Technology,3,2023,,0
-A1932,Parallel Systems Inc,EMEA,Retail,3,2023,,0
-A1933,Northwind Logic,EMEA,Professional Services,3,2023,,0
-A1934,Northwind Works Inc,EMEA,Retail,3,2023,,0
-A1935,Silverline Grid,EMEA,Healthcare,2,2024,,0
-A1936,Parallel Works,APAC,Manufacturing,3,2023,,0
-A1937,Northwind Dynamics Inc,EMEA,Retail,3,2023,,0
-A1938,Parallel Logic Inc,EMEA,Professional Services,3,2023,,0
-A1939,Pinnacle Works,APAC,Retail,5,2021,,0
-A1940,BluePeak Cloud Inc,EMEA,Financial Services,3,2023,,0
-A1941,Granite Grid,EMEA,Financial Services,3,2023,,0
-A1942,Parallel Logic Inc,EMEA,Financial Services,3,2023,,0
-A1943,Meridian Logic,APAC,Manufacturing,1,2025,,0
-A1944,Northwind Labs Inc,APAC,Financial Services,3,2023,,0
-A1945,Pinnacle Grid Inc,AMER,Professional Services,3,2023,,0
-A1946,Northwind Bridge Inc,EMEA,Manufacturing,3,2023,,0
-A1947,Meridian Works Inc,EMEA,Retail,3,2023,,0
-A1948,Meridian Logic,EMEA,Manufacturing,3,2023,,0
-A1949,Northwind Works,APAC,Retail,3,2023,,0
-A1950,BluePeak Bridge,EMEA,Manufacturing,3,2023,,0
-A1951,Northwind Grid,EMEA,Healthcare,3,2023,,0
-A1952,Vertex Cloud Inc,EMEA,Retail,3,2023,,0
-A1953,BluePeak Bridge,EMEA,Manufacturing,5,2021,,0
-A1954,Vertex Bridge,EMEA,Professional Services,3,2023,,0
-A1955,BluePeak Grid,EMEA,Professional Services,1,2025,,0
-A1956,Meridian Labs Inc,EMEA,Professional Services,3,2023,,0
-A1957,Vertex Systems Inc,EMEA,Retail,4,2022,,0
-A1958,Vertex Logic,EMEA,Manufacturing,3,2023,,0
-A1959,Aurora Dynamics Inc,EMEA,Retail,3,2023,,0
-A1960,Cobalt Bridge Inc,EMEA,Healthcare,4,2022,,0
-A1961,Pinnacle Grid Inc,APAC,Manufacturing,3,2023,,0
-A1962,Vertex Dynamics,EMEA,Healthcare,3,2023,,0
-A1963,Pinnacle Works,AMER,Manufacturing,3,2023,,0
-A1964,Silverline Labs,EMEA,Manufacturing,3,2023,,0
-A1965,Aurora Cloud,EMEA,Retail,3,2023,,0
-A1966,Vertex Dynamics,EMEA,Manufacturing,3,2023,,0
-A1967,Vertex Labs Inc,EMEA,Professional Services,3,2023,,0
-A1968,Meridian Dynamics,EMEA,Technology,3,2023,,0
-A1969,Parallel Labs,EMEA,Financial Services,3,2023,,0
-A1970,BluePeak Dynamics Inc,APAC,Retail,3,2023,,0
-A1971,Silverline Cloud,EMEA,Professional Services,3,2023,,0
-A1972,Silverline Bridge Inc,EMEA,Manufacturing,3,2023,,0
-A1973,Vertex Dynamics Inc,EMEA,Manufacturing,2,2024,,0
-A1974,Northwind Systems Inc,AMER,Professional Services,5,2021,,0
-A1975,Aurora Works Inc,EMEA,Retail,3,2023,,0
-A1976,Granite Systems Inc,AMER,Retail,3,2023,,0
-A1977,Northwind Labs,EMEA,Professional Services,3,2023,,0
-A1978,Vertex Dynamics,EMEA,Professional Services,3,2023,,0
-A1979,Northwind Cloud Inc,EMEA,Retail,3,2023,,0
-A1980,Cobalt Systems Inc,EMEA,Manufacturing,3,2023,,0
-A1981,Silverline Dynamics Inc,EMEA,Retail,3,2023,,0
-A1982,Parallel Bridge,EMEA,Retail,3,2023,,0
-A1983,Silverline Dynamics Inc,APAC,Retail,3,2023,,0
-A1984,Aurora Systems Inc,EMEA,Manufacturing,3,2023,,0
-A1985,Silverline Logic,EMEA,Professional Services,3,2023,,0
-A1986,Meridian Logic,EMEA,Professional Services,1,2025,,0
-A1987,Vertex Logic,EMEA,Healthcare,4,2022,,0
-A1988,Northwind Works,EMEA,Manufacturing,3,2023,,0
-A1989,Meridian Grid Inc,EMEA,Retail,3,2023,,0
-A1990,Parallel Logic Inc,EMEA,Healthcare,3,2023,,0
-A1991,Aurora Labs,EMEA,Manufacturing,3,2023,,0
-A1992,BluePeak Logic Inc,AMER,Retail,3,2023,,0
-A1993,Northwind Bridge Inc,EMEA,Manufacturing,3,2023,,0
-A1994,Pinnacle Works,EMEA,Manufacturing,5,2021,,0
-A1995,Meridian Cloud,AMER,Professional Services,1,2025,,0
-A1996,Vertex Works,EMEA,Professional Services,3,2023,,0
-A1997,Cobalt Works,EMEA,Manufacturing,3,2023,,0
-A1998,BluePeak Grid,EMEA,Healthcare,5,2021,,0
-A1999,Cobalt Grid,EMEA,Manufacturing,3,2023,,0
-A2000,Silverline Cloud Inc,EMEA,Manufacturing,5,2021,,0
-A2001,Meridian Dynamics,EMEA,Manufacturing,3,2023,,0
-A2002,Vertex Cloud Inc,APAC,Manufacturing,3,2023,,0
-A2003,BluePeak Works Inc,APAC,Healthcare,3,2023,,0
-A2004,Pinnacle Cloud,AMER,Financial Services,3,2023,,0
-A2005,Aurora Works,EMEA,Manufacturing,3,2023,,0
-A2006,Pinnacle Logic Inc,EMEA,Manufacturing,3,2023,,0
-A2007,Vertex Systems,EMEA,Retail,4,2022,,0
-A2008,Aurora Cloud Inc,APAC,Retail,4,2022,,0
-A2009,Northwind Works,APAC,Retail,3,2023,,0
+A0627,Northwind Bridge Inc,APAC,Professional Services,3,2022,,217000
+A0628,Meridian Labs,APAC,Technology,3,2022,,138000
+A0629,Vertex Dynamics,AMER,Financial Services,2,2023,,51000
+A0630,Parallel Logic Inc,AMER,Manufacturing,3,2022,,227000
+A0631,Pinnacle Dynamics Inc,EMEA,Technology,3,2022,,13000
+A0632,Granite Works,APAC,Technology,3,2022,,104000
+A0633,Cobalt Cloud,APAC,Professional Services,3,2022,,108000
+A0634,Cobalt Cloud,EMEA,Technology,3,2022,,18000
+A0635,Vertex Bridge,EMEA,Financial Services,3,2022,,117000
+A0636,Granite Labs,AMER,Healthcare,3,2022,,162000
+A0637,Meridian Labs Inc,AMER,Financial Services,3,2022,,297000
+A0638,Pinnacle Bridge Inc,EMEA,Technology,1,2024,,64000
+A0639,Granite Logic,EMEA,Healthcare,3,2022,,27000
+A0640,BluePeak Logic,EMEA,Professional Services,3,2022,,17000
+A0641,Cobalt Bridge Inc,APAC,Healthcare,2,2023,,18000
+A0642,Vertex Cloud,APAC,Retail,3,2022,,212000
+A0643,Silverline Systems Inc,EMEA,Manufacturing,3,2022,,24000
+A0644,Parallel Works Inc,EMEA,Technology,3,2022,,165000
+A0645,Parallel Dynamics Inc,AMER,Technology,3,2022,,31000
+A0646,Cobalt Works Inc,AMER,Financial Services,3,2022,,28000
+A0647,Northwind Logic,AMER,Manufacturing,3,2022,,149000
+A0648,Aurora Works,EMEA,Manufacturing,3,2022,,24000
+A0649,Silverline Bridge,AMER,Healthcare,5,2020,,13000
+A0650,Northwind Cloud,APAC,Technology,2,2023,,14000
+A0651,Parallel Logic,APAC,Professional Services,3,2022,,228000
+A0652,Cobalt Works Inc,EMEA,Professional Services,1,2024,,48000
+A0653,BluePeak Works,EMEA,Manufacturing,3,2022,,210000
+A0654,Silverline Logic,EMEA,Technology,3,2022,,27000
+A0655,Northwind Systems Inc,EMEA,Manufacturing,2,2023,,14000
+A0656,Granite Labs,EMEA,Professional Services,3,2022,,82000
+A0657,Silverline Systems,AMER,Technology,3,2022,,156000
+A0658,BluePeak Logic Inc,APAC,Technology,3,2022,,24000
+A0659,Meridian Systems Inc,EMEA,Retail,3,2022,,199000
+A0660,Silverline Systems,EMEA,Financial Services,4,2021,,47000
+A0661,Cobalt Labs Inc,APAC,Financial Services,3,2022,,62000
+A0662,Parallel Works,APAC,Financial Services,3,2022,,43000
+A0663,BluePeak Systems,EMEA,Manufacturing,3,2022,,201000
+A0664,Parallel Cloud,EMEA,Retail,3,2022,,148000
+A0665,Parallel Dynamics Inc,APAC,Financial Services,3,2022,,218000
+A0666,Aurora Logic,EMEA,Professional Services,3,2022,,23000
+A0667,Parallel Grid,AMER,Retail,3,2022,,217000
+A0668,Granite Dynamics,APAC,Financial Services,3,2022,,44000
+A0669,Silverline Logic,AMER,Financial Services,4,2021,,13000
+A0670,Granite Systems Inc,AMER,Financial Services,3,2022,,112000
+A0671,Parallel Works,EMEA,Manufacturing,2,2023,,45000
+A0672,Cobalt Systems Inc,EMEA,Technology,3,2022,,156000
+A0673,Vertex Cloud Inc,AMER,Financial Services,3,2022,,33000
+A0674,Parallel Logic Inc,AMER,Financial Services,3,2022,,18000
+A0675,Pinnacle Dynamics,APAC,Healthcare,3,2022,,36000
+A0676,Northwind Grid,APAC,Manufacturing,3,2022,,23000
+A0677,Meridian Works,APAC,Manufacturing,3,2022,,48000
+A0678,Pinnacle Cloud Inc,EMEA,Retail,3,2022,,81000
+A0679,Granite Systems Inc,EMEA,Healthcare,3,2022,,18000
+A0680,Parallel Cloud,AMER,Technology,3,2022,,162000
+A0681,Northwind Labs Inc,EMEA,Financial Services,3,2022,,60000
+A0682,Silverline Logic,AMER,Retail,3,2022,,173000
+A0683,Parallel Labs Inc,AMER,Healthcare,3,2022,,101000
+A0684,BluePeak Labs,AMER,Financial Services,3,2022,,28000
+A0685,Vertex Logic Inc,AMER,Professional Services,1,2024,,36000
+A0686,Northwind Dynamics,EMEA,Financial Services,3,2022,,57000
+A0687,Vertex Systems,AMER,Healthcare,3,2022,,90000
+A0688,BluePeak Works Inc,AMER,Healthcare,3,2022,,99000
+A0689,Meridian Systems,EMEA,Financial Services,4,2021,,294000
+A0690,BluePeak Systems Inc,APAC,Manufacturing,2,2023,,190000
+A0691,Pinnacle Dynamics Inc,EMEA,Professional Services,3,2022,,13000
+A0692,Aurora Dynamics Inc,APAC,Technology,4,2021,,204000
+A0693,Vertex Grid Inc,AMER,Technology,3,2022,,278000
+A0694,Parallel Labs,APAC,Professional Services,3,2022,,19000
+A0695,Cobalt Grid,EMEA,Healthcare,3,2022,,261000
+A0696,BluePeak Dynamics Inc,EMEA,Financial Services,3,2022,,293000
+A0697,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,26000
+A0698,Granite Works,AMER,Financial Services,3,2022,,31000
+A0699,Northwind Works,APAC,Financial Services,3,2022,,125000
+A0700,Northwind Systems,EMEA,Technology,3,2022,,52000
+A0701,Vertex Dynamics Inc,APAC,Financial Services,3,2022,,20000
+A0702,Aurora Logic,EMEA,Financial Services,3,2022,,24000
+A0703,Silverline Systems Inc,AMER,Healthcare,5,2020,,177000
+A0704,BluePeak Dynamics Inc,APAC,Retail,3,2022,,31000
+A0705,Pinnacle Logic Inc,AMER,Healthcare,3,2022,,235000
+A0706,Aurora Grid,APAC,Healthcare,3,2022,,252000
+A0707,Cobalt Logic,AMER,Financial Services,3,2022,,46000
+A0708,Parallel Systems Inc,AMER,Professional Services,3,2022,,20000
+A0709,Silverline Logic Inc,EMEA,Financial Services,3,2022,,53000
+A0710,Parallel Systems Inc,AMER,Healthcare,3,2022,,14000
+A0711,Parallel Cloud Inc,AMER,Professional Services,3,2022,,16000
+A0712,Silverline Labs,AMER,Technology,3,2022,,200000
+A0713,Silverline Logic,APAC,Manufacturing,5,2020,,94000
+A0714,Aurora Logic,APAC,Professional Services,3,2022,,143000
+A0715,Parallel Systems,EMEA,Retail,5,2020,,38000
+A0716,BluePeak Systems,APAC,Professional Services,3,2022,,93000
+A0717,Granite Logic,AMER,Healthcare,3,2022,,29000
+A0718,Vertex Labs Inc,AMER,Financial Services,3,2022,,46000
+A0719,Meridian Systems Inc,AMER,Healthcare,3,2022,,32000
+A0720,Northwind Grid Inc,EMEA,Retail,3,2022,,239000
+A0721,Silverline Labs Inc,EMEA,Professional Services,2,2023,,36000
+A0722,Cobalt Bridge,EMEA,Financial Services,3,2022,,145000
+A0723,Northwind Labs,AMER,Professional Services,3,2022,,32000
+A0724,Cobalt Bridge Inc,EMEA,Manufacturing,3,2022,,39000
+A0725,Pinnacle Cloud,EMEA,Healthcare,3,2022,,157000
+A0726,Vertex Cloud Inc,AMER,Technology,5,2020,,97000
+A0727,Aurora Cloud,APAC,Healthcare,3,2022,,120000
+A0728,BluePeak Logic,AMER,Healthcare,3,2022,,199000
+A0729,Silverline Cloud,AMER,Professional Services,3,2022,,106000
+A0730,Northwind Logic,EMEA,Healthcare,3,2022,,217000
+A0731,BluePeak Dynamics,EMEA,Professional Services,3,2022,,169000
+A0732,Northwind Grid Inc,EMEA,Healthcare,3,2022,,93000
+A0733,Parallel Systems,EMEA,Financial Services,3,2022,,23000
+A0734,Meridian Works Inc,AMER,Retail,3,2022,,250000
+A0735,Pinnacle Cloud,AMER,Technology,3,2022,,52000
+A0736,Meridian Grid Inc,AMER,Manufacturing,3,2022,,196000
+A0737,Aurora Bridge Inc,AMER,Professional Services,3,2022,,22000
+A0738,Aurora Cloud,EMEA,Retail,3,2022,,13000
+A0739,Aurora Systems,APAC,Technology,3,2022,,26000
+A0740,Granite Grid,AMER,Manufacturing,3,2022,,53000
+A0741,BluePeak Works Inc,APAC,Financial Services,3,2022,,32000
+A0742,Silverline Works,AMER,Manufacturing,3,2022,,31000
+A0743,Cobalt Bridge Inc,AMER,Retail,3,2022,,138000
+A0744,Silverline Logic,APAC,Professional Services,3,2022,,187000
+A0745,BluePeak Works,APAC,Healthcare,5,2020,,116000
+A0746,Cobalt Works,AMER,Manufacturing,3,2022,,24000
+A0747,Pinnacle Labs,APAC,Healthcare,3,2022,,16000
+A0748,Granite Systems,APAC,Healthcare,3,2022,,134000
+A0749,Parallel Grid,AMER,Financial Services,2,2023,,13000
+A0750,Aurora Works Inc,EMEA,Financial Services,3,2022,,64000
+A0751,Aurora Dynamics,EMEA,Technology,3,2022,,16000
+A0752,Granite Grid,APAC,Professional Services,3,2022,,40000
+A0753,Pinnacle Bridge,AMER,Professional Services,3,2022,,45000
+A0754,Aurora Bridge Inc,AMER,Financial Services,3,2022,,13000
+A0755,Pinnacle Bridge Inc,APAC,Technology,3,2022,,54000
+A0756,Aurora Dynamics,EMEA,Professional Services,3,2022,,257000
+A0757,Meridian Cloud Inc,EMEA,Technology,3,2022,,43000
+A0758,BluePeak Dynamics Inc,EMEA,Manufacturing,3,2022,,32000
+A0759,Aurora Logic,AMER,Technology,3,2022,,170000
+A0760,Aurora Grid Inc,APAC,Healthcare,3,2022,,13000
+A0761,Vertex Bridge Inc,APAC,Healthcare,3,2022,,266000
+A0762,Vertex Cloud,AMER,Manufacturing,3,2022,,27000
+A0763,Parallel Works,APAC,Professional Services,3,2022,,106000
+A0764,Pinnacle Systems,AMER,Financial Services,3,2022,,24000
+A0765,Meridian Works,AMER,Manufacturing,3,2022,,60000
+A0766,Granite Logic,APAC,Retail,3,2022,,43000
+A0767,Granite Works Inc,APAC,Technology,3,2022,,13000
+A0768,Granite Dynamics Inc,APAC,Professional Services,3,2022,,26000
+A0769,Meridian Systems,APAC,Financial Services,2,2023,,156000
+A0770,Silverline Bridge Inc,APAC,Financial Services,3,2022,,244000
+A0771,Meridian Bridge Inc,AMER,Healthcare,3,2022,,14000
+A0772,BluePeak Labs,APAC,Healthcare,5,2020,,261000
+A0773,Pinnacle Dynamics,AMER,Healthcare,3,2022,,13000
+A0774,Pinnacle Works Inc,AMER,Healthcare,3,2022,,172000
+A0775,Vertex Bridge Inc,EMEA,Technology,3,2022,,13000
+A0776,Cobalt Dynamics,EMEA,Healthcare,3,2022,,13000
+A0777,Vertex Works,APAC,Manufacturing,3,2022,,43000
+A0778,BluePeak Labs Inc,APAC,Professional Services,3,2022,,206000
+A0779,Vertex Cloud Inc,APAC,Professional Services,3,2022,,230000
+A0780,BluePeak Works,APAC,Technology,1,2024,,66000
+A0781,Cobalt Cloud,EMEA,Financial Services,2,2023,,13000
+A0782,Granite Logic Inc,APAC,Financial Services,3,2022,,279000
+A0783,Silverline Grid,EMEA,Professional Services,3,2022,,41000
+A0784,Pinnacle Logic Inc,AMER,Manufacturing,3,2022,,81000
+A0785,Silverline Systems Inc,APAC,Retail,3,2022,,22000
+A0786,Aurora Bridge,APAC,Professional Services,3,2022,,14000
+A0787,Pinnacle Logic Inc,APAC,Retail,3,2022,,43000
+A0788,Cobalt Bridge,AMER,Technology,3,2022,,41000
+A0789,Cobalt Cloud Inc,AMER,Professional Services,3,2022,,28000
+A0790,Granite Logic Inc,EMEA,Financial Services,3,2022,,225000
+A0791,Parallel Works,EMEA,Retail,3,2022,,126000
+A0792,Vertex Systems Inc,APAC,Technology,3,2022,,15000
+A0793,BluePeak Bridge,EMEA,Financial Services,3,2022,,162000
+A0794,Northwind Logic,EMEA,Technology,3,2022,,183000
+A0795,Parallel Dynamics Inc,APAC,Professional Services,3,2022,,43000
+A0796,Pinnacle Labs,AMER,Manufacturing,3,2022,,216000
+A0797,BluePeak Logic,APAC,Financial Services,3,2022,,13000
+A0798,Northwind Works Inc,AMER,Professional Services,3,2022,,189000
+A0799,Meridian Grid Inc,APAC,Healthcare,3,2022,,24000
+A0800,Aurora Labs,APAC,Financial Services,5,2020,,22000
+A0801,Granite Bridge,APAC,Retail,3,2022,,13000
+A0802,Vertex Logic,AMER,Manufacturing,2,2023,,13000
+A0803,Granite Dynamics,APAC,Healthcare,4,2021,,20000
+A0804,Aurora Labs Inc,APAC,Financial Services,3,2022,,69000
+A0805,Parallel Logic,EMEA,Financial Services,3,2022,,129000
+A0806,Cobalt Cloud Inc,APAC,Financial Services,1,2024,,26000
+A0807,Parallel Logic Inc,APAC,Manufacturing,3,2022,,70000
+A0808,Meridian Logic,EMEA,Professional Services,3,2022,,60000
+A0809,Aurora Cloud Inc,AMER,Technology,3,2022,,13000
+A0810,Northwind Labs Inc,EMEA,Retail,3,2022,,287000
+A0811,Cobalt Cloud Inc,EMEA,Manufacturing,3,2022,,112000
+A0812,Aurora Logic,APAC,Healthcare,4,2021,,72000
+A0813,Pinnacle Dynamics Inc,EMEA,Technology,3,2022,,99000
+A0814,BluePeak Labs Inc,APAC,Technology,3,2022,,28000
+A0815,BluePeak Works Inc,APAC,Manufacturing,3,2022,,89000
+A0816,Northwind Bridge,EMEA,Technology,3,2022,,13000
+A0817,Meridian Systems Inc,AMER,Retail,3,2022,,82000
+A0818,Granite Dynamics,EMEA,Manufacturing,3,2022,,13000
+A0819,Pinnacle Labs Inc,AMER,Manufacturing,3,2022,,15000
+A0820,Silverline Systems Inc,AMER,Professional Services,3,2022,,269000
+A0821,BluePeak Bridge Inc,APAC,Retail,3,2022,,16000
+A0822,BluePeak Labs,AMER,Professional Services,3,2022,,288000
+A0823,Vertex Dynamics,APAC,Technology,3,2022,,146000
+A0824,Meridian Cloud,AMER,Financial Services,3,2022,,23000
+A0825,Granite Grid,APAC,Professional Services,3,2022,,27000
+A0826,Meridian Labs,APAC,Manufacturing,1,2024,,226000
+A0827,Vertex Grid,APAC,Retail,3,2022,,104000
+A0828,Vertex Cloud,AMER,Financial Services,3,2022,,62000
+A0829,Cobalt Labs Inc,EMEA,Financial Services,3,2022,,146000
+A0830,Meridian Grid,APAC,Financial Services,3,2022,,203000
+A0831,Meridian Bridge,AMER,Manufacturing,3,2022,,127000
+A0832,Aurora Grid Inc,EMEA,Retail,3,2022,,51000
+A0833,Cobalt Works Inc,AMER,Retail,3,2022,,13000
+A0834,Aurora Grid,EMEA,Healthcare,3,2022,,53000
+A0835,Cobalt Cloud,EMEA,Technology,3,2022,,71000
+A0836,Silverline Labs Inc,APAC,Financial Services,3,2022,,51000
+A0837,Silverline Labs,EMEA,Retail,2,2023,,215000
+A0838,Cobalt Works Inc,AMER,Technology,5,2020,,108000
+A0839,Silverline Systems Inc,AMER,Retail,3,2022,,17000
+A0840,Vertex Logic,APAC,Healthcare,3,2022,,13000
+A0841,Pinnacle Systems Inc,APAC,Manufacturing,3,2022,,214000
+A0842,Pinnacle Systems Inc,EMEA,Healthcare,3,2022,,187000
+A0843,Parallel Systems Inc,AMER,Professional Services,3,2022,,208000
+A0844,Granite Labs,EMEA,Manufacturing,3,2022,,259000
+A0845,BluePeak Labs Inc,AMER,Manufacturing,3,2022,,17000
+A0846,Aurora Bridge,APAC,Retail,3,2022,,17000
+A0847,Aurora Bridge Inc,EMEA,Manufacturing,3,2022,,66000
+A0848,Meridian Cloud,AMER,Professional Services,1,2024,,225000
+A0849,Silverline Cloud Inc,EMEA,Manufacturing,3,2022,,244000
+A0850,Meridian Systems,EMEA,Financial Services,1,2024,,282000
+A0851,Parallel Logic,APAC,Financial Services,3,2022,,105000
+A0852,Vertex Bridge Inc,EMEA,Technology,3,2022,,76000
+A0853,Vertex Systems Inc,EMEA,Retail,1,2024,,127000
+A0854,Vertex Grid Inc,AMER,Financial Services,2,2023,,67000
+A0855,Meridian Works,EMEA,Technology,3,2022,,273000
+A0856,Granite Cloud,APAC,Technology,5,2020,,84000
+A0857,Parallel Works Inc,AMER,Technology,3,2022,,126000
+A0858,Cobalt Grid Inc,APAC,Retail,5,2020,,101000
+A0859,Pinnacle Cloud,EMEA,Retail,3,2022,,17000
+A0860,Northwind Grid Inc,EMEA,Financial Services,3,2022,,13000
+A0861,Northwind Systems,APAC,Healthcare,5,2020,,45000
+A0862,Granite Dynamics,EMEA,Healthcare,4,2021,,16000
+A0863,Cobalt Works Inc,AMER,Financial Services,3,2022,,73000
+A0864,Vertex Logic,EMEA,Retail,4,2021,,13000
+A0865,Parallel Bridge,EMEA,Healthcare,3,2022,,17000
+A0866,Vertex Cloud,APAC,Professional Services,3,2022,,13000
+A0867,Silverline Grid Inc,EMEA,Financial Services,3,2022,,17000
+A0868,Silverline Logic,EMEA,Financial Services,3,2022,,68000
+A0869,Parallel Dynamics,AMER,Retail,1,2024,,192000
+A0870,Silverline Works Inc,EMEA,Healthcare,3,2022,,25000
+A0871,Pinnacle Grid,APAC,Technology,1,2024,,34000
+A0872,Parallel Dynamics Inc,AMER,Healthcare,3,2022,,32000
+A0873,Parallel Dynamics,AMER,Financial Services,3,2022,,64000
+A0874,Silverline Dynamics,APAC,Retail,3,2022,,234000
+A0875,Aurora Logic,AMER,Professional Services,3,2022,,71000
+A0876,Aurora Dynamics,AMER,Financial Services,3,2022,,85000
+A0877,Cobalt Works Inc,EMEA,Financial Services,3,2022,,168000
+A0878,Vertex Labs,EMEA,Professional Services,3,2022,,163000
+A0879,Cobalt Grid,AMER,Manufacturing,5,2020,,43000
+A0880,Northwind Works,AMER,Healthcare,3,2022,,61000
+A0881,Parallel Works,AMER,Financial Services,3,2022,,31000
+A0882,Meridian Works,APAC,Professional Services,3,2022,,106000
+A0883,Meridian Works,APAC,Healthcare,1,2024,,146000
+A0884,Meridian Dynamics Inc,APAC,Technology,3,2022,,15000
+A0885,Pinnacle Dynamics,EMEA,Retail,4,2021,,32000
+A0886,Vertex Labs,EMEA,Technology,3,2022,,15000
+A0887,Northwind Works Inc,APAC,Technology,3,2022,,190000
+A0888,Meridian Grid,APAC,Manufacturing,3,2022,,13000
+A0889,Aurora Grid,AMER,Healthcare,1,2024,,26000
+A0890,Pinnacle Dynamics,EMEA,Technology,3,2022,,54000
+A0891,Parallel Systems Inc,AMER,Healthcare,1,2024,,27000
+A0892,Silverline Cloud,AMER,Financial Services,3,2022,,47000
+A0893,Cobalt Works,APAC,Retail,4,2021,,81000
+A0894,Silverline Grid,AMER,Technology,3,2022,,262000
+A0895,Cobalt Works Inc,APAC,Manufacturing,3,2022,,13000
+A0896,Northwind Cloud,EMEA,Professional Services,2,2023,,70000
+A0897,Pinnacle Cloud,AMER,Healthcare,3,2022,,157000
+A0898,BluePeak Dynamics Inc,AMER,Financial Services,3,2022,,108000
+A0899,Pinnacle Systems,APAC,Healthcare,3,2022,,21000
+A0900,Granite Bridge,AMER,Professional Services,3,2022,,15000
+A0901,Meridian Cloud Inc,AMER,Healthcare,5,2020,,265000
+A0902,Aurora Logic Inc,APAC,Technology,3,2022,,173000
+A0903,Silverline Works Inc,EMEA,Healthcare,3,2022,,248000
+A0904,Granite Cloud Inc,EMEA,Healthcare,2,2023,,80000
+A0905,Silverline Logic,EMEA,Financial Services,3,2022,,16000
+A0906,Aurora Systems,AMER,Manufacturing,3,2022,,64000
+A0907,BluePeak Grid Inc,AMER,Professional Services,3,2022,,67000
+A0908,Pinnacle Logic,APAC,Financial Services,3,2022,,27000
+A0909,Aurora Cloud Inc,AMER,Professional Services,3,2022,,144000
+A0910,Granite Grid Inc,APAC,Healthcare,3,2023,,35000
+A0911,Pinnacle Works Inc,AMER,Technology,3,2023,,59000
+A0912,Silverline Systems Inc,EMEA,Financial Services,1,2025,,25000
+A0913,Pinnacle Labs Inc,AMER,Retail,3,2023,,32000
+A0914,Parallel Logic,EMEA,Retail,3,2023,,143000
+A0915,Northwind Labs Inc,AMER,Manufacturing,3,2023,,77000
+A0916,Northwind Bridge,AMER,Financial Services,3,2023,,223000
+A0917,Northwind Labs,APAC,Financial Services,1,2025,,17000
+A0918,Northwind Systems,APAC,Technology,2,2024,,13000
+A0919,Meridian Labs Inc,EMEA,Technology,3,2023,,128000
+A0920,Granite Logic,EMEA,Professional Services,3,2023,,137000
+A0921,Parallel Grid Inc,APAC,Technology,3,2023,,193000
+A0922,BluePeak Cloud,APAC,Professional Services,3,2023,,281000
+A0923,Northwind Works,EMEA,Financial Services,3,2023,,64000
+A0924,Granite Dynamics Inc,APAC,Technology,4,2022,,13000
+A0925,Aurora Logic,APAC,Retail,3,2023,,265000
+A0926,Northwind Grid Inc,APAC,Technology,3,2023,,97000
+A0927,Vertex Logic Inc,AMER,Healthcare,3,2023,,15000
+A0928,Meridian Works,AMER,Professional Services,3,2023,,55000
+A0929,Pinnacle Cloud,APAC,Technology,3,2023,,147000
+A0930,Granite Logic Inc,APAC,Financial Services,1,2025,,25000
+A0931,Aurora Logic,EMEA,Technology,3,2023,,15000
+A0932,Granite Bridge Inc,EMEA,Retail,5,2021,,18000
+A0933,Vertex Grid Inc,EMEA,Healthcare,3,2023,,65000
+A0934,BluePeak Labs,EMEA,Financial Services,3,2023,,210000
+A0935,Pinnacle Logic,APAC,Healthcare,3,2023,,13000
+A0936,Silverline Bridge,AMER,Retail,4,2022,,232000
+A0937,Parallel Labs,APAC,Professional Services,3,2023,,74000
+A0938,Pinnacle Cloud Inc,EMEA,Retail,2,2024,,146000
+A0939,Silverline Cloud,APAC,Manufacturing,3,2023,,131000
+A0940,Pinnacle Grid Inc,EMEA,Professional Services,3,2023,,110000
+A0941,Parallel Cloud Inc,EMEA,Manufacturing,3,2023,,210000
+A0942,Vertex Bridge Inc,EMEA,Professional Services,3,2023,,206000
+A0943,Vertex Grid Inc,APAC,Financial Services,3,2023,,121000
+A0944,Meridian Grid,EMEA,Professional Services,3,2023,,13000
+A0945,Granite Logic Inc,APAC,Manufacturing,3,2023,,111000
+A0946,Granite Dynamics,AMER,Manufacturing,3,2023,,14000
+A0947,Aurora Labs,AMER,Retail,3,2023,,266000
+A0948,Pinnacle Systems Inc,EMEA,Financial Services,4,2022,,16000
+A0949,BluePeak Grid Inc,EMEA,Technology,3,2023,,156000
+A0950,Vertex Systems,EMEA,Technology,3,2023,,212000
+A0951,Cobalt Systems,AMER,Retail,3,2023,,30000
+A0952,Vertex Cloud Inc,AMER,Manufacturing,3,2023,,171000
+A0953,Pinnacle Cloud Inc,AMER,Professional Services,1,2025,,20000
+A0954,Northwind Systems Inc,EMEA,Healthcare,3,2023,,19000
+A0955,Aurora Bridge Inc,APAC,Healthcare,3,2023,,95000
+A0956,BluePeak Works,AMER,Professional Services,4,2022,,66000
+A0957,BluePeak Dynamics,AMER,Healthcare,3,2023,,38000
+A0958,Parallel Works,EMEA,Manufacturing,3,2023,,24000
+A0959,Northwind Logic,AMER,Professional Services,3,2023,,142000
+A0960,Parallel Dynamics Inc,APAC,Technology,4,2022,,18000
+A0961,BluePeak Labs Inc,AMER,Manufacturing,4,2022,,13000
+A0962,Aurora Systems Inc,APAC,Retail,3,2023,,108000
+A0963,Granite Labs,AMER,Professional Services,3,2023,,14000
+A0964,Northwind Logic Inc,APAC,Manufacturing,3,2023,,13000
+A0965,BluePeak Logic,EMEA,Healthcare,3,2023,,91000
+A0966,Granite Grid Inc,APAC,Professional Services,3,2023,,28000
+A0967,Granite Dynamics Inc,APAC,Manufacturing,3,2023,,16000
+A0968,Cobalt Cloud Inc,APAC,Technology,3,2023,,22000
+A0969,Cobalt Bridge,APAC,Technology,3,2023,,230000
+A0970,Aurora Labs,APAC,Professional Services,3,2023,,60000
+A0971,Silverline Cloud Inc,AMER,Retail,3,2023,,61000
+A0972,Pinnacle Labs Inc,AMER,Manufacturing,1,2025,,262000
+A0973,Aurora Cloud,APAC,Financial Services,1,2025,,45000
+A0974,Parallel Works,AMER,Manufacturing,4,2022,,75000
+A0975,Parallel Works,EMEA,Professional Services,3,2023,,96000
+A0976,Parallel Systems,EMEA,Financial Services,3,2023,,256000
+A0977,Cobalt Systems Inc,EMEA,Professional Services,3,2023,,147000
+A0978,Pinnacle Systems Inc,APAC,Manufacturing,3,2023,,196000
+A0979,Granite Cloud,APAC,Manufacturing,3,2023,,111000
+A0980,Meridian Logic Inc,EMEA,Technology,3,2023,,19000
+A0981,Northwind Works Inc,APAC,Manufacturing,4,2022,,82000
+A0982,Vertex Grid,AMER,Retail,3,2023,,293000
+A0983,Parallel Works,APAC,Technology,3,2023,,193000
+A0984,Meridian Dynamics,EMEA,Technology,3,2023,,13000
+A0985,Aurora Cloud Inc,APAC,Financial Services,1,2025,,123000
+A0986,Granite Cloud Inc,EMEA,Healthcare,3,2023,,107000
+A0987,Silverline Systems,APAC,Healthcare,5,2021,,38000
+A0988,Northwind Labs,EMEA,Retail,3,2023,,162000
+A0989,Meridian Works,EMEA,Financial Services,3,2023,,36000
+A0990,Granite Bridge,EMEA,Professional Services,3,2023,,26000
+A0991,Vertex Bridge,APAC,Manufacturing,5,2021,,188000
+A0992,Northwind Systems,AMER,Healthcare,3,2023,,14000
+A0993,Pinnacle Logic,APAC,Professional Services,3,2023,,21000
+A0994,Pinnacle Cloud Inc,AMER,Healthcare,3,2023,,98000
+A0995,Cobalt Labs Inc,EMEA,Technology,3,2022,,0
+A0996,Northwind Labs,EMEA,Professional Services,2,2023,,0
+A0997,BluePeak Cloud,EMEA,Manufacturing,3,2022,,0
+A0998,Northwind Bridge Inc,EMEA,Professional Services,5,2020,,0
+A0999,Aurora Logic,AMER,Retail,3,2022,,0
+A1000,Parallel Logic,AMER,Retail,3,2022,,0
+A1001,Granite Bridge Inc,AMER,Technology,5,2020,,0
+A1002,Parallel Grid,EMEA,Technology,3,2022,,0
+A1003,Silverline Grid,EMEA,Professional Services,3,2022,,0
+A1004,Parallel Dynamics,EMEA,Financial Services,3,2022,,0
+A1005,BluePeak Systems Inc,EMEA,Healthcare,3,2022,,0
+A1006,Pinnacle Bridge Inc,APAC,Healthcare,5,2020,,0
+A1007,Vertex Cloud Inc,APAC,Retail,3,2022,,0
+A1008,Meridian Systems Inc,APAC,Technology,3,2022,,0
+A1009,Pinnacle Cloud,EMEA,Manufacturing,3,2022,,0
+A1010,Granite Grid,EMEA,Professional Services,3,2022,,0
+A1011,Aurora Bridge Inc,AMER,Retail,3,2022,,0
+A1012,Northwind Bridge Inc,APAC,Technology,3,2022,,0
+A1013,Vertex Systems Inc,APAC,Retail,3,2022,,0
+A1014,BluePeak Works,APAC,Technology,3,2022,,0
+A1015,Pinnacle Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1016,Parallel Works,APAC,Technology,3,2022,,0
+A1017,Vertex Cloud,AMER,Financial Services,3,2022,,0
+A1018,Silverline Cloud,AMER,Financial Services,4,2021,,0
+A1019,Pinnacle Dynamics,APAC,Retail,1,2024,,0
+A1020,Cobalt Systems Inc,AMER,Professional Services,3,2022,,0
+A1021,BluePeak Grid,EMEA,Manufacturing,3,2022,,0
+A1022,Aurora Works,APAC,Professional Services,3,2022,,0
+A1023,Northwind Grid,AMER,Healthcare,3,2022,,0
+A1024,Granite Dynamics,EMEA,Professional Services,3,2022,,0
+A1025,Northwind Labs,APAC,Healthcare,3,2022,,0
+A1026,Cobalt Systems,APAC,Professional Services,3,2022,,0
+A1027,Vertex Labs,EMEA,Manufacturing,3,2022,,0
+A1028,Granite Logic Inc,APAC,Financial Services,3,2022,,0
+A1029,Vertex Cloud Inc,APAC,Healthcare,3,2022,,0
+A1030,Vertex Bridge,AMER,Manufacturing,3,2022,,0
+A1031,Silverline Bridge Inc,AMER,Professional Services,3,2022,,0
+A1032,Cobalt Logic Inc,EMEA,Professional Services,3,2022,,0
+A1033,Meridian Works,AMER,Technology,3,2022,,0
+A1034,Vertex Grid,APAC,Healthcare,3,2022,,0
+A1035,Silverline Bridge Inc,AMER,Retail,3,2022,,0
+A1036,Aurora Bridge,APAC,Manufacturing,4,2021,,0
+A1037,Northwind Bridge,AMER,Technology,2,2023,,0
+A1038,Granite Bridge Inc,APAC,Professional Services,3,2022,,0
+A1039,Cobalt Grid,EMEA,Healthcare,3,2022,,0
+A1040,Meridian Labs,AMER,Healthcare,3,2022,,0
+A1041,Parallel Dynamics,AMER,Healthcare,3,2022,,0
+A1042,Vertex Labs Inc,AMER,Retail,1,2024,,0
+A1043,Granite Bridge,APAC,Technology,3,2022,,0
+A1044,Meridian Grid Inc,APAC,Retail,4,2021,,0
+A1045,Meridian Labs Inc,APAC,Healthcare,2,2023,,0
+A1046,Meridian Labs Inc,EMEA,Financial Services,2,2023,,0
+A1047,Vertex Logic,AMER,Financial Services,3,2022,,0
+A1048,Parallel Works Inc,AMER,Financial Services,3,2022,,0
+A1049,Pinnacle Bridge,APAC,Manufacturing,3,2022,,0
+A1050,Meridian Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1051,Granite Logic Inc,EMEA,Manufacturing,1,2024,,0
+A1052,Pinnacle Dynamics,EMEA,Retail,3,2022,,0
+A1053,Aurora Labs,APAC,Manufacturing,3,2022,,0
+A1054,Pinnacle Works,AMER,Retail,3,2022,,0
+A1055,Meridian Grid,EMEA,Professional Services,1,2024,,0
+A1056,Aurora Bridge Inc,APAC,Technology,3,2022,,0
+A1057,Silverline Systems,AMER,Financial Services,3,2022,,0
+A1058,Meridian Systems,AMER,Retail,3,2022,,0
+A1059,Meridian Grid Inc,APAC,Retail,3,2022,,0
+A1060,Silverline Dynamics,AMER,Technology,3,2022,,0
+A1061,BluePeak Labs,EMEA,Financial Services,3,2022,,0
+A1062,Northwind Grid,EMEA,Professional Services,3,2022,,0
+A1063,Aurora Labs Inc,APAC,Technology,4,2021,,0
+A1064,Pinnacle Dynamics,EMEA,Retail,3,2022,,0
+A1065,Vertex Cloud Inc,APAC,Financial Services,5,2020,,0
+A1066,Pinnacle Labs,EMEA,Retail,3,2022,,0
+A1067,Meridian Cloud,EMEA,Technology,3,2022,,0
+A1068,Parallel Labs,APAC,Healthcare,3,2022,,0
+A1069,Cobalt Cloud,EMEA,Manufacturing,3,2022,,0
+A1070,Granite Systems,EMEA,Professional Services,3,2022,,0
+A1071,Pinnacle Grid,AMER,Healthcare,3,2022,,0
+A1072,Vertex Grid Inc,APAC,Retail,4,2021,,0
+A1073,BluePeak Grid Inc,AMER,Retail,3,2022,,0
+A1074,Silverline Cloud Inc,APAC,Technology,4,2021,,0
+A1075,Silverline Bridge,AMER,Financial Services,3,2022,,0
+A1076,Cobalt Systems,APAC,Technology,2,2023,,0
+A1077,Vertex Works,EMEA,Healthcare,3,2022,,0
+A1078,Pinnacle Labs Inc,AMER,Technology,3,2022,,0
+A1079,Parallel Cloud Inc,APAC,Professional Services,3,2022,,0
+A1080,Granite Grid,AMER,Technology,4,2021,,0
+A1081,BluePeak Logic Inc,APAC,Professional Services,5,2020,,0
+A1082,Parallel Cloud Inc,EMEA,Retail,3,2022,,0
+A1083,Vertex Labs,APAC,Financial Services,5,2020,,0
+A1084,Granite Dynamics Inc,EMEA,Technology,3,2022,,0
+A1085,Cobalt Bridge,AMER,Technology,3,2022,,0
+A1086,Cobalt Dynamics,AMER,Retail,3,2022,,0
+A1087,BluePeak Dynamics,AMER,Healthcare,5,2020,,0
+A1088,Pinnacle Logic,AMER,Technology,3,2022,,0
+A1089,Meridian Cloud,EMEA,Professional Services,3,2022,,0
+A1090,Cobalt Cloud Inc,EMEA,Retail,3,2022,,0
+A1091,Northwind Systems Inc,AMER,Manufacturing,3,2022,,0
+A1092,Vertex Labs,APAC,Professional Services,3,2022,,0
+A1093,Granite Labs,APAC,Retail,3,2022,,0
+A1094,BluePeak Grid Inc,AMER,Financial Services,3,2022,,0
+A1095,Parallel Logic,APAC,Healthcare,3,2022,,0
+A1096,Vertex Labs,EMEA,Professional Services,3,2022,,0
+A1097,Vertex Labs,APAC,Technology,3,2022,,0
+A1098,Aurora Logic,APAC,Retail,3,2022,,0
+A1099,Aurora Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1100,Cobalt Bridge,AMER,Healthcare,2,2023,,0
+A1101,Aurora Bridge,AMER,Retail,3,2022,,0
+A1102,Parallel Cloud,EMEA,Healthcare,3,2022,,0
+A1103,Aurora Works,AMER,Technology,3,2022,,0
+A1104,BluePeak Dynamics Inc,APAC,Financial Services,3,2022,,0
+A1105,Silverline Cloud,AMER,Manufacturing,5,2020,,0
+A1106,Parallel Labs Inc,AMER,Manufacturing,3,2022,,0
+A1107,Silverline Dynamics,APAC,Professional Services,3,2022,,0
+A1108,Vertex Systems Inc,APAC,Retail,3,2022,,0
+A1109,Cobalt Works Inc,AMER,Retail,3,2022,,0
+A1110,Parallel Grid,APAC,Healthcare,3,2022,,0
+A1111,Pinnacle Labs Inc,EMEA,Professional Services,2,2023,,0
+A1112,Parallel Labs Inc,AMER,Professional Services,3,2022,,0
+A1113,Parallel Systems,AMER,Professional Services,3,2022,,0
+A1114,Pinnacle Logic,AMER,Retail,3,2022,,0
+A1115,Cobalt Works,EMEA,Technology,3,2022,,0
+A1116,Vertex Systems,AMER,Technology,3,2022,,0
+A1117,Parallel Works Inc,AMER,Technology,5,2020,,0
+A1118,Northwind Works,AMER,Retail,3,2022,,0
+A1119,Parallel Logic,APAC,Professional Services,3,2022,,0
+A1120,Meridian Dynamics Inc,EMEA,Healthcare,5,2020,,0
+A1121,Vertex Bridge Inc,EMEA,Healthcare,3,2022,,0
+A1122,Aurora Labs,AMER,Retail,3,2022,,0
+A1123,Granite Grid Inc,APAC,Technology,3,2022,,0
+A1124,Parallel Systems,AMER,Healthcare,3,2022,,0
+A1125,Aurora Systems Inc,AMER,Retail,3,2022,,0
+A1126,Pinnacle Works,AMER,Technology,3,2022,,0
+A1127,Vertex Cloud Inc,AMER,Healthcare,3,2022,,0
+A1128,Meridian Systems,AMER,Retail,2,2023,,0
+A1129,Meridian Works,EMEA,Professional Services,3,2022,,0
+A1130,Vertex Grid,EMEA,Technology,3,2022,,0
+A1131,Vertex Grid Inc,APAC,Manufacturing,3,2022,,0
+A1132,Cobalt Systems Inc,EMEA,Technology,3,2022,,0
+A1133,BluePeak Cloud,AMER,Financial Services,1,2024,,0
+A1134,Meridian Logic,AMER,Professional Services,3,2022,,0
+A1135,BluePeak Grid Inc,AMER,Technology,3,2022,,0
+A1136,Aurora Labs,APAC,Healthcare,3,2022,,0
+A1137,Parallel Grid,APAC,Professional Services,3,2022,,0
+A1138,Aurora Bridge,EMEA,Financial Services,3,2022,,0
+A1139,Northwind Logic Inc,APAC,Manufacturing,3,2022,,0
+A1140,Silverline Bridge,EMEA,Retail,3,2022,,0
+A1141,Silverline Bridge,EMEA,Technology,3,2022,,0
+A1142,Aurora Works,APAC,Financial Services,5,2020,,0
+A1143,BluePeak Systems,EMEA,Retail,5,2020,,0
+A1144,Parallel Works,EMEA,Healthcare,3,2022,,0
+A1145,Pinnacle Logic Inc,AMER,Professional Services,3,2022,,0
+A1146,Vertex Logic,APAC,Healthcare,3,2022,,0
+A1147,Parallel Grid,AMER,Manufacturing,1,2024,,0
+A1148,Meridian Works,AMER,Manufacturing,3,2022,,0
+A1149,Silverline Works,EMEA,Manufacturing,3,2022,,0
+A1150,Aurora Works Inc,AMER,Technology,3,2022,,0
+A1151,Aurora Bridge,AMER,Financial Services,1,2024,,0
+A1152,Meridian Dynamics,APAC,Healthcare,5,2020,,0
+A1153,Vertex Works Inc,APAC,Retail,3,2022,,0
+A1154,Meridian Dynamics,APAC,Manufacturing,1,2024,,0
+A1155,Cobalt Logic,AMER,Financial Services,3,2022,,0
+A1156,Northwind Logic,EMEA,Retail,3,2022,,0
+A1157,BluePeak Cloud Inc,EMEA,Healthcare,4,2021,,0
+A1158,Cobalt Logic,AMER,Healthcare,2,2023,,0
+A1159,Northwind Grid Inc,APAC,Retail,3,2022,,0
+A1160,BluePeak Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1161,Northwind Dynamics Inc,AMER,Retail,3,2022,,0
+A1162,Cobalt Systems Inc,AMER,Financial Services,3,2022,,0
+A1163,Meridian Logic,APAC,Professional Services,5,2020,,0
+A1164,Pinnacle Systems Inc,AMER,Healthcare,3,2022,,0
+A1165,Aurora Bridge Inc,EMEA,Technology,3,2022,,0
+A1166,Granite Bridge Inc,AMER,Professional Services,3,2022,,0
+A1167,Meridian Cloud,EMEA,Financial Services,3,2022,,0
+A1168,Cobalt Systems,APAC,Financial Services,3,2022,,0
+A1169,Northwind Bridge Inc,EMEA,Retail,3,2022,,0
+A1170,Parallel Logic,APAC,Healthcare,3,2022,,0
+A1171,Meridian Labs Inc,APAC,Technology,3,2022,,0
+A1172,Cobalt Dynamics Inc,AMER,Professional Services,3,2022,,0
+A1173,Vertex Works,AMER,Technology,3,2022,,0
+A1174,Cobalt Cloud Inc,AMER,Technology,3,2022,,0
+A1175,Cobalt Labs,APAC,Retail,3,2022,,0
+A1176,Vertex Systems,APAC,Retail,3,2022,,0
+A1177,Granite Bridge Inc,APAC,Healthcare,4,2021,,0
+A1178,Meridian Bridge Inc,AMER,Manufacturing,1,2024,,0
+A1179,Cobalt Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1180,Cobalt Works Inc,APAC,Professional Services,3,2022,,0
+A1181,Granite Dynamics Inc,EMEA,Retail,3,2022,,0
+A1182,Parallel Systems Inc,EMEA,Healthcare,3,2022,,0
+A1183,Cobalt Dynamics Inc,APAC,Technology,3,2022,,0
+A1184,Silverline Cloud,AMER,Financial Services,3,2022,,0
+A1185,Meridian Grid,APAC,Healthcare,3,2022,,0
+A1186,Northwind Systems,EMEA,Financial Services,3,2022,,0
+A1187,Granite Works,AMER,Technology,5,2020,,0
+A1188,Aurora Bridge,APAC,Technology,3,2022,,0
+A1189,Northwind Cloud,EMEA,Retail,3,2022,,0
+A1190,Northwind Labs,APAC,Professional Services,3,2022,,0
+A1191,Vertex Cloud Inc,AMER,Retail,2,2023,,0
+A1192,Aurora Works,EMEA,Technology,3,2022,,0
+A1193,Parallel Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1194,Parallel Grid Inc,EMEA,Healthcare,3,2022,,0
+A1195,Northwind Systems,AMER,Retail,5,2020,,0
+A1196,Pinnacle Dynamics,APAC,Technology,3,2022,,0
+A1197,Parallel Dynamics Inc,AMER,Technology,3,2022,,0
+A1198,Granite Cloud,AMER,Retail,3,2022,,0
+A1199,Granite Labs,EMEA,Technology,3,2022,,0
+A1200,Aurora Works Inc,AMER,Healthcare,3,2022,,0
+A1201,BluePeak Cloud,EMEA,Financial Services,2,2023,,0
+A1202,Northwind Grid Inc,AMER,Retail,3,2022,,0
+A1203,Vertex Systems Inc,APAC,Professional Services,3,2022,,0
+A1204,Aurora Cloud,APAC,Healthcare,3,2022,,0
+A1205,Meridian Grid,APAC,Technology,3,2022,,0
+A1206,Cobalt Logic,EMEA,Retail,3,2022,,0
+A1207,Meridian Grid,AMER,Financial Services,3,2022,,0
+A1208,Aurora Labs Inc,APAC,Technology,3,2022,,0
+A1209,Northwind Dynamics Inc,AMER,Financial Services,3,2022,,0
+A1210,BluePeak Bridge Inc,APAC,Financial Services,3,2022,,0
+A1211,Meridian Dynamics,AMER,Financial Services,3,2022,,0
+A1212,Aurora Grid Inc,APAC,Retail,4,2021,,0
+A1213,Northwind Grid Inc,EMEA,Professional Services,3,2022,,0
+A1214,Pinnacle Systems,APAC,Healthcare,3,2022,,0
+A1215,Granite Bridge,AMER,Healthcare,3,2022,,0
+A1216,Aurora Grid,APAC,Manufacturing,3,2022,,0
+A1217,Aurora Works,AMER,Manufacturing,3,2022,,0
+A1218,Granite Bridge,AMER,Healthcare,3,2022,,0
+A1219,Pinnacle Cloud,EMEA,Financial Services,3,2022,,0
+A1220,Cobalt Labs Inc,AMER,Retail,3,2022,,0
+A1221,Granite Works,APAC,Retail,3,2022,,0
+A1222,Pinnacle Dynamics Inc,APAC,Professional Services,3,2022,,0
+A1223,BluePeak Cloud Inc,APAC,Technology,3,2022,,0
+A1224,Granite Labs,APAC,Retail,2,2023,,0
+A1225,Granite Cloud Inc,EMEA,Technology,3,2022,,0
+A1226,Meridian Bridge,AMER,Professional Services,3,2022,,0
+A1227,Meridian Dynamics,AMER,Professional Services,3,2022,,0
+A1228,Vertex Bridge,AMER,Technology,4,2021,,0
+A1229,Northwind Cloud,APAC,Retail,3,2022,,0
+A1230,Aurora Systems,AMER,Healthcare,3,2022,,0
+A1231,Parallel Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1232,Meridian Bridge Inc,AMER,Retail,3,2022,,0
+A1233,Northwind Logic,AMER,Financial Services,3,2022,,0
+A1234,Pinnacle Labs,EMEA,Technology,3,2022,,0
+A1235,Meridian Works Inc,EMEA,Healthcare,5,2020,,0
+A1236,Aurora Grid Inc,AMER,Healthcare,2,2023,,0
+A1237,Pinnacle Bridge Inc,EMEA,Manufacturing,3,2022,,0
+A1238,Aurora Dynamics Inc,APAC,Healthcare,3,2022,,0
+A1239,Cobalt Bridge,EMEA,Financial Services,3,2022,,0
+A1240,Aurora Works Inc,APAC,Professional Services,2,2023,,0
+A1241,Aurora Systems,AMER,Manufacturing,3,2022,,0
+A1242,Pinnacle Logic,EMEA,Technology,3,2022,,0
+A1243,Granite Cloud,APAC,Manufacturing,3,2022,,0
+A1244,Pinnacle Bridge,APAC,Financial Services,3,2022,,0
+A1245,Granite Systems,AMER,Retail,3,2022,,0
+A1246,Meridian Bridge,APAC,Technology,3,2022,,0
+A1247,BluePeak Grid Inc,AMER,Technology,3,2022,,0
+A1248,Pinnacle Grid,AMER,Financial Services,3,2022,,0
+A1249,Vertex Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1250,Granite Logic Inc,EMEA,Technology,1,2024,,0
+A1251,Pinnacle Grid,AMER,Technology,3,2022,,0
+A1252,Granite Systems,AMER,Professional Services,5,2020,,0
+A1253,Meridian Works,EMEA,Professional Services,3,2022,,0
+A1254,Pinnacle Logic Inc,EMEA,Healthcare,1,2024,,0
+A1255,BluePeak Labs,APAC,Manufacturing,3,2022,,0
+A1256,Northwind Cloud Inc,AMER,Healthcare,1,2024,,0
+A1257,Granite Systems Inc,EMEA,Financial Services,3,2022,,0
+A1258,Aurora Grid Inc,APAC,Technology,1,2024,,0
+A1259,Vertex Grid,AMER,Professional Services,3,2022,,0
+A1260,Granite Cloud Inc,EMEA,Professional Services,3,2022,,0
+A1261,Meridian Cloud,APAC,Manufacturing,3,2022,,0
+A1262,Aurora Works,APAC,Financial Services,3,2022,,0
+A1263,Parallel Works Inc,AMER,Financial Services,3,2022,,0
+A1264,Granite Dynamics,APAC,Retail,2,2023,,0
+A1265,Pinnacle Works Inc,AMER,Healthcare,3,2022,,0
+A1266,Parallel Dynamics,EMEA,Manufacturing,3,2022,,0
+A1267,BluePeak Labs Inc,APAC,Healthcare,2,2023,,0
+A1268,Aurora Grid Inc,AMER,Financial Services,3,2022,,0
+A1269,Cobalt Cloud,APAC,Retail,3,2022,,0
+A1270,BluePeak Logic Inc,APAC,Professional Services,3,2022,,0
+A1271,Parallel Systems Inc,APAC,Financial Services,3,2022,,0
+A1272,Northwind Bridge,AMER,Financial Services,3,2022,,0
+A1273,BluePeak Systems Inc,EMEA,Professional Services,3,2022,,0
+A1274,Vertex Dynamics Inc,AMER,Healthcare,3,2022,,0
+A1275,Granite Bridge Inc,AMER,Professional Services,3,2022,,0
+A1276,Meridian Systems,APAC,Manufacturing,3,2022,,0
+A1277,Northwind Systems,APAC,Technology,3,2022,,0
+A1278,Northwind Bridge Inc,EMEA,Healthcare,3,2022,,0
+A1279,Meridian Works,AMER,Technology,3,2022,,0
+A1280,Meridian Labs,EMEA,Professional Services,3,2022,,0
+A1281,Vertex Cloud,APAC,Healthcare,3,2022,,0
+A1282,Meridian Bridge,AMER,Retail,3,2022,,0
+A1283,Silverline Systems Inc,AMER,Retail,4,2021,,0
+A1284,Northwind Bridge,APAC,Financial Services,3,2022,,0
+A1285,Parallel Bridge,APAC,Manufacturing,3,2022,,0
+A1286,Granite Bridge,AMER,Healthcare,3,2022,,0
+A1287,Cobalt Bridge,AMER,Financial Services,1,2024,,0
+A1288,Aurora Works,AMER,Technology,3,2022,,0
+A1289,Parallel Bridge,EMEA,Healthcare,3,2022,,0
+A1290,Meridian Labs,APAC,Healthcare,2,2023,,0
+A1291,Vertex Labs,APAC,Financial Services,3,2022,,0
+A1292,Parallel Grid Inc,EMEA,Professional Services,3,2022,,0
+A1293,Silverline Systems Inc,APAC,Professional Services,1,2024,,0
+A1294,Granite Grid,EMEA,Retail,3,2022,,0
+A1295,Vertex Works Inc,APAC,Retail,4,2021,,0
+A1296,BluePeak Grid Inc,APAC,Healthcare,3,2022,,0
+A1297,Meridian Labs Inc,AMER,Manufacturing,3,2022,,0
+A1298,BluePeak Grid,EMEA,Professional Services,3,2022,,0
+A1299,Northwind Cloud Inc,AMER,Professional Services,5,2020,,0
+A1300,Northwind Dynamics,AMER,Financial Services,1,2024,,0
+A1301,Granite Systems Inc,AMER,Financial Services,4,2021,,0
+A1302,Aurora Systems,AMER,Financial Services,3,2022,,0
+A1303,Aurora Dynamics,EMEA,Retail,3,2022,,0
+A1304,Cobalt Grid,APAC,Professional Services,3,2022,,0
+A1305,Vertex Works Inc,APAC,Healthcare,3,2022,,0
+A1306,Aurora Cloud Inc,AMER,Retail,3,2022,,0
+A1307,BluePeak Labs,APAC,Financial Services,2,2023,,0
+A1308,Aurora Labs,APAC,Manufacturing,3,2022,,0
+A1309,Northwind Bridge,EMEA,Healthcare,3,2022,,0
+A1310,Cobalt Logic Inc,AMER,Manufacturing,3,2022,,0
+A1311,Silverline Labs,EMEA,Technology,2,2023,,0
+A1312,Silverline Works,EMEA,Manufacturing,3,2022,,0
+A1313,Aurora Labs Inc,AMER,Retail,3,2022,,0
+A1314,Meridian Logic Inc,AMER,Professional Services,3,2022,,0
+A1315,BluePeak Logic Inc,APAC,Manufacturing,3,2022,,0
+A1316,Parallel Systems,APAC,Professional Services,3,2022,,0
+A1317,Vertex Works,APAC,Professional Services,3,2022,,0
+A1318,Northwind Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1319,Pinnacle Bridge,APAC,Professional Services,2,2023,,0
+A1320,Vertex Dynamics,AMER,Professional Services,2,2023,,0
+A1321,BluePeak Cloud,AMER,Professional Services,1,2024,,0
+A1322,Parallel Bridge Inc,EMEA,Retail,1,2024,,0
+A1323,Pinnacle Cloud Inc,AMER,Professional Services,3,2022,,0
+A1324,Silverline Bridge Inc,EMEA,Financial Services,3,2022,,0
+A1325,Pinnacle Grid,EMEA,Professional Services,5,2020,,0
+A1326,Aurora Logic Inc,AMER,Financial Services,3,2022,,0
+A1327,Parallel Logic Inc,AMER,Financial Services,3,2022,,0
+A1328,Vertex Labs Inc,APAC,Manufacturing,3,2022,,0
+A1329,Silverline Cloud,APAC,Retail,3,2022,,0
+A1330,Meridian Systems Inc,EMEA,Retail,3,2022,,0
+A1331,Cobalt Logic,EMEA,Professional Services,3,2022,,0
+A1332,Aurora Grid,EMEA,Technology,3,2022,,0
+A1333,Silverline Logic,AMER,Technology,3,2022,,0
+A1334,Silverline Labs,APAC,Healthcare,3,2022,,0
+A1335,Parallel Labs Inc,APAC,Retail,3,2022,,0
+A1336,Vertex Works,AMER,Professional Services,3,2022,,0
+A1337,Meridian Logic,EMEA,Technology,5,2020,,0
+A1338,BluePeak Works,AMER,Financial Services,2,2023,,0
+A1339,Silverline Labs Inc,AMER,Financial Services,5,2020,,0
+A1340,Parallel Dynamics Inc,APAC,Manufacturing,3,2022,,0
+A1341,Vertex Dynamics Inc,EMEA,Technology,3,2022,,0
+A1342,Meridian Grid,AMER,Professional Services,3,2022,,0
+A1343,Northwind Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1344,Aurora Cloud Inc,APAC,Manufacturing,3,2022,,0
+A1345,Northwind Systems Inc,AMER,Healthcare,3,2022,,0
+A1346,Granite Cloud,EMEA,Technology,3,2022,,0
+A1347,Meridian Grid Inc,AMER,Financial Services,3,2022,,0
+A1348,Aurora Works Inc,EMEA,Retail,3,2022,,0
+A1349,Northwind Systems Inc,APAC,Retail,3,2022,,0
+A1350,Northwind Dynamics Inc,AMER,Financial Services,3,2022,,0
+A1351,Silverline Labs Inc,AMER,Financial Services,3,2022,,0
+A1352,Cobalt Cloud Inc,AMER,Healthcare,3,2022,,0
+A1353,Cobalt Systems Inc,AMER,Healthcare,3,2022,,0
+A1354,Silverline Logic,EMEA,Professional Services,3,2022,,0
+A1355,Pinnacle Logic,APAC,Financial Services,2,2023,,0
+A1356,Meridian Systems Inc,APAC,Technology,5,2020,,0
+A1357,Parallel Bridge,EMEA,Healthcare,3,2022,,0
+A1358,Aurora Works,APAC,Retail,3,2022,,0
+A1359,Aurora Logic,AMER,Professional Services,5,2020,,0
+A1360,Pinnacle Grid,APAC,Professional Services,3,2022,,0
+A1361,Aurora Works Inc,EMEA,Professional Services,3,2022,,0
+A1362,Cobalt Grid Inc,AMER,Financial Services,1,2024,,0
+A1363,Cobalt Logic,AMER,Retail,3,2022,,0
+A1364,Vertex Cloud,AMER,Professional Services,3,2022,,0
+A1365,Parallel Bridge,EMEA,Manufacturing,2,2023,,0
+A1366,Parallel Works Inc,EMEA,Retail,3,2022,,0
+A1367,BluePeak Systems,APAC,Financial Services,3,2022,,0
+A1368,Aurora Labs Inc,APAC,Healthcare,3,2022,,0
+A1369,Silverline Dynamics,AMER,Financial Services,3,2022,,0
+A1370,Aurora Labs Inc,AMER,Retail,3,2022,,0
+A1371,Vertex Works,APAC,Manufacturing,3,2022,,0
+A1372,Pinnacle Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1373,Parallel Works,EMEA,Healthcare,3,2022,,0
+A1374,Vertex Logic Inc,EMEA,Financial Services,3,2022,,0
+A1375,Vertex Cloud,EMEA,Manufacturing,3,2022,,0
+A1376,Cobalt Systems,APAC,Financial Services,3,2022,,0
+A1377,Cobalt Bridge,AMER,Professional Services,1,2024,,0
+A1378,Cobalt Dynamics,EMEA,Healthcare,3,2022,,0
+A1379,Vertex Logic,AMER,Retail,3,2022,,0
+A1380,BluePeak Systems,APAC,Manufacturing,1,2024,,0
+A1381,Pinnacle Works Inc,APAC,Healthcare,3,2022,,0
+A1382,Vertex Labs,EMEA,Technology,3,2022,,0
+A1383,Northwind Bridge,EMEA,Healthcare,3,2022,,0
+A1384,BluePeak Bridge Inc,AMER,Financial Services,3,2022,,0
+A1385,Silverline Labs,AMER,Technology,5,2020,,0
+A1386,Granite Cloud Inc,EMEA,Retail,3,2022,,0
+A1387,Granite Systems,EMEA,Financial Services,4,2021,,0
+A1388,Vertex Works Inc,EMEA,Professional Services,1,2024,,0
+A1389,Granite Bridge,AMER,Financial Services,3,2022,,0
+A1390,Northwind Cloud,APAC,Retail,3,2022,,0
+A1391,Vertex Bridge Inc,APAC,Manufacturing,3,2022,,0
+A1392,Parallel Cloud Inc,AMER,Technology,3,2022,,0
+A1393,Vertex Grid,AMER,Retail,1,2024,,0
+A1394,Pinnacle Systems Inc,APAC,Retail,3,2022,,0
+A1395,Cobalt Cloud,APAC,Manufacturing,3,2022,,0
+A1396,BluePeak Labs,APAC,Financial Services,3,2022,,0
+A1397,Parallel Logic,AMER,Professional Services,4,2021,,0
+A1398,Aurora Systems Inc,AMER,Healthcare,3,2022,,0
+A1399,Meridian Works Inc,EMEA,Retail,3,2022,,0
+A1400,Pinnacle Logic Inc,AMER,Manufacturing,3,2022,,0
+A1401,Aurora Grid Inc,APAC,Retail,1,2024,,0
+A1402,Parallel Logic,APAC,Financial Services,3,2022,,0
+A1403,Parallel Systems,EMEA,Retail,3,2022,,0
+A1404,Northwind Cloud,AMER,Manufacturing,3,2022,,0
+A1405,Meridian Logic,EMEA,Technology,4,2021,,0
+A1406,Meridian Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1407,Cobalt Dynamics,AMER,Technology,3,2022,,0
+A1408,Parallel Works Inc,AMER,Technology,3,2022,,0
+A1409,Vertex Bridge,EMEA,Retail,3,2022,,0
+A1410,Meridian Dynamics,EMEA,Financial Services,3,2022,,0
+A1411,Silverline Dynamics,AMER,Professional Services,3,2022,,0
+A1412,Granite Bridge,EMEA,Retail,1,2024,,0
+A1413,Silverline Cloud,AMER,Financial Services,3,2022,,0
+A1414,Silverline Grid,APAC,Manufacturing,3,2022,,0
+A1415,Meridian Cloud,EMEA,Retail,3,2022,,0
+A1416,BluePeak Labs Inc,AMER,Manufacturing,3,2022,,0
+A1417,Granite Labs,APAC,Technology,3,2022,,0
+A1418,Parallel Dynamics,EMEA,Healthcare,3,2022,,0
+A1419,Silverline Grid Inc,EMEA,Professional Services,3,2022,,0
+A1420,Silverline Dynamics,AMER,Retail,3,2022,,0
+A1421,Vertex Systems,APAC,Manufacturing,3,2022,,0
+A1422,Parallel Dynamics,APAC,Manufacturing,3,2022,,0
+A1423,Meridian Dynamics,EMEA,Professional Services,3,2022,,0
+A1424,Silverline Works Inc,APAC,Healthcare,4,2021,,0
+A1425,Northwind Grid,EMEA,Professional Services,3,2022,,0
+A1426,BluePeak Dynamics,EMEA,Healthcare,3,2022,,0
+A1427,Aurora Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1428,Granite Grid Inc,EMEA,Professional Services,3,2022,,0
+A1429,Pinnacle Cloud,AMER,Healthcare,3,2022,,0
+A1430,Vertex Cloud,AMER,Healthcare,3,2022,,0
+A1431,Parallel Grid Inc,APAC,Healthcare,3,2022,,0
+A1432,Northwind Grid,EMEA,Retail,3,2022,,0
+A1433,Meridian Works,AMER,Professional Services,3,2022,,0
+A1434,Granite Labs,APAC,Financial Services,3,2022,,0
+A1435,Vertex Labs,AMER,Manufacturing,3,2022,,0
+A1436,Cobalt Labs Inc,EMEA,Manufacturing,3,2022,,0
+A1437,Granite Cloud Inc,EMEA,Retail,3,2022,,0
+A1438,Northwind Grid Inc,AMER,Retail,1,2024,,0
+A1439,Granite Dynamics,EMEA,Manufacturing,3,2022,,0
+A1440,Aurora Labs Inc,EMEA,Manufacturing,3,2022,,0
+A1441,Silverline Grid,AMER,Healthcare,4,2021,,0
+A1442,Northwind Grid Inc,APAC,Retail,3,2022,,0
+A1443,Meridian Dynamics Inc,AMER,Manufacturing,2,2023,,0
+A1444,Parallel Works,AMER,Manufacturing,3,2022,,0
+A1445,Parallel Systems Inc,AMER,Financial Services,3,2022,,0
+A1446,BluePeak Grid,AMER,Manufacturing,3,2022,,0
+A1447,Granite Systems Inc,AMER,Technology,3,2022,,0
+A1448,Meridian Logic,APAC,Healthcare,2,2023,,0
+A1449,Vertex Systems,EMEA,Healthcare,3,2022,,0
+A1450,Vertex Works,APAC,Professional Services,1,2024,,0
+A1451,BluePeak Dynamics Inc,APAC,Technology,3,2022,,0
+A1452,Cobalt Bridge Inc,AMER,Manufacturing,2,2023,,0
+A1453,Granite Systems Inc,AMER,Financial Services,3,2022,,0
+A1454,Aurora Logic Inc,APAC,Professional Services,3,2022,,0
+A1455,Granite Logic,AMER,Technology,4,2021,,0
+A1456,BluePeak Grid Inc,APAC,Technology,1,2024,,0
+A1457,Pinnacle Logic,EMEA,Manufacturing,4,2021,,0
+A1458,Silverline Logic,EMEA,Manufacturing,3,2022,,0
+A1459,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,0
+A1460,Meridian Systems,EMEA,Retail,3,2022,,0
+A1461,Granite Logic,EMEA,Manufacturing,3,2022,,0
+A1462,Parallel Works,EMEA,Technology,3,2022,,0
+A1463,Silverline Grid,EMEA,Manufacturing,3,2022,,0
+A1464,Silverline Labs Inc,EMEA,Retail,3,2022,,0
+A1465,Granite Systems Inc,EMEA,Professional Services,2,2023,,0
+A1466,Aurora Labs,AMER,Professional Services,3,2022,,0
+A1467,Silverline Cloud,APAC,Manufacturing,1,2024,,0
+A1468,Parallel Cloud Inc,APAC,Manufacturing,3,2022,,0
+A1469,Vertex Grid,APAC,Manufacturing,3,2022,,0
+A1470,Northwind Grid Inc,APAC,Financial Services,5,2020,,0
+A1471,Aurora Labs,EMEA,Retail,3,2022,,0
+A1472,Cobalt Dynamics Inc,APAC,Manufacturing,3,2022,,0
+A1473,Aurora Grid,APAC,Retail,1,2024,,0
+A1474,Silverline Logic,EMEA,Financial Services,3,2022,,0
+A1475,Pinnacle Works,APAC,Manufacturing,3,2022,,0
+A1476,BluePeak Systems Inc,APAC,Manufacturing,3,2022,,0
+A1477,Parallel Systems,EMEA,Healthcare,3,2022,,0
+A1478,Northwind Logic Inc,EMEA,Healthcare,5,2020,,0
+A1479,Granite Systems Inc,EMEA,Retail,3,2022,,0
+A1480,Silverline Works,EMEA,Manufacturing,3,2022,,0
+A1481,Cobalt Works,APAC,Manufacturing,2,2023,,0
+A1482,BluePeak Logic,APAC,Manufacturing,3,2022,,0
+A1483,Meridian Dynamics,EMEA,Professional Services,3,2022,,0
+A1484,Silverline Logic,EMEA,Professional Services,3,2022,,0
+A1485,Cobalt Cloud,APAC,Retail,3,2022,,0
+A1486,Parallel Cloud,EMEA,Manufacturing,3,2022,,0
+A1487,Meridian Systems Inc,APAC,Retail,4,2021,,0
+A1488,Pinnacle Logic,EMEA,Retail,3,2022,,0
+A1489,Cobalt Works,EMEA,Technology,3,2022,,0
+A1490,BluePeak Dynamics,EMEA,Retail,3,2022,,0
+A1491,Northwind Systems,AMER,Manufacturing,3,2022,,0
+A1492,Northwind Works Inc,AMER,Retail,3,2022,,0
+A1493,BluePeak Cloud,EMEA,Healthcare,4,2021,,0
+A1494,Silverline Dynamics,EMEA,Professional Services,5,2020,,0
+A1495,Pinnacle Works Inc,EMEA,Retail,3,2022,,0
+A1496,Northwind Logic,AMER,Professional Services,4,2021,,0
+A1497,BluePeak Bridge,EMEA,Professional Services,3,2022,,0
+A1498,Meridian Systems,APAC,Healthcare,3,2022,,0
+A1499,Pinnacle Works,EMEA,Manufacturing,3,2022,,0
+A1500,Vertex Cloud,EMEA,Retail,3,2022,,0
+A1501,Pinnacle Grid,EMEA,Manufacturing,3,2022,,0
+A1502,Aurora Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1503,Silverline Labs,APAC,Manufacturing,3,2022,,0
+A1504,Meridian Labs,EMEA,Healthcare,3,2022,,0
+A1505,Granite Dynamics,APAC,Retail,3,2022,,0
+A1506,Pinnacle Works,EMEA,Manufacturing,3,2022,,0
+A1507,BluePeak Cloud Inc,EMEA,Retail,3,2022,,0
+A1508,Pinnacle Grid,EMEA,Professional Services,3,2022,,0
+A1509,Vertex Bridge Inc,EMEA,Retail,3,2022,,0
+A1510,Northwind Grid Inc,EMEA,Retail,3,2022,,0
+A1511,Northwind Grid,EMEA,Retail,3,2022,,0
+A1512,Aurora Cloud,APAC,Healthcare,1,2024,,0
+A1513,Parallel Grid,AMER,Retail,3,2022,,0
+A1514,Granite Grid,EMEA,Retail,3,2022,,0
+A1515,Pinnacle Systems,APAC,Financial Services,3,2022,,0
+A1516,BluePeak Labs,EMEA,Professional Services,3,2022,,0
+A1517,Cobalt Cloud Inc,EMEA,Professional Services,5,2020,,0
+A1518,Vertex Logic,EMEA,Professional Services,3,2022,,0
+A1519,Northwind Dynamics Inc,EMEA,Retail,5,2020,,0
+A1520,Silverline Labs Inc,EMEA,Healthcare,3,2022,,0
+A1521,BluePeak Dynamics,EMEA,Retail,3,2022,,0
+A1522,Parallel Grid,EMEA,Professional Services,3,2022,,0
+A1523,Silverline Cloud,EMEA,Retail,4,2021,,0
+A1524,Silverline Systems Inc,EMEA,Professional Services,3,2022,,0
+A1525,Aurora Dynamics Inc,EMEA,Retail,3,2022,,0
+A1526,Parallel Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1527,Northwind Labs Inc,AMER,Manufacturing,3,2022,,0
+A1528,Silverline Dynamics Inc,EMEA,Professional Services,3,2022,,0
+A1529,Northwind Systems,AMER,Professional Services,3,2022,,0
+A1530,Vertex Dynamics,EMEA,Retail,3,2022,,0
+A1531,Vertex Dynamics,EMEA,Professional Services,3,2022,,0
+A1532,Northwind Dynamics,AMER,Financial Services,3,2022,,0
+A1533,Aurora Systems,APAC,Manufacturing,1,2024,,0
+A1534,Silverline Bridge,EMEA,Retail,3,2022,,0
+A1535,Granite Works,EMEA,Manufacturing,4,2021,,0
+A1536,Meridian Logic Inc,APAC,Manufacturing,3,2022,,0
+A1537,Aurora Cloud,EMEA,Retail,3,2022,,0
+A1538,Silverline Grid,APAC,Retail,3,2022,,0
+A1539,Meridian Labs Inc,APAC,Manufacturing,3,2022,,0
+A1540,Granite Labs Inc,EMEA,Professional Services,3,2022,,0
+A1541,Meridian Labs,APAC,Retail,3,2022,,0
+A1542,Vertex Cloud Inc,APAC,Professional Services,5,2020,,0
+A1543,Meridian Grid,EMEA,Retail,3,2022,,0
+A1544,BluePeak Logic,AMER,Financial Services,3,2022,,0
+A1545,Meridian Systems Inc,AMER,Technology,3,2022,,0
+A1546,Northwind Cloud,EMEA,Healthcare,3,2022,,0
+A1547,Granite Dynamics,EMEA,Retail,3,2022,,0
+A1548,Pinnacle Bridge,AMER,Professional Services,3,2022,,0
+A1549,BluePeak Labs Inc,EMEA,Healthcare,3,2022,,0
+A1550,Cobalt Works Inc,EMEA,Financial Services,3,2022,,0
+A1551,Parallel Cloud Inc,EMEA,Healthcare,3,2022,,0
+A1552,Granite Works,EMEA,Retail,2,2023,,0
+A1553,Silverline Grid,EMEA,Retail,3,2022,,0
+A1554,Silverline Dynamics Inc,APAC,Manufacturing,3,2022,,0
+A1555,Silverline Systems Inc,EMEA,Professional Services,3,2022,,0
+A1556,Meridian Logic Inc,AMER,Professional Services,3,2022,,0
+A1557,Granite Works Inc,EMEA,Professional Services,4,2021,,0
+A1558,Vertex Bridge,APAC,Professional Services,1,2024,,0
+A1559,Granite Works,EMEA,Manufacturing,3,2022,,0
+A1560,Pinnacle Bridge Inc,EMEA,Manufacturing,3,2022,,0
+A1561,Northwind Cloud,EMEA,Manufacturing,5,2020,,0
+A1562,Northwind Grid Inc,APAC,Professional Services,3,2022,,0
+A1563,Silverline Grid,EMEA,Technology,5,2020,,0
+A1564,Aurora Works,APAC,Retail,3,2022,,0
+A1565,Pinnacle Grid Inc,EMEA,Professional Services,3,2022,,0
+A1566,Vertex Dynamics,EMEA,Retail,3,2022,,0
+A1567,Granite Labs Inc,EMEA,Healthcare,3,2022,,0
+A1568,Meridian Cloud,APAC,Retail,3,2022,,0
+A1569,Northwind Logic Inc,EMEA,Financial Services,3,2022,,0
+A1570,Vertex Labs Inc,EMEA,Manufacturing,3,2022,,0
+A1571,Silverline Cloud Inc,EMEA,Retail,1,2024,,0
+A1572,Cobalt Dynamics,EMEA,Manufacturing,4,2021,,0
+A1573,BluePeak Dynamics,EMEA,Professional Services,1,2024,,0
+A1574,Granite Cloud,EMEA,Professional Services,3,2022,,0
+A1575,Aurora Systems,APAC,Professional Services,4,2021,,0
+A1576,Parallel Systems,AMER,Financial Services,3,2022,,0
+A1577,Cobalt Works Inc,EMEA,Manufacturing,3,2022,,0
+A1578,Meridian Cloud,EMEA,Retail,5,2020,,0
+A1579,Meridian Systems,EMEA,Professional Services,3,2022,,0
+A1580,Vertex Labs Inc,EMEA,Retail,3,2022,,0
+A1581,Cobalt Bridge Inc,EMEA,Healthcare,3,2022,,0
+A1582,Vertex Cloud Inc,AMER,Manufacturing,3,2022,,0
+A1583,Aurora Systems,AMER,Professional Services,3,2022,,0
+A1584,Northwind Works Inc,APAC,Retail,3,2022,,0
+A1585,BluePeak Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1586,BluePeak Systems Inc,EMEA,Retail,3,2022,,0
+A1587,Aurora Grid,EMEA,Retail,3,2022,,0
+A1588,Cobalt Dynamics Inc,EMEA,Professional Services,3,2022,,0
+A1589,Pinnacle Systems Inc,EMEA,Healthcare,2,2023,,0
+A1590,Granite Labs Inc,EMEA,Healthcare,3,2022,,0
+A1591,Aurora Systems Inc,EMEA,Professional Services,3,2022,,0
+A1592,Pinnacle Labs,EMEA,Technology,3,2022,,0
+A1593,BluePeak Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1594,Aurora Systems,EMEA,Professional Services,3,2022,,0
+A1595,Aurora Works Inc,EMEA,Manufacturing,3,2022,,0
+A1596,Pinnacle Grid Inc,APAC,Retail,3,2022,,0
+A1597,Vertex Cloud,EMEA,Professional Services,3,2022,,0
+A1598,Cobalt Logic,EMEA,Retail,3,2022,,0
+A1599,Pinnacle Labs,AMER,Healthcare,3,2022,,0
+A1600,Meridian Grid,EMEA,Professional Services,3,2022,,0
+A1601,Pinnacle Labs,EMEA,Manufacturing,3,2022,,0
+A1602,BluePeak Grid,EMEA,Retail,3,2022,,0
+A1603,Parallel Dynamics Inc,EMEA,Professional Services,3,2022,,0
+A1604,Northwind Grid Inc,EMEA,Retail,3,2022,,0
+A1605,Silverline Systems Inc,EMEA,Manufacturing,3,2022,,0
+A1606,Northwind Works,EMEA,Manufacturing,2,2023,,0
+A1607,Pinnacle Works Inc,EMEA,Technology,3,2022,,0
+A1608,Meridian Systems,EMEA,Professional Services,2,2023,,0
+A1609,Parallel Works,EMEA,Manufacturing,3,2022,,0
+A1610,Silverline Dynamics Inc,APAC,Financial Services,2,2023,,0
+A1611,Silverline Bridge,EMEA,Professional Services,3,2022,,0
+A1612,Pinnacle Systems,EMEA,Professional Services,3,2022,,0
+A1613,BluePeak Bridge,EMEA,Retail,3,2022,,0
+A1614,BluePeak Works Inc,EMEA,Manufacturing,5,2020,,0
+A1615,Northwind Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1616,Vertex Labs,APAC,Retail,4,2021,,0
+A1617,Vertex Dynamics Inc,EMEA,Financial Services,3,2022,,0
+A1618,Silverline Systems Inc,EMEA,Financial Services,4,2021,,0
+A1619,Granite Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1620,Aurora Bridge,EMEA,Healthcare,2,2023,,0
+A1621,Silverline Logic,APAC,Professional Services,3,2022,,0
+A1622,Aurora Labs Inc,AMER,Professional Services,3,2022,,0
+A1623,Granite Dynamics,EMEA,Manufacturing,3,2022,,0
+A1624,BluePeak Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1625,Cobalt Works,AMER,Manufacturing,4,2021,,0
+A1626,Northwind Cloud,EMEA,Professional Services,3,2022,,0
+A1627,Pinnacle Systems Inc,EMEA,Retail,5,2020,,0
+A1628,BluePeak Bridge Inc,EMEA,Retail,3,2022,,0
+A1629,Cobalt Dynamics,APAC,Professional Services,1,2024,,0
+A1630,Vertex Grid,EMEA,Professional Services,4,2021,,0
+A1631,Granite Dynamics Inc,EMEA,Professional Services,5,2020,,0
+A1632,Granite Cloud,EMEA,Manufacturing,3,2022,,0
+A1633,Granite Labs Inc,EMEA,Professional Services,1,2024,,0
+A1634,BluePeak Dynamics,EMEA,Financial Services,3,2022,,0
+A1635,Silverline Labs,APAC,Retail,3,2022,,0
+A1636,Northwind Cloud Inc,AMER,Retail,3,2022,,0
+A1637,Meridian Cloud Inc,EMEA,Technology,3,2022,,0
+A1638,Meridian Labs Inc,APAC,Healthcare,3,2022,,0
+A1639,Vertex Grid,EMEA,Professional Services,3,2022,,0
+A1640,Granite Logic Inc,EMEA,Professional Services,3,2022,,0
+A1641,Vertex Labs Inc,EMEA,Professional Services,3,2022,,0
+A1642,Parallel Works,EMEA,Professional Services,4,2021,,0
+A1643,Silverline Cloud Inc,AMER,Financial Services,3,2022,,0
+A1644,Northwind Bridge,EMEA,Retail,3,2022,,0
+A1645,Parallel Dynamics,AMER,Healthcare,3,2022,,0
+A1646,Aurora Labs Inc,AMER,Healthcare,3,2022,,0
+A1647,Vertex Dynamics,EMEA,Healthcare,1,2024,,0
+A1648,Silverline Cloud,EMEA,Technology,3,2022,,0
+A1649,Cobalt Bridge,AMER,Manufacturing,3,2022,,0
+A1650,Vertex Dynamics,EMEA,Professional Services,1,2024,,0
+A1651,Meridian Logic Inc,EMEA,Professional Services,3,2022,,0
+A1652,Aurora Dynamics,APAC,Professional Services,3,2022,,0
+A1653,Vertex Bridge,APAC,Professional Services,3,2022,,0
+A1654,BluePeak Works,AMER,Manufacturing,3,2022,,0
+A1655,Silverline Dynamics Inc,EMEA,Professional Services,1,2024,,0
+A1656,Granite Cloud Inc,EMEA,Retail,3,2022,,0
+A1657,Aurora Systems,EMEA,Healthcare,3,2022,,0
+A1658,Northwind Systems,APAC,Healthcare,5,2020,,0
+A1659,Meridian Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1660,Meridian Grid,EMEA,Healthcare,1,2024,,0
+A1661,Aurora Systems Inc,EMEA,Retail,4,2021,,0
+A1662,Aurora Works Inc,EMEA,Healthcare,3,2022,,0
+A1663,Meridian Grid,APAC,Professional Services,3,2022,,0
+A1664,Meridian Labs Inc,AMER,Technology,3,2022,,0
+A1665,Parallel Systems Inc,EMEA,Retail,3,2022,,0
+A1666,Pinnacle Systems,EMEA,Healthcare,1,2024,,0
+A1667,Cobalt Logic Inc,EMEA,Technology,3,2022,,0
+A1668,Cobalt Systems,EMEA,Retail,3,2022,,0
+A1669,Granite Logic,APAC,Healthcare,3,2022,,0
+A1670,Granite Bridge,APAC,Manufacturing,3,2022,,0
+A1671,Vertex Cloud Inc,EMEA,Professional Services,3,2022,,0
+A1672,Pinnacle Logic,EMEA,Retail,3,2022,,0
+A1673,Northwind Bridge Inc,EMEA,Manufacturing,3,2022,,0
+A1674,Northwind Systems,EMEA,Financial Services,1,2024,,0
+A1675,Northwind Cloud,AMER,Manufacturing,3,2022,,0
+A1676,Northwind Bridge,EMEA,Manufacturing,3,2022,,0
+A1677,Parallel Bridge,AMER,Professional Services,3,2022,,0
+A1678,BluePeak Systems Inc,EMEA,Manufacturing,3,2022,,0
+A1679,Silverline Grid,AMER,Professional Services,3,2022,,0
+A1680,Parallel Labs,EMEA,Manufacturing,3,2022,,0
+A1681,Granite Logic,EMEA,Financial Services,3,2022,,0
+A1682,Pinnacle Labs,EMEA,Healthcare,3,2022,,0
+A1683,Cobalt Cloud,EMEA,Professional Services,3,2022,,0
+A1684,BluePeak Cloud Inc,EMEA,Financial Services,3,2022,,0
+A1685,Granite Labs,EMEA,Healthcare,3,2022,,0
+A1686,Meridian Logic,AMER,Technology,3,2022,,0
+A1687,Northwind Labs,APAC,Manufacturing,3,2022,,0
+A1688,Silverline Works,EMEA,Manufacturing,3,2022,,0
+A1689,Aurora Bridge,EMEA,Financial Services,3,2022,,0
+A1690,Pinnacle Systems Inc,AMER,Financial Services,3,2022,,0
+A1691,Silverline Logic,AMER,Manufacturing,3,2022,,0
+A1692,Parallel Labs,EMEA,Financial Services,3,2022,,0
+A1693,Granite Cloud,EMEA,Manufacturing,1,2024,,0
+A1694,Meridian Dynamics,EMEA,Professional Services,5,2020,,0
+A1695,BluePeak Works Inc,EMEA,Manufacturing,3,2022,,0
+A1696,Parallel Cloud Inc,APAC,Professional Services,3,2022,,0
+A1697,Pinnacle Labs Inc,EMEA,Manufacturing,3,2022,,0
+A1698,Parallel Dynamics,EMEA,Retail,3,2022,,0
+A1699,Granite Dynamics Inc,EMEA,Retail,3,2022,,0
+A1700,Parallel Labs Inc,EMEA,Professional Services,3,2022,,0
+A1701,Northwind Dynamics,EMEA,Professional Services,3,2022,,0
+A1702,Meridian Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1703,Aurora Works,EMEA,Manufacturing,2,2023,,0
+A1704,Silverline Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1705,Vertex Systems,EMEA,Technology,5,2020,,0
+A1706,Silverline Logic,AMER,Healthcare,3,2022,,0
+A1707,Pinnacle Labs Inc,APAC,Retail,3,2022,,0
+A1708,Vertex Grid,EMEA,Healthcare,3,2022,,0
+A1709,Pinnacle Logic Inc,AMER,Professional Services,3,2022,,0
+A1710,Northwind Systems,EMEA,Professional Services,3,2022,,0
+A1711,Vertex Works Inc,EMEA,Professional Services,3,2022,,0
+A1712,BluePeak Logic,APAC,Professional Services,3,2022,,0
+A1713,BluePeak Cloud,APAC,Manufacturing,3,2022,,0
+A1714,Vertex Works Inc,EMEA,Professional Services,3,2022,,0
+A1715,Northwind Labs,AMER,Professional Services,3,2022,,0
+A1716,Cobalt Bridge,EMEA,Professional Services,3,2022,,0
+A1717,Parallel Systems,AMER,Professional Services,3,2022,,0
+A1718,Meridian Dynamics,EMEA,Technology,3,2022,,0
+A1719,Aurora Systems Inc,EMEA,Professional Services,3,2022,,0
+A1720,Aurora Grid,EMEA,Technology,3,2022,,0
+A1721,Silverline Works,EMEA,Professional Services,3,2022,,0
+A1722,Northwind Works,EMEA,Financial Services,3,2022,,0
+A1723,Vertex Bridge Inc,APAC,Manufacturing,1,2024,,0
+A1724,Meridian Dynamics Inc,EMEA,Technology,2,2023,,0
+A1725,Aurora Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1726,Pinnacle Works,APAC,Professional Services,3,2022,,0
+A1727,Aurora Logic Inc,AMER,Retail,3,2022,,0
+A1728,Silverline Systems,EMEA,Manufacturing,3,2022,,0
+A1729,Northwind Logic,EMEA,Technology,3,2022,,0
+A1730,Cobalt Works,EMEA,Professional Services,3,2022,,0
+A1731,Cobalt Systems Inc,EMEA,Financial Services,3,2022,,0
+A1732,Aurora Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1733,Parallel Logic,EMEA,Healthcare,2,2023,,0
+A1734,Cobalt Dynamics Inc,EMEA,Professional Services,2,2023,,0
+A1735,Granite Systems,APAC,Retail,3,2022,,0
+A1736,BluePeak Labs,EMEA,Professional Services,3,2022,,0
+A1737,Vertex Logic Inc,EMEA,Retail,3,2022,,0
+A1738,Meridian Labs,EMEA,Financial Services,3,2022,,0
+A1739,BluePeak Grid,EMEA,Manufacturing,1,2024,,0
+A1740,Meridian Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1741,Northwind Cloud,EMEA,Retail,3,2022,,0
+A1742,Vertex Bridge,EMEA,Technology,3,2022,,0
+A1743,BluePeak Grid Inc,EMEA,Manufacturing,3,2022,,0
+A1744,Aurora Cloud Inc,EMEA,Professional Services,3,2022,,0
+A1745,Parallel Works Inc,EMEA,Professional Services,3,2022,,0
+A1746,BluePeak Bridge Inc,EMEA,Professional Services,3,2022,,0
+A1747,Granite Systems Inc,EMEA,Manufacturing,3,2022,,0
+A1748,Cobalt Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1749,Northwind Systems,APAC,Retail,4,2021,,0
+A1750,Cobalt Logic Inc,EMEA,Retail,3,2022,,0
+A1751,Parallel Dynamics Inc,EMEA,Professional Services,1,2024,,0
+A1752,Aurora Dynamics Inc,EMEA,Manufacturing,3,2022,,0
+A1753,Aurora Systems Inc,EMEA,Manufacturing,4,2021,,0
+A1754,Pinnacle Works,APAC,Financial Services,2,2023,,0
+A1755,Meridian Bridge,EMEA,Retail,3,2022,,0
+A1756,Parallel Works,EMEA,Financial Services,3,2022,,0
+A1757,BluePeak Bridge Inc,EMEA,Retail,2,2023,,0
+A1758,Meridian Systems Inc,AMER,Retail,3,2022,,0
+A1759,Pinnacle Logic Inc,EMEA,Professional Services,4,2021,,0
+A1760,Meridian Bridge Inc,APAC,Retail,3,2022,,0
+A1761,Pinnacle Dynamics Inc,APAC,Retail,3,2022,,0
+A1762,Silverline Labs Inc,AMER,Technology,3,2022,,0
+A1763,Granite Systems,EMEA,Professional Services,1,2024,,0
+A1764,Parallel Grid,EMEA,Manufacturing,3,2022,,0
+A1765,Granite Works Inc,EMEA,Financial Services,5,2020,,0
+A1766,BluePeak Dynamics,EMEA,Manufacturing,3,2022,,0
+A1767,Northwind Works,EMEA,Financial Services,3,2022,,0
+A1768,Meridian Cloud,APAC,Professional Services,5,2020,,0
+A1769,Parallel Works,EMEA,Manufacturing,3,2022,,0
+A1770,Aurora Systems Inc,AMER,Technology,3,2022,,0
+A1771,Silverline Dynamics Inc,EMEA,Technology,3,2022,,0
+A1772,BluePeak Cloud Inc,EMEA,Retail,3,2022,,0
+A1773,Granite Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1774,Northwind Cloud,APAC,Manufacturing,2,2023,,0
+A1775,Vertex Systems Inc,EMEA,Healthcare,3,2022,,0
+A1776,Vertex Grid,EMEA,Professional Services,3,2022,,0
+A1777,Meridian Bridge,EMEA,Healthcare,3,2022,,0
+A1778,Silverline Works Inc,APAC,Retail,3,2022,,0
+A1779,Cobalt Grid Inc,EMEA,Professional Services,4,2021,,0
+A1780,Silverline Labs,EMEA,Professional Services,3,2022,,0
+A1781,BluePeak Grid,AMER,Financial Services,3,2022,,0
+A1782,Silverline Works Inc,EMEA,Retail,3,2022,,0
+A1783,Meridian Systems Inc,EMEA,Technology,1,2024,,0
+A1784,Meridian Logic Inc,EMEA,Manufacturing,3,2022,,0
+A1785,BluePeak Bridge,EMEA,Retail,3,2022,,0
+A1786,BluePeak Labs Inc,EMEA,Healthcare,3,2022,,0
+A1787,Northwind Logic,AMER,Professional Services,3,2022,,0
+A1788,Pinnacle Labs,EMEA,Manufacturing,3,2022,,0
+A1789,Silverline Labs,EMEA,Technology,3,2022,,0
+A1790,Meridian Logic,EMEA,Retail,3,2022,,0
+A1791,Cobalt Systems,APAC,Technology,3,2022,,0
+A1792,Northwind Cloud Inc,EMEA,Manufacturing,3,2022,,0
+A1793,Cobalt Labs,AMER,Manufacturing,3,2022,,0
+A1794,Pinnacle Works Inc,AMER,Financial Services,3,2022,,0
+A1795,Parallel Cloud,AMER,Manufacturing,3,2023,,0
+A1796,Vertex Works Inc,EMEA,Retail,3,2023,,0
+A1797,Northwind Works Inc,EMEA,Retail,2,2024,,0
+A1798,Aurora Labs Inc,APAC,Retail,3,2023,,0
+A1799,BluePeak Cloud,EMEA,Manufacturing,3,2023,,0
+A1800,Aurora Dynamics,EMEA,Retail,3,2023,,0
+A1801,BluePeak Bridge,APAC,Healthcare,3,2023,,0
+A1802,Pinnacle Dynamics Inc,EMEA,Healthcare,3,2023,,0
+A1803,Aurora Bridge,EMEA,Retail,3,2023,,0
+A1804,Pinnacle Works,EMEA,Professional Services,3,2023,,0
+A1805,Granite Dynamics Inc,AMER,Technology,3,2023,,0
+A1806,Meridian Systems Inc,EMEA,Professional Services,3,2023,,0
+A1807,Vertex Works Inc,EMEA,Technology,3,2023,,0
+A1808,Vertex Dynamics,EMEA,Professional Services,3,2023,,0
+A1809,Meridian Works,EMEA,Manufacturing,3,2023,,0
+A1810,BluePeak Bridge Inc,AMER,Professional Services,3,2023,,0
+A1811,Parallel Cloud Inc,EMEA,Professional Services,3,2023,,0
+A1812,BluePeak Cloud,AMER,Professional Services,3,2023,,0
+A1813,Vertex Bridge,AMER,Manufacturing,3,2023,,0
+A1814,Vertex Cloud,EMEA,Professional Services,3,2023,,0
+A1815,Aurora Labs Inc,EMEA,Professional Services,3,2023,,0
+A1816,BluePeak Cloud,EMEA,Professional Services,2,2024,,0
+A1817,Northwind Dynamics,APAC,Retail,3,2023,,0
+A1818,Meridian Systems,EMEA,Retail,5,2021,,0
+A1819,Granite Dynamics,EMEA,Manufacturing,3,2023,,0
+A1820,Granite Bridge,EMEA,Manufacturing,2,2024,,0
+A1821,Vertex Logic Inc,EMEA,Retail,3,2023,,0
+A1822,Meridian Bridge Inc,EMEA,Professional Services,3,2023,,0
+A1823,Silverline Labs Inc,AMER,Manufacturing,3,2023,,0
+A1824,Vertex Bridge Inc,EMEA,Manufacturing,3,2023,,0
+A1825,Northwind Labs,EMEA,Professional Services,4,2022,,0
+A1826,Silverline Works,EMEA,Manufacturing,3,2023,,0
+A1827,Cobalt Works,EMEA,Healthcare,3,2023,,0
+A1828,Cobalt Systems Inc,AMER,Financial Services,3,2023,,0
+A1829,Aurora Dynamics Inc,APAC,Professional Services,5,2021,,0
+A1830,Pinnacle Labs Inc,EMEA,Manufacturing,3,2023,,0
+A1831,Granite Systems,AMER,Manufacturing,3,2023,,0
+A1832,Pinnacle Grid,EMEA,Professional Services,3,2023,,0
+A1833,Pinnacle Works,EMEA,Retail,3,2023,,0
+A1834,Silverline Systems,AMER,Professional Services,3,2023,,0
+A1835,Northwind Bridge,EMEA,Retail,3,2023,,0
+A1836,Vertex Dynamics,EMEA,Professional Services,3,2023,,0
+A1837,Cobalt Bridge,EMEA,Manufacturing,3,2023,,0
+A1838,Granite Dynamics,EMEA,Manufacturing,4,2022,,0
+A1839,Parallel Labs,EMEA,Professional Services,3,2023,,0
+A1840,Granite Bridge Inc,EMEA,Professional Services,2,2024,,0
+A1841,Pinnacle Bridge Inc,AMER,Healthcare,3,2023,,0
+A1842,Northwind Cloud,AMER,Manufacturing,3,2023,,0
+A1843,Vertex Cloud Inc,AMER,Manufacturing,1,2025,,0
+A1844,Pinnacle Labs,EMEA,Professional Services,3,2023,,0
+A1845,Aurora Works,EMEA,Manufacturing,5,2021,,0
+A1846,Meridian Systems Inc,EMEA,Professional Services,3,2023,,0
+A1847,Granite Bridge,EMEA,Financial Services,3,2023,,0
+A1848,Parallel Bridge,AMER,Professional Services,3,2023,,0
+A1849,Pinnacle Works,EMEA,Retail,3,2023,,0
+A1850,Silverline Bridge,EMEA,Professional Services,3,2023,,0
+A1851,Northwind Systems Inc,EMEA,Retail,3,2023,,0
+A1852,Northwind Cloud Inc,APAC,Professional Services,3,2023,,0
+A1853,Granite Works,APAC,Professional Services,3,2023,,0
+A1854,Pinnacle Systems Inc,EMEA,Manufacturing,3,2023,,0
+A1855,Pinnacle Logic,APAC,Retail,3,2023,,0
+A1856,Granite Grid,EMEA,Manufacturing,3,2023,,0
+A1857,Cobalt Grid,EMEA,Professional Services,3,2023,,0
+A1858,Northwind Works Inc,EMEA,Retail,3,2023,,0
+A1859,BluePeak Dynamics,EMEA,Healthcare,3,2023,,0
+A1860,Silverline Grid,EMEA,Manufacturing,4,2022,,0
+A1861,Granite Bridge Inc,EMEA,Professional Services,3,2023,,0
+A1862,Vertex Dynamics,EMEA,Retail,3,2023,,0
+A1863,Cobalt Grid,EMEA,Healthcare,3,2023,,0
+A1864,Silverline Cloud,APAC,Manufacturing,3,2023,,0
+A1865,Aurora Grid,EMEA,Professional Services,3,2023,,0
+A1866,Aurora Labs,APAC,Financial Services,2,2024,,0
+A1867,Vertex Bridge,AMER,Professional Services,3,2023,,0
+A1868,Meridian Labs Inc,EMEA,Retail,3,2023,,0
+A1869,Pinnacle Bridge,EMEA,Retail,3,2023,,0
+A1870,Silverline Labs Inc,EMEA,Retail,3,2023,,0
+A1871,Meridian Dynamics,AMER,Retail,4,2022,,0
+A1872,Silverline Cloud,EMEA,Retail,3,2023,,0
+A1873,Parallel Cloud,EMEA,Retail,3,2023,,0
+A1874,Northwind Bridge Inc,AMER,Financial Services,3,2023,,0
+A1875,BluePeak Cloud Inc,EMEA,Manufacturing,5,2021,,0
+A1876,Aurora Dynamics,EMEA,Professional Services,3,2023,,0
+A1877,Vertex Dynamics Inc,APAC,Retail,3,2023,,0
+A1878,Granite Bridge Inc,EMEA,Manufacturing,3,2023,,0
+A1879,Parallel Works,EMEA,Professional Services,3,2023,,0
+A1880,Silverline Logic,EMEA,Professional Services,3,2023,,0
+A1881,Silverline Labs,AMER,Professional Services,3,2023,,0
+A1882,Meridian Logic,AMER,Manufacturing,3,2023,,0
+A1883,Vertex Systems,EMEA,Professional Services,3,2023,,0
+A1884,Meridian Works,EMEA,Retail,3,2023,,0
+A1885,Pinnacle Grid,EMEA,Financial Services,3,2023,,0
+A1886,Silverline Cloud Inc,EMEA,Retail,3,2023,,0
+A1887,Meridian Logic Inc,EMEA,Retail,3,2023,,0
+A1888,Meridian Bridge,EMEA,Manufacturing,5,2021,,0
+A1889,Meridian Logic,EMEA,Retail,2,2024,,0
+A1890,Granite Systems Inc,EMEA,Retail,3,2023,,0
+A1891,Pinnacle Systems,AMER,Retail,3,2023,,0
+A1892,BluePeak Cloud,EMEA,Retail,5,2021,,0
+A1893,Cobalt Dynamics Inc,AMER,Financial Services,3,2023,,0
+A1894,Granite Works,EMEA,Manufacturing,3,2023,,0
+A1895,Pinnacle Cloud Inc,EMEA,Healthcare,3,2023,,0
+A1896,Meridian Works,EMEA,Manufacturing,3,2023,,0
+A1897,Aurora Bridge Inc,EMEA,Technology,3,2023,,0
+A1898,Silverline Systems,EMEA,Retail,3,2023,,0
+A1899,Parallel Logic,EMEA,Professional Services,3,2023,,0
+A1900,Pinnacle Logic,EMEA,Retail,3,2023,,0
+A1901,Cobalt Bridge Inc,APAC,Professional Services,2,2024,,0
+A1902,Silverline Logic Inc,EMEA,Manufacturing,2,2024,,0
+A1903,Aurora Cloud,EMEA,Financial Services,3,2023,,0
+A1904,Pinnacle Cloud,EMEA,Manufacturing,3,2023,,0
+A1905,Granite Dynamics,EMEA,Healthcare,3,2023,,0
+A1906,Silverline Systems,EMEA,Manufacturing,3,2023,,0
+A1907,BluePeak Works Inc,AMER,Professional Services,3,2023,,0
+A1908,Parallel Bridge Inc,EMEA,Retail,5,2021,,0
+A1909,Parallel Systems,EMEA,Retail,5,2021,,0
+A1910,Silverline Labs Inc,APAC,Financial Services,3,2023,,0
+A1911,Parallel Logic Inc,EMEA,Retail,3,2023,,0
+A1912,Parallel Grid Inc,APAC,Retail,3,2023,,0
+A1913,Northwind Labs,EMEA,Financial Services,3,2023,,0
+A1914,Meridian Grid,EMEA,Professional Services,4,2022,,0
+A1915,Cobalt Grid Inc,EMEA,Retail,3,2023,,0
+A1916,Granite Bridge,AMER,Retail,3,2023,,0
+A1917,Parallel Logic,APAC,Technology,4,2022,,0
+A1918,Aurora Logic Inc,EMEA,Retail,1,2025,,0
+A1919,Cobalt Cloud Inc,AMER,Manufacturing,3,2023,,0
+A1920,Meridian Grid Inc,EMEA,Financial Services,3,2023,,0
+A1921,Cobalt Systems,APAC,Professional Services,3,2023,,0
+A1922,Vertex Cloud,AMER,Retail,3,2023,,0
+A1923,Cobalt Grid,EMEA,Healthcare,3,2023,,0
+A1924,Northwind Grid,AMER,Financial Services,4,2022,,0
+A1925,Aurora Logic Inc,APAC,Retail,3,2023,,0
+A1926,Granite Cloud Inc,EMEA,Professional Services,3,2023,,0
+A1927,Northwind Labs Inc,EMEA,Manufacturing,3,2023,,0
+A1928,BluePeak Cloud,EMEA,Manufacturing,2,2024,,0
+A1929,Northwind Systems Inc,APAC,Professional Services,3,2023,,0
+A1930,Aurora Systems,EMEA,Technology,3,2023,,0
+A1931,Northwind Works,EMEA,Manufacturing,3,2023,,0
+A1932,Silverline Systems,APAC,Manufacturing,2,2024,,0
+A1933,Meridian Labs,AMER,Professional Services,3,2023,,0
+A1934,Silverline Dynamics Inc,EMEA,Manufacturing,3,2023,,0
+A1935,Northwind Works,APAC,Manufacturing,3,2023,,0
+A1936,Vertex Logic Inc,EMEA,Manufacturing,3,2023,,0
+A1937,Aurora Logic Inc,EMEA,Professional Services,3,2023,,0
+A1938,Silverline Logic Inc,AMER,Manufacturing,3,2023,,0
+A1939,Vertex Logic Inc,EMEA,Technology,3,2023,,0
+A1940,Parallel Systems,EMEA,Technology,3,2023,,0
+A1941,BluePeak Grid,EMEA,Manufacturing,3,2023,,0
+A1942,Aurora Bridge,AMER,Retail,3,2023,,0
+A1943,Pinnacle Bridge,EMEA,Financial Services,3,2023,,0
+A1944,Pinnacle Logic,EMEA,Healthcare,3,2023,,0
+A1945,Northwind Dynamics,EMEA,Financial Services,3,2023,,0
+A1946,Meridian Cloud,EMEA,Financial Services,3,2023,,0
+A1947,Parallel Labs Inc,EMEA,Financial Services,1,2025,,0
+A1948,Pinnacle Logic,AMER,Manufacturing,3,2023,,0
+A1949,Silverline Works Inc,AMER,Professional Services,3,2023,,0
+A1950,Granite Grid Inc,EMEA,Retail,3,2023,,0
+A1951,Granite Bridge Inc,EMEA,Retail,3,2023,,0
+A1952,Granite Bridge Inc,EMEA,Retail,3,2023,,0
+A1953,Cobalt Labs Inc,EMEA,Manufacturing,3,2023,,0
+A1954,Granite Systems,APAC,Manufacturing,3,2023,,0
+A1955,Silverline Grid,EMEA,Manufacturing,3,2023,,0
+A1956,Meridian Dynamics,APAC,Healthcare,3,2023,,0
+A1957,Parallel Logic Inc,EMEA,Professional Services,4,2022,,0
+A1958,Aurora Logic Inc,APAC,Retail,3,2023,,0
+A1959,Parallel Dynamics Inc,EMEA,Professional Services,3,2023,,0
+A1960,Aurora Dynamics,EMEA,Professional Services,3,2023,,0
+A1961,Cobalt Works,EMEA,Professional Services,4,2022,,0
+A1962,BluePeak Labs,EMEA,Manufacturing,3,2023,,0
+A1963,Silverline Works,APAC,Professional Services,3,2023,,0
+A1964,Aurora Grid Inc,APAC,Retail,1,2025,,0
+A1965,Aurora Works,EMEA,Manufacturing,4,2022,,0
+A1966,Parallel Systems,EMEA,Retail,3,2023,,0
+A1967,Meridian Labs,EMEA,Healthcare,3,2023,,0
+A1968,Meridian Grid,EMEA,Manufacturing,3,2023,,0
+A1969,Meridian Dynamics,EMEA,Professional Services,3,2023,,0
+A1970,Meridian Grid Inc,AMER,Retail,4,2022,,0
+A1971,Parallel Cloud Inc,EMEA,Manufacturing,3,2023,,0
+A1972,Parallel Grid Inc,EMEA,Financial Services,3,2023,,0
+A1973,Parallel Dynamics Inc,AMER,Manufacturing,3,2023,,0
+A1974,Cobalt Logic,EMEA,Retail,3,2023,,0
+A1975,Meridian Bridge,APAC,Retail,2,2024,,0
+A1976,BluePeak Works Inc,EMEA,Technology,3,2023,,0
+A1977,BluePeak Works,EMEA,Professional Services,2,2024,,0
+A1978,Parallel Logic,AMER,Retail,3,2023,,0
+A1979,Pinnacle Dynamics,EMEA,Healthcare,3,2023,,0
+A1980,Aurora Labs Inc,EMEA,Technology,3,2023,,0
+A1981,Aurora Grid,EMEA,Professional Services,3,2023,,0
+A1982,Aurora Systems Inc,EMEA,Financial Services,3,2023,,0
+A1983,Granite Labs,EMEA,Manufacturing,3,2023,,0
+A1984,Meridian Bridge Inc,EMEA,Healthcare,3,2023,,0
+A1985,Pinnacle Works,EMEA,Professional Services,3,2023,,0
+A1986,Granite Dynamics,EMEA,Manufacturing,4,2022,,0
+A1987,Silverline Labs,EMEA,Manufacturing,3,2023,,0
+A1988,Meridian Grid Inc,EMEA,Manufacturing,3,2023,,0
+A1989,Vertex Bridge Inc,EMEA,Manufacturing,3,2023,,0
+A1990,Silverline Works Inc,EMEA,Technology,3,2023,,0
+A1991,BluePeak Systems Inc,EMEA,Healthcare,3,2023,,0
+A1992,Cobalt Logic Inc,AMER,Financial Services,3,2023,,0
+A1993,Northwind Systems Inc,EMEA,Manufacturing,3,2023,,0
+A1994,Meridian Dynamics,EMEA,Healthcare,3,2023,,0
+A1995,BluePeak Dynamics,EMEA,Manufacturing,5,2021,,0
+A1996,Aurora Bridge Inc,AMER,Retail,3,2023,,0
+A1997,Cobalt Logic,EMEA,Healthcare,3,2023,,0
+A1998,BluePeak Works,AMER,Technology,3,2023,,0
+A1999,Parallel Labs,EMEA,Professional Services,3,2023,,0
+A2000,Pinnacle Labs,EMEA,Professional Services,3,2023,,0
+A2001,Northwind Logic,AMER,Manufacturing,3,2023,,0
+A2002,Meridian Dynamics,EMEA,Manufacturing,3,2023,,0
+A2003,Meridian Works,EMEA,Technology,3,2023,,0
+A2004,Meridian Systems,EMEA,Retail,3,2023,,0
+A2005,Vertex Works,EMEA,Retail,3,2023,,0
+A2006,Meridian Labs Inc,APAC,Professional Services,3,2023,,0
+A2007,Parallel Logic Inc,EMEA,Retail,3,2023,,0
+A2008,Parallel Dynamics,EMEA,Healthcare,3,2023,,0
+A2009,Vertex Bridge Inc,EMEA,Manufacturing,3,2023,,0
+A2010,BluePeak Works,APAC,Manufacturing,3,2023,,0
+A2011,Silverline Labs Inc,EMEA,Retail,3,2023,,0
+A2012,Meridian Dynamics Inc,EMEA,Professional Services,3,2023,,0
+A2013,Parallel Cloud,EMEA,Professional Services,3,2023,,0
+A2014,Meridian Bridge Inc,EMEA,Manufacturing,3,2023,,0
+A2015,Pinnacle Cloud Inc,APAC,Manufacturing,3,2023,,0
+A2016,Northwind Labs,EMEA,Manufacturing,5,2021,,0
+A2017,Parallel Labs Inc,EMEA,Professional Services,2,2024,,0
+A2018,Granite Cloud Inc,APAC,Professional Services,3,2023,,0
+A2019,Pinnacle Labs,EMEA,Manufacturing,3,2023,,0
+A2020,Meridian Systems,EMEA,Manufacturing,3,2023,,0
+A2021,Northwind Works Inc,EMEA,Professional Services,3,2023,,0
+A2022,Granite Dynamics Inc,AMER,Technology,3,2023,,0
+A2023,Northwind Cloud,AMER,Professional Services,3,2023,,0
+A2024,Aurora Logic Inc,AMER,Manufacturing,3,2023,,0
+A2025,Parallel Labs,EMEA,Manufacturing,3,2023,,0
+A2026,Granite Works,EMEA,Retail,3,2023,,0
+A2027,BluePeak Dynamics Inc,EMEA,Retail,4,2022,,0
+A2028,Granite Labs,APAC,Manufacturing,3,2023,,0
+A2029,Pinnacle Systems,EMEA,Retail,3,2023,,0
+A2030,Vertex Grid Inc,APAC,Financial Services,5,2021,,0
+A2031,Silverline Grid Inc,AMER,Healthcare,3,2023,,0
+A2032,Northwind Grid,EMEA,Healthcare,3,2023,,0
+A2033,BluePeak Works,APAC,Retail,3,2023,,0
+A2034,Parallel Cloud,EMEA,Financial Services,3,2023,,0
+A2035,Granite Grid,EMEA,Manufacturing,5,2021,,0
+A2036,Vertex Cloud,APAC,Professional Services,3,2023,,0
+A2037,Parallel Cloud,APAC,Professional Services,3,2023,,0
+A2038,Vertex Works Inc,EMEA,Professional Services,3,2023,,0
+A2039,Cobalt Logic,EMEA,Retail,3,2023,,0
+A2040,Pinnacle Cloud,EMEA,Professional Services,3,2023,,0
+A2041,Granite Grid Inc,EMEA,Professional Services,5,2021,,0
+A2042,Silverline Grid,EMEA,Retail,1,2025,,0
+A2043,Granite Grid Inc,EMEA,Healthcare,3,2023,,0
+A2044,Pinnacle Systems,AMER,Manufacturing,2,2024,,0
+A2045,Cobalt Logic,AMER,Retail,5,2021,,0
+A2046,BluePeak Works Inc,EMEA,Manufacturing,3,2023,,0
+A2047,BluePeak Dynamics Inc,EMEA,Manufacturing,3,2023,,0
+A2048,Aurora Systems Inc,EMEA,Financial Services,3,2023,,0
+A2049,Northwind Dynamics,AMER,Professional Services,3,2023,,0
+A2050,Cobalt Works Inc,EMEA,Technology,3,2023,,0
+A2051,Aurora Labs Inc,EMEA,Financial Services,3,2023,,0
+A2052,BluePeak Works Inc,EMEA,Professional Services,3,2023,,0
+A2053,Cobalt Systems,EMEA,Manufacturing,3,2023,,0
+A2054,Northwind Grid Inc,APAC,Professional Services,3,2023,,0
+A2055,BluePeak Systems,AMER,Manufacturing,4,2022,,0
+A2056,Meridian Dynamics Inc,EMEA,Manufacturing,3,2023,,0
+A2057,BluePeak Systems,EMEA,Professional Services,4,2022,,0
+A2058,Parallel Bridge,EMEA,Professional Services,3,2023,,0
+A2059,Meridian Cloud,APAC,Retail,5,2021,,0
+A2060,BluePeak Systems Inc,EMEA,Manufacturing,3,2023,,0
+A2061,Vertex Cloud Inc,EMEA,Retail,3,2023,,0
+A2062,Cobalt Grid,EMEA,Professional Services,3,2023,,0
+A2063,Pinnacle Labs Inc,APAC,Retail,3,2023,,0
+A2064,Silverline Dynamics,EMEA,Professional Services,3,2023,,0
+A2065,Aurora Grid Inc,EMEA,Technology,3,2023,,0
+A2066,Pinnacle Dynamics,APAC,Professional Services,3,2023,,0
+A2067,Parallel Works Inc,EMEA,Retail,3,2023,,0
+A2068,Aurora Cloud,AMER,Technology,3,2023,,0
+A2069,Meridian Logic Inc,EMEA,Manufacturing,3,2023,,0
+A2070,Northwind Works Inc,EMEA,Healthcare,5,2021,,0
+A2071,Granite Systems,AMER,Professional Services,3,2023,,0
+A2072,Aurora Systems,EMEA,Professional Services,3,2023,,0
+A2073,Vertex Grid,EMEA,Manufacturing,3,2023,,0
+A2074,Vertex Systems Inc,EMEA,Professional Services,3,2023,,0
+A2075,Meridian Cloud,EMEA,Manufacturing,3,2023,,0
+A2076,Granite Bridge,EMEA,Manufacturing,3,2023,,0
+A2077,Vertex Labs Inc,EMEA,Retail,3,2023,,0
+A2078,Parallel Logic Inc,EMEA,Healthcare,2,2024,,0
+A2079,Granite Cloud,EMEA,Retail,3,2023,,0
+A2080,Granite Works,EMEA,Technology,3,2023,,0
+A2081,Vertex Systems,EMEA,Professional Services,3,2023,,0
+A2082,BluePeak Logic Inc,APAC,Financial Services,3,2023,,0
+A2083,Granite Bridge Inc,AMER,Professional Services,3,2023,,0
+A2084,Cobalt Labs,EMEA,Manufacturing,3,2023,,0
+A2085,Meridian Labs Inc,EMEA,Retail,3,2023,,0
+A2086,Aurora Logic,EMEA,Professional Services,3,2023,,0
+A2087,Parallel Bridge,AMER,Healthcare,3,2023,,0
+A2088,Parallel Logic,AMER,Technology,3,2023,,0
+A2089,Vertex Dynamics,EMEA,Technology,3,2023,,0
+A2090,Silverline Bridge,EMEA,Technology,3,2023,,0
+A2091,Silverline Logic,AMER,Manufacturing,2,2024,,0
+A2092,Granite Grid Inc,EMEA,Financial Services,3,2023,,0
+A2093,Aurora Grid,EMEA,Retail,3,2023,,0
+A2094,Cobalt Dynamics,EMEA,Retail,5,2021,,0
+A2095,Meridian Logic,EMEA,Retail,3,2023,,0
+A2096,Cobalt Bridge Inc,EMEA,Professional Services,3,2023,,0
+A2097,Cobalt Logic,APAC,Healthcare,4,2022,,0
+A2098,Pinnacle Cloud Inc,EMEA,Manufacturing,2,2024,,0
+A2099,Granite Works,EMEA,Financial Services,3,2023,,0
+A2100,Granite Logic Inc,EMEA,Retail,4,2022,,0
+A2101,Cobalt Cloud Inc,EMEA,Retail,1,2025,,0
+A2102,Cobalt Systems,APAC,Professional Services,4,2022,,0
+A2103,Aurora Systems,EMEA,Retail,3,2023,,0
+A2104,Cobalt Works,AMER,Healthcare,3,2023,,0
+A2105,Northwind Works,EMEA,Healthcare,3,2023,,0
+A2106,Northwind Cloud,EMEA,Manufacturing,3,2023,,0
+A2107,Cobalt Grid,AMER,Professional Services,3,2023,,0
+A2108,Cobalt Cloud Inc,EMEA,Retail,3,2023,,0
+A2109,Vertex Cloud Inc,EMEA,Professional Services,4,2022,,0
+A2110,Silverline Logic,EMEA,Retail,3,2023,,0
+A2111,BluePeak Works,EMEA,Healthcare,3,2023,,0
+A2112,Northwind Cloud,EMEA,Technology,3,2023,,0
+A2113,Pinnacle Logic Inc,EMEA,Manufacturing,3,2023,,0
+A2114,Parallel Cloud Inc,EMEA,Manufacturing,3,2023,,0
+A2115,Meridian Logic Inc,EMEA,Retail,4,2022,,0
+A2116,Northwind Grid,EMEA,Professional Services,3,2023,,0
+A2117,Northwind Dynamics Inc,EMEA,Manufacturing,3,2023,,0
+A2118,Parallel Dynamics Inc,AMER,Technology,3,2023,,0
+A2119,Pinnacle Dynamics,EMEA,Healthcare,3,2023,,0
+A2120,Pinnacle Logic,APAC,Retail,3,2023,,0
+A2121,Cobalt Bridge Inc,EMEA,Financial Services,3,2023,,0
+A2122,BluePeak Bridge,EMEA,Financial Services,3,2023,,0
+A2123,Meridian Cloud,EMEA,Manufacturing,3,2023,,0
+A2124,Granite Works Inc,AMER,Retail,3,2023,,0
+A2125,BluePeak Grid Inc,APAC,Healthcare,3,2023,,0
+A2126,Parallel Labs,APAC,Manufacturing,3,2023,,0
+A2127,Meridian Labs,EMEA,Financial Services,3,2023,,0
+A2128,BluePeak Logic Inc,EMEA,Financial Services,3,2023,,0
+A2129,Parallel Grid Inc,EMEA,Retail,3,2023,,0
+A2130,BluePeak Labs,EMEA,Manufacturing,4,2022,,0
+A2131,Aurora Systems Inc,APAC,Healthcare,4,2022,,0
+A2132,Silverline Dynamics,AMER,Healthcare,3,2023,,0
+A2133,Pinnacle Logic Inc,EMEA,Retail,3,2023,,0
+A2134,Pinnacle Grid,EMEA,Manufacturing,5,2021,,0

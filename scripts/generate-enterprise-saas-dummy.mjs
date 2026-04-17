@@ -4,7 +4,8 @@
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
- * Also writes cx/product_usage.csv (usage_tier by active quarter), cx/customer_satisfaction.csv (CSAT + NPS),
+ * Also writes cx/product_usage.csv (usage_tier per account × fiscal_quarter × product_line),
+ * cx/customer_satisfaction.csv (CSAT + NPS at the same grain),
  * merged crm/deal_data.csv (renewals + new ACV + account_vertical), finance/finance_summary.csv,
  * support/support_summary.csv, plus deal-data-dashboard.html.
  *
@@ -1605,34 +1606,49 @@ function main() {
       if (!isActiveInQuarter(a.renewal_fiscal_quarter, q, renewed)) continue;
       const quartersUntilRenewal =
         churned && ir >= 0 ? Math.max(0, ir - qi) : null;
-      const tier = sampleUsageTier(rnd, {
-        churned,
-        quartersUntilRenewal,
-      });
-      const csat = sampleCsat(rnd, tier);
-      const nps = sampleNps(rnd, csat);
-      productUsageRows.push({
-        account_id: a.account_id,
-        fiscal_quarter: q,
-        usage_tier: tier,
-      });
-      satisfactionRows.push({
-        account_id: a.account_id,
-        fiscal_quarter: q,
-        csat_score: csat,
-        nps_score: nps,
-      });
+      for (const product_line of PRODUCT_LINES) {
+        const tier = sampleUsageTier(rnd, {
+          churned,
+          quartersUntilRenewal,
+        });
+        const csat = sampleCsat(rnd, tier);
+        const nps = sampleNps(rnd, csat);
+        productUsageRows.push({
+          account_id: a.account_id,
+          fiscal_quarter: q,
+          product_line,
+          usage_tier: tier,
+        });
+        satisfactionRows.push({
+          account_id: a.account_id,
+          fiscal_quarter: q,
+          product_line,
+          csat_score: csat,
+          nps_score: nps,
+        });
+      }
     }
   }
 
   writeFileSync(
     join(OUT, "cx", "product_usage.csv"),
-    toCsv(productUsageRows, ["account_id", "fiscal_quarter", "usage_tier"]),
+    toCsv(productUsageRows, [
+      "account_id",
+      "fiscal_quarter",
+      "product_line",
+      "usage_tier",
+    ]),
   );
 
   writeFileSync(
     join(OUT, "cx", "customer_satisfaction.csv"),
-    toCsv(satisfactionRows, ["account_id", "fiscal_quarter", "csat_score", "nps_score"]),
+    toCsv(satisfactionRows, [
+      "account_id",
+      "fiscal_quarter",
+      "product_line",
+      "csat_score",
+      "nps_score",
+    ]),
   );
 
   const { wonNewDeals } = buildWonNewDeals(allRenewals, rnd, CUSTOMER_COUNT, idPad);
