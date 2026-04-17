@@ -664,27 +664,41 @@ function OutlineBranch({
   depth,
   isBranchExpanded,
   onToggleBranch,
+  isLast = false,
+  hasParentTrunk = false,
 }: {
   node: OutlineNode;
   states: Record<string, NodeState>;
   depth: number;
   isBranchExpanded: (id: string, depth: number, hasChildren: boolean) => boolean;
   onToggleBranch: (id: string, depth: number, hasChildren: boolean) => void;
+  isLast?: boolean;
+  hasParentTrunk?: boolean;
 }) {
   const hasKids = Boolean(node.children?.length);
   const expanded = isBranchExpanded(node.id, depth, hasKids);
   const state = states[node.id];
 
   return (
-    <li
-      className={[
-        "relative list-none m-0 p-0",
-        // If this is the last sibling, mask the parent trunk below this node's connector
-        // so the line visibly terminates at the final branch rather than trailing past it.
-        // bg-white matches the tree panel background.
-        "last:before:pointer-events-none last:before:absolute last:before:-left-5 last:before:top-5 last:before:bottom-0 last:before:w-1 last:before:bg-white last:before:content-['']",
-      ].join(" ")}
-    >
+    <li className="relative list-none m-0 p-0">
+      {/*
+        If this is the last sibling under a parent trunk, mask the trunk line
+        below this node's horizontal connector so it visually terminates here
+        instead of trailing past the last branch.
+
+        Positioning math: our parent wrapper uses `border-l-2` + `pl-5` (20px),
+        so the trunk border sits at wrapper-x 0..2 while our li's content begins
+        at wrapper-x 22. We therefore need the mask at li-x ≈ -22 with enough
+        width to fully cover the 2px border (a few px of buffer helps on
+        sub-pixel rounding).
+      */}
+      {isLast && hasParentTrunk ? (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute bg-white"
+          style={{ left: "-24px", top: "20px", bottom: 0, width: "8px" }}
+        />
+      ) : null}
       {/*
         Horizontal connector from the parent trunk into this node's card.
         Parent wrappers all use `pl-5` (20px) so the trunk sits at content-x=-20.
@@ -842,7 +856,7 @@ function OutlineBranch({
       {hasKids && expanded && node.children ? (
         <div className="relative ml-[0.875rem] border-l-2 border-zinc-200 pl-5 pt-4">
           <ul className="m-0 list-none space-y-4 p-0">
-            {node.children.map((c) => (
+            {node.children.map((c, i) => (
               <OutlineBranch
                 key={c.id}
                 node={c}
@@ -850,6 +864,8 @@ function OutlineBranch({
                 depth={depth + 1}
                 isBranchExpanded={isBranchExpanded}
                 onToggleBranch={onToggleBranch}
+                isLast={i === node.children!.length - 1}
+                hasParentTrunk={true}
               />
             ))}
           </ul>
@@ -1738,7 +1754,7 @@ export function StrategyConsole() {
                   </button>
                 </div>
                 <ul className="m-0 min-w-0 list-none space-y-4 p-0">
-                  {roots.map((r) => (
+                  {roots.map((r, i) => (
                     <OutlineBranch
                       key={r.id}
                       node={r}
@@ -1746,6 +1762,8 @@ export function StrategyConsole() {
                       depth={0}
                       isBranchExpanded={isTreeBranchExpanded}
                       onToggleBranch={toggleTreeBranch}
+                      isLast={i === roots.length - 1}
+                      hasParentTrunk={true}
                     />
                   ))}
                 </ul>
