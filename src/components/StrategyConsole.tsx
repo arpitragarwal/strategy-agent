@@ -572,11 +572,14 @@ function StatusDot({ status }: { status: NodeState["status"] }) {
           : status === "skipped"
             ? "bg-slate-500"
             : "bg-zinc-500";
-  // Keep all statuses the same visual size; running pulses subtly to signal activity.
-  const pulse = status === "running" ? "animate-pulse" : "";
+  // All statuses use the same 10px core so their visual size matches.
+  // Running adds an expanding ping halo that fades out — purely additive, no fatter core.
   return (
     <span className="relative inline-flex h-3 w-3 items-center justify-center" title={status}>
-      <span className={`inline-block h-2.5 w-2.5 rounded-full ${color} ${pulse}`} />
+      {status === "running" ? (
+        <span className="pointer-events-none absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-amber-400 opacity-75" />
+      ) : null}
+      <span className={`relative inline-block h-2.5 w-2.5 rounded-full ${color}`} />
     </span>
   );
 }
