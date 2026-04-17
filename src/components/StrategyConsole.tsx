@@ -1539,7 +1539,7 @@ export function StrategyConsole() {
                   onClick={() => void sendControl("synthesize_now")}
                   className="rounded-md bg-zinc-700 hover:bg-zinc-800 text-white text-xs font-medium px-3 py-1.5"
                 >
-                  Synthesize so far
+                  Stop & synthesize
                 </button>
               </div>
               {controlMessage ? (
@@ -1571,23 +1571,16 @@ export function StrategyConsole() {
           title="Pipeline"
           cardClassName="border-zinc-200 bg-zinc-50/80"
           summaryEnd={
-            nodesTotal > 0 || (busy && runId) ? (
+            busy && runId ? (
               <div className="flex flex-wrap items-center justify-end gap-2">
-                {nodesTotal > 0 ? (
-                  <span className="text-xs font-mono text-zinc-500">
-                    nodes {nodesDone}/{nodesTotal}
-                  </span>
-                ) : null}
-                {busy && runId ? (
-                  <button
-                    type="button"
-                    onClick={() => void sendControl("synthesize_now")}
-                    title="The in-flight model call finishes first. Partial synthesis is applied at the next checkpoint between leaf batches during analysis."
-                    className="rounded-md border border-sky-300 bg-sky-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-sky-900 hover:bg-sky-100"
-                  >
-                    Synthesize so far
-                  </button>
-                ) : null}
+                <button
+                  type="button"
+                  onClick={() => void sendControl("synthesize_now")}
+                  title="The in-flight model call finishes first. Partial synthesis is applied at the next checkpoint between leaf batches during analysis."
+                  className="rounded-md border border-sky-300 bg-sky-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-sky-900 hover:bg-sky-100"
+                >
+                  Stop & synthesize
+                </button>
               </div>
             ) : null
           }
