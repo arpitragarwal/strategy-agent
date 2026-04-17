@@ -147,7 +147,7 @@ function buildQuantEnumMarkdown(): string {
   }
   lines.push("");
   lines.push(
-    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}; **crm/accounts.health_score** and **crm/deal_data.discount_pct** are numeric (not string \`eq\`).`,
+    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}; **crm/accounts.logo_acquisition_year**, **crm/deal_data.logo_acquisition_year** (same value per \`account_id\` as accounts), and **crm/deal_data.discount_pct** are numeric (not string \`eq\`).`,
   );
   lines.push("");
   return lines.join("\n");
@@ -160,14 +160,14 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/accounts.csv",
     domain: "crm",
     description:
-      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); logo_acquisition_year (calendar year of initial logo / prior anchor); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise); health_score (1–100).",
+      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); logo_acquisition_year (calendar year of initial logo / prior anchor); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise).",
   },
   {
     id: "crm/deal_data",
     relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Unified deal fact table for the window (renew + land + expand): fiscal_quarter (2025-Q1…2026-Q1, same label as CX), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd, deal_source, discount_pct (0–100; prototype mean ~50), primary_loss_reason (empty if won; else churn/loss category).",
+      "Unified deal fact table for the window (renew + land + expand): logo_acquisition_year (same integer as **crm/accounts** for that account_id), fiscal_quarter (2025-Q1…2026-Q1, same label as CX), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd, deal_source, discount_pct (0–100; prototype mean ~50), primary_loss_reason (empty if won; else churn/loss category).",
   },
   {
     id: "cx/product_usage",

@@ -465,9 +465,15 @@ function buildWonNewDeals(allRenewals, rnd, customerCount, idPad) {
 
 function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, idPad) {
   const accountsById = new Map(accountsRows.map((a) => [a.account_id, a]));
+  const logoYearFor = (accountId) => {
+    const y = accountsById.get(accountId)?.logo_acquisition_year;
+    return typeof y === "number" && Number.isFinite(y) ? y : 0;
+  };
+
   const renewalRowsFull = allRenewals.map((r) => ({
     account_id: r.account_id,
     account_name: r.account_name,
+    logo_acquisition_year: logoYearFor(r.account_id),
     fiscal_quarter: r.renewal_fiscal_quarter,
     close_date: sampleCloseDateInQuarter(r.renewal_fiscal_quarter, rnd),
     region: r.region,
@@ -497,6 +503,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
   const newAcvRows = wonNewDeals.map((d) => ({
     account_id: d.account_id,
     account_name: d.account_name,
+    logo_acquisition_year: logoYearFor(d.account_id),
     fiscal_quarter: d.fiscal_quarter,
     close_date: sampleCloseDateInQuarter(d.fiscal_quarter, rnd),
     region: d.region,
@@ -547,7 +554,6 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
       renewal_fiscal_quarter: "",
       arr_usd_current: 0,
       company_size_band: rnd() < 0.34 ? "Enterprise" : "SMB",
-      health_score: Math.max(1, Math.min(100, 38 + Math.floor(rnd() * 48))),
     };
     accountsRows.push(row);
     accountsById.set(account_id, row);
@@ -586,6 +592,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
+            logo_acquisition_year: logoYearFor(a.account_id),
             fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
@@ -602,6 +609,7 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
           lostNewAcvRows.push({
             account_id: a.account_id,
             account_name: a.account_name,
+            logo_acquisition_year: logoYearFor(a.account_id),
             fiscal_quarter: q,
             close_date: sampleCloseDateInQuarter(q, rnd),
             region: a.region,
@@ -1727,10 +1735,6 @@ function main() {
     const current = r.outcome === "renewed" ? r.booked_arr_usd : 0;
     const bigLogo = a.arr_up_for_renewal_usd >= 200_000;
     const company_size_band = rnd() < (bigLogo ? 0.68 : 0.26) ? "Enterprise" : "SMB";
-    let health_score = 52 + Math.floor(rnd() * 38);
-    if (r.outcome === "churned") health_score = Math.min(health_score, 22 + Math.floor(rnd() * 18));
-    if (r.outcome === "renewed") health_score = Math.max(health_score, 58 + Math.floor(rnd() * 32));
-    health_score = Math.max(1, Math.min(100, health_score));
     return {
       account_id: a.account_id,
       account_name: a.account_name,
@@ -1741,7 +1745,6 @@ function main() {
       renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       arr_usd_current: current,
       company_size_band,
-      health_score,
     };
   });
 
@@ -1821,7 +1824,6 @@ function main() {
       renewal_fiscal_quarter: "",
       arr_usd_current: d.acv_usd || 0,
       company_size_band: rnd() < (big ? 0.65 : 0.3) ? "Enterprise" : "SMB",
-      health_score: Math.max(1, Math.min(100, 48 + Math.floor(rnd() * 40))),
     });
   }
   accountsExtended.sort((a, b) => a.account_id.localeCompare(b.account_id));
@@ -1846,7 +1848,6 @@ function main() {
       "renewal_fiscal_quarter",
       "arr_usd_current",
       "company_size_band",
-      "health_score",
     ]),
   );
   writeFileSync(
@@ -1854,6 +1855,7 @@ function main() {
     toCsv(unifiedDealRows, [
       "account_id",
       "account_name",
+      "logo_acquisition_year",
       "fiscal_quarter",
       "created_date",
       "close_date",
