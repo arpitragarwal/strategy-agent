@@ -43,7 +43,7 @@ While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clar
 
 ### Prototype data & quant
 
-- CSVs live in **`data/dummy/`**. The app’s catalog is **`src/lib/quant/catalog.ts`**; agents must use exact dataset IDs, e.g. **`crm/accounts`**, **`crm/renewals`**, **`cx/product_usage`**, **`cx/customer_satisfaction`**.
+- CSVs live in **`data/dummy/`**. The app’s catalog is **`src/lib/quant/catalog.ts`**; agents must use exact dataset IDs, e.g. **`crm/accounts`**, **`crm/deal_data`**, **`finance/arr_by_account_quarter`**, **`cx/product_usage`**, **`cx/customer_satisfaction`**.
 - Regenerate the **renewal-cohort** synthetic enterprise SaaS slice (accounts, renewals, quarterly product usage tiers, customer satisfaction scores) plus a local-only **`renewals-dashboard.html`**:  
   **`npm run data:generate`**  
   (`scripts/generate-enterprise-saas-dummy.mjs`).

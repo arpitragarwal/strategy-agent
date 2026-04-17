@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-16T23:57:38.571Z",
+  "generated_at": "2026-04-17T00:34:33.520Z",
   "data_root": "data",
   "files": [
     {
@@ -23,12 +23,16 @@
       "bytes": 648649
     },
     {
+      "path": "dummy_data/finance/arr_by_account_quarter.csv",
+      "bytes": 62729
+    },
+    {
       "path": "dummy_data/finance/finance_summary.csv",
       "bytes": 775
     },
     {
       "path": "dummy_data/support/support_summary.csv",
-      "bytes": 133
+      "bytes": 60605
     }
   ]
 }

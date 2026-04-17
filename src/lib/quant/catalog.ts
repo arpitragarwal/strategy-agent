@@ -78,6 +78,9 @@ export const QUANT_ENUMS_BY_DATASET: Record<string, Record<string, readonly stri
   "finance/finance_summary": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
   },
+  "finance/arr_by_account_quarter": {
+    fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+  },
   "support/support_summary": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
   },
@@ -90,6 +93,8 @@ function buildQuantEnumMarkdown(): string {
     "For `filter` with `cmp: \"eq\"` or `\"neq\"`, use **only** the values below for these columns (case-sensitive). Do **not** use `Lost`, `Won`, `Renewal`, title case, or other CRM synonyms.",
     "",
     "- **crm/accounts** — `renewal_fiscal_quarter` may also be empty (`\"\"`) on some rows (e.g. new logos); omit filter or allow empty if you need those accounts.",
+    "- **finance/arr_by_account_quarter** — `account_id` matches **crm/accounts** (generated ids); not enumerated here.",
+    "- **support/support_summary** — `account_id` matches **crm/accounts** / **cx/*** (generated ids such as `ACC-000001`); not enumerated here.",
     "- **cx/customer_satisfaction** — `csat_score` and `nps_score` are numeric; use range compares, not string `eq`, unless comparing to a number.",
     "",
   ];
@@ -99,6 +104,7 @@ function buildQuantEnumMarkdown(): string {
     "cx/product_usage",
     "cx/customer_satisfaction",
     "finance/finance_summary",
+    "finance/arr_by_account_quarter",
     "support/support_summary",
   ] as const;
   for (const id of ids) {
@@ -155,11 +161,18 @@ export const QUANT_DATASETS: DatasetMeta[] = [
       "Quarterly finance rollup derived from deal_data + accounts: fiscal_quarter, won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts.",
   },
   {
+    id: "finance/arr_by_account_quarter",
+    relativePath: "finance/arr_by_account_quarter.csv",
+    domain: "finance",
+    description:
+      "End-of-quarter ARR run-rate per customer: account_id, fiscal_quarter, arr_usd. Computed from CRM deal_data (cumulative won land/expand ACV) plus renewal cohort fields (arr_up_for_renewal_usd before renewal quarter, booked_arr_usd on renew, 0 after churn); one row per active account × quarter in the renewal window.",
+  },
+  {
     id: "support/support_summary",
     relativePath: "support/support_summary.csv",
     domain: "support",
     description:
-      "Quarterly support rollup derived from deal/account activity: fiscal_quarter, ticket_count, avg_days_to_resolution.",
+      "Quarterly support metrics per account: account_id, fiscal_quarter, ticket_count, avg_days_to_resolution. One row per account × fiscal_quarter while the subscription is active in the window (same logic as cx/product_usage); churned accounts have no rows after their renewal quarter.",
   },
 ];
 
@@ -204,7 +217,10 @@ export function quantPlanReferencesValidDatasets(plan: {
 /** Documented join paths for multi-table quant plans (FK-style and matching dimensions). */
 export const QUANT_JOIN_RELATIONSHIPS = [
   "**crm/deal_data** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for industry, region consistency checks, and account attributes.",
-  "**finance/finance_summary** ↔ **support/support_summary** on [[\"fiscal_quarter\",\"fiscal_quarter\"]] for quarter-level rollups.",
+  "**support/support_summary** → **crm/accounts** on [[\"account_id\",\"account_id\"]] for region, industry, renewal slot.",
+  "**support/support_summary** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] (matches up to three rows per quarter by product_line on the right).",
+  "**finance/arr_by_account_quarter** → **crm/accounts** on [[\"account_id\",\"account_id\"]]; → **crm/deal_data** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"]] to reconcile with booked deals.",
+  "**support/support_summary** — aggregate to one row per **fiscal_quarter** (e.g. sum ticket_count) before joining to **finance/finance_summary** on [[\"fiscal_quarter\",\"fiscal_quarter\"]] (finance has no account_id).",
   "**cx/product_usage** → **crm/deal_data** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"],[\"product_line\",\"product_line\"]] when tying usage to booked product; account + quarter only is valid for account-level cuts.",
   "**cx/customer_satisfaction** → **cx/product_usage** on [[\"account_id\",\"account_id\"],[\"fiscal_quarter\",\"fiscal_quarter\"],[\"product_line\",\"product_line\"]] for usage_tier with csat_score / nps_score.",
 ] as const;
@@ -219,7 +235,7 @@ export function buildDataCatalogMarkdown(): string {
     "",
     ...QUANT_JOIN_RELATIONSHIPS.map((s) => `- ${s}`),
     "",
-    "Use datasetId values exactly as listed below. **Time bucket column is always `fiscal_quarter`** (string like 2025-Q1) on deal_data, CX, finance_summary, and support_summary. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
+    "Use datasetId values exactly as listed below. **Time bucket column is always `fiscal_quarter`** (string like 2025-Q1) on deal_data, CX, finance_summary, finance/arr_by_account_quarter, and support_summary. Column names must exist on the table where you reference them (after joins, use prefixed names from the right table).",
     "",
     "**Join naming:** If `on` includes `[\"product_line\",\"product_line\"]` (same name both sides), the merged row has a single **`product_line`** column — not `r_product_line`. Right-only fields (e.g. `usage_tier` from CX when the left table is `crm/deal_data`) appear as **`r_usage_tier`**.",
     "",

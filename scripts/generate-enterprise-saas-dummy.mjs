@@ -7,7 +7,8 @@
  * Also writes cx/product_usage.csv (usage_tier per account × fiscal_quarter × product_line),
  * cx/customer_satisfaction.csv (CSAT + NPS at the same grain),
  * merged crm/deal_data.csv (renewals + new ACV + account_vertical), finance/finance_summary.csv,
- * support/support_summary.csv, plus deal-data-dashboard.html.
+ * finance/arr_by_account_quarter.csv (ARR run-rate from CRM + renewal cohort),
+ * support/support_summary.csv (account × fiscal_quarter ticket metrics), plus deal-data-dashboard.html.
  *
  * Run: node scripts/generate-enterprise-saas-dummy.mjs
  * Or: npm run data:generate
@@ -675,36 +676,120 @@ function buildFinanceSummaryRows(dealRows, accountsRows) {
   });
 }
 
-function buildSupportSummaryRows(dealRows, accountsRows, rnd) {
-  const wonByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
-  const lostByQ = Object.fromEntries(RENEWAL_QUARTERS.map((q) => [q, 0]));
+/**
+ * End-of-quarter ARR run-rate per account from CRM: baseline `arr_up_for_renewal_usd` before renewal,
+ * plus cumulative won land/expand ACV from deal_data; at renewal quarter `booked_arr_usd` if renewed
+ * else 0; after renewal, further won expand/land ACV adds on.
+ * @param {Array<{account_id: string, fiscal_quarter: string, deal_type: string, outcome: string, acv_usd: number}>} dealRows
+ * @param {Array<{account_id: string, renewal_fiscal_quarter: string}>} accounts
+ * @param {Map<string, {outcome: string, arr_up_for_renewal_usd: number, booked_arr_usd: number}>} byAccountRenewal
+ */
+function buildAccountArrByQuarterRows(dealRows, accounts, byAccountRenewal) {
+  const elByAccountQ = new Map();
   for (const d of dealRows) {
-    if (!wonByQ[d.fiscal_quarter] && wonByQ[d.fiscal_quarter] !== 0) continue;
-    if (d.outcome === "won") wonByQ[d.fiscal_quarter] += 1;
-    if (d.outcome === "lost") lostByQ[d.fiscal_quarter] += 1;
+    if (d.outcome !== "won") continue;
+    if (d.deal_type !== "expand" && d.deal_type !== "land") continue;
+    const fq = d.fiscal_quarter;
+    if (!RENEWAL_QUARTERS.includes(fq)) continue;
+    const k = `${d.account_id}|${fq}`;
+    elByAccountQ.set(k, (elByAccountQ.get(k) || 0) + (d.acv_usd || 0));
   }
 
-  const baseAccounts = accountsRows.filter((a) => String(a.renewal_fiscal_quarter || "").trim() !== "").length;
-  return RENEWAL_QUARTERS.map((q, qi) => {
-    const won = wonByQ[q];
-    const lost = lostByQ[q];
-    const noiseTickets = Math.round((rnd() * 2 - 1) * 22);
-    const tickets = Math.max(
-      40,
-      Math.round(baseAccounts * 0.05 + won * 0.55 + lost * 1.35 + qi * 8 + noiseTickets),
-    );
-    const lateQuarterPenalty = q === "2025-Q4" || q === "2026-Q1" ? 0.9 : 0;
-    const noiseDays = (rnd() * 2 - 1) * 0.8;
-    const avgDays = Math.max(
-      1.2,
-      Math.round((4.3 + lateQuarterPenalty + lost * 0.012 + tickets * 0.003 + noiseDays) * 10) / 10,
-    );
-    return {
-      fiscal_quarter: q,
-      ticket_count: tickets,
-      avg_days_to_resolution: avgDays,
-    };
-  });
+  const rows = [];
+  for (const a of accounts) {
+    if (!String(a.renewal_fiscal_quarter || "").trim()) continue;
+    const r = byAccountRenewal.get(a.account_id);
+    if (!r) continue;
+    const renewed = r.outcome === "renewed";
+    const churned = r.outcome === "churned";
+    const ir = RENEWAL_QUARTERS.indexOf(a.renewal_fiscal_quarter);
+    if (ir < 0) continue;
+    const baseArr = Math.round(r.arr_up_for_renewal_usd || 0);
+
+    let cumEl = 0;
+    let postRenew = 0;
+
+    for (let qi = 0; qi < RENEWAL_QUARTERS.length; qi++) {
+      const q = RENEWAL_QUARTERS[qi];
+      if (!isActiveInQuarter(a.renewal_fiscal_quarter, q, renewed)) continue;
+
+      const elAdd = elByAccountQ.get(`${a.account_id}|${q}`) || 0;
+      let arrUsd;
+
+      if (qi < ir) {
+        cumEl += elAdd;
+        arrUsd = baseArr + cumEl;
+      } else if (qi === ir) {
+        cumEl += elAdd;
+        if (churned) {
+          arrUsd = 0;
+          postRenew = 0;
+        } else {
+          arrUsd = Math.round(r.booked_arr_usd || 0) + elAdd;
+          postRenew = arrUsd;
+        }
+      } else {
+        postRenew += elAdd;
+        arrUsd = postRenew;
+      }
+
+      rows.push({
+        account_id: a.account_id,
+        fiscal_quarter: q,
+        arr_usd: Math.round(arrUsd),
+      });
+    }
+  }
+  return rows.sort(
+    (x, y) =>
+      x.account_id.localeCompare(y.account_id) ||
+      RENEWAL_QUARTERS.indexOf(x.fiscal_quarter) - RENEWAL_QUARTERS.indexOf(y.fiscal_quarter),
+  );
+}
+
+/**
+ * Account × fiscal_quarter support metrics (same active window as CX usage).
+ * @param {Array<{account_id: string, renewal_fiscal_quarter: string}>} accounts
+ * @param {Map<string, {outcome: string, arr_up_for_renewal_usd: number, booked_arr_usd: number}>} byAccountRenewal
+ */
+function buildSupportSummaryRows(accounts, byAccountRenewal, rnd) {
+  const rows = [];
+  for (const a of accounts) {
+    if (!String(a.renewal_fiscal_quarter || "").trim()) continue;
+    const r = byAccountRenewal.get(a.account_id);
+    if (!r) continue;
+    const renewed = r.outcome === "renewed";
+    const churned = r.outcome === "churned";
+    const ir = RENEWAL_QUARTERS.indexOf(a.renewal_fiscal_quarter);
+    const arrScale = Math.min(2.2, Math.max(0.35, (r.arr_up_for_renewal_usd || 50_000) / 180_000));
+
+    for (let qi = 0; qi < RENEWAL_QUARTERS.length; qi++) {
+      const q = RENEWAL_QUARTERS[qi];
+      if (!isActiveInQuarter(a.renewal_fiscal_quarter, q, renewed)) continue;
+
+      const lateQ = q === "2025-Q4" || q === "2026-Q1";
+      const renewalPressure = ir >= 0 ? Math.max(0, qi - Math.max(0, ir - 2)) * 0.35 : 0;
+      const churnSpike = churned && ir >= 0 && qi >= ir ? 2.2 + rnd() * 4 : 0;
+      const baseTickets = 0.8 + rnd() * 4.5 + renewalPressure + churnSpike;
+      const ticket_count = Math.max(0, Math.round(baseTickets * arrScale * (lateQ ? 1.12 : 1)));
+
+      const noiseDays = (rnd() * 2 - 1) * 1.1;
+      const avg_days_to_resolution = Math.max(
+        1.0,
+        Math.round(
+          (3.8 + (lateQ ? 2.4 : 0) + (churned && qi >= ir ? 2.8 : 0) + ticket_count * 0.09 + noiseDays) * 10,
+        ) / 10,
+      );
+
+      rows.push({
+        account_id: a.account_id,
+        fiscal_quarter: q,
+        ticket_count,
+        avg_days_to_resolution,
+      });
+    }
+  }
+  return rows;
 }
 
 function listFilesRecursive(dir, baseDir) {
@@ -1746,10 +1831,21 @@ function main() {
     ]),
   );
 
-  const supportSummaryRows = buildSupportSummaryRows(unifiedDealRows, accountsExtended, rnd);
+  const accountArrByQuarterRows = buildAccountArrByQuarterRows(
+    unifiedDealRows,
+    accountsExtended,
+    byAccountRenewal,
+  );
+  writeFileSync(
+    join(OUT, "finance", "arr_by_account_quarter.csv"),
+    toCsv(accountArrByQuarterRows, ["account_id", "fiscal_quarter", "arr_usd"]),
+  );
+
+  const supportSummaryRows = buildSupportSummaryRows(accountsExtended, byAccountRenewal, rnd);
   writeFileSync(
     join(OUT, "support", "support_summary.csv"),
     toCsv(supportSummaryRows, [
+      "account_id",
       "fiscal_quarter",
       "ticket_count",
       "avg_days_to_resolution",
@@ -1782,6 +1878,9 @@ function main() {
     `Wrote ${join(OUT, "crm", "deal_data.csv")} (${unifiedDealRows.length} unified rows: renewals + new ACV, with ${wonNewDeals.length} new ACV rows)`,
   );
   console.log(`Wrote ${join(OUT, "finance", "finance_summary.csv")} (${financeSummaryRows.length} rows)`);
+  console.log(
+    `Wrote ${join(OUT, "finance", "arr_by_account_quarter.csv")} (${accountArrByQuarterRows.length} rows)`,
+  );
   console.log(`Wrote ${join(OUT, "support", "support_summary.csv")} (${supportSummaryRows.length} rows)`);
   console.log(`Wrote ${join(OUT, "cx", "product_usage.csv")} (${productUsageRows.length} rows)`);
   console.log(
