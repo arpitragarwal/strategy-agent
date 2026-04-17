@@ -3,7 +3,7 @@
  * Enterprise SaaS prototype: logos up for renewal ramp 2025-Q1 (100) → 2026-Q1 (~150) across five Qs.
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
- * Revenue GRR: last_deal_year === 2023 → ~85%; otherwise ~95%.
+ * Revenue GRR: logo_acquisition_year === 2023 cohort → ~85%; otherwise ~95%.
  * Also writes cx/product_usage.csv (usage_tier per account × fiscal_quarter × product_line),
  * cx/customer_satisfaction.csv (CSAT + NPS at the same grain),
  * merged crm/deal_data.csv (renewals + new ACV + account_vertical), finance/finance_summary.csv,
@@ -137,14 +137,14 @@ function shuffleIndices(arr, rnd) {
   }
 }
 
-/** ~50% pricing for churned rows with last_deal_year === 2023; uniform mix for other churned. */
+/** ~50% pricing for churned rows with logo_acquisition_year === 2023 (2023-logo cohort); uniform mix for other churned. */
 function assignChurnLossReasons(renewals, rnd) {
   const idx2023Churn = [];
   const idxOtherChurn = [];
   for (let i = 0; i < renewals.length; i++) {
     const r = renewals[i];
     if (r.outcome !== "churned") continue;
-    if (r.last_deal_year === 2023) idx2023Churn.push(i);
+    if (r.logo_acquisition_year === 2023) idx2023Churn.push(i);
     else idxOtherChurn.push(i);
   }
 
@@ -237,6 +237,62 @@ function sampleCloseDateInQuarter(quarter, rnd) {
   const daysInMonth = new Date(year, month, 0).getDate();
   const day = 1 + Math.floor(rnd() * daysInMonth);
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+const DEAL_SOURCES = ["inbound", "partner", "sales_outbound", "csm_expansion", "event"];
+const DEAL_SOURCE_WEIGHTS = [0.28, 0.12, 0.32, 0.22, 0.06];
+
+/** Mean ~182.5 days (~6 months) before close_date. */
+function sampleCreatedDateFromClose(closeDateStr, rnd) {
+  const d = new Date(`${closeDateStr}T12:00:00Z`);
+  if (Number.isNaN(d.getTime())) return closeDateStr;
+  const u1 = Math.max(1e-9, rnd());
+  const u2 = rnd();
+  const g = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  const days = Math.max(21, Math.min(400, Math.round(182.5 + g * 48)));
+  const c = new Date(d.getTime() - days * 86400000);
+  return c.toISOString().slice(0, 10);
+}
+
+/** Mean ~50% (average of four uniforms × 100). */
+function sampleDiscountPct(rnd) {
+  const x = ((rnd() + rnd() + rnd() + rnd()) / 4) * 100;
+  return Math.round(x * 10) / 10;
+}
+
+function sampleDealSource(rnd) {
+  const u = rnd();
+  let s = 0;
+  for (let i = 0; i < DEAL_SOURCES.length; i++) {
+    s += DEAL_SOURCE_WEIGHTS[i] ?? 0;
+    if (u <= s) return DEAL_SOURCES[i];
+  }
+  return DEAL_SOURCES[DEAL_SOURCES.length - 1];
+}
+
+function finalizeDealRows(rows, rnd, allRenewals) {
+  const lossByAccount = new Map(
+    allRenewals
+      .filter((r) => r.outcome === "churned")
+      .map((r) => [r.account_id, r.loss_reason || pick(LOSS_REASONS_ALL, rnd)]),
+  );
+  for (const row of rows) {
+    const cd = row.close_date || sampleCloseDateInQuarter(row.fiscal_quarter, rnd);
+    row.close_date = cd;
+    row.created_date = sampleCreatedDateFromClose(cd, rnd);
+    row.deal_source = sampleDealSource(rnd);
+    row.discount_pct = sampleDiscountPct(rnd);
+    if (row.outcome === "lost") {
+      if (row.deal_type === "renew" && lossByAccount.has(row.account_id)) {
+        row.primary_loss_reason = lossByAccount.get(row.account_id);
+      } else {
+        row.primary_loss_reason = pick(LOSS_REASONS_ALL, rnd);
+      }
+    } else {
+      row.primary_loss_reason = "";
+    }
+  }
+  return rows;
 }
 
 function maxAccountIndex(rows) {
@@ -487,9 +543,11 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
       region,
       industry,
       contract_term_years,
-      last_deal_year: priorDealYear(quarter, contract_term_years),
+      logo_acquisition_year: priorDealYear(quarter, contract_term_years),
       renewal_fiscal_quarter: "",
       arr_usd_current: 0,
+      company_size_band: rnd() < 0.34 ? "Enterprise" : "SMB",
+      health_score: Math.max(1, Math.min(100, 38 + Math.floor(rnd() * 48))),
     };
     accountsRows.push(row);
     accountsById.set(account_id, row);
@@ -560,11 +618,12 @@ function buildUnifiedBookingsRows(allRenewals, wonNewDeals, accountsRows, rnd, i
     }
   }
 
-  return [...renewalRows, ...newAcvRows, ...lostNewAcvRows].sort(
+  const merged = [...renewalRows, ...newAcvRows, ...lostNewAcvRows].sort(
     (a, b) =>
       RENEWAL_QUARTERS.indexOf(a.fiscal_quarter) -
       RENEWAL_QUARTERS.indexOf(b.fiscal_quarter),
   );
+  return finalizeDealRows(merged, rnd, allRenewals);
 }
 
 function buildFinanceSummaryRows(dealRows, accountsRows) {
@@ -871,14 +930,14 @@ function pickChurnIndicesForSegment(cohort, segmentIndices, churnDollarTarget, r
 
 /**
  * Simulate one renewal cohort (GRR targets; NRR emerges from per-deal renewal multipliers).
- * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, last_deal_year: number, arr_up_for_renewal_usd: number, renewal_fiscal_quarter: string}>} cohort
+ * @param {Array<{account_id: string, account_name: string, region: string, industry: string, contract_term_years: number, logo_acquisition_year: number, arr_up_for_renewal_usd: number, renewal_fiscal_quarter: string}>} cohort
  */
 function simulateRenewalCohort(cohort, rnd) {
   const n = cohort.length;
   if (n === 0) return [];
 
-  const idx2023 = cohort.map((_, i) => i).filter((i) => cohort[i].last_deal_year === 2023);
-  const idxOther = cohort.map((_, i) => i).filter((i) => cohort[i].last_deal_year !== 2023);
+  const idx2023 = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_year === 2023);
+  const idxOther = cohort.map((_, i) => i).filter((i) => cohort[i].logo_acquisition_year !== 2023);
 
   const sumArr2023 = idx2023.reduce((s, i) => s + cohort[i].arr_up_for_renewal_usd, 0);
   const sumArrOther = idxOther.reduce((s, i) => s + cohort[i].arr_up_for_renewal_usd, 0);
@@ -918,7 +977,7 @@ function simulateRenewalCohort(cohort, rnd) {
       renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       region: a.region,
       contract_term_years: a.contract_term_years,
-      last_deal_year: a.last_deal_year,
+      logo_acquisition_year: a.logo_acquisition_year,
       arr_up_for_renewal_usd: a.arr_up_for_renewal_usd,
       outcome,
       loss_reason: "",
@@ -999,9 +1058,9 @@ function quarterSummary(rows) {
   return { totalUp, totalBooked, grr, nrr, logos: rows.length };
 }
 
-/** Revenue GRR among rows with last_deal_year === 2023 (logo renewal rate in .logoRenewPct). */
+/** Revenue GRR among rows with logo_acquisition_year === 2023 (logo renewal rate in .logoRenewPct). */
 function cohort2023Metrics(rows) {
-  const sub = rows.filter((r) => r.last_deal_year === 2023);
+  const sub = rows.filter((r) => r.logo_acquisition_year === 2023);
   if (!sub.length) return null;
   const totalUp = sub.reduce((s, r) => s + r.arr_up_for_renewal_usd, 0);
   const churnedUp = sub
@@ -1093,7 +1152,7 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
               }</span>`;
         return `<tr>
         <td><span class="acct">${escapeHtml(r.account_name)}</span><span class="mono">${escapeHtml(r.account_id)}</span></td>
-        <td class="num">${r.last_deal_year}</td>
+        <td class="num">${r.logo_acquisition_year}</td>
         <td class="num">${r.contract_term_years}</td>
         <td class="muted">${escapeHtml(r.region)}</td>
         <td class="num">${escapeHtml(formatUsd(r.arr_up_for_renewal_usd))}</td>
@@ -1112,7 +1171,7 @@ function writeRenewalsDashboardHtml(allRenewals, outPath) {
       <div style="overflow-x:auto">
         <table>
           <thead><tr>
-            <th>Account</th><th class="num">Last deal</th><th class="num">Term (yr)</th><th>Region</th><th class="num">Up for renewal</th><th class="num">Booked</th><th>Outcome</th><th>Loss reason</th>
+            <th>Account</th><th class="num">Logo acq. yr</th><th class="num">Term (yr)</th><th>Region</th><th class="num">Up for renewal</th><th class="num">Booked</th><th>Outcome</th><th>Loss reason</th>
           </tr></thead>
           <tbody>${body}</tbody>
         </table>
@@ -1617,7 +1676,7 @@ function main() {
       region: pick(REGIONS, rnd),
       industry: pick(INDUSTRIES, rnd),
       contract_term_years: 0,
-      last_deal_year: 0,
+      logo_acquisition_year: 0,
       arr_up_for_renewal_usd: sampleArrUsd(rnd),
       renewal_fiscal_quarter: "",
     });
@@ -1650,7 +1709,7 @@ function main() {
   }
 
   for (const a of accounts) {
-    a.last_deal_year = priorDealYear(a.renewal_fiscal_quarter, a.contract_term_years);
+    a.logo_acquisition_year = priorDealYear(a.renewal_fiscal_quarter, a.contract_term_years);
   }
 
   const allRenewals = [];
@@ -1666,15 +1725,23 @@ function main() {
   const accountRows = accounts.map((a) => {
     const r = byAccount.get(a.account_id);
     const current = r.outcome === "renewed" ? r.booked_arr_usd : 0;
+    const bigLogo = a.arr_up_for_renewal_usd >= 200_000;
+    const company_size_band = rnd() < (bigLogo ? 0.68 : 0.26) ? "Enterprise" : "SMB";
+    let health_score = 52 + Math.floor(rnd() * 38);
+    if (r.outcome === "churned") health_score = Math.min(health_score, 22 + Math.floor(rnd() * 18));
+    if (r.outcome === "renewed") health_score = Math.max(health_score, 58 + Math.floor(rnd() * 32));
+    health_score = Math.max(1, Math.min(100, health_score));
     return {
       account_id: a.account_id,
       account_name: a.account_name,
       region: a.region,
       industry: a.industry,
       contract_term_years: a.contract_term_years,
-      last_deal_year: a.last_deal_year,
+      logo_acquisition_year: a.logo_acquisition_year,
       renewal_fiscal_quarter: a.renewal_fiscal_quarter,
       arr_usd_current: current,
+      company_size_band,
+      health_score,
     };
   });
 
@@ -1743,32 +1810,21 @@ function main() {
   for (const d of wonNewDeals) {
     if (accountIds.has(d.account_id)) continue;
     accountIds.add(d.account_id);
+    const big = (d.acv_usd || 0) >= 150_000;
     accountsExtended.push({
       account_id: d.account_id,
       account_name: d.account_name,
       region: d.region,
       industry: pick(INDUSTRIES, rnd),
       contract_term_years: d.contract_term_years,
-      last_deal_year: priorDealYear(d.fiscal_quarter, d.contract_term_years),
+      logo_acquisition_year: priorDealYear(d.fiscal_quarter, d.contract_term_years),
       renewal_fiscal_quarter: "",
       arr_usd_current: d.acv_usd || 0,
+      company_size_band: rnd() < (big ? 0.65 : 0.3) ? "Enterprise" : "SMB",
+      health_score: Math.max(1, Math.min(100, 48 + Math.floor(rnd() * 40))),
     });
   }
   accountsExtended.sort((a, b) => a.account_id.localeCompare(b.account_id));
-
-  writeFileSync(
-    join(OUT, "crm", "accounts.csv"),
-    toCsv(accountsExtended, [
-      "account_id",
-      "account_name",
-      "region",
-      "industry",
-      "contract_term_years",
-      "last_deal_year",
-      "renewal_fiscal_quarter",
-      "arr_usd_current",
-    ]),
-  );
 
   const unifiedDealRows = buildUnifiedBookingsRows(
     allRenewals,
@@ -1786,9 +1842,11 @@ function main() {
       "region",
       "industry",
       "contract_term_years",
-      "last_deal_year",
+      "logo_acquisition_year",
       "renewal_fiscal_quarter",
       "arr_usd_current",
+      "company_size_band",
+      "health_score",
     ]),
   );
   writeFileSync(
@@ -1797,6 +1855,7 @@ function main() {
       "account_id",
       "account_name",
       "fiscal_quarter",
+      "created_date",
       "close_date",
       "region",
       "account_vertical",
@@ -1806,6 +1865,9 @@ function main() {
       "contract_term_years",
       "acv_usd",
       "tcv_usd",
+      "deal_source",
+      "discount_pct",
+      "primary_loss_reason",
     ]),
   );
 

@@ -37,6 +37,32 @@ export const PROTOTYPE_DEAL_TYPES = ["land", "expand", "renew"] as const;
 
 export const PROTOTYPE_OUTCOMES = ["won", "lost"] as const;
 
+export const PROTOTYPE_COMPANY_SIZE_BANDS = ["SMB", "Enterprise"] as const;
+
+export const PROTOTYPE_DEAL_SOURCES = [
+  "inbound",
+  "partner",
+  "sales_outbound",
+  "csm_expansion",
+  "event",
+] as const;
+
+/** Same literals as churn `loss_reason` in generated deal_data (lost rows). */
+export const PROTOTYPE_PRIMARY_LOSS_REASONS = [
+  "Pricing — budget freeze or cuts",
+  "Pricing — rejected renewal uplift",
+  "Pricing — lower competitive quote",
+  "Commercial — payment or term mismatch",
+  "Value — ROI / business case not approved",
+  "Competitor — won evaluation",
+  "Product — capability or roadmap gap",
+  "Stakeholder — champion departed / reorg",
+  "Timing — deprioritized / no decision",
+  "Risk — security or compliance",
+  "Adoption — low usage or failed rollout",
+  "Procurement — vendor consolidation",
+] as const;
+
 export const PROTOTYPE_USAGE_TIERS = [
   "no_usage",
   "minimal_usage",
@@ -60,11 +86,14 @@ export const QUANT_ENUMS_BY_DATASET: Record<string, Record<string, readonly stri
     region: [...PROTOTYPE_REGIONS],
     /** Same value set as `crm/accounts.industry`. */
     account_vertical: [...PROTOTYPE_INDUSTRIES],
+    deal_source: [...PROTOTYPE_DEAL_SOURCES],
+    primary_loss_reason: [...PROTOTYPE_PRIMARY_LOSS_REASONS],
   },
   "crm/accounts": {
     region: [...PROTOTYPE_REGIONS],
     industry: [...PROTOTYPE_INDUSTRIES],
     renewal_fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
+    company_size_band: [...PROTOTYPE_COMPANY_SIZE_BANDS],
   },
   "cx/product_usage": {
     fiscal_quarter: [...PROTOTYPE_FISCAL_QUARTERS],
@@ -93,6 +122,7 @@ function buildQuantEnumMarkdown(): string {
     "For `filter` with `cmp: \"eq\"` or `\"neq\"`, use **only** the values below for these columns (case-sensitive). Do **not** use `Lost`, `Won`, `Renewal`, title case, or other CRM synonyms.",
     "",
     "- **crm/accounts** — `renewal_fiscal_quarter` may also be empty (`\"\"`) on some rows (e.g. new logos); omit filter or allow empty if you need those accounts.",
+    "- **crm/deal_data** — `primary_loss_reason` is empty on **won** rows; on **lost** rows use the literals below (or copy from joined renewal context). `discount_pct` is numeric (0–100, ~50 prototype mean).",
     "- **finance/arr_by_account_quarter** — `account_id` matches **crm/accounts** (generated ids); not enumerated here.",
     "- **support/support_summary** — `account_id` matches **crm/accounts** / **cx/*** (generated ids such as `ACC-000001`); not enumerated here.",
     "- **cx/customer_satisfaction** — `csat_score` and `nps_score` are numeric; use range compares, not string `eq`, unless comparing to a number.",
@@ -117,7 +147,7 @@ function buildQuantEnumMarkdown(): string {
   }
   lines.push("");
   lines.push(
-    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}.`,
+    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}; **crm/accounts.health_score** and **crm/deal_data.discount_pct** are numeric (not string \`eq\`).`,
   );
   lines.push("");
   return lines.join("\n");
@@ -130,14 +160,14 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/accounts.csv",
     domain: "crm",
     description:
-      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); last_deal_year = renewal fiscal year − term; renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned)",
+      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); logo_acquisition_year (calendar year of initial logo / prior anchor); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise); health_score (1–100).",
   },
   {
     id: "crm/deal_data",
     relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Unified deal fact table for the window (renew + land + expand): fiscal_quarter (2025-Q1…2026-Q1, same label as CX), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd.",
+      "Unified deal fact table for the window (renew + land + expand): fiscal_quarter (2025-Q1…2026-Q1, same label as CX), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd, deal_source, discount_pct (0–100; prototype mean ~50), primary_loss_reason (empty if won; else churn/loss category).",
   },
   {
     id: "cx/product_usage",
