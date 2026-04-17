@@ -1506,7 +1506,7 @@ export function StrategyConsole() {
           </label>
           <textarea
             className="w-full min-h-[80px] rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
-            placeholder="Example prompt: How can we improve the renewal rates in Q2-2026? I am concerned about the GRR."
+            placeholder="What's driving increased churn in Q1-26 and how can we fix it?"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             disabled={busy}
