@@ -1,36 +1,144 @@
-import * as aq from "arquero";
 import { loadCsvAsObjects } from "./loadCsv";
-import type { QuantChartConfig, QuantOp, QuantPlan, QuantResult } from "./types";
+import { QUANT_ENUMS_BY_DATASET } from "./catalog";
+import type {
+  QuantChartConfig,
+  QuantComputeExpr,
+  QuantFilterScalar,
+  QuantOp,
+  QuantPlan,
+  QuantResult,
+} from "./types";
 
 function num(v: unknown): number {
   const n = Number(v);
   return Number.isFinite(n) ? n : NaN;
 }
 
+/** Equal by loose semantics — matches the existing `==` behaviour while tolerating number/string confusion. */
+function eqLoose(a: unknown, b: unknown): boolean {
+  // eslint-disable-next-line eqeqeq
+  return a == b;
+}
+
+/**
+ * Case-insensitive enum coercion: if the filter column is a known enum on `datasetId`
+ * and the user value matches one of its literals case-insensitively, rewrite it to
+ * the canonical casing (prevents silent "0 rows" on `"Lost"` vs `"lost"`).
+ */
+function coerceEnumFilterValue(
+  value: QuantFilterScalar,
+  column: string,
+  datasetId: string,
+): QuantFilterScalar {
+  if (typeof value !== "string") return value;
+  const enums = QUANT_ENUMS_BY_DATASET[datasetId];
+  const allowed = enums?.[column];
+  if (!allowed || allowed.length === 0) return value;
+  const canonical = allowed.find(
+    (v) => v.toLocaleLowerCase() === value.toLocaleLowerCase(),
+  );
+  return canonical ?? value;
+}
+
 function applyFilter(
   rows: Record<string, unknown>[],
   s: Extract<QuantOp, { op: "filter" }>,
+  datasetId: string,
 ): Record<string, unknown>[] {
+  const col = s.column;
+  const coerceScalar = (t: QuantFilterScalar | undefined) =>
+    t == null ? t : coerceEnumFilterValue(t, col, datasetId);
+  const target = s.value != null ? coerceScalar(s.value) : undefined;
+  const targets = Array.isArray(s.values)
+    ? s.values.map((v) => coerceScalar(v))
+    : undefined;
+
   return rows.filter((r) => {
-    const v = r[s.column];
-    const t = s.value;
+    const v = r[col];
     switch (s.cmp) {
       case "eq":
-        return v == t;
+        return eqLoose(v, target);
       case "neq":
-        return v != t;
+        return !eqLoose(v, target);
       case "gt":
-        return num(v) > num(t);
+        return num(v) > num(target);
       case "gte":
-        return num(v) >= num(t);
+        return num(v) >= num(target);
       case "lt":
-        return num(v) < num(t);
+        return num(v) < num(target);
       case "lte":
-        return num(v) <= num(t);
+        return num(v) <= num(target);
+      case "in":
+        return Array.isArray(targets) && targets.some((t) => eqLoose(v, t));
+      case "not_in":
+        return Array.isArray(targets) && !targets.some((t) => eqLoose(v, t));
       default:
         return true;
     }
   });
+}
+
+function aggregateMeasure(
+  agg: Extract<QuantOp, { op: "groupby" }>["measures"][number]["agg"],
+  values: unknown[],
+  groupRowCount: number,
+): unknown {
+  switch (agg) {
+    case "count":
+      return groupRowCount;
+    case "count_distinct": {
+      const seen = new Set<unknown>();
+      for (const v of values) {
+        if (v == null || v === "") continue;
+        seen.add(v);
+      }
+      return seen.size;
+    }
+    case "sum": {
+      let s = 0;
+      let any = false;
+      for (const v of values) {
+        const n = Number(v);
+        if (Number.isFinite(n)) {
+          s += n;
+          any = true;
+        }
+      }
+      return any ? s : 0;
+    }
+    case "mean": {
+      let s = 0;
+      let c = 0;
+      for (const v of values) {
+        const n = Number(v);
+        if (Number.isFinite(n)) {
+          s += n;
+          c += 1;
+        }
+      }
+      return c > 0 ? s / c : null;
+    }
+    case "min": {
+      let best: number | null = null;
+      for (const v of values) {
+        const n = Number(v);
+        if (!Number.isFinite(n)) continue;
+        if (best === null || n < best) best = n;
+      }
+      return best;
+    }
+    case "max": {
+      let best: number | null = null;
+      for (const v of values) {
+        const n = Number(v);
+        if (!Number.isFinite(n)) continue;
+        if (best === null || n > best) best = n;
+      }
+      return best;
+    }
+    default:
+      return groupRowCount;
+  }
 }
 
 function applyGroupby(
@@ -38,32 +146,139 @@ function applyGroupby(
   s: Extract<QuantOp, { op: "groupby" }>,
 ): Record<string, unknown>[] {
   if (!rows.length) return [];
-  const tb = aq.from(rows);
-  const rollup: Record<string, unknown> = {};
-  for (const m of s.measures) {
-    switch (m.agg) {
-      case "sum":
-        rollup[m.alias] = aq.op.sum(m.column);
-        break;
-      case "mean":
-        rollup[m.alias] = aq.op.mean(m.column);
-        break;
-      case "count":
-        rollup[m.alias] = aq.op.count();
-        break;
-      case "min":
-        rollup[m.alias] = aq.op.min(m.column);
-        break;
-      case "max":
-        rollup[m.alias] = aq.op.max(m.column);
-        break;
-      default:
-        rollup[m.alias] = aq.op.count();
+  const buckets = new Map<
+    string,
+    { keyRow: Record<string, unknown>; values: Map<string, unknown[]>; count: number }
+  >();
+  for (const r of rows) {
+    const key = compositeKey(r, s.by);
+    let bucket = buckets.get(key);
+    if (!bucket) {
+      const keyRow: Record<string, unknown> = {};
+      for (const k of s.by) keyRow[k] = r[k];
+      bucket = { keyRow, values: new Map(), count: 0 };
+      for (const m of s.measures) {
+        if (!bucket.values.has(m.column)) bucket.values.set(m.column, []);
+      }
+      buckets.set(key, bucket);
+    }
+    bucket.count += 1;
+    for (const m of s.measures) {
+      bucket.values.get(m.column)!.push(r[m.column]);
     }
   }
-  // Arquero's rollup typing is narrower than runtime (aq.op.* expr objects).
-  const out = tb.groupby(...s.by).rollup(rollup as Parameters<ReturnType<typeof aq.from>["rollup"]>[0]);
-  return out.objects() as Record<string, unknown>[];
+  const out: Record<string, unknown>[] = [];
+  for (const bucket of buckets.values()) {
+    const row: Record<string, unknown> = { ...bucket.keyRow };
+    for (const m of s.measures) {
+      row[m.alias] = aggregateMeasure(
+        m.agg,
+        bucket.values.get(m.column) ?? [],
+        bucket.count,
+      );
+    }
+    out.push(row);
+  }
+  return out;
+}
+
+function evalComputeExpr(
+  row: Record<string, unknown>,
+  expr: QuantComputeExpr,
+): unknown {
+  switch (expr.kind) {
+    case "literal":
+      return expr.value;
+    case "equals":
+      return eqLoose(row[expr.column], expr.value) ? 1 : 0;
+    case "not_equals":
+      return eqLoose(row[expr.column], expr.value) ? 0 : 1;
+    case "in":
+      return Array.isArray(expr.values) &&
+        expr.values.some((v) => eqLoose(row[expr.column], v))
+        ? 1
+        : 0;
+    case "divide": {
+      const n = num(row[expr.numerator]);
+      const d = num(row[expr.denominator]);
+      if (!Number.isFinite(n) || !Number.isFinite(d) || d === 0) return null;
+      return n / d;
+    }
+    case "coalesce": {
+      for (const c of expr.columns) {
+        const v = row[c];
+        if (v != null && v !== "") return v;
+      }
+      return expr.fallback ?? null;
+    }
+    case "bucket": {
+      const n = num(row[expr.column]);
+      if (!Number.isFinite(n)) return expr.labels[expr.labels.length - 1] ?? null;
+      for (let i = 0; i < expr.breaks.length; i++) {
+        if (n <= expr.breaks[i]!) return expr.labels[i] ?? null;
+      }
+      return expr.labels[expr.labels.length - 1] ?? null;
+    }
+    default: {
+      const never: never = expr;
+      return never;
+    }
+  }
+}
+
+function collectComputeInputColumns(
+  cols: Array<{ alias: string; expr: QuantComputeExpr }>,
+): string[] {
+  const need = new Set<string>();
+  for (const c of cols) {
+    const e = c.expr;
+    switch (e.kind) {
+      case "equals":
+      case "not_equals":
+      case "in":
+        need.add(e.column);
+        break;
+      case "divide":
+        need.add(e.numerator);
+        need.add(e.denominator);
+        break;
+      case "coalesce":
+        for (const x of e.columns) need.add(x);
+        break;
+      case "bucket":
+        need.add(e.column);
+        break;
+      case "literal":
+      default:
+        break;
+    }
+  }
+  return [...need];
+}
+
+function applyCompute(
+  rows: Record<string, unknown>[],
+  step: Extract<QuantOp, { op: "compute" }>,
+  stepIdx: number,
+): Record<string, unknown>[] {
+  if (!rows.length) return [];
+  if (!Array.isArray(step.columns) || step.columns.length === 0) return rows;
+  const inputs = collectComputeInputColumns(step.columns);
+  // divide / coalesce / bucket may reference aggregate aliases that exist on the first row; others must exist upstream.
+  const haveCols = new Set(Object.keys(rows[0]!));
+  const missing = inputs.filter((c) => !haveCols.has(c));
+  if (missing.length > 0) {
+    throw new Error(
+      `Step ${stepIdx} compute: input column(s) ${missing.map((m) => `"${m}"`).join(", ")} not in data. Available: ${[...haveCols].join(", ")}`,
+    );
+  }
+  return rows.map((r) => {
+    const out: Record<string, unknown> = { ...r };
+    for (const { alias, expr } of step.columns) {
+      out[alias] = evalComputeExpr(r, expr);
+    }
+    return out;
+  });
 }
 
 function applySort(
@@ -112,12 +327,16 @@ function collectFutureReferencedColumns(
     if (st.op === "filter") need.add(st.column);
     else if (st.op === "groupby") {
       for (const b of st.by) need.add(b);
-      for (const m of st.measures) need.add(m.column);
+      for (const m of st.measures) {
+        if (m.agg !== "count") need.add(m.column);
+      }
     } else if (st.op === "sort") need.add(st.by);
     else if (st.op === "join") {
       for (const [l] of st.on) need.add(l);
     } else if (st.op === "project") {
       for (const c of st.columns) need.add(c);
+    } else if (st.op === "compute") {
+      for (const c of collectComputeInputColumns(st.columns)) need.add(c);
     }
   }
   if (chart && typeof chart === "object") {
@@ -290,9 +509,13 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
       stepIdx += 1;
       if (step.op === "filter") {
         validateColumns(rows, [step.column], `Step ${stepIdx} filter`);
-        rows = applyFilter(rows, step);
+        rows = applyFilter(rows, step, plan.datasetId);
       } else if (step.op === "groupby") {
-        const cols = [...step.by, ...step.measures.map((m) => m.column)];
+        const cols = [
+          ...step.by,
+          // `count` ignores its `column`; every other agg reads values from it.
+          ...step.measures.filter((m) => m.agg !== "count").map((m) => m.column),
+        ];
         validateColumns(rows, cols, `Step ${stepIdx} groupby`);
         rows = applyGroupby(rows, step);
       } else if (step.op === "sort") {
@@ -307,6 +530,8 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
         rows = applyJoin(rows, step, stepIdx);
       } else if (step.op === "project") {
         rows = applyProject(rows, step, stepIdx, plan.steps, stepIndex, plan.chart);
+      } else if (step.op === "compute") {
+        rows = applyCompute(rows, step, stepIdx);
       }
     }
 

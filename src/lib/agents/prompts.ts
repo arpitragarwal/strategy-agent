@@ -9,19 +9,33 @@ export type DiscoveryMemoryRoute = {
  */
 export const QUANT_PIPELINE_OPS_FOR_PROMPTS = `Allowed quant.steps operations (execute in order):
 - {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
+  - **List filters:** {"op":"filter","column":"<col>","cmp":"in"|"not_in","values":[<v1>,<v2>,...]} — use \`values\` (array), **not** \`value\`.
+  - **HAVING:** place a \`filter\` **after** a \`groupby\` to drop aggregate rows by a measure alias (e.g. \`{"op":"filter","column":"account_count","cmp":"gte","value":10}\`).
 - {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId (or each plan's datasetId) as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
   - **Same name on both sides:** if a pair is \`["product_line","product_line"]\` (or any \`["x","x"]\`), the result has **one** column \`x\` — there is **no** \`r_x\`. Only right-only columns (not in \`on\`, or different right-side name) appear as \`r_<col>\`.
   - **Left join:** rows with no key match still get all \`r_*\` columns set to null (stable schema).
-- {"op":"project","columns":["col1","col2",...]} — **destructive:** only listed columns survive. Include **every** column you need for **all later steps**: each \`groupby.by\` and measure \`column\`, each later \`filter.column\`, each \`sort.by\`, each **left-hand** \`join\` \`on\` key, each column in any **later** \`project\`, and the optional top-level \`chart\` \`x\`/\`y\` on the **final** row shape. Common mistake: dropping \`account_id\` (or another join key) then \`groupby\` by account — that fails.
-- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"min"|"max"}]}
+- {"op":"project","columns":["col1","col2",...]} — **destructive:** only listed columns survive. Include **every** column you need for **all later steps**: each \`groupby.by\` and measure \`column\`, each later \`filter.column\`, each \`sort.by\`, each **left-hand** \`join\` \`on\` key, each column referenced by any later \`compute\` expression, each column in any **later** \`project\`, and the optional top-level \`chart\` \`x\`/\`y\` on the **final** row shape. Common mistake: dropping \`account_id\` (or another join key) then \`groupby\` by account — that fails.
+- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"count_distinct"|"min"|"max"}]}
+  - \`count\` ignores \`column\` (row count). \`count_distinct\` counts unique non-null values of \`column\` (e.g. unique accounts: \`{"alias":"account_count","column":"account_id","agg":"count_distinct"}\`).
+- {"op":"compute","columns":[{"alias":"<new_col>","expr": <expr>}, ...]} — add derived columns (does **not** remove any). Use **before** groupby to convert a categorical into a 0/1 flag you can \`sum\`, or **after** groupby to compute a ratio from measure aliases.
+  - Supported \`expr\` shapes:
+    - {"kind":"equals","column":"<col>","value":"<v>"} → 1 if \`col == v\`, else 0 (pair with \`groupby\` + \`sum\` alias to count matches; e.g. churned deals).
+    - {"kind":"not_equals","column":"<col>","value":"<v>"} → 1 if not equal, else 0.
+    - {"kind":"in","column":"<col>","values":[<v1>,<v2>,...]} → 1 if value is in the list, else 0.
+    - {"kind":"divide","numerator":"<col>","denominator":"<col>"} → number; **null** when denominator is 0 or missing. Use for ratios like \`churn_rate = divide(churn_count, total_count)\`.
+    - {"kind":"coalesce","columns":["a","b"],"fallback": <optional scalar>} → first non-null non-empty value (useful after \`left\` joins: e.g. \`coalesce(r_arr_usd, 0)\`).
+    - {"kind":"bucket","column":"<numeric col>","breaks":[x1,x2,...],"labels":["<=x1","x1-x2",...]} → label bucket by numeric cutoff (\`breaks\` ascending, \`labels\` has one more entry than \`breaks\` OR same length and the last catches overflow).
+    - {"kind":"literal","value": <scalar>} → constant column (rare; used for stacking before \`groupby\`).
 - {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
 - {"op":"limit","n": number}
 
 For cross-table questions, use **join** as documented in the catalog instead of reasoning from one file only.
 
+**Canonical churn-rate recipe:** \`compute is_churn = equals(outcome, lost)\` on \`crm/deal_data\` → \`groupby by=[<segment>]\` with \`measures=[{alias:"churn_count",column:"is_churn",agg:"sum"},{alias:"total_deals",column:"is_churn",agg:"count"}]\` → \`compute churn_rate = divide(churn_count, total_deals)\`. Add a HAVING \`filter\` (e.g. \`total_deals gte 10\`) before \`sort\` to drop tiny segments.
+
 **Time bucket:** prototype CSVs use the column name **fiscal_quarter** (values like 2025-Q1) on crm/deal_data, cx/*, finance/finance_summary, **finance/arr_by_account_quarter** (ARR by account × quarter from CRM), and support/support_summary — not \`quarter\`. **support/support_summary** is **account × fiscal_quarter** (join on **account_id** + **fiscal_quarter** to CX/CRM). crm/accounts uses **renewal_fiscal_quarter** for the account’s renewal slot. **crm/deal_data.logo_acquisition_cohort** matches **crm/accounts.logo_acquisition_cohort** for the same **account_id** (calendar year used as the logo cohort key in the prototype).
 
-**Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`).
+**Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\`/\`in\`/\`not_in\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`). The executor will **case-coerce** a recognised enum value if only the casing is wrong, but do not rely on that — use the catalog values verbatim.
 
 Optional chart per plan: either \`"chart": null\` (no chart) **or** an object with **all four required string fields** filled in: \`{"type":"bar"|"line","x":"<col>","y":"<col>","title":"<short string>"}\`. Rules for the chart object:
 - \`x\` and \`y\` MUST be **non-empty string** column names that exist on the **final** result rows (after the last \`project\` / \`groupby\`). Most common \`y\` is a **groupby measure alias** (e.g. "churn_rate", "account_count").
