@@ -259,7 +259,7 @@ export function buildDataCatalogMarkdown(): string {
   const lines = [
     "## Available quantitative datasets (CSV prototypes)",
     "",
-    "Use datasetId as the **primary (left) table**. Add **join** steps to bring in other catalog tables; right-hand columns appear with **rightPrefix** (default r_). Use **project** to keep only the columns you need before **groupby** / **chart**.",
+    "Use datasetId as the **primary (left) table**. Add **join** steps to bring in other catalog tables; right-hand columns appear with **rightPrefix** (default r_). Use **project** to narrow columns before **groupby** / **chart**; keep every column later steps reference (especially **groupby** keys and join keys such as **account_id**). The executor also **auto-appends** future-referenced columns that still exist on the row but were left out of `project.columns`, to reduce brittle plans.",
     "",
     "### Multi-table joins",
     "",

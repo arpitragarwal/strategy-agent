@@ -100,6 +100,33 @@ function validateColumns(rows: Record<string, unknown>[], cols: string[], ctx: s
   }
 }
 
+/** Column names referenced after `projectIndex` (exclusive): needed so project does not drop them. */
+function collectFutureReferencedColumns(
+  allSteps: QuantOp[],
+  projectStepIndex: number,
+  chart: QuantPlan["chart"],
+): string[] {
+  const need = new Set<string>();
+  for (let j = projectStepIndex + 1; j < allSteps.length; j++) {
+    const st = allSteps[j]!;
+    if (st.op === "filter") need.add(st.column);
+    else if (st.op === "groupby") {
+      for (const b of st.by) need.add(b);
+      for (const m of st.measures) need.add(m.column);
+    } else if (st.op === "sort") need.add(st.by);
+    else if (st.op === "join") {
+      for (const [l] of st.on) need.add(l);
+    } else if (st.op === "project") {
+      for (const c of st.columns) need.add(c);
+    }
+  }
+  if (chart && typeof chart === "object") {
+    if (typeof chart.x === "string" && chart.x.trim()) need.add(chart.x.trim());
+    if (typeof chart.y === "string" && chart.y.trim()) need.add(chart.y.trim());
+  }
+  return [...need];
+}
+
 function compositeKey(row: Record<string, unknown>, cols: string[]): string {
   return cols.map((c) => String(row[c] ?? "")).join("\u0001");
 }
@@ -184,11 +211,21 @@ function applyProject(
   rows: Record<string, unknown>[],
   step: Extract<QuantOp, { op: "project" }>,
   stepIdx: number,
+  allSteps: QuantOp[],
+  stepIndex: number,
+  chart: QuantPlan["chart"],
 ): Record<string, unknown>[] {
-  validateColumns(rows, step.columns, `Step ${stepIdx} project`);
+  if (!rows.length) return [];
+  const have = new Set(Object.keys(rows[0]!));
+  const future = collectFutureReferencedColumns(allSteps, stepIndex, chart);
+  const merged: string[] = [...step.columns];
+  for (const c of future) {
+    if (have.has(c) && !merged.includes(c)) merged.push(c);
+  }
+  validateColumns(rows, merged, `Step ${stepIdx} project`);
   return rows.map((r) => {
     const o: Record<string, unknown> = {};
-    for (const c of step.columns) {
+    for (const c of merged) {
       o[c] = r[c];
     }
     return o;
@@ -248,7 +285,8 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
     }
 
     let stepIdx = 0;
-    for (const step of plan.steps) {
+    for (let stepIndex = 0; stepIndex < plan.steps.length; stepIndex++) {
+      const step = plan.steps[stepIndex]!;
       stepIdx += 1;
       if (step.op === "filter") {
         validateColumns(rows, [step.column], `Step ${stepIdx} filter`);
@@ -268,7 +306,7 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
         }
         rows = applyJoin(rows, step, stepIdx);
       } else if (step.op === "project") {
-        rows = applyProject(rows, step, stepIdx);
+        rows = applyProject(rows, step, stepIdx, plan.steps, stepIndex, plan.chart);
       }
     }
 
