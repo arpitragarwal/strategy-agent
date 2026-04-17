@@ -1530,30 +1530,6 @@ export function StrategyConsole() {
             </div>
           ) : null}
 
-          {busy && runId ? (
-            <div className="rounded-lg border border-sky-200 bg-sky-50/80 p-3 space-y-2">
-              <p className="text-xs font-medium text-sky-900 uppercase tracking-wide">
-                While running
-              </p>
-              <p className="text-xs text-sky-800/90">
-                The in-flight model call finishes first. Partial synthesis is applied at the next
-                checkpoint between leaf batches during analysis.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => void sendControl("synthesize_now")}
-                  className="rounded-md bg-sky-600 hover:bg-sky-700 text-white text-xs font-medium px-3 py-1.5"
-                >
-                  Synthesize so far
-                </button>
-              </div>
-              {controlMessage ? (
-                <p className="text-xs text-amber-900">{controlMessage}</p>
-              ) : null}
-            </div>
-          ) : null}
-
           {error ? (
             <div className="text-sm text-rose-800 border border-rose-200 rounded-lg px-3 py-2 bg-rose-50 space-y-2">
               <p className="whitespace-pre-wrap break-words">{error.message}</p>
@@ -1577,16 +1553,33 @@ export function StrategyConsole() {
           title="Pipeline"
           cardClassName="border-zinc-200 bg-zinc-50/80"
           summaryEnd={
-            nodesTotal > 0 ? (
-              <span className="text-xs font-mono text-zinc-500">
-                nodes {nodesDone}/{nodesTotal}
-              </span>
+            nodesTotal > 0 || (busy && runId) ? (
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {nodesTotal > 0 ? (
+                  <span className="text-xs font-mono text-zinc-500">
+                    nodes {nodesDone}/{nodesTotal}
+                  </span>
+                ) : null}
+                {busy && runId ? (
+                  <button
+                    type="button"
+                    onClick={() => void sendControl("synthesize_now")}
+                    title="The in-flight model call finishes first. Partial synthesis is applied at the next checkpoint between leaf batches during analysis."
+                    className="rounded-md border border-sky-300 bg-sky-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-sky-900 hover:bg-sky-100"
+                  >
+                    Synthesize so far
+                  </button>
+                ) : null}
+              </div>
             ) : null
           }
         >
           <div className="rounded-lg border border-zinc-200/80 bg-white/90 px-3 py-3">
             <PipelineTimeline steps={pipelineSteps} />
           </div>
+          {busy && runId && controlMessage ? (
+            <p className="mt-2 text-xs text-sky-900">{controlMessage}</p>
+          ) : null}
           {tokenUsagePipelineLine ? (
             <p className="mt-2 text-[10px] font-mono text-zinc-600 tabular-nums">
               {tokenUsagePipelineLine}
