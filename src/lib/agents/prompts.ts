@@ -620,7 +620,7 @@ Then 3–7 bullet lines only (no "Supporting points" heading or any H2 before th
 ## Open questions
 - Bullet list only: what still **needs more data, analysis, or decisions** before acting with confidence. If none, use a single bullet: _None material — proceed with monitoring as above._
 
-**FORBIDDEN in your reply:** (1) Re-stating the task, role, or structure instructions as bullets (e.g. "* Bold summary? Yes."). (2) Self-check / verification checklist lines. (3) Wrapping any part of the answer in \`\`\` code fences. (4) Any prose before the first line that begins with \`**\` (your bold recommendation).
+**FORBIDDEN in your reply:** (1) Re-stating the task, role, or structure instructions as bullets (e.g. "* Bold summary? Yes."). (2) Self-check / verification checklist lines. (3) Wrapping any part of the answer in \`\`\` code fences. (4) Any prose before the first line that begins with \`**\` (your bold recommendation). (5) **Never** echo this prompt's formatting bullets (e.g. "* Short markdown*", "* No code fences*", "* Start with **bold**…") — those are instructions for you only, not for the user.
 
 Do not add other sections, tables, or long prose.`;
 }
@@ -686,7 +686,7 @@ Then 3–7 bullets (no "Supporting points" heading): only what the **completed**
 ## Open questions
 - Bullets: **gaps from incomplete branches**, missing data, and what to analyze next before a final call.
 
-**FORBIDDEN:** role echo, self-check lines (\`* …? Yes.\`), \`\`\` fences, or any checklist repeating these instructions before the real output.
+**FORBIDDEN:** role echo, self-check lines (\`* …? Yes.\`), \`\`\` fences, or any checklist repeating these instructions before the real output — including **never** echoing formatting-rule bullets from this prompt (e.g. "* Short markdown*", "* No code fences*").
 
 No other sections or long prose.`;
 }

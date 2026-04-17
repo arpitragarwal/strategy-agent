@@ -77,6 +77,28 @@ export function sanitizeDiscoveryMarkdown(raw: string): string {
   return s.replace(/\n{3,}/g, "\n\n").trim();
 }
 
+/** Leading bullets that echo the synthesis prompt's formatting rules (not user-facing content). */
+function isSynthesisFormattingEchoLine(t: string): boolean {
+  const u = t.trim();
+  if (!/^\*\s/.test(u) || u.length > 220) return false;
+  // Single-line literal: line breaks inside `/.../` are invalid in JS.
+  if (
+    /^\*\s*(?:\*\s*)?(short\s+markdown\.?|no\s+code\s+fences?|no\s+meta\s+bullet[^.]*|start\s+with\s+\*\*bold|followed\s+by\s+3[-–]7|ending\s+with.{0,48}open\s+questions|no\s+generic\s+boilerplate|no\s+prose\s+before|no\s+labels?\s+like)\b/i.test(
+      u,
+    )
+  ) {
+    return true;
+  }
+  if (
+    /^\*\s*(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|concrete support|heading)\b/i.test(
+      u,
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
 /**
  * Cleans synthesis output: unwrap ``` fences, drop self-check / instruction echo bullets,
  * fix `?Yes.**` glued to bold, then trim everything before the first real **…** lead line.
@@ -84,6 +106,7 @@ export function sanitizeDiscoveryMarkdown(raw: string): string {
 export function stripSynthesisMarkdown(text: string): string {
   let s = unwrapLeadingMarkdownFences(text);
   if (!s) return s;
+  s = unwrapEmbeddedProseCodeFences(s);
 
   // Model sometimes glues checklist "Yes." to the bold summary: `? Yes.**Reduce...`
   s = s.replace(/\?\s*Yes\.?\s*(\*\*)/gi, "\n\n$1");
@@ -103,12 +126,7 @@ export function stripSynthesisMarkdown(text: string): string {
       i++;
       continue;
     }
-    if (
-      /^\*\s*(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|concrete support|heading)\b/i.test(
-        t,
-      ) &&
-      t.length < 180
-    ) {
+    if (isSynthesisFormattingEchoLine(t)) {
       i++;
       continue;
     }
