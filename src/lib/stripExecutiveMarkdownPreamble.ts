@@ -358,7 +358,15 @@ export function stripSynthesisMarkdown(text: string): string {
   const lines = s.split(/\r?\n/);
   const out: string[] = [];
   const summaryRe =
-    /^[*+-]\s+\*{1,2}\s*(?:Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*(.+?)\s*$/i;
+    /^[*+-]\s+\*{1,2}\s*(?:Recommendation|Answer|Bottom\s+line|Bold\s+[Ss]ummary|Final\s+[Ss]ummary|Revised\s+[Ss]ummary|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*(.+?)\s*$/i;
+  // Same label families but as a standalone line (not a bullet), e.g. a nested
+  // `*Bold Summary:* **…**` that got dedented by the prose flow.
+  const summaryLabelLineRe =
+    /^\*{1,2}\s*(?:Recommendation|Answer|Bottom\s+line|Bold\s+[Ss]ummary|Final\s+[Ss]ummary|Revised\s+[Ss]ummary|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*\*\*[^*]+\*\*/i;
+  // Any line carrying a long bold-emphasis span (≥30 chars inside `**…**`) —
+  // used to catch a second bold summary whether it appears standalone, as a
+  // label bullet, or glued to the end of a question (`…?**Improve Q2-26…**`).
+  const embeddedLongBoldRe = /\*\*[^*\n]{30,}\*\*/;
   const childrenLabelRe =
     /^[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Support\s+bullets?|Support\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*{1,2}\s*:?\s*$/i;
   const openQLabelRe = /^[*+-]\s+\*{1,2}\s*Open\s+[Qq]uestions?\s*:?\s*\*{1,2}\s*:?\s*$/i;
@@ -381,12 +389,25 @@ export function stripSynthesisMarkdown(text: string): string {
     const line = lines[k];
     const t = line.trim();
 
-    // Models sometimes write the whole synthesis TWICE back to back ("first attempt"
-    // then "final"). Once we've already captured a bold summary AND an Open questions
-    // block, any new standalone `**…**` line or another `## Open questions` heading
-    // signals the start of a duplicate — stop here so only the first copy is kept.
+    // Models sometimes write the whole synthesis TWICE (or more) back to back
+    // ("first attempt" / "final", or a nested `*Bold Summary:*` restatement inside
+    // the Open questions list). Once we've already captured a bold summary AND an
+    // Open questions block, any of the following signals a duplicate — stop here
+    // so only the first copy is kept:
+    //   - a new standalone `**…**` paragraph
+    //   - another `## Open questions` heading
+    //   - a label bullet like `* *Bold Summary:* **…**` (any depth of nesting)
+    //   - a standalone `*Bold Summary:* **…**` line (same, but not inside a bullet)
+    //   - any line with a long `**…**` span embedded in it (catches bold glued to
+    //     the end of a question like `…resources?**Improve Q2-26…**`)
     if (sawBoldSummary && sawOpenQuestionsHeading) {
-      if (standaloneBoldRe.test(t) || openQHeadingRe.test(t)) {
+      if (
+        standaloneBoldRe.test(t) ||
+        openQHeadingRe.test(t) ||
+        summaryRe.test(t) ||
+        summaryLabelLineRe.test(t) ||
+        embeddedLongBoldRe.test(t)
+      ) {
         break;
       }
     }

@@ -70,6 +70,26 @@ const cases: Case[] = [
     expectNotContains: ["first attempt", "second attempt"],
   },
   {
+    name: "single synthesis with short bold emphasis inside bullets — must not truncate",
+    input: `**Prioritize expansion accounts with usage above the threshold.**
+
+- The **key driver** is usage depth, not deal size.
+- **Q1-26** data shows a 40% gap between top and bottom tiers.
+- Verticals differ by **TAM ceiling**, not product quality.
+
+## Open questions
+- What is the exact **usage threshold** for top-tier accounts?
+- Do **ROI perceptions** flip after onboarding completes?`,
+    expectContains: [
+      "Prioritize expansion accounts",
+      "key driver",
+      "## Open questions",
+      "usage threshold",
+      "ROI perceptions",
+    ],
+    expectNotContains: [],
+  },
+  {
     name: "duplicate with no blank line between first Open questions and second bold",
     input: `**First summary recommendation.**
 
@@ -92,6 +112,51 @@ const cases: Case[] = [
       "Second summary with different wording",
       "Alt A",
       "Qx",
+    ],
+  },
+  {
+    name: "duplicate nested inside Open questions via `* *Bold Summary:* **…**`",
+    input: `**To improve Q2-26 win rates, implement a bifurcated strategy that prioritizes usage-based triggers for expansion deals and pricing-centric optimization for land deals.**
+
+- Expansion losses are primarily driven by adoption bottlenecks.
+- Land deals are primarily lost on pricing.
+- Existing "winner" verticals provide a potential blueprint.
+- Product-market fit gaps in specific lines.
+- Current data volume is critically low for several segments.
+
+## Open questions
+- What is the precise usage threshold that separates high-risk from high-win accounts?
+- Do laggard verticals show high "Value" loss reasons even when usage is high?
+- Does the Q2-26 product roadmap address the specific capability gaps?
+- Is there a statistically significant sample size (N > 30) for laggard segments?
+  - *Bold Summary:* **Improve Q2-26 win rates by bifurcating sales plays—focusing land deals on pricing optimization and expansion deals on usage-based triggers—while validating that vertical laggards suffer from value-proposition gaps rather than adoption bottlenecks.**
+  - Expansion win rates correlate strongly with usage tiers, with low-usage accounts serving as the primary driver of lost deals.
+  - Land deals are primarily lost on pricing, requiring a distinct intervention strategy.
+  - Vertical "blueprints" can only be scaled if losses in laggard segments are driven by ROI failures.
+  - Product-line underperformance may be a positioning gap.
+  - Strategic pivots for ICP and product enablement currently rely on statistically thin datasets.
+  - What is the precise usage threshold that separates high-risk from high-win accounts?
+  - Do laggard verticals show high "Value" loss reasons even when usage is high?
+  - Does the Q2-26 product roadmap address the specific capability gaps?
+  - Can we achieve a statistically significant sample size (N > 30) for laggard segments before committing resources?**Improve Q2-26 win rates by bifurcating sales plays—focusing land deals on pricing optimization and expansion deals on usage-based triggers—while validating that vertical laggards suffer from value-proposition gaps rather than adoption bottlenecks.**
+  - Expansion win rates correlate strongly with usage tiers, with low-usage accounts serving as the primary driver of lost deals.
+  - Land deals are primarily lost on pricing.
+  - Vertical "blueprints" can only be scaled if losses in laggard segments are driven by ROI failures.
+  - Product-line underperformance may be a positioning gap.
+  - Strategic pivots for ICP and product enablement currently rely on statistically thin datasets.`,
+    expectContains: [
+      "To improve Q2-26 win rates, implement a bifurcated strategy",
+      "Expansion losses are primarily driven by adoption bottlenecks",
+      "## Open questions",
+      "What is the precise usage threshold",
+      "Is there a statistically significant sample size (N > 30) for laggard segments?",
+    ],
+    expectNotContains: [
+      "Improve Q2-26 win rates by bifurcating sales plays",
+      "Bold Summary",
+      "Vertical \"blueprints\" can only be scaled",
+      "Strategic pivots for ICP",
+      "Can we achieve a statistically significant sample size",
     ],
   },
 ];
