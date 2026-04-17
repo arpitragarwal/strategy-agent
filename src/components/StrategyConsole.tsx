@@ -562,28 +562,21 @@ function PipelineTimeline({
 }
 
 function StatusDot({ status }: { status: NodeState["status"] }) {
-  if (status === "running") {
-    return (
-      <span
-        className="relative inline-flex h-3 w-3 items-center justify-center"
-        title={status}
-      >
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-80" />
-        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500 shadow-[0_0_0_2px_rgba(251,191,36,0.35),0_0_8px_2px_rgba(245,158,11,0.65)] ring-1 ring-amber-600/70" />
-      </span>
-    );
-  }
   const color =
-    status === "done"
-      ? "bg-emerald-500"
-      : status === "blocked"
-        ? "bg-rose-500"
-        : status === "skipped"
-          ? "bg-slate-500"
-          : "bg-zinc-500";
+    status === "running"
+      ? "bg-amber-500"
+      : status === "done"
+        ? "bg-emerald-500"
+        : status === "blocked"
+          ? "bg-rose-500"
+          : status === "skipped"
+            ? "bg-slate-500"
+            : "bg-zinc-500";
+  // Keep all statuses the same visual size; running pulses subtly to signal activity.
+  const pulse = status === "running" ? "animate-pulse" : "";
   return (
     <span className="relative inline-flex h-3 w-3 items-center justify-center" title={status}>
-      <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />
+      <span className={`inline-block h-2.5 w-2.5 rounded-full ${color} ${pulse}`} />
     </span>
   );
 }
