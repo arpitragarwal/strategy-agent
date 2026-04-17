@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Strategy Team AI Agents: Prototype",
+  title: "AI Agent Team For Corporate Strategy: Prototype",
   description: "An AI powered corporate strategy team",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],

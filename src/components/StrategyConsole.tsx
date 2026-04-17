@@ -1418,10 +1418,10 @@ export function StrategyConsole() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <header className="sticky top-0 z-30 -mx-4 px-4 bg-white pb-4 border-b border-zinc-100 mb-8">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-          Strategy Team AI Agents: Prototype
+          AI Agent Team For Corporate Strategy: Prototype
         </h1>
         <p className="text-zinc-600 text-sm mt-1">
-          An AI powered corporate strategy team · Built by{" "}
+          By{" "}
           <a
             href="https://www.linkedin.com/in/arpit-agarwal/"
             target="_blank"
