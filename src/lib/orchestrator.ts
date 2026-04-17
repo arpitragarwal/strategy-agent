@@ -1376,6 +1376,25 @@ async function runLeafAnalysisPhase(
               roots,
               leaf,
               redirectContext,
+            }).catch(async (err: unknown): Promise<NodeState> => {
+              // Isolate per-leaf failures: one flaky model/JSON-repair call should not abort
+              // the whole run. Mark the node as "skipped" with the error captured and keep going.
+              const msg = err instanceof Error ? err.message : String(err);
+              if (process.env.NODE_ENV !== "production") {
+                console.warn(`[analyze] leaf "${leaf.title}" (${leaf.id}) failed: ${msg}`);
+              }
+              await emit(
+                "analysis",
+                `Leaf "${leaf.title}" failed — skipping so the run can continue.`,
+              );
+              return {
+                id: leaf.id,
+                status: "skipped",
+                summary: "Leaf analysis failed — run continued without this node.",
+                analysis: `_Skipped because of an internal error:_ ${msg.slice(0, 800)}`,
+                verdict: "inconclusive",
+                confidence: "low",
+              };
             }),
           ),
         ),
