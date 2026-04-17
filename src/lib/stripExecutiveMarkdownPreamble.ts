@@ -374,10 +374,22 @@ export function stripSynthesisMarkdown(text: string): string {
   //  Used so the first such line (even if it wasn't wrapped in `* *Summary:*`) still sets
   //  sawBoldSummary, so subsequent labelled summaries downgrade to plain bullets.
   const standaloneBoldRe = /^\*\*[^*]([^\n]*[^*])?\*\*\s*$/;
+  // Proper H2 for Open questions (as emitted by the template).
+  const openQHeadingRe = /^##\s+open\s+questions?\s*$/i;
 
   for (let k = 0; k < lines.length; k++) {
     const line = lines[k];
     const t = line.trim();
+
+    // Models sometimes write the whole synthesis TWICE back to back ("first attempt"
+    // then "final"). Once we've already captured a bold summary AND an Open questions
+    // block, any new standalone `**…**` line or another `## Open questions` heading
+    // signals the start of a duplicate — stop here so only the first copy is kept.
+    if (sawBoldSummary && sawOpenQuestionsHeading) {
+      if (standaloneBoldRe.test(t) || openQHeadingRe.test(t)) {
+        break;
+      }
+    }
 
     const mSummary = t.match(summaryRe);
     if (mSummary) {
@@ -433,6 +445,11 @@ export function stripSynthesisMarkdown(text: string): string {
     // Track raw standalone `**…**` lines so a later `* *Summary:* …` doesn't stack another bold.
     if (!sawBoldSummary && standaloneBoldRe.test(t)) {
       sawBoldSummary = true;
+    }
+
+    // Track proper `## Open questions` headings so we can detect a subsequent duplicate block.
+    if (openQHeadingRe.test(t)) {
+      sawOpenQuestionsHeading = true;
     }
 
     out.push(line);
