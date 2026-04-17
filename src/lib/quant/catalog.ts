@@ -122,7 +122,7 @@ function buildQuantEnumMarkdown(): string {
     "For `filter` with `cmp: \"eq\"` or `\"neq\"`, use **only** the values below for these columns (case-sensitive). Do **not** use `Lost`, `Won`, `Renewal`, title case, or other CRM synonyms.",
     "",
     "- **crm/accounts** — `renewal_fiscal_quarter` may also be empty (`\"\"`) on some rows (e.g. new logos); omit filter or allow empty if you need those accounts.",
-    "- **crm/deal_data** — `primary_loss_reason` is empty on **won** rows; on **lost** rows use the literals below (or copy from joined renewal context). `discount_pct` is numeric (0–100, ~50 prototype mean).",
+    "- **crm/deal_data** — `primary_loss_reason` is empty on **won** rows; on **lost** rows use the literals below (or copy from joined renewal context).",
     "- **finance/arr_by_account_quarter** — `account_id` matches **crm/accounts** (generated ids); not enumerated here.",
     "- **support/support_summary** — `account_id` matches **crm/accounts** / **cx/*** (generated ids such as `ACC-000001`); not enumerated here.",
     "- **cx/customer_satisfaction** — `csat_score` and `nps_score` are numeric; use range compares, not string `eq`, unless comparing to a number.",
@@ -147,7 +147,7 @@ function buildQuantEnumMarkdown(): string {
   }
   lines.push("");
   lines.push(
-    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}; **crm/accounts.logo_acquisition_year**, **crm/deal_data.logo_acquisition_year** (same value per \`account_id\` as accounts), and **crm/deal_data.discount_pct** are numeric (not string \`eq\`).`,
+    `- **Numeric enums** — \`contract_term_years\` on **crm/deal_data** / **crm/accounts**: integers ${PROTOTYPE_CONTRACT_TERM_YEARS.join(", ")}; **crm/accounts.logo_acquisition_year** and **crm/deal_data.logo_acquisition_year** (same value per \`account_id\` as accounts) are numeric (not string \`eq\`).`,
   );
   lines.push("");
   return lines.join("\n");
@@ -167,7 +167,7 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/deal_data.csv",
     domain: "crm",
     description:
-      "Unified deal fact table for the window (renew + land + expand): logo_acquisition_year (same integer as **crm/accounts** for that account_id), fiscal_quarter (2025-Q1…2026-Q1, same label as CX), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd, deal_source, discount_pct (0–100; prototype mean ~50), primary_loss_reason (empty if won; else churn/loss category).",
+      "Unified deal fact table for the window (renew + land + expand): logo_acquisition_year (same integer as **crm/accounts** for that account_id), fiscal_quarter (2025-Q1…2026-Q1, same label as CX), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type, outcome (won/lost), contract_term_years, acv_usd, tcv_usd, deal_source, primary_loss_reason (empty if won; else churn/loss category).",
   },
   {
     id: "cx/product_usage",

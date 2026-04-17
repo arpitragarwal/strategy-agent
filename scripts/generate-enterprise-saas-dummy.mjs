@@ -254,12 +254,6 @@ function sampleCreatedDateFromClose(closeDateStr, rnd) {
   return c.toISOString().slice(0, 10);
 }
 
-/** Mean ~50% (average of four uniforms × 100). */
-function sampleDiscountPct(rnd) {
-  const x = ((rnd() + rnd() + rnd() + rnd()) / 4) * 100;
-  return Math.round(x * 10) / 10;
-}
-
 function sampleDealSource(rnd) {
   const u = rnd();
   let s = 0;
@@ -281,7 +275,6 @@ function finalizeDealRows(rows, rnd, allRenewals) {
     row.close_date = cd;
     row.created_date = sampleCreatedDateFromClose(cd, rnd);
     row.deal_source = sampleDealSource(rnd);
-    row.discount_pct = sampleDiscountPct(rnd);
     if (row.outcome === "lost") {
       if (row.deal_type === "renew" && lossByAccount.has(row.account_id)) {
         row.primary_loss_reason = lossByAccount.get(row.account_id);
@@ -1868,7 +1861,6 @@ function main() {
       "acv_usd",
       "tcv_usd",
       "deal_source",
-      "discount_pct",
       "primary_loss_reason",
     ]),
   );
