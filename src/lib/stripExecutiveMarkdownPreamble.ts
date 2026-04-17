@@ -101,7 +101,7 @@ export function sanitizeDiscoveryMarkdown(raw: string): string {
 /** Leading bullets that echo the synthesis prompt's formatting rules (not user-facing content). */
 function isSynthesisFormattingEchoLine(t: string): boolean {
   const u = t.trim();
-  if (!/^\*\s/.test(u) || u.length > 240) return false;
+  if (!/^[*+-]\s/.test(u) || u.length > 240) return false;
   // Patterns copied from the synthesis prompt (model sometimes restates them as a checklist).
   const phrases = [
     /short\s+markdown\b/,
@@ -125,7 +125,7 @@ function isSynthesisFormattingEchoLine(t: string): boolean {
   if (phrases.some((re) => re.test(u.toLowerCase()))) return true;
   // Fallback keyword heads seen in older outputs.
   if (
-    /^\*\s*(?:\*\s*)?(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|heading)\b/i.test(
+    /^[*+-]\s*(?:\*\s*)?(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|heading)\b/i.test(
       u,
     )
   ) {
@@ -134,29 +134,135 @@ function isSynthesisFormattingEchoLine(t: string): boolean {
   return false;
 }
 
+/** Bullet ending in a self-check answer like `? Yes.`, `? Yes (5).`, `? No – because …`. */
+function isSelfCheckBulletLine(t: string): boolean {
+  return /^[*+-]\s+.+\?\s*(Yes|No)\b[^?]{0,80}$/i.test(t);
+}
+
+/** Bullet whose content is a recap of an input section label (Themes/Problems/Analyses/…). */
+function isContextRecapBulletLine(t: string): boolean {
+  const m = t.match(/^[*+-]\s+\*{0,2}\s*([^*:]{1,60}?)\s*\*{0,2}\s*:/);
+  if (!m) return false;
+  const label = m[1].trim().toLowerCase();
+  return (
+    label === "themes" ||
+    label === "theme" ||
+    label === "problems" ||
+    label === "problem" ||
+    label === "risks" ||
+    label === "risk" ||
+    label === "problems/risks" ||
+    label === "problems / risks" ||
+    label === "opportunities" ||
+    label === "opportunity" ||
+    label === "data-backed specificity" ||
+    label === "data backed specificity" ||
+    label === "data-backed" ||
+    label === "manager critique" ||
+    label === "manager feedback" ||
+    label === "manager notes" ||
+    label === "manager" ||
+    label === "analyses" ||
+    label === "analysis" ||
+    label === "analysis summary" ||
+    label === "user goal" ||
+    label === "goal" ||
+    label === "context" ||
+    label === "context & clarification" ||
+    label === "context and clarification" ||
+    label === "clarification" ||
+    label === "per-leaf analyses" ||
+    label === "hypotheses"
+  );
+}
+
+/** Bullet that echoes the user goal as a question: `* **What is driving X?** …` / `* **How can we fix Y?** …` */
+function isGoalEchoQuestionBullet(t: string): boolean {
+  return /^[*+-]\s+\*\*(?:What|Why|How|When|Where|Which|Who)\b[^*]{0,240}\?\*\*/i.test(t);
+}
+
+/** Any of the above — used to skip leading junk and to drop isolated echo bullets inside the body. */
+function isLeadingJunkBullet(t: string): boolean {
+  if (!/^[*+-]\s/.test(t)) return false;
+  if (isSelfCheckBulletLine(t)) return true;
+  if (isSynthesisFormattingEchoLine(t)) return true;
+  if (isContextRecapBulletLine(t)) return true;
+  if (isGoalEchoQuestionBullet(t)) return true;
+  return false;
+}
+
 /**
  * If the first block of non-empty lines is uniformly indented by 4+ spaces
- * and consists of bullets, ReactMarkdown renders it as a code block. De-indent
- * so the individual rule-echo / other detection can then decide what to drop.
+ * (which ReactMarkdown/GFM would render as a <pre><code>), strip the common
+ * minimum indent so later line-based cleaning can run. Preserves relative
+ * nesting (doesn't flatten) so children of a labelled bullet still render
+ * correctly after the label itself is removed.
  */
 function dedentLeadingIndentedBlock(s: string): string {
   const lines = s.split(/\r?\n/);
   let i = 0;
   while (i < lines.length && lines[i].trim() === "") i++;
   const start = i;
-  // Scan contiguous non-empty block
   while (i < lines.length && lines[i].trim() !== "") i++;
   if (i === start) return s;
   const block = lines.slice(start, i);
-  const allIndentedBullets = block.every((l) => /^\s{4,}[*+\-]\s/.test(l));
-  if (!allIndentedBullets) return s;
-  const deindented = block.map((l) => l.replace(/^\s+/, ""));
+  if (!/^\s{4,}[*+\-]\s/.test(block[0])) return s;
+  let min = Infinity;
+  for (const l of block) {
+    const m = l.match(/^( *)/);
+    const n = m ? m[1].length : 0;
+    if (n < min) min = n;
+  }
+  if (!Number.isFinite(min) || min <= 0) return s;
+  const cut = min as number;
+  const deindented = block.map((l) => l.slice(cut));
   return [...lines.slice(0, start), ...deindented, ...lines.slice(i)].join("\n");
 }
 
+/** Any structural label bullet (e.g. `* **Supporting points:**`, `* **Open Questions:**`) —
+ *  used so `consumeDedentedChildren` stops before eating the next label.
+ */
+const STRUCTURAL_LABEL_BULLET_RE =
+  /^\s*[*+-]\s+\*\*\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?|Open\s+[Qq]uestions?|Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR)s?\s*:?\s*\*\*\s*:?\s*$/i;
+
+/** Dedent a contiguous run of indented child bullets/numbered items to flush top-level `- …`. */
+function consumeDedentedChildren(lines: string[], startIdx: number, out: string[]): number {
+  let j = startIdx;
+  let consumedAny = false;
+  while (j < lines.length) {
+    const nl = lines[j];
+    if (nl.trim() === "") {
+      if (!consumedAny) {
+        j++;
+        continue;
+      }
+      let k = j + 1;
+      while (k < lines.length && lines[k].trim() === "") k++;
+      if (
+        k < lines.length &&
+        /^\s+([*+\-]|\d+\.)\s+/.test(lines[k]) &&
+        !STRUCTURAL_LABEL_BULLET_RE.test(lines[k])
+      ) {
+        j = k;
+        continue;
+      }
+      break;
+    }
+    if (STRUCTURAL_LABEL_BULLET_RE.test(nl)) break;
+    const mm = nl.match(/^\s+([*+\-]|\d+\.)\s+(.*)$/);
+    if (!mm) break;
+    out.push(`- ${mm[2].trim()}`);
+    consumedAny = true;
+    j++;
+  }
+  return j;
+}
+
 /**
- * Cleans synthesis output: unwrap ``` fences, drop self-check / instruction echo bullets,
- * fix `?Yes.**` glued to bold, then trim everything before the first real **…** lead line.
+ * Cleans synthesis output: unwrap ``` fences, drop self-check / instruction / context-echo bullets,
+ * unwrap template-label bullets (`* **Recommendation:** X` → `**X**`, `* **Supporting points:**` and
+ * `* **Open Questions:**` → proper shape), fix `?Yes.**` glued to bold, then trim everything before
+ * the first real **…** lead line.
  */
 export function stripSynthesisMarkdown(text: string): string {
   let s = unwrapLeadingMarkdownFences(text);
@@ -168,31 +274,88 @@ export function stripSynthesisMarkdown(text: string): string {
   s = s.replace(/\?\s*Yes\.?\s*(\*\*)/gi, "\n\n$1");
   s = s.replace(/\?\s*No\.?\s*(\*\*)/gi, "\n\n$1");
 
-  const lines = s.split(/\r?\n/);
-  const cleaned: string[] = [];
+  // Pass 1: drop leading junk bullets (self-check / rule-echo / context-recap / goal-echo Q&A)
+  //         until the first "real" content line. When a context-recap label ends with `:` (no
+  //         content on the same line), also consume its indented child bullets — otherwise a
+  //         `* Analyses:` drop would leave the nested leaf-analysis bullets orphaned.
+  const l1 = s.split(/\r?\n/);
   let i = 0;
-  while (i < lines.length) {
-    const raw = lines[i];
+  while (i < l1.length) {
+    const raw = l1[i];
     const t = raw.trim();
-    if (t === "") {
+    if (t === "") { i++; continue; }
+    if (isLeadingJunkBullet(t)) {
+      const endsWithColon = /:\s*$/.test(t);
       i++;
-      continue;
-    }
-    if (/^\*\s*.+\?\s*(Yes|No)\.?\s*$/i.test(t)) {
-      i++;
-      continue;
-    }
-    if (isSynthesisFormattingEchoLine(t)) {
-      i++;
+      if (endsWithColon) {
+        while (i < l1.length) {
+          const nl = l1[i];
+          if (nl.trim() === "") { i++; continue; }
+          if (/^\s+[*+\-]\s/.test(nl) || /^\s+\d+\.\s/.test(nl)) { i++; continue; }
+          break;
+        }
+      }
       continue;
     }
     break;
   }
-  for (; i < lines.length; i++) cleaned.push(lines[i]);
-  s = cleaned.join("\n").trim();
+  s = l1.slice(i).join("\n").trim();
 
+  // Pass 2: line-by-line structural rewrites.
+  const lines = s.split(/\r?\n/);
+  const out: string[] = [];
+  const summaryRe =
+    /^[*+-]\s+\*\*\s*(?:Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR)s?\s*:?\s*\*\*\s*:?\s*(.+?)\s*$/i;
+  const childrenLabelRe =
+    /^[*+-]\s+\*\*\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*\*\s*:?\s*$/i;
+  const openQLabelRe = /^[*+-]\s+\*\*\s*Open\s+[Qq]uestions?\s*:?\s*\*\*\s*:?\s*$/i;
+
+  for (let k = 0; k < lines.length; k++) {
+    const line = lines[k];
+    const t = line.trim();
+
+    const mSummary = t.match(summaryRe);
+    if (mSummary) {
+      let content = mSummary[1].trim();
+      const innerBold = content.match(/^\*\*(.+?)\*\*\s*$/);
+      if (innerBold) content = innerBold[1].trim();
+      content = content.replace(/\*\*/g, "").trim();
+      if (content) {
+        if (out.length > 0 && out[out.length - 1].trim() !== "") out.push("");
+        out.push(`**${content}**`);
+        out.push("");
+      }
+      continue;
+    }
+
+    if (openQLabelRe.test(t)) {
+      if (out.length > 0 && out[out.length - 1].trim() !== "") out.push("");
+      out.push("## Open questions");
+      k = consumeDedentedChildren(lines, k + 1, out) - 1;
+      continue;
+    }
+
+    if (childrenLabelRe.test(t)) {
+      k = consumeDedentedChildren(lines, k + 1, out) - 1;
+      continue;
+    }
+
+    // Drop stray echo/recap bullets that slipped past the leading pass.
+    if (isContextRecapBulletLine(t) || isSelfCheckBulletLine(t) || isGoalEchoQuestionBullet(t)) {
+      continue;
+    }
+
+    out.push(line);
+  }
+
+  s = out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+
+  // Promote the first standalone bold line to the top if junk remains before it.
   const outLines = s.split(/\r?\n/);
-  const boldIdx = outLines.findIndex((line) => line.trimStart().startsWith("**"));
+  const boldIdx = outLines.findIndex((line) => {
+    const t = line.trimStart();
+    return t.startsWith("**") && !t.startsWith("***") && !/^[*+-]\s/.test(line.trimStart());
+  });
   if (boldIdx > 0) {
     s = outLines.slice(boldIdx).join("\n").trim();
   }

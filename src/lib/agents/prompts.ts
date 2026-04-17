@@ -686,7 +686,12 @@ Output template (fill in — keep this shape, same three sections, nothing else)
 Hard rules (do **not** write these rules in your output; obey them silently):
 - Your reply must **begin** with the literal character \`*\` of the opening \`**\` of the bold recommendation — no prose, headings, preamble, role statement, checklist, or bullets before it.
 - Never wrap any part of the output in \`\`\` code fences.
+- Never indent any top-level line by 4+ spaces (it would render as a code block). Bullets start flush-left with \`- \`.
 - Never restate these rules, the task, or the template as bullets (e.g. do **not** write lines like "* Start with **bold**", "* No code fences", "* 3-7 bullets", "* No H2 before", "* No labels"). They are instructions for you only.
+- Never emit a self-check or verification checklist (e.g. "* Start with \`**\`? Yes.", "* 3-7 bullets? Yes (5).", "* Open questions section? Yes."). Obey silently.
+- Never recap the inputs. Do **not** write bullets that label or paraphrase the Goal, Context & clarification, Manager critique, or Analyses sections (e.g. do **not** write lines like "* Themes: …", "* Problems/Risks: …", "* Opportunities: …", "* Data-backed specificity: …", "* Manager Critique: …", "* Analyses:"). Use those inputs as evidence inside your support bullets instead.
+- Never use template-label bullets. The bold summary is a **standalone line that starts with \`**\`**, not a bullet prefixed with \`* **Recommendation:**\`, \`* **Answer:**\`, \`* **Bottom line:**\`, or \`* **Summary:**\`. The support bullets are **plain bullets** — do not wrap them in a \`* **Supporting points:**\` / \`* **Bullets:**\` / \`* **Findings:**\` parent bullet, and do not put the \`## Open questions\` block inside a \`* **Open Questions:**\` bullet.
+- Do **not** split the answer into goal-echo Q&A bullets (e.g. "* **What is driving X?** …", "* **How do we fix Y?** …"). Fuse the answer into the single bold summary line.
 - No "Supporting points" heading, no \`##\` heading before the bullets, no extra sections, no tables, no long prose.`;
 }
 
@@ -769,6 +774,10 @@ Output template (fill in — keep this shape, same three sections, nothing else)
 Hard rules (do **not** write these rules in your output; obey them silently):
 - Your reply must **begin** with \`**Partial synthesis**\` exactly — no prose, headings, preamble, role statement, checklist, or bullets before it.
 - Never wrap any part of the output in \`\`\` code fences.
+- Never indent any top-level line by 4+ spaces (it would render as a code block). Bullets start flush-left with \`- \`.
 - Never restate these rules, the task, or the template as bullets (e.g. do **not** write lines like "* Start with **bold**", "* No code fences", "* 3-7 bullets").
+- Never emit a self-check or verification checklist (e.g. "* Start with \`**\`? Yes.", "* 3-7 bullets? Yes (5).").
+- Never recap the inputs. Do **not** write bullets that label or paraphrase the Goal, Context & clarification, Manager critique, or Analyses sections (e.g. "* Themes: …", "* Problems/Risks: …", "* Manager Critique: …", "* Analyses:").
+- Never use template-label bullets. The bold answer is a standalone line starting with \`**\`, not \`* **Recommendation:**\`. Support bullets are plain bullets, not wrapped in \`* **Supporting points:**\` / \`* **Bullets:**\`. The Open questions block uses \`## Open questions\`, not \`* **Open Questions:**\`.
 - No other sections, tables, or long prose.`;
 }
