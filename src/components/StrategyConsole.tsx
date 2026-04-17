@@ -12,7 +12,10 @@ import {
   RUNNING_STREAM_RECONNECT_JITTER_MS,
 } from "@/lib/runStream";
 import { sanitizeManagerTreeReviewMarkdown } from "@/lib/sanitizeManagerTreeReview";
-import { stripSynthesisMarkdown } from "@/lib/stripExecutiveMarkdownPreamble";
+import {
+  sanitizeDiscoveryMarkdown,
+  stripSynthesisMarkdown,
+} from "@/lib/stripExecutiveMarkdownPreamble";
 import type {
   HypothesisVerdict,
   OutlineNode,
@@ -1643,7 +1646,7 @@ export function StrategyConsole() {
             cardClassName="border-zinc-200 bg-white"
           >
             <div className="max-h-64 overflow-y-auto">
-              <MarkdownBody content={discovery} />
+              <MarkdownBody content={sanitizeDiscoveryMarkdown(discovery)} />
             </div>
           </OutputPanel>
         ) : null}

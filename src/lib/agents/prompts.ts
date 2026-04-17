@@ -144,6 +144,11 @@ Write **markdown** with exactly these sections (use ## headings):
 ${input.clarifyingQuestions.length > 0 ? "Numbered list, same questions as above, phrased crisply." : "Write exactly: _None — continue when ready._"}
 ## Suggested focus for the hypothesis tree
 
+STRICT FORMAT:
+- Do **not** use markdown code fences (\`\`\`) anywhere — no fenced recap of Memory, analyses, or clarifying questions; weave those into normal prose under the sections above.
+- Do **not** prefix the brief with meta bullet lists (\`* Memory:\`, \`* Analyses:\`) that duplicate what you write below; start at **## Themes** (optionally one short title line of plain text above it is fine).
+- Put each \`## Section\` on its own line (never glue \`## Themes\` onto the same line as tone or other text).
+
 Be specific; avoid generic consulting boilerplate. If Memory text is irrelevant, do not mention it.`;
 }
 

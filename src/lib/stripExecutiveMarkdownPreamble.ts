@@ -36,6 +36,47 @@ export function stripExecutiveMarkdownPreamble(text: string): string {
   return lines.slice(hIdx).join("\n").trim();
 }
 
+/** Unwrap ``` / ```markdown segments whose body is prose (## headings or bullets), not JSON. */
+function unwrapEmbeddedProseCodeFences(s: string): string {
+  let out = s.replace(/```(?:markdown|md)\s*\n([\s\S]*?)\n```/gi, (_, inner: string) => {
+    const t = inner.trim();
+    if (/^\s*\{/.test(t) && /"(roots|quant_plans|specificity_notes)"\s*:/.test(t)) {
+      return "```json\n" + inner + "\n```";
+    }
+    return t;
+  });
+  out = out.replace(/```\s*\n([\s\S]*?)\n```/g, (full, inner: string) => {
+    const t = inner.trim();
+    if (/^\s*[\[{]/.test(t) && /"(roots|id|hypothesis)"\s*:/.test(t)) return full;
+    if (/^##\s/m.test(t) || /^[\s]*[*+-]\s/m.test(t)) return t;
+    return full;
+  });
+  return out;
+}
+
+/**
+ * Context & clarification brief: models often fence a Memory/Analyses recap or glue "## Themes"
+ * onto one line, which renders as a redundant code block. Idempotent for save + display.
+ */
+export function sanitizeDiscoveryMarkdown(raw: string): string {
+  let s = raw.trim();
+  if (!s) return s;
+  s = unwrapLeadingMarkdownFences(s);
+  s = unwrapEmbeddedProseCodeFences(s);
+  // Glued section heading after a sentence (e.g. "...data-driven.## Themes")
+  s = s.replace(
+    /\.(##\s+(?:Themes|Problems|Opportunities|Data-backed|Open questions|Questions for you|Suggested focus)\b)/g,
+    ".\n\n$1",
+  );
+  s = s.replace(
+    /([a-z0-9)])(##\s+(?:Themes|Problems|Opportunities|Data-backed|Open questions|Questions for you|Suggested focus)\b)/gi,
+    "$1\n\n$2",
+  );
+  s = s.replace(/^(\s*)[*+-]\s+##\s/gm, "$1## ");
+  s = stripExecutiveMarkdownPreamble(s);
+  return s.replace(/\n{3,}/g, "\n\n").trim();
+}
+
 /**
  * Cleans synthesis output: unwrap ``` fences, drop self-check / instruction echo bullets,
  * fix `?Yes.**` glued to bold, then trim everything before the first real **…** lead line.

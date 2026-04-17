@@ -26,6 +26,7 @@ import {
 import { generateJson, generateText, getModelId } from "./genai";
 import { sanitizeManagerTreeReviewMarkdown } from "./sanitizeManagerTreeReview";
 import {
+  sanitizeDiscoveryMarkdown,
   stripExecutiveMarkdownPreamble,
   stripSynthesisMarkdown,
 } from "./stripExecutiveMarkdownPreamble";
@@ -1086,7 +1087,7 @@ async function runContextClarificationPhase(
   const dataAnalysesMarkdown = dataBlocks.join("\n\n---\n\n");
 
   await emit("context", "Writing context & clarification brief…");
-  const discoveryText = await generateText(
+  const discoveryRaw = await generateText(
     contextClarificationSynthesisPrompt({
       userGoal: run.prompt,
       retrievedMemory,
@@ -1095,6 +1096,8 @@ async function runContextClarificationPhase(
       clarifyingQuestions: plan.clarifying_questions,
     }),
   );
+  const discoveryText =
+    sanitizeDiscoveryMarkdown(discoveryRaw).trim() || discoveryRaw.trim();
 
   await prisma.strategyRun.update({
     where: { id: runId },
