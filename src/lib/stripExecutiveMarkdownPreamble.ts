@@ -121,6 +121,13 @@ function isSynthesisFormattingEchoLine(t: string): boolean {
     /no\s+labels?\s+like/,
     /no\s+h2\s+before/,
     /no\s+"?supporting\s+points"?\s+heading/,
+    /\bno\s+recap\s+of\s+(inputs?|input\s+sections?)\b/,
+    /\bno\s+recap\b/,
+    /\bno\s+(?:rule|template|instruction)\s+echo/,
+    /\bobey\s+silently\b/,
+    /\bflush[-\s]?left\s+bullets?\b/,
+    /\bno\s+4\+?\s*space(?:d)?\s+indent/,
+    /\bproduce\s+(?:the\s+)?synthesis\s+once\b/,
   ];
   if (phrases.some((re) => re.test(u.toLowerCase()))) return true;
   // Fallback keyword heads seen in older outputs.
@@ -244,7 +251,7 @@ function dedentLeadingIndentedBlock(s: string): string {
  *  Accepts 1 or 2 asterisks on each side (italic or bold).
  */
 const STRUCTURAL_LABEL_BULLET_RE =
-  /^\s*[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?|Open\s+[Qq]uestions?|Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*$/i;
+  /^\s*[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Support\s+bullets?|Support\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?|Open\s+[Qq]uestions?|Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*$/i;
 
 /** Strip a single outer wrap of `**…**` (bold) or `*…*` (italic) from a trimmed string. */
 function unwrapOuterEmphasis(s: string): string {
@@ -353,7 +360,7 @@ export function stripSynthesisMarkdown(text: string): string {
   const summaryRe =
     /^[*+-]\s+\*{1,2}\s*(?:Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*(.+?)\s*$/i;
   const childrenLabelRe =
-    /^[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*{1,2}\s*:?\s*$/i;
+    /^[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Support\s+bullets?|Support\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*{1,2}\s*:?\s*$/i;
   const openQLabelRe = /^[*+-]\s+\*{1,2}\s*Open\s+[Qq]uestions?\s*:?\s*\*{1,2}\s*:?\s*$/i;
   // `* *Support 1 (Baseline):* Content…` — a numbered "Support N" bullet carrying content.
   // Strip the label; emit the content as a plain bullet.
@@ -362,6 +369,11 @@ export function stripSynthesisMarkdown(text: string): string {
 
   let sawBoldSummary = false;
   let sawOpenQuestionsHeading = false;
+
+  // Regex for a standalone bold paragraph line: `**…**` with nothing before/after.
+  //  Used so the first such line (even if it wasn't wrapped in `* *Summary:*`) still sets
+  //  sawBoldSummary, so subsequent labelled summaries downgrade to plain bullets.
+  const standaloneBoldRe = /^\*\*[^*]([^\n]*[^*])?\*\*\s*$/;
 
   for (let k = 0; k < lines.length; k++) {
     const line = lines[k];
@@ -405,14 +417,22 @@ export function stripSynthesisMarkdown(text: string): string {
       continue;
     }
 
-    // Drop stray echo/recap bullets that slipped past the leading pass.
+    // Drop stray echo/recap bullets that slipped past the leading pass. Also catch
+    // unlabeled rule-echo sub-bullets like "- No recap of input sections" and indented
+    // variants of `*Support Bullets:*` that escaped because they were nested children.
     if (
       isContextRecapBulletLine(t) ||
       isSelfCheckBulletLine(t) ||
       isGoalEchoQuestionBullet(t) ||
-      isProseRuleEchoLine(t)
+      isProseRuleEchoLine(t) ||
+      isSynthesisFormattingEchoLine(t)
     ) {
       continue;
+    }
+
+    // Track raw standalone `**…**` lines so a later `* *Summary:* …` doesn't stack another bold.
+    if (!sawBoldSummary && standaloneBoldRe.test(t)) {
+      sawBoldSummary = true;
     }
 
     out.push(line);
