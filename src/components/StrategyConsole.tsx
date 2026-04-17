@@ -1638,7 +1638,16 @@ export function StrategyConsole() {
         </OutputPanel>
 
         {discovery ? (
-          <OutputPanel title="Context & clarification" cardClassName="border-zinc-200 bg-white">
+          <OutputPanel
+            title="Context & clarification"
+            subtitle={
+              <p className="text-xs text-zinc-600">
+                In step-by-step mode, the run pauses after this brief so you can answer any optional questions,
+                then continue the pipeline.
+              </p>
+            }
+            cardClassName="border-zinc-200 bg-white"
+          >
             <div className="max-h-64 overflow-y-auto">
               <MarkdownBody content={discovery} />
             </div>
