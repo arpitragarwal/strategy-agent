@@ -176,9 +176,29 @@ function isContextRecapBulletLine(t: string): boolean {
   );
 }
 
-/** Bullet that echoes the user goal as a question: `* **What is driving X?** …` / `* **How can we fix Y?** …` */
+/** Bullet that echoes the user goal as a question: `* **What is driving X?** …` / `* *How can we fix Y?* …` */
 function isGoalEchoQuestionBullet(t: string): boolean {
-  return /^[*+-]\s+\*\*(?:What|Why|How|When|Where|Which|Who)\b[^*]{0,240}\?\*\*/i.test(t);
+  return /^[*+-]\s+\*{1,2}(?:What|Why|How|When|Where|Which|Who)\b[^*]{0,240}\?\*{1,2}/i.test(t);
+}
+
+/** Non-bullet prose line at the top that echoes the prompt's rule template (e.g. "Short markdown. Exactly as specified …"). */
+function isProseRuleEchoLine(t: string): boolean {
+  if (/^[*+\-#>]\s|^\s*\d+\.\s|^\*\*/.test(t)) return false;
+  if (t.length === 0 || t.length > 240) return false;
+  const u = t.toLowerCase();
+  return (
+    /\bshort\s+markdown\b/.test(u) ||
+    /\bexactly\s+as\s+specified\b/.test(u) ||
+    /\bper\s+the\s+template\b/.test(u) ||
+    /\bas\s+per\s+the\s+template\b/.test(u) ||
+    /\bfollowing\s+the\s+template\b/.test(u) ||
+    /\bbold\s+summary\b.*\bopen\s+questions?\b/.test(u) ||
+    /^here\s+is\s+(the\s+)?(synthesis|summary|recommendation|answer)\b/.test(u) ||
+    /^output\s+(template|format)\b/.test(u) ||
+    /^i\s+(will|'ll)\s+(provide|output|write|follow)\b/.test(u) ||
+    /^i\s+(have\s+)?obey(ed)?\s+the\s+(rules|template)/.test(u) ||
+    /^(below|above)\s+is\s+(the\s+)?(synthesis|summary|answer)\b/.test(u)
+  );
 }
 
 /** Any of the above — used to skip leading junk and to drop isolated echo bullets inside the body. */
@@ -219,16 +239,35 @@ function dedentLeadingIndentedBlock(s: string): string {
   return [...lines.slice(0, start), ...deindented, ...lines.slice(i)].join("\n");
 }
 
-/** Any structural label bullet (e.g. `* **Supporting points:**`, `* **Open Questions:**`) —
+/** Any structural label bullet (e.g. `* **Supporting points:**`, `* *Open Questions:*`) —
  *  used so `consumeDedentedChildren` stops before eating the next label.
+ *  Accepts 1 or 2 asterisks on each side (italic or bold).
  */
 const STRUCTURAL_LABEL_BULLET_RE =
-  /^\s*[*+-]\s+\*\*\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?|Open\s+[Qq]uestions?|Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR)s?\s*:?\s*\*\*\s*:?\s*$/i;
+  /^\s*[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?|Open\s+[Qq]uestions?|Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*$/i;
 
-/** Dedent a contiguous run of indented child bullets/numbered items to flush top-level `- …`. */
+/** Strip a single outer wrap of `**…**` (bold) or `*…*` (italic) from a trimmed string. */
+function unwrapOuterEmphasis(s: string): string {
+  const t = s.trim();
+  const bold = t.match(/^\*\*(.+?)\*\*\s*$/);
+  if (bold) return bold[1].trim();
+  const ital = t.match(/^\*(.+?)\*\s*$/);
+  if (ital) return ital[1].trim();
+  return t;
+}
+
+/** Dedent a contiguous run of indented child bullets/numbered items to flush top-level `- …`.
+ *  Tracks the indent of the first consumed child so we stop when a less-indented line appears —
+ *  otherwise eating a second synthesis attempt at a shallower indent would be a bug.
+ */
 function consumeDedentedChildren(lines: string[], startIdx: number, out: string[]): number {
   let j = startIdx;
   let consumedAny = false;
+  let childIndent = -1;
+  const leadOf = (l: string) => {
+    const m = l.match(/^( *)/);
+    return m ? m[1].length : 0;
+  };
   while (j < lines.length) {
     const nl = lines[j];
     if (nl.trim() === "") {
@@ -241,7 +280,8 @@ function consumeDedentedChildren(lines: string[], startIdx: number, out: string[
       if (
         k < lines.length &&
         /^\s+([*+\-]|\d+\.)\s+/.test(lines[k]) &&
-        !STRUCTURAL_LABEL_BULLET_RE.test(lines[k])
+        !STRUCTURAL_LABEL_BULLET_RE.test(lines[k]) &&
+        leadOf(lines[k]) >= childIndent
       ) {
         j = k;
         continue;
@@ -249,6 +289,9 @@ function consumeDedentedChildren(lines: string[], startIdx: number, out: string[
       break;
     }
     if (STRUCTURAL_LABEL_BULLET_RE.test(nl)) break;
+    const lead = leadOf(nl);
+    if (childIndent === -1) childIndent = lead;
+    else if (lead < childIndent) break;
     const mm = nl.match(/^\s+([*+\-]|\d+\.)\s+(.*)$/);
     if (!mm) break;
     out.push(`- ${mm[2].trim()}`);
@@ -275,6 +318,7 @@ export function stripSynthesisMarkdown(text: string): string {
   s = s.replace(/\?\s*No\.?\s*(\*\*)/gi, "\n\n$1");
 
   // Pass 1: drop leading junk bullets (self-check / rule-echo / context-recap / goal-echo Q&A)
+  //         and leading prose preamble lines ("Short markdown. Exactly as specified …"),
   //         until the first "real" content line. When a context-recap label ends with `:` (no
   //         content on the same line), also consume its indented child bullets — otherwise a
   //         `* Analyses:` drop would leave the nested leaf-analysis bullets orphaned.
@@ -284,6 +328,7 @@ export function stripSynthesisMarkdown(text: string): string {
     const raw = l1[i];
     const t = raw.trim();
     if (t === "") { i++; continue; }
+    if (isProseRuleEchoLine(t)) { i++; continue; }
     if (isLeadingJunkBullet(t)) {
       const endsWithColon = /:\s*$/.test(t);
       i++;
@@ -301,14 +346,22 @@ export function stripSynthesisMarkdown(text: string): string {
   }
   s = l1.slice(i).join("\n").trim();
 
-  // Pass 2: line-by-line structural rewrites.
+  // Pass 2: line-by-line structural rewrites. Labels accept 1 or 2 asterisks (italic or bold)
+  //         because the model oscillates between `*Label:*` and `**Label:**`.
   const lines = s.split(/\r?\n/);
   const out: string[] = [];
   const summaryRe =
-    /^[*+-]\s+\*\*\s*(?:Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR)s?\s*:?\s*\*\*\s*:?\s*(.+?)\s*$/i;
+    /^[*+-]\s+\*{1,2}\s*(?:Recommendation|Answer|Bottom\s+line|Summary|Conclusion|Key\s+takeaway|Takeaway|TL;DR|Current\s+state|State|Verdict)s?\s*:?\s*\*{1,2}\s*:?\s*(.+?)\s*$/i;
   const childrenLabelRe =
-    /^[*+-]\s+\*\*\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*\*\s*:?\s*$/i;
-  const openQLabelRe = /^[*+-]\s+\*\*\s*Open\s+[Qq]uestions?\s*:?\s*\*\*\s*:?\s*$/i;
+    /^[*+-]\s+\*{1,2}\s*(?:Supporting\s+points?|Bullets?|Findings|Key\s+findings?|Key\s+points?|Evidence|Points?|Details?)\s*:?\s*\*{1,2}\s*:?\s*$/i;
+  const openQLabelRe = /^[*+-]\s+\*{1,2}\s*Open\s+[Qq]uestions?\s*:?\s*\*{1,2}\s*:?\s*$/i;
+  // `* *Support 1 (Baseline):* Content…` — a numbered "Support N" bullet carrying content.
+  // Strip the label; emit the content as a plain bullet.
+  const supportBulletRe =
+    /^[*+-]\s+\*{1,2}\s*Support\s*\d+(?:\s*\([^)]{1,80}\))?\s*:?\s*\*{1,2}\s*:?\s*(.+?)\s*$/i;
+
+  let sawBoldSummary = false;
+  let sawOpenQuestionsHeading = false;
 
   for (let k = 0; k < lines.length; k++) {
     const line = lines[k];
@@ -316,21 +369,33 @@ export function stripSynthesisMarkdown(text: string): string {
 
     const mSummary = t.match(summaryRe);
     if (mSummary) {
-      let content = mSummary[1].trim();
-      const innerBold = content.match(/^\*\*(.+?)\*\*\s*$/);
-      if (innerBold) content = innerBold[1].trim();
-      content = content.replace(/\*\*/g, "").trim();
-      if (content) {
+      const content = unwrapOuterEmphasis(mSummary[1]).replace(/\*+/g, "").trim();
+      if (!content) continue;
+      if (sawBoldSummary) {
+        // Second summary-style bullet — downgrade to a plain support bullet to avoid stacking.
+        out.push(`- ${content}`);
+      } else {
         if (out.length > 0 && out[out.length - 1].trim() !== "") out.push("");
         out.push(`**${content}**`);
         out.push("");
+        sawBoldSummary = true;
       }
       continue;
     }
 
+    const mSupport = t.match(supportBulletRe);
+    if (mSupport) {
+      const content = unwrapOuterEmphasis(mSupport[1]).trim();
+      if (content) out.push(`- ${content}`);
+      continue;
+    }
+
     if (openQLabelRe.test(t)) {
-      if (out.length > 0 && out[out.length - 1].trim() !== "") out.push("");
-      out.push("## Open questions");
+      if (!sawOpenQuestionsHeading) {
+        if (out.length > 0 && out[out.length - 1].trim() !== "") out.push("");
+        out.push("## Open questions");
+        sawOpenQuestionsHeading = true;
+      }
       k = consumeDedentedChildren(lines, k + 1, out) - 1;
       continue;
     }
@@ -341,7 +406,12 @@ export function stripSynthesisMarkdown(text: string): string {
     }
 
     // Drop stray echo/recap bullets that slipped past the leading pass.
-    if (isContextRecapBulletLine(t) || isSelfCheckBulletLine(t) || isGoalEchoQuestionBullet(t)) {
+    if (
+      isContextRecapBulletLine(t) ||
+      isSelfCheckBulletLine(t) ||
+      isGoalEchoQuestionBullet(t) ||
+      isProseRuleEchoLine(t)
+    ) {
       continue;
     }
 
