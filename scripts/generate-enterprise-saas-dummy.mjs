@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Enterprise SaaS prototype: logos up for renewal ramp 2025-Q1 (100) → 2026-Q1 (~150) across five Qs.
+ * Enterprise SaaS prototype: logos up for renewal ramp 2025-Q1 (200) → 2026-Q1 (~300) across five Qs.
  * Contract terms 1–5 years (~80% are 3 years). Renewed deals: booked ARR = 1–3× prior ARR (E[×] ≈ 1.6); NRR is emergent.
  * Prior deal year = renewal calendar year − contract_term_years (~80% are 3yr → ~80%/Q are “3 years ago”).
  * Revenue GRR: logo_acquisition_year === 2023 cohort → ~85%; otherwise ~95%.
@@ -27,8 +27,8 @@ const LEGACY_OUT = join(DATA_ROOT, "dummy");
 /** All renewal periods included in the export. */
 const RENEWAL_QUARTERS = ["2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"];
 /** Logos up for renewal in first Q (2025-Q1) and last Q (2026-Q1); middle Qs linearly interpolated. */
-const LOGOS_UP_FIRST_Q = 100;
-const LOGOS_UP_LAST_Q = 150;
+const LOGOS_UP_FIRST_Q = 200;
+const LOGOS_UP_LAST_Q = 300;
 const NEW_DEALS_WON_FIRST_Q = 400;
 const NEW_DEALS_WON_LAST_Q = 500;
 const NEW_ACV_LOGO_SCALE = 0.25;

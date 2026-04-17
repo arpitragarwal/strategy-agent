@@ -160,7 +160,7 @@ export const QUANT_DATASETS: DatasetMeta[] = [
     relativePath: "crm/accounts.csv",
     domain: "crm",
     description:
-      "Customers (~626): renewals/q ramp 2025-Q1 (100) → 2026-Q1 (~150); contract_term_years (1–5; 80% are 3yr); logo_acquisition_year (calendar year of initial logo / prior anchor); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise).",
+      "Customers (~1.25k): renewals/q ramp 2025-Q1 (~200) → 2026-Q1 (~300); contract_term_years (1–5; 80% are 3yr); logo_acquisition_year (calendar year of initial logo / prior anchor); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise).",
   },
   {
     id: "crm/deal_data",
