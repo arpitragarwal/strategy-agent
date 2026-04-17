@@ -18,14 +18,35 @@ export function unwrapLeadingMarkdownFences(text: string): string {
 }
 
 /**
+ * Strip a uniform leading indent across non-empty lines (e.g. models indenting
+ * the whole reply by 4+ spaces, which would render as a `<pre><code>` block).
+ */
+export function dedentUniformIndent(s: string): string {
+  const lines = s.split(/\r?\n/);
+  let min = Infinity;
+  for (const l of lines) {
+    if (!l.trim()) continue;
+    const m = l.match(/^( +)/);
+    const n = m ? m[1].length : 0;
+    if (n < min) min = n;
+    if (min === 0) break;
+  }
+  if (!Number.isFinite(min) || min <= 0) return s;
+  const cut = min as number;
+  return lines.map((l) => (l.trim() ? l.slice(cut) : l)).join("\n");
+}
+
+/**
  * Removes common model lead-in before executive markdown (manager critique, etc.):
  * - leading ``` fences
+ * - uniform 4+ space indent across non-empty lines (would render as code block)
  * - mistaken list markers before headings (`* ## Foo` → `## Foo`)
  * - prose before the first real `## ` heading
  */
 export function stripExecutiveMarkdownPreamble(text: string): string {
   let s = unwrapLeadingMarkdownFences(text);
   if (!s) return s;
+  s = dedentUniformIndent(s);
 
   // `* ## Section` or `- ## Section` (invalid heading syntax → renders as body / code-ish)
   s = s.replace(/^(\s*)[*+-]\s+##\s/gm, "$1## ");
@@ -80,23 +101,57 @@ export function sanitizeDiscoveryMarkdown(raw: string): string {
 /** Leading bullets that echo the synthesis prompt's formatting rules (not user-facing content). */
 function isSynthesisFormattingEchoLine(t: string): boolean {
   const u = t.trim();
-  if (!/^\*\s/.test(u) || u.length > 220) return false;
-  // Single-line literal: line breaks inside `/.../` are invalid in JS.
+  if (!/^\*\s/.test(u) || u.length > 240) return false;
+  // Patterns copied from the synthesis prompt (model sometimes restates them as a checklist).
+  const phrases = [
+    /short\s+markdown\b/,
+    /no\s+code\s+fences?/,
+    /no\s+meta\s+bullet/,
+    /start\s+with\s+\*?\*?bold/,
+    /\bbold\s+recommendation\b/,
+    /\bbold\s+summary\b/,
+    /followed\s+by\s+3[-–]7/,
+    /\b3[-–]7\s+bullet/,
+    /bullet\s+points?\s+of\s+concrete\s+support/,
+    /concrete\s+support/,
+    /ending\s+with.{0,48}open\s+questions/,
+    /\bopen\s+questions?\b[^.]*\bsection\b/,
+    /no\s+generic\s+boilerplate/,
+    /no\s+prose\s+before/,
+    /no\s+labels?\s+like/,
+    /no\s+h2\s+before/,
+    /no\s+"?supporting\s+points"?\s+heading/,
+  ];
+  if (phrases.some((re) => re.test(u.toLowerCase()))) return true;
+  // Fallback keyword heads seen in older outputs.
   if (
-    /^\*\s*(?:\*\s*)?(short\s+markdown\.?|no\s+code\s+fences?|no\s+meta\s+bullet[^.]*|start\s+with\s+\*\*bold|followed\s+by\s+3[-–]7|ending\s+with.{0,48}open\s+questions|no\s+generic\s+boilerplate|no\s+prose\s+before|no\s+labels?\s+like)\b/i.test(
-      u,
-    )
-  ) {
-    return true;
-  }
-  if (
-    /^\*\s*(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|concrete support|heading)\b/i.test(
+    /^\*\s*(?:\*\s*)?(Bold|bolded|3-7|No H2|Supporting|Self-check|Verification|bullet|Open questions|markdown|summary|boilerplate|heading)\b/i.test(
       u,
     )
   ) {
     return true;
   }
   return false;
+}
+
+/**
+ * If the first block of non-empty lines is uniformly indented by 4+ spaces
+ * and consists of bullets, ReactMarkdown renders it as a code block. De-indent
+ * so the individual rule-echo / other detection can then decide what to drop.
+ */
+function dedentLeadingIndentedBlock(s: string): string {
+  const lines = s.split(/\r?\n/);
+  let i = 0;
+  while (i < lines.length && lines[i].trim() === "") i++;
+  const start = i;
+  // Scan contiguous non-empty block
+  while (i < lines.length && lines[i].trim() !== "") i++;
+  if (i === start) return s;
+  const block = lines.slice(start, i);
+  const allIndentedBullets = block.every((l) => /^\s{4,}[*+\-]\s/.test(l));
+  if (!allIndentedBullets) return s;
+  const deindented = block.map((l) => l.replace(/^\s+/, ""));
+  return [...lines.slice(0, start), ...deindented, ...lines.slice(i)].join("\n");
 }
 
 /**
@@ -107,6 +162,7 @@ export function stripSynthesisMarkdown(text: string): string {
   let s = unwrapLeadingMarkdownFences(text);
   if (!s) return s;
   s = unwrapEmbeddedProseCodeFences(s);
+  s = dedentLeadingIndentedBlock(s);
 
   // Model sometimes glues checklist "Yes." to the bold summary: `? Yes.**Reduce...`
   s = s.replace(/\?\s*Yes\.?\s*(\*\*)/gi, "\n\n$1");

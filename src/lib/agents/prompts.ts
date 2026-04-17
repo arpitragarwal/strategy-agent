@@ -115,7 +115,12 @@ export function contextClarificationSynthesisPrompt(input: {
       input.clarifyingQuestions.map((q, i) => `${i + 1}. ${q}`).join("\n")
     : "(No clarifying questions — data and goal were sufficient.)";
 
-  return `You complete the **Context & clarification** brief (markdown for executives). Another pass already ran optional Memory lookup and executed spreadsheet analyses; your job is to **integrate** them with judgment.
+  const questionsBody =
+    input.clarifyingQuestions.length > 0 ?
+      "<numbered list mirroring the planned clarifying questions, phrased crisply>"
+    : "_None — continue when ready._";
+
+  return `You complete the **Context & clarification** brief (markdown for executives). Another pass already ran optional Memory lookup and executed spreadsheet analyses; your job is to **integrate** them with judgment. Output **markdown only**, shaped **exactly** like the template below.
 
 User goal:
 ${input.userGoal}
@@ -132,24 +137,37 @@ ${input.dataAnalysesMarkdown.trim() || "(No quant runs executed.)"}
 Planned clarifying questions for the user (if any — you MUST surface these in the output):
 ${qBlock}
 
-Write **markdown** with exactly these sections (use ## headings):
+Output template (fill in — keep these seven sections in this exact order, nothing else):
+
 ## Themes
+<2–5 bullets or a tight paragraph of specific themes that shape this strategy question>
+
 ## Problems / risks
+- <specific problem or risk>
+- <another>
+
 ## Opportunities
+- <specific opportunity>
+- <another>
+
 ## Data-backed specificity
-(State what was pinned down from the analyses above — key numbers, rankings, segments/regions — or say none if no runs.)
+<State what was pinned down from the executed analyses — key numbers, rankings, segments/regions. If no quant ran, say: _None — no quant runs executed._>
+
 ## Open questions
-(Internal unknowns that are not necessarily for the user.)
+- <internal unknowns you would still want to close, not necessarily for the user>
+
 ## Questions for you
-${input.clarifyingQuestions.length > 0 ? "Numbered list, same questions as above, phrased crisply." : "Write exactly: _None — continue when ready._"}
+${questionsBody}
+
 ## Suggested focus for the hypothesis tree
+- <sharpest angles the tree should cover first>
 
-STRICT FORMAT:
-- Do **not** use markdown code fences (\`\`\`) anywhere — no fenced recap of Memory, analyses, or clarifying questions; weave those into normal prose under the sections above.
-- Do **not** prefix the brief with meta bullet lists (\`* Memory:\`, \`* Analyses:\`) that duplicate what you write below; start at **## Themes** (optionally one short title line of plain text above it is fine).
+Hard rules (obey silently; do **not** write them in your output):
+- Your reply must **begin** with \`## Themes\` — no preamble, no meta bullet list like \`* Memory:\` / \`* Analyses:\`, no title above it.
+- Never wrap any part of the output in \`\`\` code fences anywhere — weave Memory, analyses, and clarifying questions into normal prose under the sections above.
+- Never restate these rules or the template as bullets.
 - Put each \`## Section\` on its own line (never glue \`## Themes\` onto the same line as tone or other text).
-
-Be specific; avoid generic consulting boilerplate. If Memory text is irrelevant, do not mention it.`;
+- Be specific; avoid generic consulting boilerplate. If Memory text is irrelevant, do not mention it.`;
 }
 
 export function structurePrompt(input: {
@@ -203,7 +221,7 @@ export function managerMeceReviewPrompt(input: {
   discovery: string;
   outlineJson: string;
 }): string {
-  return `Role (do not repeat this block in your answer): senior manager reviewing the proposed **hypothesis tree** before any per-leaf analysis runs.
+  return `You are a senior manager reviewing the proposed **hypothesis tree** before any per-leaf analysis runs. Output **markdown only**, shaped **exactly** like the template below.
 
 User goal and context (full prompt):
 ${input.userGoal}
@@ -214,23 +232,38 @@ ${input.discovery}
 Proposed hypothesis tree (JSON):
 ${input.outlineJson}
 
-Write **only** the executive-facing review below — text that will be shown to the user as-is.
+Output template (fill in — keep the title + six sections in this exact order, nothing else):
 
-STRICT OUTPUT RULES:
-- **First character** of your reply must be "#" (start with a single top-level title, e.g. "# Manager review" or "# Hypothesis tree review"), then use "##" for each section below. No lead-in sentence, no "Senior manager…" persona line, no restating the user goal, no checklist of "what you will review," and no bullets that only echo these instructions.
-- Do **not** wrap the answer in markdown code fences (\`\`\`). Use normal markdown only.
-- Prefer Unicode arrows (→) instead of LaTeX (no \`$...$\`).
+# Hypothesis tree review
 
-Use these section headings and answer under each (substance only):
-## Hypothesis tree / coverage (mutually exclusive? collectively exhaustive for the goal?)
+## Hypothesis tree / coverage
+<Are the roots mutually exclusive? Do they collectively cover the goal? Concrete verdict, then specifics.>
+
 ## Gaps, overlaps, or mis-groupings
-## Node hypotheses (every depth)
-Are **all** nodes' \`question\` fields testable claims (confirm/deny with evidence)—not just leaves? Flag any internal node that only "frames a pillar" without a falsifiable statement.
-## Ordering (within each level, should higher-impact or more causal branches appear earlier? say what to reorder)
-## Concrete structural fixes (merge/split/rename pillars, add missing branches, sharpen hypotheses at every level)
-## Must-fix issues before analysis proceeds
+- <missing angle / overlap / wrong parent>
+- <another>
 
-Be direct and actionable. The next step will **rebuild the tree JSON** from your feedback.`;
+## Node hypotheses (every depth)
+<Are all nodes' \`question\` fields testable claims (confirm/deny with evidence)? Flag any internal node that only "frames a pillar" without a falsifiable statement.>
+
+## Ordering
+<Within each level, should higher-impact or more causal branches appear earlier? Say what to reorder.>
+
+## Concrete structural fixes
+- <merge / split / rename pillar X because …>
+- <add missing branch Y>
+- <sharpen hypothesis on node Z>
+
+## Must-fix issues before analysis proceeds
+- <blocker 1>
+- <blocker 2>
+
+Hard rules (obey silently; do **not** write them in your output):
+- Your reply must **begin** with the literal characters \`# Hypothesis tree review\` — no role statement, no "Senior manager…" line, no restating the user goal, no bullets that restate this task.
+- Never wrap any part of the output in \`\`\` code fences.
+- Never restate these rules or the template as bullets.
+- Use Unicode arrows (→) instead of LaTeX (\`$...$\`).
+- Be direct and actionable — the next step will **rebuild the tree JSON** from your feedback.`;
 }
 
 export function structureRevisionPrompt(input: {
@@ -580,15 +613,25 @@ ${input.discovery}
 Per-leaf analyses (deepest leaves — branch rollups appear in the UI but focus on leaf evidence here):
 ${input.analysesMarkdown}
 
-Output markdown with **exactly** these four H2 sections (use \`##\` at column 0 — not bullet lists like \`* ##\`):
+Output template (fill in — keep this shape, same four sections, nothing else):
+
 ## Challenge assumptions
+<direct, skeptical but constructive bullets or short prose>
+
 ## Contradictions / gaps
+<…>
+
 ## What would change the recommendation
+<…>
+
 ## Go / no-go checks for the next phase
+<…>
 
-**FORBIDDEN in your reply:** (1) Re-stating your role, the user goal, or this task as a preamble (e.g. "Manager Agent pressure-testing…"). (2) Quoted or paraphrased instructions / section titles as a checklist before the real sections. (3) Wrapping the answer in \`\`\` code fences. (4) Any prose before the first \`## Challenge assumptions\` line.
-
-Your entire response must **begin** with the characters \`## Challenge assumptions\` (after any leading whitespace). Be direct and skeptical but constructive.`;
+Hard rules (do **not** write these rules in your output; obey them silently):
+- Your reply must **begin** with the literal characters \`## Challenge assumptions\` — no role statement, preamble, checklist, quoted instructions, or bullets before it.
+- Never wrap any part of the output in \`\`\` code fences.
+- Never restate these rules or the template as bullets (e.g. do **not** write lines like "* First character must be \\#", "* No code fences", "* Exactly four sections").
+- No extra sections; keep it tight and action-oriented.`;
 }
 
 export function synthesisPrompt(input: {
@@ -597,7 +640,7 @@ export function synthesisPrompt(input: {
   managerNotes: string;
   analysesMarkdown: string;
 }): string {
-  return `You are a synthesis agent. Output **short** markdown (not a long memo).
+  return `You are a synthesis agent. Output **short** markdown only — shaped **exactly** like the template below.
 
 Goal:
 ${input.userGoal}
@@ -611,18 +654,23 @@ ${input.managerNotes}
 Analyses:
 ${input.analysesMarkdown}
 
-Use **exactly this structure** — keep the whole synthesis tight.
+Output template (fill in — keep this shape, same three sections, nothing else):
 
-Start with one or two sentences answering the goal, wrapped entirely in **bold** (e.g. **Your clearest recommendation here.**). No label like "Key point:" and no \`##\` heading before it.
+**<one or two sentences answering the goal, the whole thing inside these double asterisks>**
 
-Then 3–7 bullet lines only (no "Supporting points" heading or any H2 before them). Each bullet: one concrete support — cite **numbers, facts from analyses, or tight reasoning** (no filler).
+- <first concrete support: numbers, facts from analyses, or tight reasoning>
+- <second concrete support>
+- <third concrete support>
+- <up to 7 total>
 
 ## Open questions
-- Bullet list only: what still **needs more data, analysis, or decisions** before acting with confidence. If none, use a single bullet: _None material — proceed with monitoring as above._
+- <what still needs more data, analysis, or decisions before acting; or the single line _None material — proceed with monitoring as above._>
 
-**FORBIDDEN in your reply:** (1) Re-stating the task, role, or structure instructions as bullets (e.g. "* Bold summary? Yes."). (2) Self-check / verification checklist lines. (3) Wrapping any part of the answer in \`\`\` code fences. (4) Any prose before the first line that begins with \`**\` (your bold recommendation). (5) **Never** echo this prompt's formatting bullets (e.g. "* Short markdown*", "* No code fences*", "* Start with **bold**…") — those are instructions for you only, not for the user.
-
-Do not add other sections, tables, or long prose.`;
+Hard rules (do **not** write these rules in your output; obey them silently):
+- Your reply must **begin** with the literal character \`*\` of the opening \`**\` of the bold recommendation — no prose, headings, preamble, role statement, checklist, or bullets before it.
+- Never wrap any part of the output in \`\`\` code fences.
+- Never restate these rules, the task, or the template as bullets (e.g. do **not** write lines like "* Start with **bold**", "* No code fences", "* 3-7 bullets", "* No H2 before", "* No labels"). They are instructions for you only.
+- No "Supporting points" heading, no \`##\` heading before the bullets, no extra sections, no tables, no long prose.`;
 }
 
 export function partialManagerPrompt(input: {
@@ -641,13 +689,25 @@ ${input.discovery}
 Per-leaf analyses (some branches show "pending" or were skipped):
 ${input.analysesMarkdown}
 
-Output concise markdown with **exactly** these four H2 sections (\`##\` at column 0, not \`* ##\`):
-## Challenge assumptions (given partial coverage)
-## Biggest gaps from incomplete branches
-## What to validate before acting
-## Go / no-go checks
+Output template (fill in — keep this shape, same four sections, nothing else):
 
-**FORBIDDEN:** role/task preamble, echoing the prompt as bullets, \`\`\` fences, or any text before the first \`## Challenge assumptions\`. Your reply must **begin** with \`## Challenge assumptions\`. Be direct; flag uncertainty from missing analyses.`;
+## Challenge assumptions (given partial coverage)
+<direct, skeptical but constructive bullets or short prose; flag uncertainty from missing analyses>
+
+## Biggest gaps from incomplete branches
+<…>
+
+## What to validate before acting
+<…>
+
+## Go / no-go checks
+<…>
+
+Hard rules (do **not** write these rules in your output; obey them silently):
+- Your reply must **begin** with \`## Challenge assumptions\` — no role statement, preamble, checklist, or bullets before it.
+- Never wrap any part of the output in \`\`\` code fences.
+- Never restate these rules or the template as bullets (e.g. do **not** write lines like "* Exactly four sections", "* No code fences").
+- No extra sections.`;
 }
 
 export function partialSynthesisPrompt(input: {
@@ -661,7 +721,7 @@ export function partialSynthesisPrompt(input: {
     `\nUser instruction when stopping early:\n${input.userInstruction.trim()}\n`
     : "";
 
-  return `You are a synthesis agent. The user requested an **early / partial** synthesis: not all branches were analyzed. Output **short** markdown only.
+  return `You are a synthesis agent. The user requested an **early / partial** synthesis: not all branches were analyzed. Output **short** markdown only — shaped **exactly** like the template below.
 
 Goal:
 ${input.userGoal}
@@ -675,18 +735,23 @@ ${input.managerNotes}
 Analyses (partial — note pending/skipped branches):
 ${input.analysesMarkdown}
 
-First line (standalone): **Partial synthesis** — not all hypotheses were tested.
+Output template (fill in — keep this shape, same three sections, nothing else):
 
-Then match full synthesis shape (hedge where coverage is thin):
+**Partial synthesis** — not all hypotheses were tested.
 
-Then one or two sentences in **bold** with the best-effort answer to the goal; say inside the bold text if the conclusion is provisional. No label line and no \`##\` heading before it.
+**<one or two sentences with the best-effort answer to the goal; if provisional, say so inside these double asterisks>**
 
-Then 3–7 bullets (no "Supporting points" heading): only what the **completed** analyses support; cite data or reasoning. Optional bullet flagging **what was not analyzed** if it would change the answer.
+- <first concrete support from a completed analysis: data or reasoning>
+- <second concrete support>
+- <optional bullet flagging something not analyzed that could change the answer>
+- <up to 7 total>
 
 ## Open questions
-- Bullets: **gaps from incomplete branches**, missing data, and what to analyze next before a final call.
+- <gaps from incomplete branches, missing data, and what to analyze next before a final call>
 
-**FORBIDDEN:** role echo, self-check lines (\`* …? Yes.\`), \`\`\` fences, or any checklist repeating these instructions before the real output — including **never** echoing formatting-rule bullets from this prompt (e.g. "* Short markdown*", "* No code fences*").
-
-No other sections or long prose.`;
+Hard rules (do **not** write these rules in your output; obey them silently):
+- Your reply must **begin** with \`**Partial synthesis**\` exactly — no prose, headings, preamble, role statement, checklist, or bullets before it.
+- Never wrap any part of the output in \`\`\` code fences.
+- Never restate these rules, the task, or the template as bullets (e.g. do **not** write lines like "* Start with **bold**", "* No code fences", "* 3-7 bullets").
+- No other sections, tables, or long prose.`;
 }

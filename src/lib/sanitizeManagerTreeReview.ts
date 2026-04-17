@@ -1,3 +1,5 @@
+import { dedentUniformIndent } from "./stripExecutiveMarkdownPreamble";
+
 /**
  * Cleans hypothesis-tree manager review markdown: models often wrap prose in
  * fences, repeat role/instructions, or echo rubric bullets before real sections.
@@ -12,6 +14,8 @@ export function sanitizeManagerTreeReviewMarkdown(raw: string): string {
     if (whole) s = whole[1]!.trim();
     else break;
   }
+
+  s = dedentUniformIndent(s);
 
   s = s.replace(/```(?:markdown|md)\s*\n([\s\S]*?)\n```/gi, (_, inner: string) => {
     const t = inner.trim();
