@@ -47,17 +47,17 @@ const CAPABILITIES: Capability[] = [
   {
     id: "long-horizon",
     label: "Long-horizon",
-    body: "This architecture enables long, complex analysis while staying aligned with the original task, avoiding hallucination, and maintaining runtime stability.",
+    body: "Execute complex analysis while staying aligned with the original task, avoiding hallucination, and maintaining runtime stability",
   },
   {
     id: "memory",
     label: "Memory",
-    body: "Step outputs are saved to a SQL database, letting agents optionally reuse insights from prior runs.",
+    body: "Step outputs are saved to a SQL database, letting agents optionally reuse insights from prior runs",
   },
   {
     id: "parallel",
     label: "Parallel execution",
-    body: "Independent branches of the hypothesis tree run concurrently.",
+    body: "Independent branches of the hypothesis tree run concurrently",
   },
 ];
 
