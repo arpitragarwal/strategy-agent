@@ -62,8 +62,8 @@ const CAPABILITIES: Capability[] = [
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto w-full max-w-5xl px-6 py-10 sm:py-12">
-      <nav className="mb-12">
+    <main className="mx-auto w-full max-w-5xl px-6 py-8 sm:py-10">
+      <nav className="mb-8">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-sm text-emerald-800/90 hover:text-emerald-700 underline-offset-2 hover:underline"
@@ -76,13 +76,13 @@ export default function AboutPage() {
       <section>
         <Block eyebrow="What it is">
           <p className="text-lg leading-relaxed text-zinc-800">
-            The product is a team of AI agents that supercharges a corporate
-            strategy team&apos;s knowledge work, allowing every member to
-            operate a level higher and focus on people work.
+            A team of AI agents that supercharges a corporate strategy
+            team&apos;s knowledge work, allowing every member to operate a
+            level higher and focus on people work.
           </p>
         </Block>
 
-        <Block eyebrow="What it does" className="mt-12">
+        <Block eyebrow="What it does" className="mt-8">
           <p className="text-lg leading-relaxed text-zinc-800">
             Receive a board-ready analysis for any strategy question in hours
             instead of weeks, grounded in the company&apos;s own data and
@@ -90,11 +90,11 @@ export default function AboutPage() {
           </p>
         </Block>
 
-        <Block eyebrow="How it works" className="mt-16">
+        <Block eyebrow="How it works" className="mt-10">
           <PipelineDiagram />
         </Block>
 
-        <Block eyebrow="Built for" className="mt-16">
+        <Block eyebrow="Built for" className="mt-10">
           <div className="grid gap-8 sm:grid-cols-3">
             {CAPABILITIES.map((cap) => (
               <div key={cap.id}>
@@ -127,7 +127,7 @@ function Block({
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
         {eyebrow}
       </p>
-      <div className="mt-3">{children}</div>
+      <div className="mt-2">{children}</div>
     </div>
   );
 }
