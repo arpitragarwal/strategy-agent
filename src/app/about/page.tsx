@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -63,13 +64,13 @@ export default function AboutPage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-10 sm:py-12">
       <nav className="mb-12">
-        <a
+        <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-sm text-emerald-800/90 hover:text-emerald-700 underline-offset-2 hover:underline"
         >
           <span aria-hidden>←</span>
           <span>Back to app</span>
-        </a>
+        </Link>
       </nav>
 
       <section>

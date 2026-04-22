@@ -2,6 +2,7 @@
 
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
 import { playAttentionSound, primeAttentionAudio } from "@/lib/attentionChime";
@@ -1492,12 +1493,12 @@ export function StrategyConsole() {
               Arpit Agarwal
             </a>
           </p>
-          <a
+          <Link
             href="/about"
             className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-800 ring-1 ring-emerald-200 hover:bg-emerald-100"
           >
             About
-          </a>
+          </Link>
         </div>
         {selectedMemoryId && !busy ? (
           <p className="text-emerald-800 text-xs mt-2 font-medium">
