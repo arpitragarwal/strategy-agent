@@ -34,12 +34,12 @@ const AGENTS: Agent[] = [
   {
     id: "analysts",
     name: "Analyst agents",
-    role: "In-depth quantitative and qualitative analysis",
+    role: "Quantitative / qualitative analysis",
   },
   {
     id: "synthesizer",
     name: "Synthesis agent",
-    role: "Synthesize into recommendations",
+    role: "Synthesizes into recommendations",
   },
 ];
 
