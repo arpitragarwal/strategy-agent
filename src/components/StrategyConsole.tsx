@@ -1480,17 +1480,25 @@ export function StrategyConsole() {
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
           AI Agent Team For Corporate Strategy
         </h1>
-        <p className="text-zinc-600 text-sm mt-1">
-          Prototype by{" "}
+        <div className="mt-1 flex items-center gap-3 text-sm">
+          <p className="text-zinc-600">
+            Prototype by{" "}
+            <a
+              href="https://www.linkedin.com/in/arpit-agarwal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-800/90 hover:text-emerald-700 underline-offset-2 hover:underline"
+            >
+              Arpit Agarwal
+            </a>
+          </p>
           <a
-            href="https://www.linkedin.com/in/arpit-agarwal/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-emerald-800/90 hover:text-emerald-700 underline-offset-2 hover:underline"
+            href="/about"
+            className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-800 ring-1 ring-emerald-200 hover:bg-emerald-100"
           >
-            Arpit Agarwal
+            About
           </a>
-        </p>
+        </div>
         {selectedMemoryId && !busy ? (
           <p className="text-emerald-800 text-xs mt-2 font-medium">
             Viewing a saved run from Memory — edit the goal and run again to start a new pipeline.
