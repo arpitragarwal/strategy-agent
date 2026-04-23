@@ -19,3 +19,4 @@ export {
 } from "./catalog";
 export { loadCsvAsObjects, peekColumns } from "./loadCsv";
 export { executeQuantPlan } from "./executor";
+export { validateQuantPlan } from "./validatePlan";

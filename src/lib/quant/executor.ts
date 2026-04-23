@@ -1,5 +1,6 @@
 import { loadCsvAsObjects } from "./loadCsv";
 import { QUANT_ENUMS_BY_DATASET } from "./catalog";
+import { validateQuantPlan } from "./validatePlan";
 import type {
   QuantChartConfig,
   QuantComputeExpr,
@@ -8,6 +9,8 @@ import type {
   QuantPlan,
   QuantResult,
 } from "./types";
+
+const AGG_EXPR_RE = /^\s*(sum|avg|mean|count|count_distinct|min|max)\s*\(/i;
 
 function num(v: unknown): number {
   const n = Number(v);
@@ -496,6 +499,17 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
   };
 
   try {
+    // Deterministic pre-execution check: catches chart wiring bugs and
+    // column-referenced-before-produced errors in a single pass, so we fail
+    // fast with an actionable message instead of running a 2000-row pipeline
+    // and then silently skipping the chart.
+    const validation = validateQuantPlan(plan);
+    if (!validation.ok) {
+      safe.error = `Plan validation failed: ${validation.errors.join(" | ")}`;
+      safe.narrative = safe.error;
+      return safe;
+    }
+
     let rows = loadCsvAsObjects(plan.datasetId);
     if (!rows.length) {
       safe.narrative = "Dataset is empty — add rows to the CSV under data/dummy_data or pick another datasetId.";
@@ -554,8 +568,15 @@ export function executeQuantPlan(plan: QuantPlan): QuantResult {
         const available = new Set(Object.keys(rows[0]!));
         const missing = [cx, cy].filter((c) => !available.has(c as string));
         if (missing.length > 0) {
+          const aggHints = missing
+            .filter((m) => AGG_EXPR_RE.test(m as string))
+            .map(
+              (m) =>
+                ` "${m}" looks like an aggregate expression — planner bug: a groupby measure should be aliased to exactly "${m}".`,
+            )
+            .join("");
           chartNotes.push(
-            `Chart skipped — column(s) ${missing.map((m) => `"${m}"`).join(", ")} not in result rows. Available: ${[...available].join(", ")}.`,
+            `Chart skipped — column(s) ${missing.map((m) => `"${m}"`).join(", ")} not in result rows.${aggHints} Available: ${[...available].join(", ")}.`,
           );
         } else {
           const spec = buildVegaLiteSpec(plan.chart, rows);

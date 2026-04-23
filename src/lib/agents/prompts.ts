@@ -40,7 +40,9 @@ For cross-table questions, use **join** as documented in the catalog instead of 
 Optional chart per plan: either \`"chart": null\` (no chart) **or** an object with **all four required string fields** filled in: \`{"type":"bar"|"line","x":"<col>","y":"<col>","title":"<short string>"}\`. Rules for the chart object:
 - \`x\` and \`y\` MUST be **non-empty string** column names that exist on the **final** result rows (after the last \`project\` / \`groupby\`). Most common \`y\` is a **groupby measure alias** (e.g. "churn_rate", "account_count").
 - Do **not** omit \`x\` or \`y\`, do **not** set them to \`null\`, empty string, or a placeholder. If you cannot confidently name both columns, set \`chart\` to \`null\` instead.
-- \`title\` is a short string for the chart header; never null.`;
+- \`title\` is a short string for the chart header; never null.
+- **Never** use an aggregate expression like \`"sum(acv_usd)"\`, \`"avg(arr_usd)"\`, or \`"count(deals)"\` as \`chart.x\`/\`chart.y\`. The chart reads columns by literal name — it does not compute aggregates. If you want an aggregated axis, add a \`groupby\` step whose \`measures\` produce a named alias (e.g. \`{"alias":"acv_total","column":"acv_usd","agg":"sum"}\`), then set \`"y":"acv_total"\`. A plan-level validator rejects charts whose \`x\`/\`y\` are not produced by an earlier step, so this is a hard error, not a warning.
+- **Anti-pattern (will fail):** plan ends with raw deal rows (no \`groupby\`) and \`chart: {"x":"account_vertical","y":"sum(acv_usd)"}\`. **Fix:** either add \`{"op":"groupby","by":["account_vertical"],"measures":[{"alias":"acv_total","column":"acv_usd","agg":"sum"}]}\` before the chart and use \`"y":"acv_total"\`, or set \`chart\` to \`null\`.`;
 
 /** Model decides whether to run a Memory repository search (like optional web search). */
 export function discoveryMemoryRoutePrompt(userGoal: string): string {
