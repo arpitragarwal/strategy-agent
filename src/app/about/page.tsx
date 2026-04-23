@@ -116,8 +116,8 @@ export default function AboutPage() {
         <Block eyebrow="Try it out" className="mt-10">
           <p className="text-base leading-relaxed text-zinc-800">
             Browse a completed run under &lsquo;Memory&rsquo;, or kick off
-            your own — a full run takes about 15–20 min. The platform uses
-            a small sample dataset, not real company data.
+            your own — a full run takes about 15–20 min. The prototype uses
+            a small, synthetic dataset, not real company data.
           </p>
           <ul className="mt-4 space-y-1.5 border-l-2 border-zinc-200 pl-4">
             <li className="text-sm italic text-zinc-600">
