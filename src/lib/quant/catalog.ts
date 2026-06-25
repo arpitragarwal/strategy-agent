@@ -1,78 +1,66 @@
-import { join } from "path";
+import { readFileSync } from "fs";
+import { isAbsolute, join } from "path";
+import type { DatasetMeta } from "./types";
 
-export type DatasetMeta = {
-  id: string;
-  /** Path under data/dummy_data */
-  relativePath: string;
-  domain: "crm" | "cx" | "finance" | "support";
-  description: string;
-};
+/**
+ * The dataset catalog is data, not code: it is loaded from a JSON file chosen
+ * by the CATALOG_FILE env var (default: the synthetic prototype catalog). A
+ * private deployment points CATALOG_FILE at its own catalog (real warehouse
+ * tables) without forking this module. Keep the JSON shape stable — the agent
+ * prompt, SQL guard, and providers all assume `{ datasets: DatasetMeta[] }`.
+ */
 
-/** Registry of prototype datasets (CSV under /data/dummy_data). */
-export const QUANT_DATASETS: DatasetMeta[] = [
-  {
-    id: "crm/accounts",
-    relativePath: "crm/accounts.csv",
-    domain: "crm",
-    description:
-      "Customers (~1.25k): renewals/q ramp 2025-Q1 (~200) → 2026-Q1 (~300); contract_term_years (1–5; 80% are 3yr); logo_acquisition_cohort (calendar year of initial logo / prior anchor, used as cohort id); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise).",
-  },
-  {
-    id: "crm/deal_data",
-    relativePath: "crm/deal_data.csv",
-    domain: "crm",
-    description:
-      "Unified deal fact table for the window (renew + land + expand): logo_acquisition_cohort (same integer as crm/accounts for that account_id), fiscal_quarter (2025-Q1…2026-Q1), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type (land|expand|renew), outcome (won|lost), contract_term_years, acv_usd, tcv_usd, deal_source, primary_loss_reason (empty if won; else churn/loss category).",
-  },
-  {
-    id: "cx/product_usage",
-    relativePath: "cx/product_usage.csv",
-    domain: "cx",
-    description:
-      "Quarterly product engagement by SKU line: account_id, fiscal_quarter, product_line (Platform|Security|Analytics), usage_tier (no_usage|minimal_usage|high_usage|power_usage). One row per account × fiscal_quarter × product_line while subscribed in the window; churned accounts have no rows after their renewal quarter.",
-  },
-  {
-    id: "cx/customer_satisfaction",
-    relativePath: "cx/customer_satisfaction.csv",
-    domain: "cx",
-    description:
-      "Quarterly satisfaction at product line grain (matches cx/product_usage): account_id, fiscal_quarter, product_line, csat_score (1–5 Likert), nps_score (−100…100). CSAT/NPS correlate weakly with that line's usage_tier in the generator.",
-  },
-  {
-    id: "finance/finance_summary",
-    relativePath: "finance/finance_summary.csv",
-    domain: "finance",
-    description:
-      "Quarterly finance rollup derived from deal_data + accounts: fiscal_quarter, won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts. No account_id (already aggregated).",
-  },
-  {
-    id: "finance/arr_by_account_quarter",
-    relativePath: "finance/arr_by_account_quarter.csv",
-    domain: "finance",
-    description:
-      "End-of-quarter ARR run-rate per customer: account_id, fiscal_quarter, arr_usd. Computed from CRM deal_data (cumulative won land/expand ACV) plus renewal cohort fields (arr_up_for_renewal_usd before renewal quarter, booked_arr_usd on renew, 0 after churn); one row per active account × quarter in the renewal window.",
-  },
-  {
-    id: "support/support_summary",
-    relativePath: "support/support_summary.csv",
-    domain: "support",
-    description:
-      "Quarterly support metrics per account: account_id, fiscal_quarter, ticket_count, avg_days_to_resolution. One row per account × fiscal_quarter while the subscription is active (same logic as cx/product_usage); churned accounts have no rows after their renewal quarter.",
-  },
-];
+const DEFAULT_CATALOG_FILE = "config/catalog.dummy.json";
+
+function loadCatalog(): DatasetMeta[] {
+  const configured = process.env.CATALOG_FILE?.trim() || DEFAULT_CATALOG_FILE;
+  const path = isAbsolute(configured) ? configured : join(process.cwd(), configured);
+  let raw: string;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch (e) {
+    throw new Error(
+      `Failed to read catalog file "${path}" (CATALOG_FILE=${process.env.CATALOG_FILE ?? "<unset>"}). ${
+        e instanceof Error ? e.message : String(e)
+      }`,
+    );
+  }
+  let parsed: { datasets?: unknown };
+  try {
+    parsed = JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`Catalog file "${path}" is not valid JSON. ${e instanceof Error ? e.message : String(e)}`);
+  }
+  const datasets = parsed.datasets;
+  if (!Array.isArray(datasets) || datasets.length === 0) {
+    throw new Error(`Catalog file "${path}" must contain a non-empty "datasets" array.`);
+  }
+  for (const d of datasets as DatasetMeta[]) {
+    if (!d.id || !d.table || !d.domain || !d.source?.kind) {
+      throw new Error(
+        `Catalog file "${path}" has a dataset missing required fields (id, table, domain, source.kind): ${JSON.stringify(d)}`,
+      );
+    }
+  }
+  return datasets as DatasetMeta[];
+}
+
+/** Registry of catalog datasets, loaded once at module init from CATALOG_FILE. */
+export const QUANT_DATASETS: DatasetMeta[] = loadCatalog();
 
 const byId = new Map(QUANT_DATASETS.map((d) => [d.id, d]));
 
-export function resolveDatasetPath(datasetId: string): string {
-  const meta = byId.get(datasetId);
-  if (!meta) {
-    throw new Error(`Unknown datasetId "${datasetId}". Use an id from the data catalog.`);
-  }
-  return join(process.cwd(), "data", "dummy_data", meta.relativePath);
-}
-
 export function getDatasetMeta(datasetId: string): DatasetMeta | undefined {
   return byId.get(datasetId);
+}
+
+/**
+ * SQL identifier for a dataset. Prefers the catalog's explicit `table`; falls
+ * back to sanitising the id (slash → underscore) for callers that pass an id
+ * not in the catalog.
+ */
+export function tableNameFor(datasetId: string): string {
+  return byId.get(datasetId)?.table ?? datasetId.replace(/[^a-zA-Z0-9_]/g, "_");
 }
 
 /** Catalog ids — used as the canonical list for prompts and audit display. */
@@ -82,21 +70,26 @@ export function listQuantDatasetIds(): string[] {
 
 /**
  * Lightweight catalog for prompts that surface a dataset list to the user
- * (synthesis, manager review). Enum literals and join recipes are no longer
- * spelled out here — the SQL agent discovers them via describe_table.
+ * (synthesis, manager review). Enum literals and join recipes are not spelled
+ * out here — the SQL agent discovers them via describe_table.
  */
 export function buildDataCatalogMarkdown(): string {
   const lines = [
-    "## Prototype datasets (synthetic CSV; SELECT-only via DuckDB views)",
+    "## Datasets (SELECT-only)",
     "",
-    "Catalog id appears in agent audit logs; the table name (slash → underscore) is what SQL queries against.",
+    "Catalog id appears in agent audit logs; the table name is what SQL queries against.",
     "",
   ];
-  const byDomain: Record<string, DatasetMeta[]> = { crm: [], cx: [], finance: [], support: [] };
-  for (const d of QUANT_DATASETS) byDomain[d.domain].push(d);
-  for (const domain of ["crm", "cx", "finance", "support"] as const) {
+  // Group by domain in first-seen order so the markdown follows the catalog file.
+  const byDomain = new Map<string, DatasetMeta[]>();
+  for (const d of QUANT_DATASETS) {
+    const list = byDomain.get(d.domain) ?? [];
+    list.push(d);
+    byDomain.set(d.domain, list);
+  }
+  for (const [domain, datasets] of byDomain) {
     lines.push(`### ${domain.toUpperCase()}`);
-    for (const d of byDomain[domain]) {
+    for (const d of datasets) {
       lines.push(`- **${d.id}** — ${d.description}`);
     }
     lines.push("");

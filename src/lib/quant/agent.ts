@@ -7,9 +7,8 @@ import {
 } from "@google/generative-ai";
 import { getModelId } from "../genai";
 import { recordTokenUsageFromGenerateResponse } from "../tokenUsage";
-import { QUANT_DATASETS } from "./catalog";
-import { runSelect, tableNameFor } from "./duckdb";
-import { describeTable, listTables } from "./schema";
+import { QUANT_DATASETS, tableNameFor } from "./catalog";
+import { getProvider, type QuantProvider } from "./provider";
 import { guardSql, SQL_MAX_ROWS } from "./sqlGuard";
 import { buildVegaLiteSpec } from "./chart";
 import { QUANT_TOOL_DECLARATIONS, TOOL_NAMES } from "./tools";
@@ -42,13 +41,13 @@ function getApiKey(): string {
   return key;
 }
 
-function systemInstruction(): string {
+function systemInstruction(dialect: string): string {
   const tableLines = QUANT_DATASETS.map(
     (d) => `- ${tableNameFor(d.id)} (${d.id}) — ${d.description}`,
   ).join("\n");
-  return `You are a SQL data-analyst agent. You answer ONE hypothesis using read-only DuckDB SQL against the prototype warehouse below.
+  return `You are a SQL data-analyst agent. You answer ONE hypothesis using read-only ${dialect} SQL against the warehouse below.
 
-Tables (SQL name in parens-free form; catalog id in parens):
+Tables (SQL name first; catalog id in parens):
 ${tableLines}
 
 Tools (call in this order most of the time):
@@ -61,8 +60,8 @@ Tools (call in this order most of the time):
 SQL constraints:
 - One statement per call. No semicolons except optional trailing one. No DDL/DML/PRAGMA/SET — the guard rejects them.
 - Use the SQL table names (e.g. crm_deal_data), not catalog ids with slashes.
-- Filter strings are case-sensitive in the prototype data (e.g. outcome is 'lost', deal_type is 'renew'). Call describe_table to see the exact literals.
-- All read_sql results are capped at ${SQL_MAX_ROWS} rows; the guard auto-injects LIMIT if you forget.
+- Filter strings may be case-sensitive (e.g. outcome 'lost', deal_type 'renew'). Call describe_table to see the exact literals before filtering.
+- All query results are capped at ${SQL_MAX_ROWS} rows; the guard auto-injects LIMIT if you forget.
 
 Finalize rules:
 - narrative is 1–3 sentences with concrete numbers from your final result tying back to the hypothesis.
@@ -100,6 +99,7 @@ function coerceChartConfig(raw: unknown): QuantChartConfig | null {
 
 async function dispatchTool(
   call: FunctionCall,
+  provider: QuantProvider,
   state: {
     audit: QuantSqlAudit[];
     runSqlCount: number;
@@ -113,12 +113,12 @@ async function dispatchTool(
 
   switch (name) {
     case TOOL_NAMES.listTables: {
-      const tables = await listTables();
+      const tables = await provider.listTables();
       return { tables };
     }
     case TOOL_NAMES.describeTable: {
       try {
-        const info = await describeTable(asString(args.table));
+        const info = await provider.describeTable(asString(args.table));
         state.datasetIdsUsed.add(info.datasetId);
         return { table: info };
       } catch (e) {
@@ -138,7 +138,7 @@ async function dispatchTool(
         return { error: guard.error };
       }
       try {
-        const { columns, rows } = await runSelect(guard.sql);
+        const { columns, rows } = await provider.runSelect(guard.sql);
         const truncated = rows.slice(0, SAMPLE_ROWS_LIMIT);
         for (const id of parseSqlForDatasetIds(guard.sql)) state.datasetIdsUsed.add(id);
         state.audit.push({
@@ -182,7 +182,7 @@ async function dispatchTool(
         return { error: guard.error };
       }
       try {
-        const { columns, rows } = await runSelect(guard.sql);
+        const { columns, rows } = await provider.runSelect(guard.sql);
         for (const id of parseSqlForDatasetIds(guard.sql)) state.datasetIdsUsed.add(id);
         state.lastResult = {
           sql: guard.sql,
@@ -264,12 +264,14 @@ export async function runQuantAgent(
   };
 
   let chat: ChatSession;
+  let provider: QuantProvider;
   try {
+    provider = await getProvider();
     const ai = new GoogleGenerativeAI(getApiKey());
     const model = ai.getGenerativeModel({
       model: getModelId(),
       generationConfig: { temperature: 0.2, maxOutputTokens: 4096 },
-      systemInstruction: systemInstruction(),
+      systemInstruction: systemInstruction(provider.dialect),
       tools: [{ functionDeclarations: QUANT_TOOL_DECLARATIONS }],
     });
     chat = model.startChat();
@@ -304,7 +306,7 @@ export async function runQuantAgent(
 
     const responseParts: Part[] = [];
     for (const call of calls) {
-      const response = await dispatchTool(call, state);
+      const response = await dispatchTool(call, provider, state);
       responseParts.push({
         functionResponse: { name: call.name, response },
       });

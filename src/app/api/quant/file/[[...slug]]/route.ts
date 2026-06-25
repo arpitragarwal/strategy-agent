@@ -1,6 +1,5 @@
-import { readFileSync } from "fs";
 import { NextResponse } from "next/server";
-import { getDatasetMeta, resolveDatasetPath } from "@/lib/quant";
+import { getDatasetMeta, getProvider } from "@/lib/quant";
 
 export const dynamic = "force-dynamic";
 
@@ -15,9 +14,15 @@ export async function GET(
     return NextResponse.json({ error: "Unknown dataset" }, { status: 404 });
   }
 
+  const provider = await getProvider();
+  if (!provider.getDatasetText) {
+    // Non-file backends (e.g. a real warehouse) don't expose raw downloads.
+    return NextResponse.json({ error: "Dataset download not available" }, { status: 404 });
+  }
+
   let text: string;
   try {
-    text = readFileSync(resolveDatasetPath(id), "utf8");
+    text = await provider.getDatasetText(id);
   } catch {
     return NextResponse.json({ error: "Failed to read file" }, { status: 500 });
   }

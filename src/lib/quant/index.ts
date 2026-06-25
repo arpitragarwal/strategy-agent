@@ -4,8 +4,7 @@ export {
   getDatasetMeta,
   listQuantDatasetIds,
   QUANT_DATASETS,
-  resolveDatasetPath,
+  tableNameFor,
 } from "./catalog";
 export { runQuantAgent } from "./agent";
-export { getQuantDuck, runSelect, tableNameFor } from "./duckdb";
-export { listTables, describeTable, tableCatalogMarkdown } from "./schema";
+export { getProvider, type QuantProvider } from "./provider";

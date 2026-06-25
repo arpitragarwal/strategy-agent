@@ -127,7 +127,6 @@ type MemoryRow = {
 
 type QuantCatalogDataset = {
   id: string;
-  relativePath: string;
   domain: string;
   description: string;
   columns: string[];
@@ -429,13 +428,14 @@ function QuantDatasetsTreeBox() {
     }
     return QUANT_DOMAIN_ORDER.map((domain) => ({
       domain,
-      rows: (m.get(domain) ?? []).slice().sort((a, b) => a.relativePath.localeCompare(b.relativePath)),
+      rows: (m.get(domain) ?? []).slice().sort((a, b) => a.id.localeCompare(b.id)),
     })).filter((b) => b.rows.length > 0);
   }, [datasets]);
 
-  function fileLabel(relativePath: string, domain: string): string {
+  // Catalog ids are "domain/name"; strip the domain prefix for the leaf label.
+  function fileLabel(datasetId: string, domain: string): string {
     const prefix = `${domain}/`;
-    return relativePath.startsWith(prefix) ? relativePath.slice(prefix.length) : relativePath;
+    return datasetId.startsWith(prefix) ? datasetId.slice(prefix.length) : datasetId;
   }
 
   return (
@@ -471,7 +471,7 @@ function QuantDatasetsTreeBox() {
                   {block.rows.map((row, fi) => {
                     const fileLast = fi === block.rows.length - 1;
                     const branch = fileLast ? "└─ " : "├─ ";
-                    const name = fileLabel(row.relativePath, block.domain);
+                    const name = fileLabel(row.id, block.domain);
                     const href = `/api/quant/file/${row.id}`;
                     return (
                       <div key={row.id} className="flex whitespace-pre items-baseline" title={`${row.id} — ${row.description}`}>

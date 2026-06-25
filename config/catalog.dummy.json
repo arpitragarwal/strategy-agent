@@ -1,0 +1,54 @@
+{
+  "$comment": "Synthetic prototype catalog (DuckDB-over-CSV). Selected via CATALOG_FILE; default when unset. A private deployment ships its own catalog (e.g. config/catalog.prod.json) with source.kind=clickhouse and points CATALOG_FILE + QUANT_PROVIDER at it. Keep this shape stable across catalogs so the agent prompt and SQL guard stay backend-neutral.",
+  "datasets": [
+    {
+      "id": "crm/accounts",
+      "table": "crm_accounts",
+      "domain": "crm",
+      "source": { "kind": "csv", "path": "data/dummy_data/crm/accounts.csv" },
+      "description": "Customers (~1.25k): renewals/q ramp 2025-Q1 (~200) → 2026-Q1 (~300); contract_term_years (1–5; 80% are 3yr); logo_acquisition_cohort (calendar year of initial logo / prior anchor, used as cohort id); renewal_fiscal_quarter (when the account renews in the window); arr_usd_current after renewal (0 if churned); company_size_band (SMB | Enterprise)."
+    },
+    {
+      "id": "crm/deal_data",
+      "table": "crm_deal_data",
+      "domain": "crm",
+      "source": { "kind": "csv", "path": "data/dummy_data/crm/deal_data.csv" },
+      "description": "Unified deal fact table for the window (renew + land + expand): logo_acquisition_cohort (same integer as crm/accounts for that account_id), fiscal_quarter (2025-Q1…2026-Q1), created_date (opportunity created; ~6 month mean sales cycle before close_date), close_date, account_vertical (consistent with accounts.industry), product_line (Platform/Security/Analytics), deal_type (land|expand|renew), outcome (won|lost), contract_term_years, acv_usd, tcv_usd, deal_source, primary_loss_reason (empty if won; else churn/loss category)."
+    },
+    {
+      "id": "cx/product_usage",
+      "table": "cx_product_usage",
+      "domain": "cx",
+      "source": { "kind": "csv", "path": "data/dummy_data/cx/product_usage.csv" },
+      "description": "Quarterly product engagement by SKU line: account_id, fiscal_quarter, product_line (Platform|Security|Analytics), usage_tier (no_usage|minimal_usage|high_usage|power_usage). One row per account × fiscal_quarter × product_line while subscribed in the window; churned accounts have no rows after their renewal quarter."
+    },
+    {
+      "id": "cx/customer_satisfaction",
+      "table": "cx_customer_satisfaction",
+      "domain": "cx",
+      "source": { "kind": "csv", "path": "data/dummy_data/cx/customer_satisfaction.csv" },
+      "description": "Quarterly satisfaction at product line grain (matches cx/product_usage): account_id, fiscal_quarter, product_line, csat_score (1–5 Likert), nps_score (−100…100). CSAT/NPS correlate weakly with that line's usage_tier in the generator."
+    },
+    {
+      "id": "finance/finance_summary",
+      "table": "finance_finance_summary",
+      "domain": "finance",
+      "source": { "kind": "csv", "path": "data/dummy_data/finance/finance_summary.csv" },
+      "description": "Quarterly finance rollup derived from deal_data + accounts: fiscal_quarter, won/lost deals, ACV won/lost, billings_tcv, recognized_revenue, COGS, gross_profit, opex buckets, EBITDA, active_accounts. No account_id (already aggregated)."
+    },
+    {
+      "id": "finance/arr_by_account_quarter",
+      "table": "finance_arr_by_account_quarter",
+      "domain": "finance",
+      "source": { "kind": "csv", "path": "data/dummy_data/finance/arr_by_account_quarter.csv" },
+      "description": "End-of-quarter ARR run-rate per customer: account_id, fiscal_quarter, arr_usd. Computed from CRM deal_data (cumulative won land/expand ACV) plus renewal cohort fields (arr_up_for_renewal_usd before renewal quarter, booked_arr_usd on renew, 0 after churn); one row per active account × quarter in the renewal window."
+    },
+    {
+      "id": "support/support_summary",
+      "table": "support_support_summary",
+      "domain": "support",
+      "source": { "kind": "csv", "path": "data/dummy_data/support/support_summary.csv" },
+      "description": "Quarterly support metrics per account: account_id, fiscal_quarter, ticket_count, avg_days_to_resolution. One row per account × fiscal_quarter while the subscription is active (same logic as cx/product_usage); churned accounts have no rows after their renewal quarter."
+    }
+  ]
+}
