@@ -3,8 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  // Pooled (PgBouncer) endpoint for the app at runtime.
+  url       = env("DATABASE_URL")
+  // Unpooled endpoint for Prisma CLI (migrate / db push), which can't run
+  // through the pooler. Only used by the CLI — not the runtime client.
+  directUrl = env("DIRECT_URL")
 }
 
 model StrategyRun {
