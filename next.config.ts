@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  // DuckDB ships platform-specific .node bindings via dynamic require; let the
+  // server runtime load them at runtime instead of having webpack try to bundle
+  // every per-platform variant.
+  serverExternalPackages: ["@duckdb/node-api", "@duckdb/node-bindings"],
   experimental: {
     serverActions: {
       bodySizeLimit: "2mb",

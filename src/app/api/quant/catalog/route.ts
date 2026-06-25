@@ -1,28 +1,11 @@
 import { NextResponse } from "next/server";
-import {
-  QUANT_DATASETS,
-  QUANT_ENUMS_BY_DATASET,
-  QUANT_JOIN_RELATIONSHIPS,
-  buildDataCatalogMarkdown,
-  peekColumns,
-} from "@/lib/quant";
+import { QUANT_DATASETS, buildDataCatalogMarkdown } from "@/lib/quant";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const datasets = QUANT_DATASETS.map((d) => {
-    let columns: string[] = [];
-    try {
-      columns = peekColumns(d.id);
-    } catch {
-      columns = [];
-    }
-    return { ...d, columns };
-  });
   return NextResponse.json({
     markdown: buildDataCatalogMarkdown(),
-    joinRelationships: [...QUANT_JOIN_RELATIONSHIPS],
-    enumsByDataset: QUANT_ENUMS_BY_DATASET,
-    datasets,
+    datasets: QUANT_DATASETS,
   });
 }

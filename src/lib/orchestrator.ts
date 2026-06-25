@@ -44,13 +44,7 @@ import {
   normalizeOutlineDoc,
   pathToNode,
 } from "./outline";
-import {
-  buildDataCatalogMarkdown,
-  executeQuantPlan,
-  listQuantDatasetIds,
-  quantPlanReferencesValidDatasets,
-} from "./quant";
-import type { QuantPlan } from "./quant/types";
+import { buildDataCatalogMarkdown, runQuantAgent } from "./quant";
 import { searchStrategyMemory } from "./strategyMemory";
 import {
   errorToLogParts,
@@ -70,10 +64,23 @@ import type {
 function normalizeContextClarificationPlan(
   plan: ContextClarificationPlanJson,
 ): ContextClarificationPlanJson {
+  const requests = Array.isArray(plan.quant_requests) ? plan.quant_requests : [];
   return {
     specificity_notes:
       typeof plan.specificity_notes === "string" ? plan.specificity_notes : "",
-    quant_plans: Array.isArray(plan.quant_plans) ? plan.quant_plans.slice(0, 4) : [],
+    quant_requests: requests
+      .map((r) => {
+        if (!r || typeof r !== "object") return null;
+        const obj = r as { hypothesis_under_test?: unknown; question?: unknown };
+        const hyp = typeof obj.hypothesis_under_test === "string"
+          ? obj.hypothesis_under_test.trim()
+          : "";
+        const q = typeof obj.question === "string" ? obj.question.trim() : "";
+        if (!q) return null;
+        return { hypothesis_under_test: hyp || q, question: q };
+      })
+      .filter((r): r is { hypothesis_under_test: string; question: string } => r !== null)
+      .slice(0, 4),
     clarifying_questions: Array.isArray(plan.clarifying_questions)
       ? plan.clarifying_questions
           .map((q) => String(q).trim())
@@ -255,7 +262,7 @@ function inferStaleResumeCheckpoint(run: {
 }
 
 const LEAF_ANALYSIS_JSON_REPAIR_HINT =
-  'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant" (null OR object with hypothesis_under_test, datasetId, steps: filter/join/project/groupby/sort/limit, optional chart).';
+  'Keys: "summary" (string), "analysis" (string), "hypothesis" (string or null), "verdict" ("confirmed"|"refuted"|"inconclusive"|"partially_supported"), "evidence_needed" (string array), "confidence" ("low"|"medium"|"high"), "quant_request" (null OR one-sentence natural-language question for the SQL subagent — no SQL, no column names).';
 
 function leafManagerReviewEnabled(): boolean {
   const v = process.env.LEAF_MANAGER_REVIEW?.trim().toLowerCase();
@@ -289,9 +296,9 @@ function markdownLeafManagerReview(m: LeafManagerReviewJson): string {
   if (m.refinement_directives?.length) {
     lines.push("**Directives for revision**", ...m.refinement_directives.map((s) => `- ${s}`), "");
   }
-  if (m.suggested_followup_quant) {
+  if (m.suggested_followup_quant_request?.trim()) {
     lines.push(
-      "_Follow-up quant suggested (validated against allow-list before refinement)._",
+      `_Follow-up quant suggested: ${m.suggested_followup_quant_request.trim()}_`,
       "",
     );
   }
@@ -301,30 +308,24 @@ function markdownLeafManagerReview(m: LeafManagerReviewJson): string {
 function shouldSkipLeafRefinement(m: LeafManagerReviewJson): boolean {
   if (!m.adequately_addresses_hypothesis) return false;
   if (m.missed_catalog_opportunities?.length) return false;
-  if (m.suggested_followup_quant != null) return false;
+  if (m.suggested_followup_quant_request?.trim()) return false;
   if (m.refinement_directives?.length) return false;
   return true;
 }
 
-function sanitizeManagerSuggestedQuant(raw: unknown): QuantPlan | null {
-  if (!raw || typeof raw !== "object") return null;
-  const p = raw as QuantPlan;
-  if (typeof p.datasetId !== "string" || !Array.isArray(p.steps)) return null;
-  if (!quantPlanReferencesValidDatasets(p)) return null;
-  return p;
+function extractQuantRequest(raw: unknown): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  return trimmed ? trimmed : null;
 }
 
-function runQuantIfValid(parsed: AnalysisJson): QuantResult | undefined {
-  if (
-    parsed.quant &&
-    typeof parsed.quant === "object" &&
-    typeof (parsed.quant as QuantPlan).datasetId === "string" &&
-    Array.isArray((parsed.quant as QuantPlan).steps) &&
-    quantPlanReferencesValidDatasets(parsed.quant as QuantPlan)
-  ) {
-    return executeQuantPlan(parsed.quant as QuantPlan);
-  }
-  return undefined;
+async function runQuantForLeafIfRequested(
+  parsed: AnalysisJson,
+  context: string,
+): Promise<QuantResult | undefined> {
+  const question = extractQuantRequest(parsed.quant_request);
+  if (!question) return undefined;
+  return runQuantAgent({ hypothesisUnderTest: question, context });
 }
 
 function buildNodeStateFromAnalysis(
@@ -382,7 +383,10 @@ async function analyzeLeafToDoneState(params: {
     }),
     { repairHint: LEAF_ANALYSIS_JSON_REPAIR_HINT },
   );
-  let quantResult = runQuantIfValid(parsedInitial);
+  const leafContext = `Leaf hypothesis: ${leafQuestion}\nPath: ${pathTitles}`;
+  let quantResult = await withTokenPhase("leaf_quant", () =>
+    runQuantForLeafIfRequested(parsedInitial, leafContext),
+  );
   const draft = buildNodeStateFromAnalysis(params.leaf.id, parsedInitial, quantResult);
 
   if (!leafManagerReviewEnabled()) {
@@ -405,11 +409,10 @@ async function analyzeLeafToDoneState(params: {
           evidenceNeededLines: draft.evidenceNeeded ?? [],
           quantBlockForReview: formatQuantBlockForManager(draft.quant),
           dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
-          allowedDatasetIdsBlock: listQuantDatasetIds().join("\n"),
         }),
         {
           repairHint:
-            'Keys: "adequately_addresses_hypothesis" (boolean), "pressure_test_summary" (string), "analysis_alignment" ("strong"|"moderate"|"weak"), "missed_catalog_opportunities" (string array), "suggested_followup_quant" (null or object with hypothesis_under_test, datasetId, steps, optional chart), "refinement_directives" (string array).',
+            'Keys: "adequately_addresses_hypothesis" (boolean), "pressure_test_summary" (string), "analysis_alignment" ("strong"|"moderate"|"weak"), "missed_catalog_opportunities" (string array), "suggested_followup_quant_request" (null or one-sentence string for the SQL subagent), "refinement_directives" (string array).',
         },
       ),
     );
@@ -427,9 +430,10 @@ async function analyzeLeafToDoneState(params: {
     return { ...draft, leafManagerReview: reviewMd };
   }
 
-  const suggestedValid = sanitizeManagerSuggestedQuant(managerJson.suggested_followup_quant);
-  const managerSuggestedQuantHint =
-    suggestedValid ? JSON.stringify(suggestedValid) : "(none)";
+  const suggestedFollowupRequest = extractQuantRequest(
+    managerJson.suggested_followup_quant_request,
+  );
+  const managerSuggestedQuantHint = suggestedFollowupRequest ?? "(none)";
 
   let parsedRefined: AnalysisJson;
   try {
@@ -453,7 +457,9 @@ async function analyzeLeafToDoneState(params: {
     return { ...draft, leafManagerReview: reviewMd };
   }
 
-  quantResult = runQuantIfValid(parsedRefined);
+  quantResult = await withTokenPhase("leaf_quant", () =>
+    runQuantForLeafIfRequested(parsedRefined, leafContext),
+  );
   const refined = buildNodeStateFromAnalysis(
     params.leaf.id,
     parsedRefined,
@@ -683,7 +689,7 @@ type AnalysisJson = {
   verdict?: string;
   evidence_needed: string[];
   confidence: string;
-  quant?: QuantPlan | null;
+  quant_request?: string | null;
 };
 
 export type StreamSender = (event: StreamEvent) => void;
@@ -1038,7 +1044,7 @@ async function runContextClarificationPhase(
   await emit("context", "Planning data checks and specificity…");
   let plan: ContextClarificationPlanJson = {
     specificity_notes: "",
-    quant_plans: [],
+    quant_requests: [],
     clarifying_questions: [],
   };
   try {
@@ -1051,30 +1057,24 @@ async function runContextClarificationPhase(
         }),
         {
           repairHint:
-            'Keys: "specificity_notes" (string), "quant_plans" (array, max 4 objects: hypothesis_under_test, datasetId, steps with filter/join/project/groupby/sort/limit, optional chart), "clarifying_questions" (array, max 5 short strings).',
+            'Keys: "specificity_notes" (string), "quant_requests" (array, max 4 objects with hypothesis_under_test and a one-sentence question for the SQL subagent), "clarifying_questions" (array, max 5 short strings).',
         },
       ),
     );
   } catch {
-    plan = { specificity_notes: "", quant_plans: [], clarifying_questions: [] };
+    plan = { specificity_notes: "", quant_requests: [], clarifying_questions: [] };
   }
 
   const dataBlocks: string[] = [];
-  for (const rawPlan of plan.quant_plans) {
-    if (
-      !rawPlan ||
-      typeof rawPlan !== "object" ||
-      typeof rawPlan.datasetId !== "string" ||
-      !Array.isArray(rawPlan.steps)
-    ) {
-      continue;
-    }
-    const label =
-      typeof rawPlan.hypothesis_under_test === "string" ?
-        rawPlan.hypothesis_under_test
-      : "Data check";
+  for (const req of plan.quant_requests) {
+    const label = req.hypothesis_under_test || req.question;
     await emit("context", `Running data check: ${label.slice(0, 72)}…`);
-    const result = executeQuantPlan(rawPlan as QuantPlan);
+    const result = await withTokenPhase("context_quant", () =>
+      runQuantAgent({
+        hypothesisUnderTest: req.hypothesis_under_test || req.question,
+        context: req.question,
+      }),
+    );
     const narr = [
       `**${label}**`,
       result.narrative ?? "",

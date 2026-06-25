@@ -4,45 +4,10 @@ export type DiscoveryMemoryRoute = {
 };
 
 /**
- * Single source of truth for quant pipeline JSON (context planner + leaf analysis).
- * Matches ops handled by `executeQuantPlan` in `src/lib/quant/executor.ts`.
+ * Shared block describing the quant subagent to LLMs that may delegate to it.
+ * No SQL or column names — the subagent owns its own catalog and schema discovery.
  */
-export const QUANT_PIPELINE_OPS_FOR_PROMPTS = `Allowed quant.steps operations (execute in order):
-- {"op":"filter","column":"<col>","cmp":"eq"|"neq"|"gt"|"gte"|"lt"|"lte","value": string|number|boolean}
-  - **List filters:** {"op":"filter","column":"<col>","cmp":"in"|"not_in","values":[<v1>,<v2>,...]} — use \`values\` (array), **not** \`value\`.
-  - **HAVING:** place a \`filter\` **after** a \`groupby\` to drop aggregate rows by a measure alias (e.g. \`{"op":"filter","column":"account_count","cmp":"gte","value":10}\`).
-- {"op":"join","rightDatasetId":"<catalog id>","on":[["leftCol","rightCol"],...],"how":"inner"|"left","rightPrefix":"optional prefix for right-hand columns (default r_)"} — start from quant.datasetId (or each plan's datasetId) as the left table; add another CSV keyed by **on** (composite keys supported). Chained joins: use different **rightPrefix** each time (e.g. acc_, tix_).
-  - **Same name on both sides:** if a pair is \`["product_line","product_line"]\` (or any \`["x","x"]\`), the result has **one** column \`x\` — there is **no** \`r_x\`. Only right-only columns (not in \`on\`, or different right-side name) appear as \`r_<col>\`.
-  - **Left join:** rows with no key match still get all \`r_*\` columns set to null (stable schema).
-- {"op":"project","columns":["col1","col2",...]} — **destructive:** only listed columns survive. Include **every** column you need for **all later steps**: each \`groupby.by\` and measure \`column\`, each later \`filter.column\`, each \`sort.by\`, each **left-hand** \`join\` \`on\` key, each column referenced by any later \`compute\` expression, each column in any **later** \`project\`, and the optional top-level \`chart\` \`x\`/\`y\` on the **final** row shape. Common mistake: dropping \`account_id\` (or another join key) then \`groupby\` by account — that fails.
-- {"op":"groupby","by":["col1",...],"measures":[{"alias":"name","column":"<col>","agg":"sum"|"mean"|"count"|"count_distinct"|"min"|"max"}]}
-  - \`count\` ignores \`column\` (row count). \`count_distinct\` counts unique non-null values of \`column\` (e.g. unique accounts: \`{"alias":"account_count","column":"account_id","agg":"count_distinct"}\`).
-- {"op":"compute","columns":[{"alias":"<new_col>","expr": <expr>}, ...]} — add derived columns (does **not** remove any). Use **before** groupby to convert a categorical into a 0/1 flag you can \`sum\`, or **after** groupby to compute a ratio from measure aliases.
-  - Supported \`expr\` shapes:
-    - {"kind":"equals","column":"<col>","value":"<v>"} → 1 if \`col == v\`, else 0 (pair with \`groupby\` + \`sum\` alias to count matches; e.g. churned deals).
-    - {"kind":"not_equals","column":"<col>","value":"<v>"} → 1 if not equal, else 0.
-    - {"kind":"in","column":"<col>","values":[<v1>,<v2>,...]} → 1 if value is in the list, else 0.
-    - {"kind":"divide","numerator":"<col>","denominator":"<col>"} → number; **null** when denominator is 0 or missing. Use for ratios like \`churn_rate = divide(churn_count, total_count)\`.
-    - {"kind":"coalesce","columns":["a","b"],"fallback": <optional scalar>} → first non-null non-empty value (useful after \`left\` joins: e.g. \`coalesce(r_arr_usd, 0)\`).
-    - {"kind":"bucket","column":"<numeric col>","breaks":[x1,x2,...],"labels":["<=x1","x1-x2",...]} → label bucket by numeric cutoff (\`breaks\` ascending, \`labels\` has one more entry than \`breaks\` OR same length and the last catches overflow).
-    - {"kind":"literal","value": <scalar>} → constant column (rare; used for stacking before \`groupby\`).
-- {"op":"sort","by":"<col>","dir":"asc"|"desc"} (optional dir, default asc)
-- {"op":"limit","n": number}
-
-For cross-table questions, use **join** as documented in the catalog instead of reasoning from one file only.
-
-**Canonical churn-rate recipe:** \`compute is_churn = equals(outcome, lost)\` on \`crm/deal_data\` → \`groupby by=[<segment>]\` with \`measures=[{alias:"churn_count",column:"is_churn",agg:"sum"},{alias:"total_deals",column:"is_churn",agg:"count"}]\` → \`compute churn_rate = divide(churn_count, total_deals)\`. Add a HAVING \`filter\` (e.g. \`total_deals gte 10\`) before \`sort\` to drop tiny segments.
-
-**Time bucket:** prototype CSVs use the column name **fiscal_quarter** (values like 2025-Q1) on crm/deal_data, cx/*, finance/finance_summary, **finance/arr_by_account_quarter** (ARR by account × quarter from CRM), and support/support_summary — not \`quarter\`. **support/support_summary** is **account × fiscal_quarter** (join on **account_id** + **fiscal_quarter** to CX/CRM). crm/accounts uses **renewal_fiscal_quarter** for the account’s renewal slot. **crm/deal_data.logo_acquisition_cohort** matches **crm/accounts.logo_acquisition_cohort** for the same **account_id** (calendar year used as the logo cohort key in the prototype).
-
-**Categorical filters:** the data catalog markdown includes **“Filter literals (exact strings)”** — copy those values exactly for \`filter\` \`eq\`/\`neq\`/\`in\`/\`not_in\` (e.g. \`outcome\` is \`lost\` not \`Lost\`; \`deal_type\` is \`renew\` not \`renewal\`). The executor will **case-coerce** a recognised enum value if only the casing is wrong, but do not rely on that — use the catalog values verbatim.
-
-Optional chart per plan: either \`"chart": null\` (no chart) **or** an object with **all four required string fields** filled in: \`{"type":"bar"|"line","x":"<col>","y":"<col>","title":"<short string>"}\`. Rules for the chart object:
-- \`x\` and \`y\` MUST be **non-empty string** column names that exist on the **final** result rows (after the last \`project\` / \`groupby\`). Most common \`y\` is a **groupby measure alias** (e.g. "churn_rate", "account_count").
-- Do **not** omit \`x\` or \`y\`, do **not** set them to \`null\`, empty string, or a placeholder. If you cannot confidently name both columns, set \`chart\` to \`null\` instead.
-- \`title\` is a short string for the chart header; never null.
-- **Never** use an aggregate expression like \`"sum(acv_usd)"\`, \`"avg(arr_usd)"\`, or \`"count(deals)"\` as \`chart.x\`/\`chart.y\`. The chart reads columns by literal name — it does not compute aggregates. If you want an aggregated axis, add a \`groupby\` step whose \`measures\` produce a named alias (e.g. \`{"alias":"acv_total","column":"acv_usd","agg":"sum"}\`), then set \`"y":"acv_total"\`. A plan-level validator rejects charts whose \`x\`/\`y\` are not produced by an earlier step, so this is a hard error, not a warning.
-- **Anti-pattern (will fail):** plan ends with raw deal rows (no \`groupby\`) and \`chart: {"x":"account_vertical","y":"sum(acv_usd)"}\`. **Fix:** either add \`{"op":"groupby","by":["account_vertical"],"measures":[{"alias":"acv_total","column":"acv_usd","agg":"sum"}]}\` before the chart and use \`"y":"acv_total"\`, or set \`chart\` to \`null\`.`;
+export const QUANT_AGENT_DELEGATION_NOTE = `A separate **quant subagent** runs SQL against the prototype warehouse on demand. To ask it something, emit a short \`quant_request\` string: one sentence stating what the numbers should test or quantify (e.g. "Churn rate on FY26 renewals split by region, ordered by churn rate desc."). Mention the dataset/domain you want it to look at if obvious (e.g. "from the deals table"). Do NOT write SQL, column names, or dataset ids yourself — the subagent discovers the schema and writes the SQL. If no numeric check would help this question, set the request to null.`;
 
 /** Model decides whether to run a Memory repository search (like optional web search). */
 export function discoveryMemoryRoutePrompt(userGoal: string): string {
@@ -71,12 +36,11 @@ Rules:
 export type ContextClarificationPlanJson = {
   /** Where the goal is vague (e.g. "largest segment" without naming it) — plain text. */
   specificity_notes: string;
-  /** 0–4 plans using catalog datasets only; resolve "which X is biggest/fastest" when columns exist. */
-  quant_plans: Array<{
+  /** 0–4 natural-language quant requests to delegate to the SQL subagent. */
+  quant_requests: Array<{
     hypothesis_under_test: string;
-    datasetId: string;
-    steps: unknown[];
-    chart?: unknown | null;
+    /** One sentence: what numbers should test or quantify. No SQL, no column names. */
+    question: string;
   }>;
   /** 1–5 short questions only when data cannot resolve (definitions, preferences, horizons). Else []. */
   clarifying_questions: string[];
@@ -91,10 +55,10 @@ export function contextClarificationPlanPrompt(input: {
 
 Your jobs:
 1. **Specificity check** — Read the goal for underspecified phrases (e.g. "the largest customer segment", "fastest-growing region", "main vertical") where naming the entity would sharpen the rest of the pipeline. Call this out in specificity_notes.
-2. **Data-first disambiguation** — When prototype spreadsheet data (see catalog) can pin down those entities, emit quant_plans (up to **4**). Prefer **filter → join (if multiple tables) → project (optional, to select columns) → groupby → sort (desc) → limit**. Use exact datasetId values from the catalog and documented join keys.
+2. **Data-first disambiguation** — When prototype warehouse data (see catalog) can pin down those entities, emit quant_requests (up to **4**). Each is a one-sentence question the SQL subagent will answer. Do not write SQL yourself.
 3. **Human clarification** — When the catalog **cannot** resolve an important gap (definitions, horizons, intent), add concise clarifying_questions (max **5** strings).
 
-**Mandatory closure:** If specificity_notes is **non-empty** (you flagged underspecified phrases), you **must not** leave both quant_plans and clarifying_questions empty. Either emit at least one **valid** quant_plan that targets a flagged gap using catalog columns, **or** at least one clarifying_question the user must answer, **or both**. If the goal is already concrete, keep specificity_notes brief and use [] for both arrays.
+**Mandatory closure:** If specificity_notes is **non-empty** (you flagged underspecified phrases), you **must not** leave both quant_requests and clarifying_questions empty. Either emit at least one quant_request that targets a flagged gap, **or** at least one clarifying_question the user must answer, **or both**. If the goal is already concrete, keep specificity_notes brief and use [] for both arrays.
 
 User goal / question:
 ${input.userGoal}
@@ -106,19 +70,17 @@ Rules for Memory: use **only** when clearly relevant; otherwise mentally ignore 
 
 ${input.dataCatalogMarkdown}
 
+${QUANT_AGENT_DELEGATION_NOTE}
+
 Output **one JSON object only** — first character "{", last "}".
 Shape:
 {
   "specificity_notes": "string",
-  "quant_plans": [ ... 0 to 4 objects with hypothesis_under_test, datasetId, steps, optional chart — same quant shape as the analysis agent ... ],
+  "quant_requests": [ { "hypothesis_under_test": "string", "question": "one-sentence ask for the SQL subagent" }, ... up to 4 ],
   "clarifying_questions": [ "string", ... ]
 }
 
-Each quant_plan object: hypothesis_under_test, datasetId, steps[], optional chart — same shape as the leaf analysis "quant" object.
-
-${QUANT_PIPELINE_OPS_FOR_PROMPTS}
-
-If retrieve_memory had nothing useful and the goal is already concrete, specificity_notes can be brief, quant_plans can be [], clarifying_questions can be [].`;
+If retrieve_memory had nothing useful and the goal is already concrete, specificity_notes can be brief, quant_requests can be [], clarifying_questions can be [].`;
 }
 
 export function contextClarificationSynthesisPrompt(input: {
@@ -150,7 +112,7 @@ ${input.retrievedMemory.trim() || "(None.)"}
 Specificity / ambiguity notes from the planner:
 ${input.specificityNotes.trim() || "(None.)"}
 
-Executed data analyses (prototype CSVs — treat as illustrative snapshots, not live systems):
+Executed data analyses (prototype warehouse — treat as illustrative snapshots, not live systems):
 ${input.dataAnalysesMarkdown.trim() || "(No quant runs executed.)"}
 
 Planned clarifying questions for the user (if any — you MUST surface these in the output):
@@ -371,7 +333,7 @@ export function analysisPrompt(input: {
       `\nUser steering notes (prioritize when answering this leaf):\n${input.redirectContext.trim()}\n`
     : "";
 
-  return `You are an analysis agent working on one **leaf node** of a **hypothesis tree** (every node in the tree is framed as a hypothesis; leaves are tested here directly). This node's \`question\` is the **hypothesis** to test. Weigh evidence (context, reasoning, and optional CSV analysis) and **confirm or refute** it when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
+  return `You are an analysis agent working on one **leaf node** of a **hypothesis tree** (every node in the tree is framed as a hypothesis; leaves are tested here directly). This node's \`question\` is the **hypothesis** to test. Weigh evidence (context, reasoning, and optional quantitative checks) and **confirm or refute** it when possible; use "inconclusive" or "partially_supported" when evidence is mixed or incomplete.
 
 Overall goal:
 ${input.userGoal}
@@ -386,17 +348,15 @@ ${input.leafQuestion}
 
 ${input.dataCatalogMarkdown}
 
-Quantitative plans: when numeric evidence from these CSVs would strengthen confirmation or refutation, include "quant" with a pipeline. If the hypothesis is purely qualitative or no dataset fits, set "quant" to null.
-
-${QUANT_PIPELINE_OPS_FOR_PROMPTS}
+${QUANT_AGENT_DELEGATION_NOTE}
 
 evidence_needed (required discipline): List concrete gaps that limit this answer — not generic caveats. Each item is one short string. Include when relevant:
-- Data / numbers: metrics, cuts, or time ranges not in context notes or CSVs; unreliable proxies you had to use.
+- Data / numbers: metrics, cuts, or time ranges that weren't covered by the quant request (or that you didn't request).
 - Context: missing segment, geography, product, channel, competitor, or regulatory detail that would change the read.
 - Stakeholders / primary research: who you would need to interview or what internal doc/source would resolve ambiguity.
-- Quant: you set "quant" to null but a specific dataset or cut would have helped — say what you would run (name datasetId if obvious from the catalog).
+- Quant: if you set quant_request to null but a specific cut would have helped, name it.
 
-Also mention limitations of the prototype CSVs (snapshot only, no live systems) when you leaned on them heavily. Use an empty array only when nothing substantive is missing for *this* leaf.
+Also mention limitations of the prototype warehouse (snapshot only, no live systems) when you leaned on it heavily. Use an empty array only when nothing substantive is missing for *this* leaf.
 
 Your entire reply must be ONE JSON object only — no markdown, no keys in prose form, no text before { or after }.
 
@@ -408,12 +368,7 @@ Required JSON shape (types matter):
   "verdict": "confirmed" | "refuted" | "inconclusive" | "partially_supported",
   "evidence_needed": ["specific gap strings per rules above; [] only if truly nothing missing"],
   "confidence": "low" | "medium" | "high",
-  "quant": null OR {
-    "hypothesis_under_test": "string, what the numbers will test",
-    "datasetId": "string, exact id from catalog e.g. crm/deal_data",
-    "steps": [ ...quant steps... ],
-    "chart": null OR { "type": "bar" | "line", "x": "string", "y": "string", "title": "optional string" }
-  }
+  "quant_request": null OR "one-sentence question for the SQL subagent (no SQL, no column names)"
 }`;
 }
 
@@ -422,14 +377,10 @@ export type LeafManagerReviewJson = {
   adequately_addresses_hypothesis: boolean;
   pressure_test_summary: string;
   analysis_alignment: "strong" | "moderate" | "weak";
-  /** Name a real catalog datasetId when suggesting CSV checks; never invent ids. */
+  /** Free-text notes about possible quant checks (e.g. "ARR by region by quarter"). */
   missed_catalog_opportunities: string[];
-  suggested_followup_quant: null | {
-    hypothesis_under_test: string;
-    datasetId: string;
-    steps: unknown[];
-    chart?: unknown | null;
-  };
+  /** Natural-language follow-up question for the SQL subagent, or null. */
+  suggested_followup_quant_request: string | null;
   refinement_directives: string[];
 };
 
@@ -445,8 +396,6 @@ export function leafManagerReviewPrompt(input: {
   evidenceNeededLines: string[];
   quantBlockForReview: string;
   dataCatalogMarkdown: string;
-  /** Exact allowed datasetId values (one per line). */
-  allowedDatasetIdsBlock: string;
 }): string {
   const ev =
     input.evidenceNeededLines.length > 0 ?
@@ -456,12 +405,11 @@ export function leafManagerReviewPrompt(input: {
   return `You are a **senior manager** pressure-testing a **single leaf analysis** before it is finalized. The tree is MECE; this leaf's job is to test one hypothesis.
 
 **Anti-hallucination / grounding rules (mandatory):**
-- You do **not** have raw CSV rows. Judge only from the **text** below: initial analysis, quant output (if any), context & clarification, and the **data catalog** (dataset ids and descriptions).
-- **Never invent** dataset ids, column names, or numbers. The only valid \`datasetId\` values for any suggested quant are **exactly** those listed under ALLOWED DATASET IDS — character-for-character.
-- If you suggest \`suggested_followup_quant\`, it must use \`datasetId\` from that list and \`steps\` that only reference columns **named or clearly implied** in the catalog description for that dataset. If unsure of a column, do **not** put it in \`steps\`; instead add a string to \`refinement_directives\` like "Verify column X exists in crm/deal_data before quant".
-- Do **not** claim specific cell values or aggregates exist unless they appear in the **quant block** or **context** text. You may say "a quant on crm/deal_data could test …" without fabricating outcomes.
-- \`missed_catalog_opportunities\`: short strings; when pointing at data, include a valid dataset id from the allow list (e.g. "crm/deal_data: ACV trend by quarter could test cohort mix").
-- If the analysis is sound and grounded, set \`adequately_addresses_hypothesis\` true and keep arrays empty and \`suggested_followup_quant\` null.
+- You do **not** have raw warehouse rows. Judge only from the **text** below: initial analysis, quant output (if any), context & clarification, and the **data catalog** (dataset descriptions).
+- Do **not** claim specific cell values or aggregates exist unless they appear in the **quant block** or **context** text. You may say "a quant on the deals table could test …" without fabricating outcomes.
+- \`missed_catalog_opportunities\`: short plain-English notes pointing at a dataset and what to check (e.g. "deals table: ACV trend by quarter could test cohort mix").
+- \`suggested_followup_quant_request\`: one short sentence the subagent will execute as SQL. Do NOT write SQL, table names, or column names yourself; describe the analysis in natural language.
+- If the analysis is sound and grounded, set \`adequately_addresses_hypothesis\` true and keep arrays empty and \`suggested_followup_quant_request\` null.
 
 Overall goal:
 ${input.userGoal}
@@ -488,9 +436,6 @@ ${ev}
 **Quant that ran (or error / none):**
 ${input.quantBlockForReview}
 
-ALLOWED DATASET IDS (only these strings are valid \`datasetId\` / join \`rightDatasetId\`):
-${input.allowedDatasetIdsBlock}
-
 ${input.dataCatalogMarkdown}
 
 Output **one JSON object only** — first "{", last "}".
@@ -500,8 +445,8 @@ Shape:
   "adequately_addresses_hypothesis": boolean,
   "pressure_test_summary": "string, 2-5 sentences: does the analysis directly answer the hypothesis? logical gaps?",
   "analysis_alignment": "strong" | "moderate" | "weak",
-  "missed_catalog_opportunities": ["short strings, optional dataset id from allow list"],
-  "suggested_followup_quant": null OR { "hypothesis_under_test", "datasetId" (must be in allow list), "steps", optional "chart" },
+  "missed_catalog_opportunities": ["short strings"],
+  "suggested_followup_quant_request": null OR "one-sentence natural-language ask for the SQL subagent",
   "refinement_directives": ["imperatives for the analyst's second pass, e.g. tighten verdict, add quant, address contradiction"]
 }`;
 }
@@ -541,17 +486,16 @@ ${input.priorAnalysisJson}
 **Manager review (JSON):**
 ${input.managerReviewJson}
 
-**Manager-suggested quant (already validated against catalog; null if none):**
+**Manager-suggested quant request (natural language; null if none):**
 ${input.managerSuggestedQuantHint}
 
 Rules:
-- Address \`refinement_directives\` and \`pressure_test_summary\` from the manager JSON. If \`suggested_followup_quant\` was provided above, you **should** usually set your output \`quant\` to that exact object (or a minor fix) and **not** invent a different dataset.
-- **Anti-hallucination:** \`quant.datasetId\` and any join \`rightDatasetId\` must appear in the catalog markdown. Only use column names you can justify from catalog descriptions. If you cannot run a valid quant, set \`quant\` to null and explain in \`evidence_needed\`.
+- Address \`refinement_directives\` and \`pressure_test_summary\` from the manager JSON. If \`suggested_followup_quant_request\` was provided above, you **should** usually set your output \`quant_request\` to that exact string (or a tightened version) so the SQL subagent runs it.
 - \`verdict\` and \`confidence\` must reflect the **refined** reasoning.
 
 ${input.dataCatalogMarkdown}
 
-${QUANT_PIPELINE_OPS_FOR_PROMPTS}
+${QUANT_AGENT_DELEGATION_NOTE}
 
 Output ONE JSON object only — same keys as the initial leaf analysis:
 {
@@ -561,7 +505,7 @@ Output ONE JSON object only — same keys as the initial leaf analysis:
   "verdict": "confirmed" | "refuted" | "inconclusive" | "partially_supported",
   "evidence_needed": ["string"],
   "confidence": "low" | "medium" | "high",
-  "quant": null OR { "hypothesis_under_test", "datasetId", "steps", optional "chart" }
+  "quant_request": null OR "one-sentence ask for the SQL subagent"
 }`;
 }
 

@@ -1,6 +1,6 @@
 # Strategy team prototype
 
-Multi-agent strategy pipeline with **Server-Sent Events** for live progress, **PostgreSQL** for run state, and an optional **Memory** repository (search-on-demand, like an internal knowledge lookup). Prototype **CSV datasets** under `data/dummy` back in-app quantitative checks (Arquero).
+Multi-agent strategy pipeline with **Server-Sent Events** for live progress, **PostgreSQL** for run state, and an optional **Memory** repository (search-on-demand, like an internal knowledge lookup). A **SQL subagent** answers numeric questions on demand against an in-process **DuckDB** warehouse (views over prototype CSVs in `data/dummy_data/`).
 
 ## Agent architecture
 
@@ -10,11 +10,11 @@ All steps are orchestrated in **`src/lib/orchestrator.ts`**. Each “agent” is
 
 | Stage | Role | Output |
 |--------|------|--------|
-| **Context & clarification** | If **`usePriorRunMemory`** is true on the run (default): optional **Memory** routing (small JSON: search or skip) + keyword scan of recent artifacts when useful. If false, that search is skipped. Then a **plan JSON** drives **0–4 in-process quant runs** on catalog CSVs to pin down vague goal phrases (e.g. “largest segment”). A final brief is **markdown**: themes, risks, opportunities, **data-backed specificity**, open questions, **Questions for you**, and suggested focus for the tree. Step‑by‑step runs pause here; you can **`PATCH /api/runs/[id]`** with **`clarificationAnswers`** before continuing so answers merge into the brief. | Markdown (`discoveryOutput`) |
+| **Context & clarification** | If **`usePriorRunMemory`** is true on the run (default): optional **Memory** routing (small JSON: search or skip) + keyword scan of recent artifacts when useful. If false, that search is skipped. Then a **plan JSON** emits up to **4 natural-language `quant_requests`** that the **SQL subagent** answers against DuckDB to pin down vague goal phrases (e.g. “largest segment”). A final brief is **markdown**: themes, risks, opportunities, **data-backed specificity**, open questions, **Questions for you**, and suggested focus for the tree. Step‑by‑step runs pause here; you can **`PATCH /api/runs/[id]`** with **`clarificationAnswers`** before continuing so answers merge into the brief. | Markdown (`discoveryOutput`) |
 | **Structure (v1)** | Builds an initial **hypothesis tree** as JSON: **`roots`** → nested **`children`**; **every node** gets a `nodeStates` entry; **each node's `question`** is a **testable declarative hypothesis** (not only leaves); leaves have **`children: []`**. Parses alternate shapes via `normalizeOutlineDoc`; retries if empty. | JSON → outline |
 | **Manager review (tree)** | Reviews MECE coverage and whether **every node's question** is a testable claim (confirm/refute), not the full prose brief. | Markdown → `treeReviewNotes` |
 | **Structure (revised)** | Rebuilds full tree JSON from manager feedback; falls back to v1 if revision JSON is invalid. | JSON → final outline |
-| **Analysis** (leaves, **bounded concurrency**) | Batched **`Promise.all`** over leaves (cap **`ANALYSIS_CONCURRENCY`**; default **3** on Vercel, **4** locally). Each leaf: initial analysis JSON → **manager review** (grounded to the data catalog; invalid suggested quants dropped) → optional **refinement** pass if gaps remain; then **`verdict`**, **`confidence`**, **`evidence_needed`**, optional **`quant`**, optional **`leafManagerReview`** markdown. Disable with **`LEAF_MANAGER_REVIEW=off`**. The DB field **`redirectContext`** is legacy only (older runs); it is not written by the app anymore. | JSON per leaf + SSE |
+| **Analysis** (leaves, **bounded concurrency**) | Batched **`Promise.all`** over leaves (cap **`ANALYSIS_CONCURRENCY`**; default **3** on Vercel, **4** locally). Each leaf: initial analysis JSON (optional **`quant_request`** delegated to the SQL subagent) → **manager review** grounded to the data catalog (may emit a **`suggested_followup_quant_request`**) → optional **refinement** pass that re-runs the SQL subagent on the manager's follow-up; then **`verdict`**, **`confidence`**, **`evidence_needed`**, optional **`quant`** result, optional **`leafManagerReview`** markdown. Disable with **`LEAF_MANAGER_REVIEW=off`**. The DB field **`redirectContext`** is legacy only (older runs); it is not written by the app anymore. | JSON per leaf + SSE |
 | **Branch rollup** | After all leaves finish (or skip), **bottom‑up waves** judge each **internal node's hypothesis** (`question`) using **direct children** as evidence (LLM JSON + deterministic fallback): **summary**, **analysis**, **verdict**, **confidence**, optional **evidence** gaps. | Updates `nodeStates` for internal nodes |
 | **Manager (analyses)** | Pressure-tests **leaf** analyses (manager prompt stays leaf-focused). | Markdown |
 | **Synthesis** | **Short** markdown: **bold key point** (≤2 sentences), then supporting **bullets** (no section header), then **Open questions**. Partial runs prefix a partial banner. | Markdown |
@@ -43,10 +43,21 @@ While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clar
 
 ### Prototype data & quant
 
-- CSVs live in **`data/dummy/`**. The app’s catalog is **`src/lib/quant/catalog.ts`**; agents must use exact dataset IDs, e.g. **`crm/accounts`**, **`crm/deal_data`**, **`finance/arr_by_account_quarter`**, **`cx/product_usage`**, **`cx/customer_satisfaction`**.
+- CSVs live in **`data/dummy_data/`**. The app's catalog is **`src/lib/quant/catalog.ts`** — seven prototype tables across CRM, CX, finance, and support. Catalog ids use slashes (e.g. **`crm/deal_data`**); the SQL views drop the slash (e.g. **`crm_deal_data`**).
 - Regenerate the **renewal-cohort** synthetic enterprise SaaS slice (accounts, renewals, quarterly product usage tiers, customer satisfaction scores) plus a local-only **`renewals-dashboard.html`**:  
   **`npm run data:generate`**  
   (`scripts/generate-enterprise-saas-dummy.mjs`).
+
+#### SQL subagent
+
+When any of the context planner, leaf analyst, or manager emits a `quant_request` (or `suggested_followup_quant_request`), the **SQL subagent** runs a Gemini tool-use loop against an in-process **DuckDB** instance with one view per CSV. Source: **`src/lib/quant/agent.ts`**.
+
+- **Tools** the agent can call: `list_tables`, `describe_table`, `sample_rows`, `run_sql`, `finalize`. Defined in **`src/lib/quant/tools.ts`**.
+- **Schema discovery is on-demand** — `describe_table` returns column types plus precomputed enum values for low-cardinality string columns, so the planner doesn't carry the catalog around in every prompt.
+- **Safety layer** in **`src/lib/quant/sqlGuard.ts`**: single statement only, must start with `SELECT`/`WITH`, rejects DDL/DML/`ATTACH`/`COPY`/`PRAGMA`/`SET`/etc., auto-injects `LIMIT 1000`. DuckDB has no `statement_timeout` like Postgres — for now the row cap is the backstop; wrap `runSelect` in `Promise.race` + `conn.interrupt()` if you point this at larger data.
+- **Caps:** up to **6 turns** and **8 `run_sql` calls** per `runQuantAgent` invocation. Every statement (and any guard rejection) is recorded in `QuantResult.sqlAudit`.
+- **Output:** narrative (1–3 sentences with concrete numbers) + the final result table + optional Vega-Lite v5 chart spec, surfaced in the same `QuantResult` shape the leaf UI already renders.
+- **DuckDB bootstrap:** in-memory, one `CREATE VIEW … AS SELECT * FROM read_csv_auto(...)` per CSV on cold start (`src/lib/quant/duckdb.ts`). Connection is cached on `globalThis` so it survives HMR. The native bindings are listed in **`next.config.ts → serverExternalPackages`** so Next does not try to bundle the per-platform `.node` files.
 
 ### Data model (Prisma)
 
@@ -61,11 +72,11 @@ While paused after context & clarification: `PATCH /api/runs/[id]` with `{ "clar
 | `src/lib/orchestrator.ts` | Run state machine, SSE, partial completion, branch rollup, memory writes. |
 | `src/lib/strategyMemory.ts` | Optional Memory search + digest for context step. |
 | `src/lib/genai.ts` | Google AI client, text vs JSON generation, JSON repair (incl. JSON‑MIME pass), retries. |
-| `src/lib/quant/` | Dataset paths, CSV load, declarative **quant** plan execution (Arquero). |
+| `src/lib/quant/` | DuckDB bootstrap, schema introspection, SQL guard, Gemini tool-use loop (`agent.ts`), chart spec builder. |
 | `src/lib/outline.ts` | Outline normalization, leaf flattening, **all node ids**, path labels. |
 | `src/components/StrategyConsole.tsx` | UI: hypothesis tree, verdict/confidence/evidence per node, rollup labels, EventSource, memory. |
 | `src/components/MarkdownBody.tsx` | Renders memo markdown in the browser. |
-| `scripts/generate-enterprise-saas-dummy.mjs` | Regenerate `data/dummy/*.csv` for end-to-end tests. |
+| `scripts/generate-enterprise-saas-dummy.mjs` | Regenerate `data/dummy_data/**/*.csv` (loaded as DuckDB views at runtime). |
 
 ## Model (open-weight Gemma 4)
 
