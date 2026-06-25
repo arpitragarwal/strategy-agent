@@ -4,7 +4,9 @@ import TrackPageGeo from "@/components/TrackPageGeo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Agent Team For Corporate Strategy",
+  // Overridable per-deployment via NEXT_PUBLIC_APP_NAME (private sets it); the
+  // default keeps the public prototype's title. No company string in shared code.
+  title: process.env.NEXT_PUBLIC_APP_NAME || "AI Agent Team For Corporate Strategy",
   description: "An AI powered corporate strategy team",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],

@@ -1479,7 +1479,7 @@ export function StrategyConsole() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <header className="sticky top-0 z-30 -mx-4 px-4 bg-white pb-4 border-b border-zinc-100 mb-8">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-          AI Agent Team For Corporate Strategy
+          {process.env.NEXT_PUBLIC_APP_NAME || "AI Agent Team For Corporate Strategy"}
         </h1>
         <div className="mt-1 flex items-center gap-3 text-sm">
           <p className="text-zinc-600">
