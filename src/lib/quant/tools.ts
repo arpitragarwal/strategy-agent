@@ -1,4 +1,4 @@
-import { SchemaType, type FunctionDeclaration } from "@google/generative-ai";
+import { SchemaType, type FunctionDeclaration, type Schema } from "@google/generative-ai";
 
 /**
  * Tool surface presented to the quant agent. The agent picks tools to
@@ -15,6 +15,63 @@ export const TOOL_NAMES = {
   runSql: "run_sql",
   finalize: "finalize",
 } as const;
+
+/** One chart config. Reused for both the single `chart` field and the `charts` array. */
+const CHART_SCHEMA: Schema = {
+  type: SchemaType.OBJECT,
+  description:
+    "A chart config. x, y, and series must be column names that exist on the last run_sql result.",
+  properties: {
+    type: {
+      type: SchemaType.STRING,
+      description:
+        "'bar' (compare categories), 'line' (trend over time/ordered x), 'area' (cumulative/stacked trend), 'point' (scatter of two numeric columns), 'histogram' (distribution of one numeric column — x only), 'heatmap' (two categories with series as the colored value), 'combo' (bars for y plus a line for series on a second axis), or 'boxplot' (distribution of y across categories).",
+    },
+    x: { type: SchemaType.STRING, description: "Column for the x-axis (category, time, or the numeric column for histogram)." },
+    y: {
+      type: SchemaType.STRING,
+      description: "Column for the value axis (numeric). For heatmap, the second category.",
+    },
+    series: {
+      type: SchemaType.STRING,
+      description:
+        "Splits bar/line/area/point into colored series; for heatmap it is the numeric value (cell color); for combo it is the line metric on the right axis. Omit when not needed.",
+    },
+    horizontal: {
+      type: SchemaType.BOOLEAN,
+      description: "Bars only: set true when category labels are long.",
+    },
+    stacked: {
+      type: SchemaType.BOOLEAN,
+      description: "With a series: stack bars/areas instead of grouping them.",
+    },
+    aggregate: {
+      type: SchemaType.STRING,
+      description:
+        "Aggregate the value field in the chart ('sum','mean','median','min','max','count') so the SQL needn't pre-group. 'count' needs no y.",
+    },
+    refLine: {
+      type: SchemaType.OBJECT,
+      description: "Optional reference line on the value axis.",
+      properties: {
+        value: { type: SchemaType.NUMBER, description: "Fixed value to draw the line at." },
+        stat: { type: SchemaType.STRING, description: "'mean' or 'median' of the data instead of a fixed value." },
+        label: { type: SchemaType.STRING, description: "Optional label drawn near the line." },
+      },
+    },
+    dataLabels: {
+      type: SchemaType.BOOLEAN,
+      description: "Draw the numeric value on each mark (best for bar/point with ≤12 categories).",
+    },
+    yFormat: {
+      type: SchemaType.STRING,
+      description:
+        "Value-axis format: 'currency', 'percent' (expects 0–1 fractions), or 'number'. Omit to auto-detect from the column name.",
+    },
+    title: { type: SchemaType.STRING, description: "Short chart title." },
+  },
+  required: ["type", "x", "y"],
+};
 
 export const QUANT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
@@ -80,7 +137,7 @@ export const QUANT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: TOOL_NAMES.finalize,
     description:
-      "Emit the final narrative for the hypothesis and (optionally) a chart spec built from the last run_sql result. Always call this exactly once when done. After finalize is called, no further tool calls are accepted.",
+      "Emit the final narrative for the hypothesis and (optionally) up to 3 charts built from the last run_sql result. Always call this exactly once when done. After finalize is called, no further tool calls are accepted.",
     parameters: {
       type: SchemaType.OBJECT,
       properties: {
@@ -89,42 +146,15 @@ export const QUANT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
           description:
             "1–3 sentences with concrete numbers from the result that bear on the hypothesis.",
         },
-        chart: {
-          type: SchemaType.OBJECT,
+        charts: {
+          type: SchemaType.ARRAY,
           description:
-            "Optional chart config. x, y, and series must be column names that exist on the last run_sql result.",
-          properties: {
-            type: {
-              type: SchemaType.STRING,
-              description:
-                "'bar' (compare categories), 'line' (trend over a time/ordered x), 'area' (cumulative/stacked trend), or 'point' (scatter, two numeric columns).",
-            },
-            x: { type: SchemaType.STRING, description: "Column for the x-axis (category or time)." },
-            y: {
-              type: SchemaType.STRING,
-              description: "Column for the value axis (must be numeric).",
-            },
-            series: {
-              type: SchemaType.STRING,
-              description:
-                "Optional column to split into colored series (e.g. segment, region). Omit for a single series.",
-            },
-            horizontal: {
-              type: SchemaType.BOOLEAN,
-              description: "Bars only: set true when category labels are long.",
-            },
-            stacked: {
-              type: SchemaType.BOOLEAN,
-              description: "With a series: stack bars/areas instead of grouping them.",
-            },
-            yFormat: {
-              type: SchemaType.STRING,
-              description:
-                "Value-axis format: 'currency', 'percent' (expects 0–1 fractions), or 'number'. Omit to auto-detect from the column name.",
-            },
-            title: { type: SchemaType.STRING, description: "Short chart title." },
-          },
-          required: ["type", "x", "y"],
+            "Up to 3 chart configs built from the last run_sql result. Use more than one when a trend and a breakdown each add something.",
+          items: CHART_SCHEMA,
+        },
+        chart: {
+          ...CHART_SCHEMA,
+          description: "Single chart config (use `charts` for more than one).",
         },
       },
       required: ["narrative"],

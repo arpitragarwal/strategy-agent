@@ -10,17 +10,18 @@ import { recordTokenUsageFromGenerateResponse } from "../tokenUsage";
 import { QUANT_DATASETS, tableNameFor } from "./catalog";
 import { getProvider, type QuantProvider } from "./provider";
 import { guardSql, SQL_MAX_ROWS } from "./sqlGuard";
-import { buildVegaLiteSpec } from "./chart";
+import { buildVegaLiteSpec, isRenderableSpec } from "./chart";
 import { QUANT_TOOL_DECLARATIONS, TOOL_NAMES } from "./tools";
 import type { QuantChartConfig, QuantResult, QuantSqlAudit } from "./types";
 
 const MAX_ITERATIONS = 6;
 const MAX_RUN_SQL_CALLS = 8;
 const SAMPLE_ROWS_LIMIT = 20;
+const MAX_CHARTS = 3;
 
 type FinalizePayload = {
   narrative: string;
-  chart?: QuantChartConfig | null;
+  charts?: QuantChartConfig[];
 };
 
 type LastRunSqlResult = {
@@ -65,9 +66,10 @@ SQL constraints:
 
 Finalize rules:
 - narrative is 1–3 sentences with concrete numbers from your final result tying back to the hypothesis.
-- chart is optional. If included, x, y, and series MUST be column names on the last run_sql result; never aggregate expressions like 'SUM(acv_usd)' (alias them in the query first). y must be numeric.
-- Pick the chart type deliberately: 'bar' to compare categories, 'line' for a trend over a time/ordered x, 'area' for cumulative/stacked trends, 'point' for the relationship between two numeric columns. Use series to break results out by a dimension (e.g. segment, region); add stacked:true to stack them, or horizontal:true for bars with long category labels. Set yFormat to 'currency' or 'percent' when appropriate (percent expects 0–1 fractions).
-- Keep charts readable: aggregate in SQL so a bar chart has at most ~20–30 categories rather than hundreds of raw rows.
+- charts is optional (use the charts array; up to 3). Emit more than one only when a trend and a breakdown each add something. x, y, and series MUST be column names on the last run_sql result. y must be numeric (unless you set aggregate).
+- Pick the chart type deliberately: 'bar' to compare categories, 'line' for a trend over a time/ordered x, 'area' for cumulative/stacked trends, 'point' for the relationship between two numeric columns, 'histogram' for the distribution of one numeric column (x only), 'heatmap' for two categories with series as the colored value, 'combo' for bars (y) plus a line (series) on a second axis, and 'boxplot' for a numeric distribution across categories.
+- Use series to break results out by a dimension (e.g. segment, region); add stacked:true to stack, or horizontal:true for bars with long labels. Set aggregate ('sum','mean','count'…) to let the chart aggregate instead of pre-grouping in SQL. Add refLine ({stat:'mean'} or {value:N}) to mark a benchmark, dataLabels:true to print values on bars/points, and yFormat ('currency'/'percent', percent expects 0–1 fractions).
+- Keep charts readable: aim for at most ~20–30 categories on a bar chart.
 - If you cannot answer (no fit, empty result, query errors you can't fix), finalize with a narrative that says so plainly. Do not invent numbers.`;
 }
 
@@ -88,13 +90,27 @@ function asString(v: unknown): string {
   return typeof v === "string" ? v : v == null ? "" : String(v);
 }
 
+const CHART_TYPES = ["bar", "line", "area", "point", "histogram", "heatmap", "combo", "boxplot"];
+const AGGREGATES = ["sum", "mean", "median", "min", "max", "count"];
+
+function coerceRefLine(raw: unknown): QuantChartConfig["refLine"] | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const o = raw as Record<string, unknown>;
+  const value = typeof o.value === "number" && Number.isFinite(o.value) ? o.value : undefined;
+  const statRaw = asString(o.stat).toLowerCase();
+  const stat = statRaw === "mean" || statRaw === "median" ? (statRaw as "mean" | "median") : undefined;
+  if (value === undefined && !stat) return undefined;
+  const label = asString(o.label).trim() || undefined;
+  return { ...(value !== undefined ? { value } : {}), ...(stat ? { stat } : {}), ...(label ? { label } : {}) };
+}
+
 function coerceChartConfig(raw: unknown): QuantChartConfig | null {
   if (!raw || typeof raw !== "object") return null;
   const o = raw as Record<string, unknown>;
   const type = asString(o.type).toLowerCase();
   const x = asString(o.x).trim();
   const y = asString(o.y).trim();
-  if (!["bar", "line", "area", "point"].includes(type) || !x || !y) return null;
+  if (!CHART_TYPES.includes(type) || !x || !y) return null;
   const title = typeof o.title === "string" && o.title.trim() ? o.title.trim() : undefined;
   const series = asString(o.series).trim() || undefined;
   const yFormatRaw = asString(o.yFormat).toLowerCase();
@@ -102,6 +118,11 @@ function coerceChartConfig(raw: unknown): QuantChartConfig | null {
     yFormatRaw === "currency" || yFormatRaw === "percent" || yFormatRaw === "number"
       ? (yFormatRaw as "currency" | "percent" | "number")
       : undefined;
+  const aggRaw = asString(o.aggregate).toLowerCase();
+  const aggregate = AGGREGATES.includes(aggRaw)
+    ? (aggRaw as NonNullable<QuantChartConfig["aggregate"]>)
+    : undefined;
+  const refLine = coerceRefLine(o.refLine);
   return {
     type: type as QuantChartConfig["type"],
     x,
@@ -109,9 +130,26 @@ function coerceChartConfig(raw: unknown): QuantChartConfig | null {
     ...(series ? { series } : {}),
     ...(o.horizontal === true ? { horizontal: true } : {}),
     ...(o.stacked === true ? { stacked: true } : {}),
+    ...(aggregate ? { aggregate } : {}),
+    ...(refLine ? { refLine } : {}),
+    ...(o.dataLabels === true ? { dataLabels: true } : {}),
     ...(yFormat ? { yFormat } : {}),
     ...(title ? { title } : {}),
   };
+}
+
+/** Gather chart configs from finalize args: `charts` array and/or the legacy single `chart`. */
+function coerceCharts(args: Record<string, unknown>): QuantChartConfig[] {
+  const out: QuantChartConfig[] = [];
+  if (Array.isArray(args.charts)) {
+    for (const c of args.charts) {
+      const cfg = coerceChartConfig(c);
+      if (cfg) out.push(cfg);
+    }
+  }
+  const single = coerceChartConfig(args.chart);
+  if (single) out.push(single);
+  return out.slice(0, MAX_CHARTS);
 }
 
 async function dispatchTool(
@@ -236,7 +274,7 @@ async function dispatchTool(
     case TOOL_NAMES.finalize: {
       state.finalize = {
         narrative: asString(args.narrative).trim() || "(no narrative produced)",
-        chart: coerceChartConfig(args.chart),
+        charts: coerceCharts(args),
       };
       return { ok: true };
     }
@@ -362,19 +400,33 @@ export async function runQuantAgent(
       : "Quant agent did not produce a narrative or run any SQL.";
   }
 
-  if (state.finalize?.chart && state.lastResult?.rows.length) {
+  if (state.finalize?.charts?.length && state.lastResult?.rows.length) {
     const have = new Set(state.lastResult.columns);
-    const chart = { ...state.finalize.chart };
-    // Drop a series column the result doesn't actually have rather than failing.
-    if (chart.series && !have.has(chart.series)) delete chart.series;
-    if (have.has(chart.x) && have.has(chart.y)) {
-      const spec = buildVegaLiteSpec(chart, state.lastResult.rows);
+    const rows = state.lastResult.rows;
+    let skipped = 0;
+    for (const raw of state.finalize.charts) {
+      const chart = { ...raw };
+      // Drop a series column the result doesn't actually have rather than failing.
+      if (chart.series && !have.has(chart.series)) delete chart.series;
+      // x is always required; y is required for everything except histogram (x-only).
+      const ok = have.has(chart.x) && (chart.type === "histogram" || have.has(chart.y));
+      if (!ok) {
+        skipped += 1;
+        continue;
+      }
+      const spec = buildVegaLiteSpec(chart, rows);
+      // Drop specs Vega-Lite can't compile rather than shipping a blank widget.
+      if (!isRenderableSpec(spec)) {
+        skipped += 1;
+        continue;
+      }
       safe.vegaLiteSpecs.push({
         title: chart.title ?? `${chart.y} by ${chart.x}`,
         spec,
       });
-    } else {
-      narrative = `${narrative} (Chart skipped — x or y not in result columns.)`;
+    }
+    if (skipped > 0) {
+      narrative = `${narrative} (${skipped} chart${skipped > 1 ? "s" : ""} skipped — missing columns or unrenderable.)`;
     }
   }
 

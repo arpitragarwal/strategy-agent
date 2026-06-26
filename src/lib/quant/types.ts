@@ -1,13 +1,34 @@
+export type QuantChartType =
+  | "bar"
+  | "line"
+  | "area"
+  | "point"
+  | "histogram"
+  | "heatmap"
+  | "combo"
+  | "boxplot";
+
 export type QuantChartConfig = {
-  type: "bar" | "line" | "area" | "point";
+  type: QuantChartType;
   x: string;
   y: string;
-  /** Optional column that splits the data into colored series. */
+  /**
+   * Meaning depends on type:
+   * - bar/line/area/point: column that splits data into colored series.
+   * - heatmap: the numeric column shown as the cell color (x and y are the two categories).
+   * - combo: the second metric drawn as a line on the right axis (y is the bars).
+   */
   series?: string;
   /** Bars only: render horizontally (better for long category labels). */
   horizontal?: boolean;
   /** Bar/area with a series: stack instead of grouping/overlaying. */
   stacked?: boolean;
+  /** Aggregate applied to the value field so SQL needn't pre-group (count needs no y). */
+  aggregate?: "sum" | "mean" | "median" | "min" | "max" | "count";
+  /** Optional reference line on the value axis (a fixed value, or mean/median of the data). */
+  refLine?: { value?: number; stat?: "mean" | "median"; label?: string };
+  /** Draw the numeric value on each mark (best for bar/point with few categories). */
+  dataLabels?: boolean;
   /** Hint for how to format the value axis; auto-detected from the column name when omitted. */
   yFormat?: "number" | "currency" | "percent";
   title?: string;
