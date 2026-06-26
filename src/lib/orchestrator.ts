@@ -23,7 +23,7 @@ import {
   type DiscoveryMemoryRoute,
   type LeafManagerReviewJson,
 } from "./agents/prompts";
-import { generateJson, generateText, getModelId } from "./genai";
+import { generateJson, generateText, getModelId, withModelId } from "./genai";
 import { sanitizeManagerTreeReviewMarkdown } from "./sanitizeManagerTreeReview";
 import {
   sanitizeDiscoveryMarkdown,
@@ -1642,9 +1642,12 @@ export async function executeRun(
     send({ type: "progress", entry });
   };
 
-  const acc = new RunTokenUsageAccumulator(getModelId());
+  const acc = new RunTokenUsageAccumulator(
+    run.modelId?.trim() || getModelId(),
+  );
   const executeStartedAt = performance.now();
-  await runTokenTrackingContext(acc, async () => {
+  await withModelId(run.modelId, () =>
+    runTokenTrackingContext(acc, async () => {
     try {
     if (initialStatus === "pending") {
       await runContextClarificationPhase(runId, send, emit);
@@ -1752,5 +1755,6 @@ export async function executeRun(
         /* ignore persistence errors */
       }
     }
-  });
+    }),
+  );
 }

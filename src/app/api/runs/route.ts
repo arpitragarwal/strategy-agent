@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { isAvailableModel } from "@/lib/models";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  let body: { prompt?: string; mode?: string; usePriorRunMemory?: unknown };
+  let body: {
+    prompt?: string;
+    mode?: string;
+    usePriorRunMemory?: unknown;
+    modelId?: unknown;
+  };
   try {
     body = await req.json();
   } catch {
@@ -18,6 +24,9 @@ export async function POST(req: Request) {
     body.mode === "end_to_end" || body.mode === "step_by_step" ? body.mode : "step_by_step";
   const usePriorRunMemory =
     typeof body.usePriorRunMemory === "boolean" ? body.usePriorRunMemory : true;
+  // Only persist an explicit, allowlisted pick; otherwise leave null so the run
+  // uses the env default (GOOGLE_AI_MODEL) at execution time.
+  const modelId = isAvailableModel(body.modelId) ? body.modelId : null;
 
   const run = await prisma.strategyRun.create({
     data: {
@@ -26,6 +35,7 @@ export async function POST(req: Request) {
       status: "pending",
       runMode: mode,
       usePriorRunMemory,
+      modelId,
       progressLog: [],
     },
   });

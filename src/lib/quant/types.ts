@@ -1,7 +1,15 @@
 export type QuantChartConfig = {
-  type: "bar" | "line";
+  type: "bar" | "line" | "area" | "point";
   x: string;
   y: string;
+  /** Optional column that splits the data into colored series. */
+  series?: string;
+  /** Bars only: render horizontally (better for long category labels). */
+  horizontal?: boolean;
+  /** Bar/area with a series: stack instead of grouping/overlaying. */
+  stacked?: boolean;
+  /** Hint for how to format the value axis; auto-detected from the column name when omitted. */
+  yFormat?: "number" | "currency" | "percent";
   title?: string;
 };
 

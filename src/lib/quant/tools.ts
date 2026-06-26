@@ -92,14 +92,36 @@ export const QUANT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
         chart: {
           type: SchemaType.OBJECT,
           description:
-            "Optional Vega-Lite-like chart config. x and y must be column names that exist on the last run_sql result.",
+            "Optional chart config. x, y, and series must be column names that exist on the last run_sql result.",
           properties: {
             type: {
               type: SchemaType.STRING,
-              description: "'bar' or 'line'.",
+              description:
+                "'bar' (compare categories), 'line' (trend over a time/ordered x), 'area' (cumulative/stacked trend), or 'point' (scatter, two numeric columns).",
             },
-            x: { type: SchemaType.STRING, description: "Column name on the result." },
-            y: { type: SchemaType.STRING, description: "Column name on the result." },
+            x: { type: SchemaType.STRING, description: "Column for the x-axis (category or time)." },
+            y: {
+              type: SchemaType.STRING,
+              description: "Column for the value axis (must be numeric).",
+            },
+            series: {
+              type: SchemaType.STRING,
+              description:
+                "Optional column to split into colored series (e.g. segment, region). Omit for a single series.",
+            },
+            horizontal: {
+              type: SchemaType.BOOLEAN,
+              description: "Bars only: set true when category labels are long.",
+            },
+            stacked: {
+              type: SchemaType.BOOLEAN,
+              description: "With a series: stack bars/areas instead of grouping them.",
+            },
+            yFormat: {
+              type: SchemaType.STRING,
+              description:
+                "Value-axis format: 'currency', 'percent' (expects 0–1 fractions), or 'number'. Omit to auto-detect from the column name.",
+            },
             title: { type: SchemaType.STRING, description: "Short chart title." },
           },
           required: ["type", "x", "y"],

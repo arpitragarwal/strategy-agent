@@ -20,6 +20,8 @@ model StrategyRun {
   runMode         String   @default("step_by_step")
   /// When false, context step skips Memory repository search entirely (set at run creation).
   usePriorRunMemory Boolean @default(true)
+  /// User-picked Google AI model id for this run; null falls back to GOOGLE_AI_MODEL env default.
+  modelId         String?
   /// When status is awaiting_review: after_discovery | after_structure | after_analysis
   reviewCheckpoint String?
   prompt          String   @db.Text

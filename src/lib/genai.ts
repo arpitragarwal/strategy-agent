@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import {
   GoogleGenerativeAI,
   GoogleGenerativeAIAbortError,
@@ -9,8 +10,27 @@ import {
 import { parseModelJson } from "./json";
 import { recordTokenUsageFromGenerateResponse } from "./tokenUsage";
 
-/** Model ID for generateContent (e.g. open-weight Gemma 4 on the Google AI API). */
+/** Per-run model override (set from the user's pick); falls back to env when unset. */
+const modelOverrideStorage = new AsyncLocalStorage<string>();
+
+/**
+ * Run `fn` with `modelId` forcing every getModelId() lookup inside it. Empty /
+ * null falls through to the env default, so callers can pass the run's stored
+ * choice verbatim.
+ */
+export function withModelId<T>(
+  modelId: string | null | undefined,
+  fn: () => Promise<T>,
+): Promise<T> {
+  const trimmed = modelId?.trim();
+  if (!trimmed) return fn();
+  return modelOverrideStorage.run(trimmed, fn);
+}
+
+/** Model ID for generateContent: per-run override → GOOGLE_AI_MODEL → GEMINI_MODEL → built-in default. */
 export function getModelId(): string {
+  const override = modelOverrideStorage.getStore();
+  if (override) return override;
   return (
     process.env.GOOGLE_AI_MODEL?.trim() ||
     process.env.GEMINI_MODEL?.trim() ||

@@ -7,6 +7,7 @@ import { MarkdownBody } from "@/components/MarkdownBody";
 import { VegaLiteEmbed } from "@/components/VegaLiteEmbed";
 import { playAttentionSound, primeAttentionAudio } from "@/lib/attentionChime";
 import { parseStoredRunError } from "@/lib/errors";
+import { AVAILABLE_MODELS, modelLabel } from "@/lib/models";
 import { flattenLeaves, listAllNodeIds } from "@/lib/outline";
 import {
   RUNNING_STREAM_RECONNECT_BASE_MS,
@@ -46,6 +47,7 @@ type RunRow = {
   reviewCheckpoint?: string | null;
   runMode?: string | null;
   usePriorRunMemory?: boolean | null;
+  modelId?: string | null;
   prompt: string;
   companyContext?: string | null;
   discoveryOutput: string | null;
@@ -92,6 +94,7 @@ function formatTokenUsagePipelineLine(u: TokenUsageSnapshot | null): string | nu
   const executionMs =
     typeof u.executionMs === "number" && Number.isFinite(u.executionMs) ? u.executionMs : 0;
   const parts: string[] = [];
+  if (u.modelId) parts.push(u.modelId);
   if (input || output || calls) {
     parts.push(
       `Tokens ${formatTokensRoundK(input)} in`,
@@ -876,7 +879,7 @@ function OutlineBranch({
   );
 }
 
-export function StrategyConsole() {
+export function StrategyConsole({ defaultModelId }: { defaultModelId?: string }) {
   const [prompt, setPrompt] = useState("");
   const [runId, setRunId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -897,6 +900,8 @@ export function StrategyConsole() {
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
   const [usePriorRunMemory, setUsePriorRunMemory] = useState(false);
+  /** "" = use the server's env default model; otherwise an AVAILABLE_MODELS id. */
+  const [modelId, setModelId] = useState("");
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
   /** True after a terminal stream event so EventSource `onerror` from close() is ignored. */
   const suppressStreamErrorRef = useRef(false);
@@ -1065,6 +1070,7 @@ export function StrategyConsole() {
     setUsePriorRunMemory(
       typeof run.usePriorRunMemory === "boolean" ? run.usePriorRunMemory : false,
     );
+    setModelId(typeof run.modelId === "string" ? run.modelId : "");
     const tu = run.tokenUsage;
     setTokenUsage(tu && typeof tu === "object" ? (tu as TokenUsageSnapshot) : null);
   }, []);
@@ -1362,6 +1368,7 @@ export function StrategyConsole() {
           prompt: prompt.trim(),
           mode,
           usePriorRunMemory,
+          ...(modelId ? { modelId } : {}),
         }),
       });
       if (!res.ok) {
@@ -1520,22 +1527,36 @@ export function StrategyConsole() {
             onChange={(e) => setPrompt(e.target.value)}
             disabled={busy}
           />
-          <label className="flex items-start gap-2.5 cursor-pointer select-none pt-0.5">
-            <input
-              type="checkbox"
-              className="mt-0.5 h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/40"
-              checked={usePriorRunMemory}
-              onChange={(e) => setUsePriorRunMemory(e.target.checked)}
-              disabled={busy}
-            />
-            <span className="text-sm text-zinc-700 leading-snug">
-              <span className="font-medium text-zinc-900">Use prior run memory</span>
-              <span className="text-zinc-500">
-                {" "}
-                — search saved analysis from earlier runs.
-              </span>
-            </span>
-          </label>
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-0.5">
+            <label className="flex items-center gap-2 select-none">
+              <span className="text-sm font-medium text-zinc-900 shrink-0">Model</span>
+              <select
+                className="max-w-[14rem] rounded-lg border border-zinc-300 bg-white px-2.5 py-1.5 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 disabled:opacity-50"
+                value={modelId}
+                onChange={(e) => setModelId(e.target.value)}
+                disabled={busy}
+              >
+                <option value="">
+                  Default · {defaultModelId ? modelLabel(defaultModelId) : "server setting"}
+                </option>
+                {AVAILABLE_MODELS.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/40"
+                checked={usePriorRunMemory}
+                onChange={(e) => setUsePriorRunMemory(e.target.checked)}
+                disabled={busy}
+              />
+              <span className="text-sm font-medium text-zinc-900">Use prior run memory</span>
+            </label>
+          </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-3 pt-1">
             <button
               type="button"
@@ -1643,7 +1664,7 @@ export function StrategyConsole() {
             <p className="mt-2 text-xs text-sky-900">{controlMessage}</p>
           ) : null}
           {tokenUsagePipelineLine ? (
-            <p className="mt-2 text-[10px] font-mono text-zinc-600 tabular-nums">
+            <p className="mt-2 text-xs font-mono text-zinc-700 tabular-nums">
               {tokenUsagePipelineLine}
             </p>
           ) : null}

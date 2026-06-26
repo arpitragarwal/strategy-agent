@@ -65,7 +65,9 @@ SQL constraints:
 
 Finalize rules:
 - narrative is 1–3 sentences with concrete numbers from your final result tying back to the hypothesis.
-- chart is optional. If included, x and y MUST be column names on the last run_sql result; never aggregate expressions like 'SUM(acv_usd)' (alias them in the query first).
+- chart is optional. If included, x, y, and series MUST be column names on the last run_sql result; never aggregate expressions like 'SUM(acv_usd)' (alias them in the query first). y must be numeric.
+- Pick the chart type deliberately: 'bar' to compare categories, 'line' for a trend over a time/ordered x, 'area' for cumulative/stacked trends, 'point' for the relationship between two numeric columns. Use series to break results out by a dimension (e.g. segment, region); add stacked:true to stack them, or horizontal:true for bars with long category labels. Set yFormat to 'currency' or 'percent' when appropriate (percent expects 0–1 fractions).
+- Keep charts readable: aggregate in SQL so a bar chart has at most ~20–30 categories rather than hundreds of raw rows.
 - If you cannot answer (no fit, empty result, query errors you can't fix), finalize with a narrative that says so plainly. Do not invent numbers.`;
 }
 
@@ -92,9 +94,24 @@ function coerceChartConfig(raw: unknown): QuantChartConfig | null {
   const type = asString(o.type).toLowerCase();
   const x = asString(o.x).trim();
   const y = asString(o.y).trim();
-  if ((type !== "bar" && type !== "line") || !x || !y) return null;
+  if (!["bar", "line", "area", "point"].includes(type) || !x || !y) return null;
   const title = typeof o.title === "string" && o.title.trim() ? o.title.trim() : undefined;
-  return { type: type as "bar" | "line", x, y, title };
+  const series = asString(o.series).trim() || undefined;
+  const yFormatRaw = asString(o.yFormat).toLowerCase();
+  const yFormat =
+    yFormatRaw === "currency" || yFormatRaw === "percent" || yFormatRaw === "number"
+      ? (yFormatRaw as "currency" | "percent" | "number")
+      : undefined;
+  return {
+    type: type as QuantChartConfig["type"],
+    x,
+    y,
+    ...(series ? { series } : {}),
+    ...(o.horizontal === true ? { horizontal: true } : {}),
+    ...(o.stacked === true ? { stacked: true } : {}),
+    ...(yFormat ? { yFormat } : {}),
+    ...(title ? { title } : {}),
+  };
 }
 
 async function dispatchTool(
@@ -347,7 +364,9 @@ export async function runQuantAgent(
 
   if (state.finalize?.chart && state.lastResult?.rows.length) {
     const have = new Set(state.lastResult.columns);
-    const chart = state.finalize.chart;
+    const chart = { ...state.finalize.chart };
+    // Drop a series column the result doesn't actually have rather than failing.
+    if (chart.series && !have.has(chart.series)) delete chart.series;
     if (have.has(chart.x) && have.has(chart.y)) {
       const spec = buildVegaLiteSpec(chart, state.lastResult.rows);
       safe.vegaLiteSpecs.push({
