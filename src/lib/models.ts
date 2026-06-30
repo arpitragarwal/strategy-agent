@@ -20,7 +20,7 @@ export const AVAILABLE_MODELS: ModelOption[] = [
   // GLM (Zhipu) via the z.ai endpoint — requires GLM_API_KEY.
   { id: "glm-5.2", label: "GLM 5.2" },
   { id: "glm-4.6", label: "GLM 4.6" },
-  { id: "glm-4.5", label: "GLM 4.5" },
+  { id: "glm-4.5-flash", label: "GLM 4.5 (free)" },
 ];
 
 /** True when `v` is a model id the user is allowed to select. */
