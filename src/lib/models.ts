@@ -21,6 +21,10 @@ export const AVAILABLE_MODELS: ModelOption[] = [
   { id: "glm-5.2", label: "GLM 5.2" },
   { id: "glm-4.6", label: "GLM 4.6" },
   { id: "glm-4.5-flash", label: "GLM 4.5 (free)" },
+  // Zenmux's OpenAI-compatible endpoint — requires ZENMUX_API_KEY. There is no
+  // free GLM 5.2, so the free pick is GLM 4.7 Flash; full 5.2 is paid (cheaper than z.ai).
+  { id: "glm-4.7-flash-free", label: "GLM 4.7 Flash (free)" },
+  { id: "glm-5.2-zenmux", label: "GLM 5.2 (Zenmux, paid)" },
 ];
 
 /** True when `v` is a model id the user is allowed to select. */

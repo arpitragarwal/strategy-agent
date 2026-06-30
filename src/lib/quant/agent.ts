@@ -373,7 +373,7 @@ async function runGlmAgentLoop(
   userMessage: string,
   state: AgentState,
 ): Promise<string> {
-  const client = getGlmClient();
+  const { client, model } = getGlmClient(modelId);
   const tools = QUANT_TOOL_DECLARATIONS.map(toOpenAiTool);
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemInstr },
@@ -383,7 +383,7 @@ async function runGlmAgentLoop(
   let trailingText = "";
   for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
     const resp = await client.chat.completions.create({
-      model: modelId,
+      model,
       temperature: 0.2,
       max_tokens: 4096,
       tools,
