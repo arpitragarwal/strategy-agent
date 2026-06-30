@@ -1,11 +1,13 @@
 import {
   GoogleGenerativeAI,
-  type ChatSession,
   type FunctionCall,
+  type FunctionDeclaration,
   type GenerateContentResult,
   type Part,
 } from "@google/generative-ai";
+import type OpenAI from "openai";
 import { getModelId } from "../genai";
+import { getGlmClient, isGlmModel, recordGlmUsage } from "../glm";
 import { recordTokenUsageFromGenerateResponse } from "../tokenUsage";
 import { QUANT_DATASETS, tableNameFor } from "./catalog";
 import { getProvider, type QuantProvider } from "./provider";
@@ -297,6 +299,130 @@ export type RunQuantAgentInput = {
   context?: string;
 };
 
+/** Mutable per-call state shared by tool dispatch and the model loop. */
+type AgentState = {
+  audit: QuantSqlAudit[];
+  runSqlCount: number;
+  lastResult: LastRunSqlResult | null;
+  datasetIdsUsed: Set<string>;
+  finalize: FinalizePayload | null;
+};
+
+/**
+ * Gemini function declarations are already valid JSON Schema (SchemaType enum
+ * values are the lowercase JSON-schema type names), so they map straight onto
+ * OpenAI's tool format with no field translation.
+ */
+function toOpenAiTool(decl: FunctionDeclaration): OpenAI.Chat.Completions.ChatCompletionTool {
+  return {
+    type: "function",
+    function: {
+      name: decl.name,
+      description: decl.description,
+      parameters: (decl.parameters ?? { type: "object", properties: {} }) as Record<string, unknown>,
+    },
+  };
+}
+
+/** Gemini-native function-calling loop. Returns any trailing assistant text. */
+async function runGeminiAgentLoop(
+  provider: QuantProvider,
+  systemInstr: string,
+  userMessage: string,
+  state: AgentState,
+): Promise<string> {
+  const ai = new GoogleGenerativeAI(getApiKey());
+  const model = ai.getGenerativeModel({
+    model: getModelId(),
+    generationConfig: { temperature: 0.2, maxOutputTokens: 4096 },
+    systemInstruction: systemInstr,
+    tools: [{ functionDeclarations: QUANT_TOOL_DECLARATIONS }],
+  });
+  const chat = model.startChat();
+
+  let next: string | Part[] = userMessage;
+  let trailingText = "";
+  for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
+    const result: GenerateContentResult = await chat.sendMessage(next);
+    recordTokenUsageFromGenerateResponse(result.response as { usageMetadata?: unknown });
+
+    const calls = result.response.functionCalls() ?? [];
+    if (calls.length === 0) {
+      trailingText = extractText(result);
+      break;
+    }
+
+    const responseParts: Part[] = [];
+    for (const call of calls) {
+      const response = await dispatchTool(call, provider, state);
+      responseParts.push({ functionResponse: { name: call.name, response } });
+      if (state.finalize) break;
+    }
+    next = responseParts;
+    // Once finalize lands we have everything; bail to keep latency down.
+    if (state.finalize) break;
+  }
+  return trailingText;
+}
+
+/** GLM (z.ai OpenAI-compatible) tool-calling loop. Returns any trailing assistant text. */
+async function runGlmAgentLoop(
+  modelId: string,
+  provider: QuantProvider,
+  systemInstr: string,
+  userMessage: string,
+  state: AgentState,
+): Promise<string> {
+  const client = getGlmClient();
+  const tools = QUANT_TOOL_DECLARATIONS.map(toOpenAiTool);
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+    { role: "system", content: systemInstr },
+    { role: "user", content: userMessage },
+  ];
+
+  let trailingText = "";
+  for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
+    const resp = await client.chat.completions.create({
+      model: modelId,
+      temperature: 0.2,
+      max_tokens: 4096,
+      tools,
+      tool_choice: "auto",
+      messages,
+    });
+    recordGlmUsage(resp.usage);
+
+    const msg = resp.choices[0]?.message;
+    if (!msg) break;
+    const toolCalls = msg.tool_calls ?? [];
+    if (toolCalls.length === 0) {
+      trailingText = (msg.content ?? "").trim();
+      break;
+    }
+
+    // Echo the assistant turn (with its tool_calls) before answering each call.
+    messages.push({ role: "assistant", content: msg.content ?? "", tool_calls: msg.tool_calls });
+    for (const tc of toolCalls) {
+      if (tc.type !== "function") continue;
+      let args: Record<string, unknown> = {};
+      try {
+        args = JSON.parse(tc.function.arguments || "{}");
+      } catch {
+        /* malformed args → dispatch with empty object, tool returns a usable error */
+      }
+      const response = await dispatchTool(
+        { name: tc.function.name, args } as unknown as FunctionCall,
+        provider,
+        state,
+      );
+      messages.push({ role: "tool", tool_call_id: tc.id, content: JSON.stringify(response) });
+      if (state.finalize) break;
+    }
+    if (state.finalize) break;
+  }
+  return trailingText;
+}
+
 export async function runQuantAgent(
   input: RunQuantAgentInput,
 ): Promise<QuantResult> {
@@ -318,18 +444,9 @@ export async function runQuantAgent(
     sqlAudit: audit,
   };
 
-  let chat: ChatSession;
   let provider: QuantProvider;
   try {
     provider = await getProvider();
-    const ai = new GoogleGenerativeAI(getApiKey());
-    const model = ai.getGenerativeModel({
-      model: getModelId(),
-      generationConfig: { temperature: 0.2, maxOutputTokens: 4096 },
-      systemInstruction: systemInstruction(provider.dialect),
-      tools: [{ functionDeclarations: QUANT_TOOL_DECLARATIONS }],
-    });
-    chat = model.startChat();
   } catch (e) {
     safe.error = e instanceof Error ? e.message : String(e);
     safe.narrative = safe.error;
@@ -340,39 +457,15 @@ export async function runQuantAgent(
     ? `Hypothesis under test:\n${input.hypothesisUnderTest}\n\nContext:\n${input.context.trim()}`
     : `Hypothesis under test:\n${input.hypothesisUnderTest}`;
 
-  let next: string | Part[] = userMessage;
+  const systemInstr = systemInstruction(provider.dialect);
   let trailingText = "";
-
-  for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
-    let result: GenerateContentResult;
-    try {
-      result = await chat.sendMessage(next);
-    } catch (e) {
-      safe.error = e instanceof Error ? e.message : String(e);
-      break;
-    }
-    recordTokenUsageFromGenerateResponse(result.response as { usageMetadata?: unknown });
-
-    const calls = result.response.functionCalls() ?? [];
-    if (calls.length === 0) {
-      trailingText = extractText(result);
-      break;
-    }
-
-    const responseParts: Part[] = [];
-    for (const call of calls) {
-      const response = await dispatchTool(call, provider, state);
-      responseParts.push({
-        functionResponse: { name: call.name, response },
-      });
-      if (state.finalize) break;
-    }
-    next = responseParts;
-    if (state.finalize) {
-      // Let the model see the finalize ack and emit a closing turn (optional).
-      // We already have everything we need; bail to keep latency down.
-      break;
-    }
+  try {
+    const modelId = getModelId();
+    trailingText = isGlmModel(modelId)
+      ? await runGlmAgentLoop(modelId, provider, systemInstr, userMessage, state)
+      : await runGeminiAgentLoop(provider, systemInstr, userMessage, state);
+  } catch (e) {
+    safe.error = e instanceof Error ? e.message : String(e);
   }
 
   safe.datasetIdsUsed = [...state.datasetIdsUsed];

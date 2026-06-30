@@ -8,6 +8,7 @@ import {
   type GenerativeModel,
 } from "@google/generative-ai";
 import { parseModelJson } from "./json";
+import { glmGenerateText, isGlmModel } from "./glm";
 import { recordTokenUsageFromGenerateResponse } from "./tokenUsage";
 
 /** Per-run model override (set from the user's pick); falls back to env when unset. */
@@ -235,8 +236,17 @@ async function generateContentText(model: GenerativeModel, prompt: string): Prom
   throw new Error("Model request exceeded retry limit (internal error).");
 }
 
+/** One completion routed to the active provider (GLM when the model id is glm-*, else Gemini). */
+async function generateRaw(prompt: string, json: boolean): Promise<string> {
+  const modelId = getModelId();
+  if (isGlmModel(modelId)) {
+    return glmGenerateText(modelId, prompt, { json });
+  }
+  return generateContentText(json ? getJsonModel() : getTextModel(), prompt);
+}
+
 export async function generateText(prompt: string): Promise<string> {
-  return generateContentText(getTextModel(), prompt);
+  return generateRaw(prompt, false);
 }
 
 export type GenerateJsonOptions = {
@@ -251,7 +261,7 @@ export async function generateJson<T>(
   prompt: string,
   options: GenerateJsonOptions,
 ): Promise<T> {
-  const text = await generateContentText(getJsonModel(), prompt);
+  const text = await generateRaw(prompt, true);
 
   const attemptParse = (raw: string): T | null => {
     try {
@@ -278,7 +288,7 @@ export async function generateJson<T>(
       text.slice(0, 12000),
     ].join("\n");
 
-  const repaired = await generateContentText(getTextModel(), repairBlock("Repair pass 1."));
+  const repaired = await generateRaw(repairBlock("Repair pass 1."), false);
   let fixed = repaired;
   if (!fixed) {
     throw new Error(`JSON repair got empty response. Raw (truncated): ${text.slice(0, 400)}`);
@@ -287,11 +297,11 @@ export async function generateJson<T>(
   let second = attemptParse(fixed);
   if (second !== null) return second;
 
-  const repaired2 = await generateContentText(
-    getTextModel(),
+  const repaired2 = await generateRaw(
     repairBlock(
       "Repair pass 2 — previous fix was still not parseable JSON. Be stricter: minified JSON only.",
     ),
+    false,
   );
   fixed = repaired2;
   if (fixed) {
@@ -300,8 +310,7 @@ export async function generateJson<T>(
   }
 
   // Pass 3: JSON MIME model — helps when the first call returned prose (e.g. comma-separated themes, no "{").
-  const repaired3 = await generateContentText(
-    getJsonModel(),
+  const repaired3 = await generateRaw(
     [
       "Repair pass 3 (strict JSON output mode).",
       "The following text is NOT valid JSON. It may be a comma-separated list of themes, short phrases, partial outline, or markdown notes — you MUST convert it into ONE valid JSON object.",
@@ -313,6 +322,7 @@ export async function generateJson<T>(
       "Broken / prose output to convert:",
       text.slice(0, 12000),
     ].join("\n"),
+    true,
   );
   if (repaired3?.trim()) {
     const third = attemptParse(repaired3);

@@ -15,11 +15,12 @@ export type ModelOption = {
 };
 
 export const AVAILABLE_MODELS: ModelOption[] = [
-  { id: "gemma-4-31b-it", label: "Gemma 4 · 31B (dense)" },
-  { id: "gemma-4-26b-a4b-it", label: "Gemma 4 · 26B (MoE)" },
+  { id: "gemma-4-31b-it", label: "Gemma 4 32B" },
   { id: "gemini-2.5-flash", label: "Gemini 2.5 Flash" },
-  { id: "gemini-2.5-flash-lite", label: "Gemini 2.5 Flash-Lite" },
-  { id: "gemini-2.5-pro", label: "Gemini 2.5 Pro" },
+  // GLM (Zhipu) via the z.ai endpoint — requires GLM_API_KEY.
+  { id: "glm-5.2", label: "GLM 5.2" },
+  { id: "glm-4.6", label: "GLM 4.6" },
+  { id: "glm-4.5", label: "GLM 4.5" },
 ];
 
 /** True when `v` is a model id the user is allowed to select. */

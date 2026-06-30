@@ -20,6 +20,7 @@
     "@vercel/analytics": "^2.0.1",
     "arquero": "^8.0.3",
     "next": "^15.5.0",
+    "openai": "^6.45.0",
     "papaparse": "^5.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
