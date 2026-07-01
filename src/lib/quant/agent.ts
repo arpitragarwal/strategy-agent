@@ -7,7 +7,7 @@ import {
 } from "@google/generative-ai";
 import type OpenAI from "openai";
 import { getModelId } from "../genai";
-import { getGlmClient, isGlmModel, recordGlmUsage } from "../glm";
+import { getGlmClient, isOpenAiCompatModel, recordGlmUsage } from "../glm";
 import { recordTokenUsageFromGenerateResponse } from "../tokenUsage";
 import { QUANT_DATASETS, tableNameFor } from "./catalog";
 import { getProvider, type QuantProvider } from "./provider";
@@ -373,7 +373,7 @@ async function runGlmAgentLoop(
   userMessage: string,
   state: AgentState,
 ): Promise<string> {
-  const { client, model } = getGlmClient(modelId);
+  const { client, model, supportsTemperature } = getGlmClient(modelId);
   const tools = QUANT_TOOL_DECLARATIONS.map(toOpenAiTool);
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: systemInstr },
@@ -384,7 +384,8 @@ async function runGlmAgentLoop(
   for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
     const resp = await client.chat.completions.create({
       model,
-      temperature: 0.2,
+      // Sonnet 5 via Zenmux 400s on `temperature`; only send it where accepted.
+      ...(supportsTemperature ? { temperature: 0.2 } : {}),
       max_tokens: 4096,
       tools,
       tool_choice: "auto",
@@ -461,7 +462,7 @@ export async function runQuantAgent(
   let trailingText = "";
   try {
     const modelId = getModelId();
-    trailingText = isGlmModel(modelId)
+    trailingText = isOpenAiCompatModel(modelId)
       ? await runGlmAgentLoop(modelId, provider, systemInstr, userMessage, state)
       : await runGeminiAgentLoop(provider, systemInstr, userMessage, state);
   } catch (e) {

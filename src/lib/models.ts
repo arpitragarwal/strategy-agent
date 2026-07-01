@@ -25,6 +25,10 @@ export const AVAILABLE_MODELS: ModelOption[] = [
   // free GLM 5.2, so the free pick is GLM 4.7 Flash; full 5.2 is paid (cheaper than z.ai).
   { id: "glm-4.7-flash-free", label: "GLM 4.7 Flash (free)" },
   { id: "glm-5.2-zenmux", label: "GLM 5.2 (Zenmux, paid)" },
+  // Claude Sonnet 5 via Zenmux (paid). Zenmux passes Anthropic's list rates
+  // through unchanged ($2/MTok in, $10/MTok out); it's here for one-key access
+  // alongside the GLM models, not for a discount.
+  { id: "sonnet-5-zenmux", label: "Sonnet 5 (Zenmux, paid)" },
 ];
 
 /** True when `v` is a model id the user is allowed to select. */

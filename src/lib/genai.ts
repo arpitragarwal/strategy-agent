@@ -8,7 +8,7 @@ import {
   type GenerativeModel,
 } from "@google/generative-ai";
 import { parseModelJson } from "./json";
-import { glmGenerateText, isGlmModel } from "./glm";
+import { glmGenerateText, isOpenAiCompatModel } from "./glm";
 import { recordTokenUsageFromGenerateResponse } from "./tokenUsage";
 
 /** Per-run model override (set from the user's pick); falls back to env when unset. */
@@ -236,10 +236,10 @@ async function generateContentText(model: GenerativeModel, prompt: string): Prom
   throw new Error("Model request exceeded retry limit (internal error).");
 }
 
-/** One completion routed to the active provider (GLM when the model id is glm-*, else Gemini). */
+/** One completion routed to the active provider (OpenAI-compatible for GLM / Zenmux ids, else Gemini). */
 async function generateRaw(prompt: string, json: boolean): Promise<string> {
   const modelId = getModelId();
-  if (isGlmModel(modelId)) {
+  if (isOpenAiCompatModel(modelId)) {
     return glmGenerateText(modelId, prompt, { json });
   }
   return generateContentText(json ? getJsonModel() : getTextModel(), prompt);
