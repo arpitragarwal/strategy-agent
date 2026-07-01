@@ -47,6 +47,7 @@ type RunRow = {
   reviewCheckpoint?: string | null;
   runMode?: string | null;
   usePriorRunMemory?: boolean | null;
+  useDocumentContext?: boolean | null;
   modelId?: string | null;
   prompt: string;
   companyContext?: string | null;
@@ -132,7 +133,8 @@ type QuantCatalogDataset = {
   id: string;
   domain: string;
   description: string;
-  columns: string[];
+  table: string;
+  source: { kind: string; database?: string; path?: string };
 };
 
 const QUANT_DOMAIN_ORDER = ["crm", "cx", "finance", "support"] as const;
@@ -393,6 +395,7 @@ function OutputPanel({
 
 function QuantDatasetsTreeBox() {
   const [datasets, setDatasets] = useState<QuantCatalogDataset[] | null>(null);
+  const [contextDocsCount, setContextDocsCount] = useState<number | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -403,13 +406,17 @@ function QuantDatasetsTreeBox() {
         const res = await fetch("/api/quant/catalog");
         const data = (await res.json().catch(() => ({}))) as {
           datasets?: QuantCatalogDataset[];
+          contextDocsCount?: number | null;
           error?: string;
         };
         if (!res.ok) {
           if (!cancelled) setLoadError(data.error ?? res.statusText ?? "Request failed");
           return;
         }
-        if (!cancelled) setDatasets(Array.isArray(data.datasets) ? data.datasets : []);
+        if (!cancelled) {
+          setDatasets(Array.isArray(data.datasets) ? data.datasets : []);
+          setContextDocsCount(typeof data.contextDocsCount === "number" ? data.contextDocsCount : null);
+        }
       } catch (e) {
         if (!cancelled) setLoadError(e instanceof Error ? e.message : "Failed to load catalog");
       } finally {
@@ -435,18 +442,18 @@ function QuantDatasetsTreeBox() {
     })).filter((b) => b.rows.length > 0);
   }, [datasets]);
 
-  // Catalog ids are "domain/name"; strip the domain prefix for the leaf label.
-  function fileLabel(datasetId: string, domain: string): string {
-    const prefix = `${domain}/`;
-    return datasetId.startsWith(prefix) ? datasetId.slice(prefix.length) : datasetId;
+  // Table identifier as the agent sees it: "database.table" for warehouse
+  // sources, the bare table name otherwise (e.g. csv-backed datasets).
+  function sourceLabel(row: QuantCatalogDataset): string {
+    return row.source.database ? `${row.source.database}.${row.table}` : row.table;
   }
 
   return (
     <div className="rounded-lg border border-zinc-200 bg-white shadow-sm overflow-hidden">
       <div className="px-2.5 py-1.5 border-b border-zinc-100 bg-zinc-50/90">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600">Data files</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600">Data sources</p>
         <p className="text-[9px] text-zinc-500 mt-0.5 leading-tight">
-          Click a file to open the CSV · hover for <span className="font-mono">datasetId</span>
+          Warehouse tables the agent can query · hover for <span className="font-mono">datasetId</span>
         </p>
       </div>
       <div className="p-2 max-h-[14rem] overflow-y-auto">
@@ -458,7 +465,6 @@ function QuantDatasetsTreeBox() {
           <p className="text-[10px] text-zinc-500">No datasets.</p>
         ) : (
           <div className="font-mono text-[10px] leading-snug text-zinc-800 select-none">
-            <div className="text-zinc-700">data/dummy_data/</div>
             {domainBlocks.map((block, di) => {
               const domainLast = di === domainBlocks.length - 1;
               const domainBranch = domainLast ? "└─ " : "├─ ";
@@ -474,28 +480,35 @@ function QuantDatasetsTreeBox() {
                   {block.rows.map((row, fi) => {
                     const fileLast = fi === block.rows.length - 1;
                     const branch = fileLast ? "└─ " : "├─ ";
-                    const name = fileLabel(row.id, block.domain);
-                    const href = `/api/quant/file/${row.id}`;
+                    const name = sourceLabel(row);
+                    const isCsv = row.source.kind === "csv";
                     return (
                       <div key={row.id} className="flex whitespace-pre items-baseline" title={`${row.id} — ${row.description}`}>
                         <span className="text-zinc-400" aria-hidden>
                           {continuation}
                           {branch}
                         </span>
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sky-800 hover:text-sky-950 hover:underline underline-offset-2 decoration-sky-600/50 min-w-0 break-all select-text text-left"
-                        >
-                          {name}
-                        </a>
+                        {isCsv ? (
+                          <a
+                            href={`/api/quant/file/${row.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sky-800 hover:text-sky-950 hover:underline underline-offset-2 decoration-sky-600/50 min-w-0 break-all select-text text-left"
+                          >
+                            {name}
+                          </a>
+                        ) : (
+                          <span className="text-zinc-800 min-w-0 break-all select-text">{name}</span>
+                        )}
                       </div>
                     );
                   })}
                 </div>
               );
             })}
+            <div className="mt-1.5 pt-1.5 border-t border-zinc-100 text-zinc-500">
+              +{contextDocsCount ?? "…"} reference docs from Drop
+            </div>
           </div>
         )}
       </div>
@@ -900,6 +913,7 @@ export function StrategyConsole({ defaultModelId }: { defaultModelId?: string })
   const [clarificationDraft, setClarificationDraft] = useState("");
   const [runMode, setRunMode] = useState<RunMode>("end_to_end");
   const [usePriorRunMemory, setUsePriorRunMemory] = useState(false);
+  const [useDocumentContext, setUseDocumentContext] = useState(true);
   /** "" = use the server's env default model; otherwise an AVAILABLE_MODELS id. */
   const [modelId, setModelId] = useState("");
   const [tokenUsage, setTokenUsage] = useState<TokenUsageSnapshot | null>(null);
@@ -1069,6 +1083,9 @@ export function StrategyConsole({ defaultModelId }: { defaultModelId?: string })
     }
     setUsePriorRunMemory(
       typeof run.usePriorRunMemory === "boolean" ? run.usePriorRunMemory : false,
+    );
+    setUseDocumentContext(
+      typeof run.useDocumentContext === "boolean" ? run.useDocumentContext : true,
     );
     setModelId(typeof run.modelId === "string" ? run.modelId : "");
     const tu = run.tokenUsage;
@@ -1368,6 +1385,7 @@ export function StrategyConsole({ defaultModelId }: { defaultModelId?: string })
           prompt: prompt.trim(),
           mode,
           usePriorRunMemory,
+          useDocumentContext,
           ...(modelId ? { modelId } : {}),
         }),
       });
@@ -1555,6 +1573,16 @@ export function StrategyConsole({ defaultModelId }: { defaultModelId?: string })
                 disabled={busy}
               />
               <span className="text-sm font-medium text-zinc-900">Use prior run memory</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/40"
+                checked={useDocumentContext}
+                onChange={(e) => setUseDocumentContext(e.target.checked)}
+                disabled={busy}
+              />
+              <span className="text-sm font-medium text-zinc-900">Use Drop reference documents</span>
             </label>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-3 pt-1">

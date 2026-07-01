@@ -46,6 +46,7 @@ import {
 } from "./outline";
 import { buildDataCatalogMarkdown, runQuantAgent } from "./quant";
 import { searchStrategyMemory } from "./strategyMemory";
+import { retrieveDocumentContext } from "./contextDocuments";
 import {
   errorToLogParts,
   formatRunErrorField,
@@ -1041,6 +1042,12 @@ async function runContextClarificationPhase(
     );
   }
 
+  let retrievedDocuments = "";
+  if (run.useDocumentContext !== false) {
+    await emit("context", "Selecting relevant reference documents…");
+    retrievedDocuments = await retrieveDocumentContext(run.prompt);
+  }
+
   await emit("context", "Planning data checks and specificity…");
   let plan: ContextClarificationPlanJson = {
     specificity_notes: "",
@@ -1053,6 +1060,7 @@ async function runContextClarificationPhase(
         contextClarificationPlanPrompt({
           userGoal: run.prompt,
           retrievedMemory,
+          retrievedDocuments,
           dataCatalogMarkdown: DATA_CATALOG_MARKDOWN,
         }),
         {
@@ -1091,6 +1099,7 @@ async function runContextClarificationPhase(
     contextClarificationSynthesisPrompt({
       userGoal: run.prompt,
       retrievedMemory,
+      retrievedDocuments,
       specificityNotes: plan.specificity_notes,
       dataAnalysesMarkdown,
       clarifyingQuestions: plan.clarifying_questions,

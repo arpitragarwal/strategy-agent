@@ -32,6 +32,28 @@ Rules:
 - Do not request Memory for generic questions with no plausible link to prior strategy artifacts.`;
 }
 
+/**
+ * Manifest-select over the Drop reference corpus: the model picks which
+ * pre-filtered candidate documents are worth reading for this goal. Returns
+ * doc_ids referencing the numbered manifest ([] when none are relevant).
+ */
+export function documentSelectionPrompt(userGoal: string, manifest: string, maxDocs: number): string {
+  return `You are selecting **reference documents** to load as background for a strategy question. Below is a shortlist of candidate documents (title, tags, one-line description), already keyword-matched to the goal. Pick only the ones whose full text would genuinely inform this specific goal.
+
+User goal / question:
+${userGoal}
+
+Candidate documents (numbered):
+${manifest}
+
+Choose up to ${maxDocs}. Prefer precision over recall — a document that merely shares a keyword but wouldn't change the analysis should be left out. If none are genuinely relevant, return an empty list.
+
+Output ONE JSON object only. First character "{", last "}".
+Shape:
+{ "doc_ids": [ <numbers from the list above> ] }
+Example when nothing fits: {"doc_ids":[]}`;
+}
+
 /** Plan step: what to quantify + what to ask the user (output JSON). */
 export type ContextClarificationPlanJson = {
   /** Where the goal is vague (e.g. "largest segment" without naming it) — plain text. */
@@ -49,6 +71,7 @@ export type ContextClarificationPlanJson = {
 export function contextClarificationPlanPrompt(input: {
   userGoal: string;
   retrievedMemory: string;
+  retrievedDocuments: string;
   dataCatalogMarkdown: string;
 }): string {
   return `You are the **planning** half of a "Context & clarification" step for strategy work. You do NOT write the final brief yet.
@@ -68,6 +91,11 @@ ${input.retrievedMemory.trim() || "(No memory lookup was run, or search returned
 
 Rules for Memory: use **only** when clearly relevant; otherwise mentally ignore it.
 
+Reference documents (excerpts from the company's Drop corpus, auto-selected for this goal):
+${input.retrievedDocuments.trim() || "(No reference documents were selected for this goal.)"}
+
+Rules for reference documents: treat as background context the org has already written; use only what bears on the goal.
+
 ${input.dataCatalogMarkdown}
 
 ${QUANT_AGENT_DELEGATION_NOTE}
@@ -86,6 +114,7 @@ If retrieve_memory had nothing useful and the goal is already concrete, specific
 export function contextClarificationSynthesisPrompt(input: {
   userGoal: string;
   retrievedMemory: string;
+  retrievedDocuments: string;
   specificityNotes: string;
   /** Markdown: executed quant narratives/errors (may be empty). */
   dataAnalysesMarkdown: string;
@@ -108,6 +137,9 @@ ${input.userGoal}
 
 Memory (optional prior-run excerpts — use only if relevant):
 ${input.retrievedMemory.trim() || "(None.)"}
+
+Reference documents (auto-selected from the company's Drop corpus — use only if relevant):
+${input.retrievedDocuments.trim() || "(None.)"}
 
 Specificity / ambiguity notes from the planner:
 ${input.specificityNotes.trim() || "(None.)"}

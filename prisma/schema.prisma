@@ -20,6 +20,8 @@ model StrategyRun {
   runMode         String   @default("step_by_step")
   /// When false, context step skips Memory repository search entirely (set at run creation).
   usePriorRunMemory Boolean @default(true)
+  /// When false, context step skips reference-document (Drop corpus) retrieval (set at run creation).
+  useDocumentContext Boolean @default(true)
   /// User-picked Google AI model id for this run; null falls back to GOOGLE_AI_MODEL env default.
   modelId         String?
   /// When status is awaiting_review: after_discovery | after_structure | after_analysis
@@ -59,4 +61,29 @@ model MemoryArtifact {
   topics    String   @default("") @db.Text
   payload   Json
   runId     String?
+}
+
+/// Reference documents ingested from Drop share links (see
+/// private/drop_documents.csv, DROP_BASE_URL). The curated title/description form the
+/// manifest the router picks from; `content` (markdown) is hydrated into a
+/// run's context only for the docs the model selects.
+model ContextDocument {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  /// Drop share token (the {token} in /s/{token}); unique per doc.
+  shareToken  String   @unique
+  url         String
+  title       String
+  /// Curated one-liner from the CSV; used (with title) in the selection manifest.
+  description String   @db.Text
+  /// Full document text as markdown, converted from the SSR HTML at /s/{token}.
+  content     String   @db.Text
+  /// sha256 of `content`; lets re-ingestion skip unchanged docs.
+  contentHash String
+  /// Tags scraped from the doc footer (df-tag spans), comma-separated.
+  topics      String   @default("")
+  /// html | markdown — the doc's original file_type when known.
+  fileType    String   @default("")
+  fetchedAt   DateTime @default(now())
 }

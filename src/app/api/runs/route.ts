@@ -9,6 +9,7 @@ export async function POST(req: Request) {
     prompt?: string;
     mode?: string;
     usePriorRunMemory?: unknown;
+    useDocumentContext?: unknown;
     modelId?: unknown;
   };
   try {
@@ -24,6 +25,8 @@ export async function POST(req: Request) {
     body.mode === "end_to_end" || body.mode === "step_by_step" ? body.mode : "step_by_step";
   const usePriorRunMemory =
     typeof body.usePriorRunMemory === "boolean" ? body.usePriorRunMemory : true;
+  const useDocumentContext =
+    typeof body.useDocumentContext === "boolean" ? body.useDocumentContext : true;
   // Only persist an explicit, allowlisted pick; otherwise leave null so the run
   // uses the env default (GOOGLE_AI_MODEL) at execution time.
   const modelId = isAvailableModel(body.modelId) ? body.modelId : null;
@@ -35,6 +38,7 @@ export async function POST(req: Request) {
       status: "pending",
       runMode: mode,
       usePriorRunMemory,
+      useDocumentContext,
       modelId,
       progressLog: [],
     },

@@ -10,7 +10,8 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "data:generate": "node scripts/generate-enterprise-saas-dummy.mjs"
+    "data:generate": "node scripts/generate-enterprise-saas-dummy.mjs",
+    "ingest:docs": "node --env-file=.env scripts/ingest-drop-docs.mjs"
   },
   "dependencies": {
     "@clickhouse/client": "^1.12.0",
@@ -26,6 +27,7 @@
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
+    "turndown": "^7.2.4",
     "vega": "^6.2.0",
     "vega-embed": "^7.1.0",
     "vega-lite": "^6.4.2"
@@ -37,6 +39,7 @@
     "@types/papaparse": "^5.5.2",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@types/turndown": "^5.0.6",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.5.0",
     "prisma": "6.19.3",
